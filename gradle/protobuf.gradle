@@ -1,0 +1,17 @@
+apply plugin: 'com.google.protobuf'
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protocVersion}"
+    }
+}
+
+idea {
+    module {
+        sourceDirs += file("${protobuf.generatedFilesBaseDir}/main/java")
+    }
+}
+
+dependencies {
+    compile("com.google.protobuf:protobuf-java:${protobufVersion}")
+}

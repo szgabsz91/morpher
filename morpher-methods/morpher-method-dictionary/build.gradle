@@ -1,0 +1,22 @@
+description = 'Dictionary based inflection/lemmatization method'
+
+apply from: "$rootDir/gradle/test.gradle"
+apply from: "$rootDir/gradle/protobuf.gradle"
+
+ext {
+    moduleName = 'com.github.szgabsz91.morpher.methods.dictionary'
+
+    testCoverageLimits = [
+        instruction: 100.0,
+        line: 100.0,
+        branch: 100.0,
+        class: 100.0
+    ]
+}
+
+dependencies {
+    compile project(':morpher-core')
+    compile project(':morpher-methods:morpher-method-api')
+
+    compile("org.apache.commons:commons-lang3:${commonsLangVersion}")
+}

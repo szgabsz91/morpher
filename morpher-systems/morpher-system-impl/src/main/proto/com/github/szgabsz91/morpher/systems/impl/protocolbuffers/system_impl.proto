@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.github.szgabsz91.morpher.systems.impl.protocolbuffers;
+
+option java_multiple_files = true;
+option java_package = "com.github.szgabsz91.morpher.systems.impl.protocolbuffers";
+option java_outer_classname = "SystemImplProtocolBuffers";
+
+import "google/protobuf/any.proto";
+
+message MorpherSystemMessage {
+    map<string, google.protobuf.Any> engineMap = 1;
+}

@@ -1,0 +1,42 @@
+apply plugin: 'maven'
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            inceptionYear '2016'
+            url 'https://github.com/szgabsz91/morpher'
+            organization {
+                name 'szgabsz91'
+            }
+            licenses {
+                license {
+                    name 'Creative Commons GNU LGPL, Version 3.0'
+                    url 'http://www.gnu.org/licenses/lgpl-3.0.html'
+                    distribution 'repo'
+                }
+            }
+            issueManagement {
+                system 'Github'
+                url 'https://github.com/szgabsz91/morpher/issues'
+            }
+            ciManagement {
+                system 'CircleCI'
+                url 'https://circleci.com/gh/szgabsz91/morpher'
+            }
+            scm {
+                connection 'scm:git:git@github.com:szgabsz91/morpher.git'
+                developerConnection 'scm:git:git@github.com:szgabsz91/morpher.git'
+                url 'https://github.com/szgabsz91/morpher'
+                tag 'HEAD'
+            }
+            developers {
+                developer {
+                    name 'szgabsz91'
+                    email 'szgabsz91@gmail.com'
+                }
+            }
+        }
+    }
+}
+
+build.dependsOn install

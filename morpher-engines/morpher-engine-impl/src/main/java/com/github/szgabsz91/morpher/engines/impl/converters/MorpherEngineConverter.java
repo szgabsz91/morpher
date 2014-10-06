@@ -1,0 +1,419 @@
+/*
+ *                    GNU LESSER GENERAL PUBLIC LICENSE
+ *                        Version 3, 29 June 2007
+ *
+ *  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ *  Everyone is permitted to copy and distribute verbatim copies
+ *  of this license document, but changing it is not allowed.
+ *
+ *
+ *   This version of the GNU Lesser General Public License incorporates
+ * the terms and conditions of version 3 of the GNU General Public
+ * License, supplemented by the additional permissions listed below.
+ *
+ *   0. Additional Definitions.
+ *
+ *   As used herein, "this License" refers to version 3 of the GNU Lesser
+ * General Public License, and the "GNU GPL" refers to version 3 of the GNU
+ * General Public License.
+ *
+ *   "The Library" refers to a covered work governed by this License,
+ * other than an Application or a Combined Work as defined below.
+ *
+ *   An "Application" is any work that makes use of an interface provided
+ * by the Library, but which is not otherwise based on the Library.
+ * Defining a subclass of a class defined by the Library is deemed a mode
+ * of using an interface provided by the Library.
+ *
+ *   A "Combined Work" is a work produced by combining or linking an
+ * Application with the Library.  The particular version of the Library
+ * with which the Combined Work was made is also called the "Linked
+ * Version".
+ *
+ *   The "Minimal Corresponding Source" for a Combined Work means the
+ * Corresponding Source for the Combined Work, excluding any source code
+ * for portions of the Combined Work that, considered in isolation, are
+ * based on the Application, and not on the Linked Version.
+ *
+ *   The "Corresponding Application Code" for a Combined Work means the
+ * object code and/or source code for the Application, including any data
+ * and utility programs needed for reproducing the Combined Work from the
+ * Application, but excluding the System Libraries of the Combined Work.
+ *
+ *   1. Exception to Section 3 of the GNU GPL.
+ *
+ *   You may convey a covered work under sections 3 and 4 of this License
+ * without being bound by section 3 of the GNU GPL.
+ *
+ *   2. Conveying Modified Versions.
+ *
+ *   If you modify a copy of the Library, and, in your modifications, a
+ * facility refers to a function or data to be supplied by an Application
+ * that uses the facility (other than as an argument passed when the
+ * facility is invoked), then you may convey a copy of the modified
+ * version:
+ *
+ *    a) under this License, provided that you make a good faith effort to
+ *    ensure that, in the event an Application does not supply the
+ *    function or data, the facility still operates, and performs
+ *    whatever part of its purpose remains meaningful, or
+ *
+ *    b) under the GNU GPL, with none of the additional permissions of
+ *    this License applicable to that copy.
+ *
+ *   3. Object Code Incorporating Material from Library Header Files.
+ *
+ *   The object code form of an Application may incorporate material from
+ * a header file that is part of the Library.  You may convey such object
+ * code under terms of your choice, provided that, if the incorporated
+ * material is not limited to numerical parameters, data structure
+ * layouts and accessors, or small macros, inline functions and templates
+ * (ten or fewer lines in length), you do both of the following:
+ *
+ *    a) Give prominent notice with each copy of the object code that the
+ *    Library is used in it and that the Library and its use are
+ *    covered by this License.
+ *
+ *    b) Accompany the object code with a copy of the GNU GPL and this license
+ *    document.
+ *
+ *   4. Combined Works.
+ *
+ *   You may convey a Combined Work under terms of your choice that,
+ * taken together, effectively do not restrict modification of the
+ * portions of the Library contained in the Combined Work and reverse
+ * engineering for debugging such modifications, if you also do each of
+ * the following:
+ *
+ *    a) Give prominent notice with each copy of the Combined Work that
+ *    the Library is used in it and that the Library and its use are
+ *    covered by this License.
+ *
+ *    b) Accompany the Combined Work with a copy of the GNU GPL and this license
+ *    document.
+ *
+ *    c) For a Combined Work that displays copyright notices during
+ *    execution, include the copyright notice for the Library among
+ *    these notices, as well as a reference directing the user to the
+ *    copies of the GNU GPL and this license document.
+ *
+ *    d) Do one of the following:
+ *
+ *        0) Convey the Minimal Corresponding Source under the terms of this
+ *        License, and the Corresponding Application Code in a form
+ *        suitable for, and under terms that permit, the user to
+ *        recombine or relink the Application with a modified version of
+ *        the Linked Version to produce a modified Combined Work, in the
+ *        manner specified by section 6 of the GNU GPL for conveying
+ *        Corresponding Source.
+ *
+ *        1) Use a suitable shared library mechanism for linking with the
+ *        Library.  A suitable mechanism is one that (a) uses at run time
+ *        a copy of the Library already present on the user's computer
+ *        system, and (b) will operate properly with a modified version
+ *        of the Library that is interface-compatible with the Linked
+ *        Version.
+ *
+ *    e) Provide Installation Information, but only if you would otherwise
+ *    be required to provide such information under section 6 of the
+ *    GNU GPL, and only to the extent that such information is
+ *    necessary to install and execute a modified version of the
+ *    Combined Work produced by recombining or relinking the
+ *    Application with a modified version of the Linked Version. (If
+ *    you use option 4d0, the Installation Information must accompany
+ *    the Minimal Corresponding Source and Corresponding Application
+ *    Code. If you use option 4d1, you must provide the Installation
+ *    Information in the manner specified by section 6 of the GNU GPL
+ *    for conveying Corresponding Source.)
+ *
+ *   5. Combined Libraries.
+ *
+ *   You may place library facilities that are a work based on the
+ * Library side by side in a single library together with other library
+ * facilities that are not Applications and are not covered by this
+ * License, and convey such a combined library under terms of your
+ * choice, if you do both of the following:
+ *
+ *    a) Accompany the combined library with a copy of the same work based
+ *    on the Library, uncombined with any other library facilities,
+ *    conveyed under the terms of this License.
+ *
+ *    b) Give prominent notice with the combined library that part of it
+ *    is a work based on the Library, and explaining where to find the
+ *    accompanying uncombined form of the same work.
+ *
+ *   6. Revised Versions of the GNU Lesser General Public License.
+ *
+ *   The Free Software Foundation may publish revised and/or new versions
+ * of the GNU Lesser General Public License from time to time. Such new
+ * versions will be similar in spirit to the present version, but may
+ * differ in detail to address new problems or concerns.
+ *
+ *   Each version is given a distinguishing version number. If the
+ * Library as you received it specifies that a certain numbered version
+ * of the GNU Lesser General Public License "or any later version"
+ * applies to it, you have the option of following the terms and
+ * conditions either of that published version or of any later version
+ * published by the Free Software Foundation. If the Library as you
+ * received it does not specify a version number of the GNU Lesser
+ * General Public License, you may choose any version of the GNU Lesser
+ * General Public License ever published by the Free Software Foundation.
+ *
+ *   If the Library as you received it specifies that a proxy can decide
+ * whether future versions of the GNU Lesser General Public License shall
+ * apply, that proxy's public statement of acceptance of any version is
+ * permanent authorization for you to choose that version for the
+ * Library.
+ */
+package com.github.szgabsz91.morpher.engines.impl.converters;
+
+import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
+import com.github.szgabsz91.morpher.core.model.AffixType;
+import com.github.szgabsz91.morpher.core.io.IConverter;
+import com.github.szgabsz91.morpher.core.services.ServiceProvider;
+import com.github.szgabsz91.morpher.engines.impl.impl.MorpherEngine;
+import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.IMorpherMethodHolder;
+import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;
+import com.github.szgabsz91.morpher.engines.impl.impl.probability.MinMaxProbabilityCalclator;
+import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
+import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.IMorpherMethodHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.protocolbuffers.MorpherEngineMessage;
+import com.github.szgabsz91.morpher.engines.impl.protocolbuffers.ProbabilityCalculatorTypeMessage;
+import com.github.szgabsz91.morpher.methods.api.IMorpherMethod;
+import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
+import com.google.protobuf.Any;
+import com.google.protobuf.CodedInputStream;
+import com.google.protobuf.DoubleValue;
+import com.google.protobuf.InvalidProtocolBufferException;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+import java.util.zip.GZIPInputStream;
+
+import static java.util.stream.Collectors.toMap;
+
+/**
+ * Protocol Buffer converter for the {@link MorpherEngine} class.
+ *
+ * @author szgabsz91
+ */
+public class MorpherEngineConverter implements IConverter<MorpherEngine, MorpherEngineMessage> {
+
+    private final ServiceProvider serviceProvider;
+    private final boolean lazy;
+
+    /**
+     * Constructor that sets the {@link ServiceProvider} instance and the lazy flag.
+     * @param serviceProvider the {@link ServiceProvider} instance
+     * @param lazy flag that indicates if the methods should not be serialized/deserialized (true) or should be (false)
+     */
+    public MorpherEngineConverter(final ServiceProvider serviceProvider, final boolean lazy) {
+        this.serviceProvider = serviceProvider;
+        this.lazy = lazy;
+    }
+
+    /**
+     * Constructor that sets the {@link ServiceProvider} instance and the lazy flag to false.
+     * @param serviceProvider the {@link ServiceProvider} instance
+     */
+    public MorpherEngineConverter(final ServiceProvider serviceProvider) {
+        this(serviceProvider, false);
+    }
+
+    /**
+     * Converts a {@link MorpherEngine} to a {@link MorpherEngineMessage}.
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public MorpherEngineMessage convert(final MorpherEngine morpherEngine) {
+        final String methodHolderFactoryQualifier = morpherEngine.getMethodHolderFactory().getClass().getName();
+
+        final String abstractMethodFactoryQualifier = toString(morpherEngine.getAbstractMethodFactory());
+        final Any abstractMethodFactoryMessage = Any.pack(morpherEngine.getAbstractMethodFactory().toMessage());
+
+        final String analyzerAgentQualifier = toString(morpherEngine.getAnalyzerAgent());
+        final Any analyzerAgentMessage = Any.pack(morpherEngine.getAnalyzerAgent().toMessage());
+
+        final ProbabilityCalculatorTypeMessage probabilityCalculatorType =
+                getProbabilityCalculatorType(morpherEngine.getProbabilityCalculator());
+
+        MorpherEngineMessage.Builder morpherEngineMessageBuilder = MorpherEngineMessage.newBuilder()
+                .setMethodHolderFactoryQualifier(methodHolderFactoryQualifier)
+                .setAbstractMethodFactoryQualifier(abstractMethodFactoryQualifier)
+                .setAbstractMethodFactory(abstractMethodFactoryMessage)
+                .setAnalyzerAgentQualifier(analyzerAgentQualifier)
+                .setAnalyzerAgent(analyzerAgentMessage)
+                .setProbabilityCalculatorType(probabilityCalculatorType);
+
+        final Double minimumAggregatedWeightThreshold = morpherEngine.getMinimumAggregatedWeightThreshold();
+        if (minimumAggregatedWeightThreshold != null) {
+            morpherEngineMessageBuilder = morpherEngineMessageBuilder
+                    .setMinimumAggregatedWeightThreshold(DoubleValue.of(minimumAggregatedWeightThreshold));
+        }
+
+        if (!this.lazy) {
+            final Map<String, Any> methodMap = morpherEngine.getMethodHolderMap().entrySet()
+                    .stream()
+                    .map(entry -> {
+                        final AffixType affixType = entry.getKey();
+                        final IMorpherMethodHolder methodHolder = entry.getValue();
+                        final IMorpherMethod<?> method = methodHolder.get();
+                        methodHolder.clear();
+                        final Any methodMessage = Any.pack(method.toMessage());
+                        return Map.entry(affixType.toString(), methodMessage);
+                    })
+                    .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+            morpherEngineMessageBuilder = morpherEngineMessageBuilder.putAllMethodMap(methodMap);
+        }
+
+        return morpherEngineMessageBuilder.build();
+    }
+
+    /**
+     * Converts a {@link MorpherEngineMessage} to a {@link MorpherEngine}.
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public MorpherEngine convertBack(final MorpherEngineMessage morpherEngineMessage) {
+        final IMorpherMethodHolderFactory morpherMethodHolderFactory = instantiate(
+                morpherEngineMessage.getMethodHolderFactoryQualifier()
+        );
+
+        @SuppressWarnings("unchecked")
+        final IAbstractMethodFactory<?, ?> abstractMethodFactory = toInstance(
+                IAbstractMethodFactory.class,
+                morpherEngineMessage.getAbstractMethodFactoryQualifier()
+        );
+        try {
+            abstractMethodFactory.fromMessage(morpherEngineMessage.getAbstractMethodFactory());
+        }
+        catch (final InvalidProtocolBufferException e) {
+            throw new IllegalStateException("Cannot load abstract method factory", e);
+        }
+
+        final IAnalyzerAgent<?> analyzerAgent = toInstance(
+                IAnalyzerAgent.class,
+                morpherEngineMessage.getAnalyzerAgentQualifier()
+        );
+        try {
+            analyzerAgent.fromMessage(morpherEngineMessage.getAnalyzerAgent());
+        }
+        catch (final InvalidProtocolBufferException e) {
+            throw new IllegalStateException("Cannot load analyzer agent", e);
+        }
+
+        final IProbabilityCalculator probabilityCalculator =
+                createProbabilityCalculator(morpherEngineMessage.getProbabilityCalculatorType());
+
+        final Double minimumAggregatedWeightThreshold = morpherEngineMessage.hasMinimumAggregatedWeightThreshold() ?
+                morpherEngineMessage.getMinimumAggregatedWeightThreshold().getValue() :
+                null;
+
+        final Map<AffixType, IMorpherMethodHolder> methodHolderMap;
+        if (!this.lazy) {
+            methodHolderMap = morpherEngineMessage.getMethodMapMap().entrySet()
+                    .stream()
+                    .map(entry -> {
+                        final AffixType affixType = AffixType.of(entry.getKey());
+                        final Any methodMessage = entry.getValue();
+                        final Supplier<IMorpherMethod<?>> bidirectionalFactory =
+                                abstractMethodFactory.getBidirectionalFactory(affixType);
+                        final IMorpherMethod<?> morpherMethod = bidirectionalFactory.get();
+                        try {
+                            morpherMethod.fromMessage(methodMessage);
+                        }
+                        catch (final InvalidProtocolBufferException e) {
+                            throw new IllegalStateException("Cannot load method for " + affixType, e);
+                        }
+                        final IMorpherMethodHolder methodHolder = morpherMethodHolderFactory.create(
+                                affixType,
+                                abstractMethodFactory,
+                                morpherMethod
+                        );
+                        return Map.entry(affixType, methodHolder);
+                    })
+                    .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+        }
+        else {
+            methodHolderMap = new HashMap<>();
+        }
+
+        return new MorpherEngine(
+                this.serviceProvider,
+                methodHolderMap,
+                morpherMethodHolderFactory,
+                abstractMethodFactory,
+                analyzerAgent,
+                probabilityCalculator,
+                minimumAggregatedWeightThreshold
+        );
+    }
+
+    /**
+     * Parses the given file and loads the {@link MorpherEngineMessage} from it.
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public MorpherEngineMessage parse(final Path file) throws IOException {
+        try (GZIPInputStream gzipInputStream = new GZIPInputStream(Files.newInputStream(file))) {
+            final CodedInputStream codedInputStream = CodedInputStream.newInstance(gzipInputStream);
+            codedInputStream.setSizeLimit(Integer.MAX_VALUE);
+            return MorpherEngineMessage.parseFrom(codedInputStream);
+        }
+    }
+
+    private static <T> String toString(final T instance) {
+        return ServiceProvider.getQualifier(instance).orElse(null);
+    }
+
+    private <S> S toInstance(final Class<S> clazz, final String string) {
+        return this.serviceProvider.get(clazz, string);
+    }
+
+    private <S> S instantiate(final String className) {
+        try {
+            @SuppressWarnings("unchecked")
+            final S result = (S) Class.forName(className).getDeclaredConstructor().newInstance();
+            return result;
+        }
+        catch (final InstantiationException | ClassNotFoundException | NoSuchMethodException |
+                InvocationTargetException | IllegalAccessException e) {
+            throw new IllegalStateException("Cannot instantiate class " + className, e);
+        }
+    }
+
+    private static ProbabilityCalculatorTypeMessage getProbabilityCalculatorType(
+            final IProbabilityCalculator probabilityCalculator) {
+        if (probabilityCalculator instanceof MinMaxProbabilityCalclator) {
+            return ProbabilityCalculatorTypeMessage.MIN_MAX;
+        }
+
+        if (probabilityCalculator instanceof MultiplyProbabilityCalculator) {
+            return ProbabilityCalculatorTypeMessage.MULTIPLY;
+        }
+
+        throw new IllegalArgumentException("Unknown probability calculator type: " + probabilityCalculator);
+    }
+
+    private static IProbabilityCalculator createProbabilityCalculator(
+            final ProbabilityCalculatorTypeMessage probabilityCalculatorTypeMessage) {
+        if (probabilityCalculatorTypeMessage == ProbabilityCalculatorTypeMessage.MIN_MAX) {
+            return new MinMaxProbabilityCalclator();
+        }
+
+        if (probabilityCalculatorTypeMessage == ProbabilityCalculatorTypeMessage.MULTIPLY) {
+            return new MultiplyProbabilityCalculator();
+        }
+
+        throw new IllegalArgumentException("Unknown probability calculator type: " + probabilityCalculatorTypeMessage);
+    }
+
+}

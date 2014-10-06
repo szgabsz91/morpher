@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package com.github.szgabsz91.morpher.methods.astra.protocolbuffers;
+
+option java_multiple_files = true;
+option java_package = "com.github.szgabsz91.morpher.methods.astra.protocolbuffers";
+option java_outer_classname = "ASTRAProtocolBuffers";
+
+import "google/protobuf/wrappers.proto";
+
+message ASTRAMethodMessage {
+    ASTRAMessage astra = 1;
+}
+
+message ASTRAMessage {
+    string affixType = 1;
+    SearcherMessage searcher = 2;
+    double fitnessThreshold = 3;
+    int32 maximumNumberOfResponses = 4;
+    google.protobuf.Int32Value minimumSupportThreshold = 5;
+    google.protobuf.Int32Value minimumWordFrequencyThreshold = 6;
+    google.protobuf.Int32Value minimumAggregatedSupportThreshold = 7;
+    google.protobuf.Int32Value minimumContextLength = 8;
+    google.protobuf.Int32Value maximumNumberOfGeneratedAtomicRules = 9;
+    google.protobuf.DoubleValue maximumResponseProbabilityDifferenceThreshold = 10;
+}
+
+message ASTRAMethodConfigurationMessage {
+    SearcherTypeMessage searcherType = 1;
+    double fitnessThreshold = 2;
+    int32 maximumNumberOfResponses = 3;
+    google.protobuf.Int32Value minimumSupportThreshold = 4;
+    google.protobuf.Int32Value minimumWordFrequencyThreshold = 5;
+    google.protobuf.Int32Value minimumAggregatedSupportThreshold = 6;
+    google.protobuf.Int32Value minimumContextLength = 7;
+    google.protobuf.Int32Value maximumNumberOfGeneratedAtomicRules = 8;
+    AtomicRuleFitnessCalculatorTypeMessage atomicRuleFitnessCalculatorType = 9;
+    double exponentialFactor = 10;
+    google.protobuf.DoubleValue maximumResponseProbabilityDifferenceThreshold = 11;
+}
+
+message SearcherMessage {
+    SearcherTypeMessage type = 1;
+    bool unidirectional = 2;
+    AtomicRuleFitnessCalculatorTypeMessage atomicRuleFitnessCalculatorType = 3;
+    double exponentialFactor = 4;
+    repeated AtomicRuleMessage atomicRules = 5;
+}
+
+enum AtomicRuleFitnessCalculatorTypeMessage {
+    DEFAULT = 0;
+    SMOOTH_LOCAL = 1;
+    SMOOTH_GLOBAL = 2;
+}
+
+enum SearcherTypeMessage {
+    SEQUENTIAL = 0;
+    PARALLEL = 1;
+    PREFIX_TREE = 2;
+}
+
+message AtomicRuleMessage {
+    string prefix = 1;
+    string from = 2;
+    string to = 3;
+    string postfix = 4;
+    int32 support = 5;
+    int32 wordFrequency = 6;
+}
