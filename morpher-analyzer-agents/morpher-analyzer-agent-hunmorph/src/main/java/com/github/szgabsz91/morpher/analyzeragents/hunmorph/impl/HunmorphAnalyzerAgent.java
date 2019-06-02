@@ -389,8 +389,18 @@ public class HunmorphAnalyzerAgent implements IAnalyzerAgent<HunmorphAnalyzerAge
      * @return a list of {@link AnnotationTokenizerResult}
      */
     public List<AnnotationTokenizerResult> analyzeInternally(final FrequencyAwareWord word) {
+        return this.analyzeInternally(word, false);
+    }
+
+    /**
+     * Returns a list of {@link AnnotationTokenizerResult} for the given {@link Word}.
+     * @param word the {@link Word} to analyze
+     * @param guess flag that indicates if unknown words should be analyzed or not
+     * @return a list of {@link AnnotationTokenizerResult}
+     */
+    public List<AnnotationTokenizerResult> analyzeInternally(final FrequencyAwareWord word, final boolean guess) {
         final String wordString = word.getWord().toString();
-        final Optional<HunmorphResult> optionalHunmorphResult = this.hunmorphWordProcessor.process(wordString);
+        final Optional<HunmorphResult> optionalHunmorphResult = this.hunmorphWordProcessor.process(wordString, guess);
         return optionalHunmorphResult
                 .map(hunmorphResult -> {
                     return hunmorphResult.getOutputLines()

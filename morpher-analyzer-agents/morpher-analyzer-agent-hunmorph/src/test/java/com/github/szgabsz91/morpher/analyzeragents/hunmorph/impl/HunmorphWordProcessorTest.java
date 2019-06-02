@@ -34,6 +34,28 @@ public class HunmorphWordProcessorTest {
     }
 
     @Test
+    public void testProcessWithNoGuessMode() {
+        String input = "habablát";
+        Optional<HunmorphResult> optionalResult = this.hunmorphWordProcessor.process(input, false);
+        assertThat(optionalResult).isNotPresent();
+    }
+
+    @Test
+    public void testProcessWithGuessMode() {
+        String input = "habablát";
+        Optional<HunmorphResult> optionalResult = this.hunmorphWordProcessor.process(input, true);
+        assertThat(optionalResult).isPresent();
+        HunmorphResult result = optionalResult.get();
+        assertThat(result.getGrammaticalForm()).isEqualTo(input);
+        assertThat(result.getOutputLines()).containsExactly(
+                "hababl?NOUN<POSS><CAS<ACC>>",
+                "hababla?NOUN<CAS<ACC>>",
+                "habablá?NOUN<CAS<ACC>>",
+                "habablát?NOUN"
+        );
+    }
+
+    @Test
     public void testCloseWithIOException() {
         HunmorphWordProcessor hunmorphWordProcessor = new HunmorphWordProcessor();
         hunmorphWordProcessor.close();

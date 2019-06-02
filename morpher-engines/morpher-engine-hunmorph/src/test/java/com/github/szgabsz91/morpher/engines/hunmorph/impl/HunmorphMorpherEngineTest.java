@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -31,7 +32,7 @@ public class HunmorphMorpherEngineTest {
 
     @BeforeEach
     public void setUp() {
-        this.engine = new HunmorphMorpherEngine();
+        this.engine = new HunmorphMorpherEngine(false);
     }
 
     @AfterEach
@@ -98,6 +99,21 @@ public class HunmorphMorpherEngineTest {
                 new ProbabilisticStep(input, Word.of("alma"), AffixType.of("<PLUR>"), 1.0, 1.0, 1.0)
         );
         assertThat(morpherEngineResponse.getAggregatedWeight()).isOne();
+    }
+
+    @Test
+    public void testLemmatizeWithGuessMode() {
+        Word input = Word.of("habablát");
+        LemmatizationInput lemmatizationInput = LemmatizationInput.of(input);
+        HunmorphMorpherEngine hunmorphMorpherEngine = new HunmorphMorpherEngine(true);
+        List<MorpherEngineResponse> responses = hunmorphMorpherEngine.lemmatize(lemmatizationInput);
+        assertThat(responses).hasSize(4);
+        List<String> outputs = responses
+                .stream()
+                .map(MorpherEngineResponse::getOutput)
+                .map(Word::toString)
+                .collect(toList());
+        assertThat(outputs).containsExactlyInAnyOrder("hababl", "hababla", "habablá", "habablát");
     }
 
     @Test
