@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package com.github.szgabsz91.morpher.methods.tasr.protocolbuffers;
+
+option java_multiple_files = true;
+option java_package = "com.github.szgabsz91.morpher.methods.tasr.protocolbuffers";
+option java_outer_classname = "TASRProtocolBuffers";
+
+message TASRMethodMessage {
+    bool unidirectional = 1;
+    string affixType = 2;
+    TASRTreeMessage inflectionTree = 3;
+    TASRTreeMessage lemmatizationTree = 4;
+}
+
+message TASRTreeMessage {
+    int32 lastNodeId = 1;
+    repeated TASRTreeNodeMessage nodes = 2;
+}
+
+message TASRTreeNodeMessage {
+    int32 id = 1;
+    string firstCharacter = 2;
+    repeated SuffixRuleMessage suffixRules = 3;
+    int32 parentNodeId = 4;
+}
+
+message SuffixRuleMessage {
+    string leftHandSuffix = 1;
+    string rightHandSuffix = 2;
+    int32 frequency = 3;
+}
+
+message TASRMethodConfigurationMessage {
+
+}

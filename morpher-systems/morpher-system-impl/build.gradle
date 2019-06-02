@@ -1,0 +1,46 @@
+description = 'Morpher System Impl that can handle multiple Morpher Engines related to different languages'
+
+apply from: "$rootDir/gradle/test.gradle"
+apply from: "$rootDir/gradle/protobuf.gradle"
+
+ext {
+    moduleName = 'com.github.szgabsz91.morpher.systems.impl'
+    mockingEnabled = true
+    testModuleDependencies = [
+        'java.desktop',
+        'com.github.szgabsz91.morpher.engines.impl',
+        'com.github.szgabsz91.morpher.engines.hunmorph',
+        'com.github.szgabsz91.morpher.methods.astra',
+        'com.github.szgabsz91.morpher.analyzeragents.hunmorph',
+        'com.github.szgabsz91.morpher.methods.api'
+    ]
+    testModuleExports = [
+        'com.github.szgabsz91.morpher.methods.astra/com.github.szgabsz91.morpher.methods.astra.impl.method',
+        'com.github.szgabsz91.morpher.analyzeragents.hunmorph/com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl',
+        'com.github.szgabsz91.morpher.analyzeragents.hunmorph/com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.markov'
+    ]
+
+    testCoverageLimits = [
+        instruction: 96.62,
+        line: 96.71,
+        branch: 87.50,
+        class: 100.0
+    ]
+}
+
+dependencies {
+    compile project(':morpher-systems:morpher-system-api')
+    compile project(':morpher-engines:morpher-engine-api')
+
+    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+
+    runtime("ch.qos.logback:logback-core:${logbackVersion}")
+    runtime("ch.qos.logback:logback-classic:${logbackVersion}")
+
+    testCompile project(':morpher-methods:morpher-method-astra')
+    testCompile project(':morpher-analyzer-agents:morpher-analyzer-agent-hunmorph')
+    testCompile project(':morpher-engines:morpher-engine-impl')
+    testCompile project(':morpher-engines:morpher-engine-hunmorph')
+    testCompile("com.google.code.gson:gson:${gsonVersion}")
+    testCompile("org.apache.velocity:velocity-engine-core:${velocityVersion}")
+}

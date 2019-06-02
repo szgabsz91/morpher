@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Radial Tree</title>
+        <meta charset="utf-8">
+        <style>
+            body {
+                margin: auto 0;
+                text-align: center;
+            }
+
+            a#download {
+                position: fixed;
+                top: 0;
+                left: 0;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <svg width="1100" height="1100"></svg>
+        <a id="download" href="#">Download SVG</a>
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <script>
+            var svg = d3.select('svg');
+
+            var g = svg
+                .append('g')
+                .attr('transform', 'translate(570, 560)');
+
+            var stratify = d3.stratify()
+                .parentId(d => d.id.substring(0, d.id.lastIndexOf('.')));
+
+            var tree = d3.tree()
+                .size([2 * Math.PI, 500])
+                .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth);
+
+            var nodes = [{"id":"START"},{"id":"START.NOUN"},{"id":"START.NOUN.POSS"},{"id":"START.NOUN.METATTRIB"},{"id":"START.NOUN.METATTRIB.ATTRIB"},{"id":"START.NUM"},{"id":"START.NUM.FRACT"},{"id":"START.NUM.FRACT.ATTRIB"},{"id":"START.NUM.FRACT.ATTRIB.PLUR"},{"id":"START.ADJ"},{"id":"START.ADJ.ABSTRACT"},{"id":"START.NUM.FRACT.ATTRIB.POSS"},{"id":"START.NOUN.PLUR"},{"id":"START.VERB"},{"id":"START.VERB.PERFPART"},{"id":"START.VERB.PERFPART.ABSTRACT"},{"id":"START.VERB.PERFPART.ABSTRACT.POSSPLUR"},{"id":"START.VERB.PREVERB"},{"id":"START.ADJ.COMPAR"},{"id":"START.ADJ.COMPAR.ANP"},{"id":"START.NOUN.METATTRIB.PLURPOSS"},{"id":"START.VERB.PREVERB.IMPERFPART"},{"id":"START.VERB.PREVERB.IMPERFPART.POSS"},{"id":"START.VERB.PREVERB.PERFPART"},{"id":"START.VERB.PREVERB.PERFPART.PLUR"},{"id":"START.VERB.PERFPART.PLURFAM"},{"id":"START.VERB.PERFPART.PLURFAM.ANP"},{"id":"START.VERB.PERFPART.POSS2PLUR"},{"id":"START.VERB.IMPERFPART"},{"id":"START.POSTP"},{"id":"START.POSTP.ATTRIB"},{"id":"START.POSTP.ATTRIB.ABSTRACT"},{"id":"START.POSTP.ATTRIB.ABSTRACT.POSS1PLUR"},{"id":"START.VERB.PREVERB.PERFPART.POSS1PLUR"},{"id":"START.VERB.PREVERB.PERFPART.POSS2PLUR"},{"id":"START.ADJ.COMPAR.PLUR"},{"id":"START.ADJ.COMPAR.PLUR.ANP"},{"id":"START.VERB.GERUND"},{"id":"START.VERB.GERUND.POSS"},{"id":"START.VERB.GERUND.METATTRIB"},{"id":"START.VERB.GERUND.METATTRIB.POSS1PLUR"},{"id":"START.VERB.IMPERFPART.PLURPOSS"},{"id":"START.VERB.PREVERB.PERFPART.PLURFAM"},{"id":"START.VERB.PERFPART.POSS2"},{"id":"START.VERB.PERFPART.POSS2.ANP"},{"id":"START.VERB.PERFPART.POSS1"},{"id":"START.VERB.PERFPART.POSS1.ANP"},{"id":"START.NOUN.METATTRIB.ATTRIB.POSS1"},{"id":"START.VERB.PERFPART.PLUR"},{"id":"START.VERB.PREVERB.PERFPART.ABSTRACT"},{"id":"START.VERB.GERUND.METATTRIB.PLUR"},{"id":"START.VERB.IMPERFPART.ATTRIB"},{"id":"START.VERB.IMPERFPART.ATTRIB.POSS"},{"id":"START.VERB.IMPERFPART.PLUR"},{"id":"START.NUM.FRACT.PLUR"},{"id":"START.VERB.PREVERB.IMPERFPART.PLUR"},{"id":"START.NUM.MULTIPL-ITER"},{"id":"START.NUM.MULTIPL-ITER.MEDIAL"},{"id":"START.NUM.MULTIPL-ITER.MEDIAL.GERUND"},{"id":"START.VERB.IMPERFPART.POSS"},{"id":"START.ADJ.ABSTRACT.POSS"},{"id":"START.NOUN.METATTRIB.ATTRIB.POSS"},{"id":"START.VERB.GERUND.METATTRIB.POSS1"},{"id":"START.NOUN.METATTRIB.PLUR"},{"id":"START.VERB.PERFPART.ABSTRACT.POSS"},{"id":"START.ADJ.PLUR"},{"id":"START.VERB.PERFPART.PLUR.ANP"},{"id":"START.VERB.PERFPART.POSS1PLUR"},{"id":"START.DET"},{"id":"START.DET.PLUR"},{"id":"START.DET.PLUR.ANP"},{"id":"START.DET.POSS"},{"id":"START.NUM.MULTIPL-ITER.PERFPART"},{"id":"START.POSTP.ATTRIB.ANP"},{"id":"START.VERB.PREVERB.IMPERFPART.PLURPOSS"},{"id":"START.VERB.PREVERB.IMPERFPART.ATTRIB"},{"id":"START.VERB.PREVERB.PERFPART.POSS2"},{"id":"START.VERB.GERUND.PLUR"},{"id":"START.POSTP.ATTRIB.ABSTRACT.POSS"},{"id":"START.NOUN.METATTRIB.PLURPOSS.ANP"},{"id":"START.NOUN.METATTRIB.ATTRIB.PLUR"},{"id":"START.VERB.GERUND.METATTRIB.POSS2"},{"id":"START.POSTP.ATTRIB.PLUR"},{"id":"START.NUM.FRACT.POSS"},{"id":"START.NUM.FRACT.ATTRIB.PLURPOSS"},{"id":"START.ADJ.ABSTRACT.POSSPLUR"},{"id":"START.VERB.PERFPART.ABSTRACT.METATTRIB"},{"id":"START.VERB.PREVERB.PERFPART.POSS1"},{"id":"START.VERB.IMPERFPART.ATTRIB.PLUR"},{"id":"START.POSTP.ATTRIB.PLUR.ANP"},{"id":"START.VERB.PERFPART.POSS2PLUR.ANP"},{"id":"START.POSTP.ATTRIB.PLURPOSS"},{"id":"START.NUM.MULTIPL-ITER.MEDIAL.MODAL"}];
+            var root = tree(stratify(nodes));
+
+            var link = g.selectAll('.link')
+                .data(root.links())
+                .enter()
+                    .append('path')
+                    .attr('style', 'fill: none; stroke: #555; stroke-opacity: 0.4; stroke-width: 1.5px;')
+                    .attr('d', d3.linkRadial()
+                        .angle(d => d.x)
+                        .radius(d => d.y));
+
+            var node = g.selectAll('.node')
+                .data(root.descendants())
+                .enter()
+                    .append('g')
+                    .attr('transform', d => 'translate(' + radialPoint(d.x, d.y) + ')');
+
+            node
+                .append('circle')
+                .attr('fill', d => d.childen ? '#555' : '#999')
+                .attr('r', 2.5);
+
+            node
+                .append('text')
+                .attr('dy', '0.31em')
+                .attr('x', d => d.x < Math.PI === !d.children ? 6 : -6)
+                .attr('style', d => 'font: 14px sans-serif; ' + (d.children ? 'text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;' : ''))
+                .attr('text-anchor', d => d.x < Math.PI === !d.children ? 'start' : 'end')
+                .attr('transform', d => 'rotate(' + (d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI + ')')
+                .text(d => d.id.substring(d.id.lastIndexOf('.') + 1));
+
+            function radialPoint(x, y) {
+                return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
+            }
+
+            document.querySelector('a#download').addEventListener('click', event => {
+                event.preventDefault();
+
+                var svg = document.querySelector('svg');
+
+                var serializer = new XMLSerializer();
+                var source = serializer.serializeToString(svg);
+                if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+                    source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+                }
+                if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+                    source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+                }
+                source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+                var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'tree.svg';
+                link.target = '_href';
+                link.click();
+            });
+        </script>
+    </body>
+</html>
+

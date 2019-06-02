@@ -1,0 +1,50 @@
+version: 2
+jobs:
+    build:
+
+        working_directory: ~/morpher
+
+        docker:
+            - image: szgabsz91/jdk-ocamorph-pyphen:12.0.0
+
+        steps:
+
+            - checkout
+
+            - run:
+                name: Clean
+                command: ./gradlew clean
+
+            - run:
+                name: Assemble
+                command: ./gradlew compileJava compileTestJava assemble
+
+            - run:
+                name: Test
+                command: ./gradlew test
+
+            - run:
+                name: Check
+                command: ./gradlew check
+
+            - run:
+                name: Jacoco test report
+                command: ./gradlew jacocoTestReport
+
+            - run:
+                name: Javadoc
+                command: ./gradlew javadoc
+
+            - run:
+                name: Install
+                command: ./gradlew install
+
+            - run:
+                name: Collect test results
+                command: |
+                    mkdir -p ~/morpher/build/test-report
+                    find . -type f -name "TEST*.xml" -exec cp {} ~/morpher/build/test-report \;
+                when: always
+
+            - store_test_results:
+                path: ~/morpher/build/test-report

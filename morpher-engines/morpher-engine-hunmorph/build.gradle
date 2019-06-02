@@ -1,0 +1,22 @@
+description = 'Morpher Engine Hunmorph is a Morpher Engine implementation that uses Hunmorph under the hood'
+
+apply from: "$rootDir/gradle/test.gradle"
+apply from: "$rootDir/gradle/protobuf.gradle"
+
+ext {
+    moduleName = 'com.github.szgabsz91.morpher.engines.hunmorph'
+
+    testCoverageLimits = [
+        instruction: 100.0,
+        line: 100.0,
+        branch: 100.0,
+        class: 100.0
+    ]
+}
+
+dependencies {
+    compile project(':morpher-core')
+    compile project(':morpher-engines:morpher-engine-api')
+    compile project(':morpher-analyzer-agents:morpher-analyzer-agent-api')
+    compile project(':morpher-analyzer-agents:morpher-analyzer-agent-hunmorph')
+}

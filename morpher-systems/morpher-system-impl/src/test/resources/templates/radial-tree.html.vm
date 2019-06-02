@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Radial Tree</title>
+        <meta charset="utf-8">
+        <style>
+            body {
+                margin: auto 0;
+                text-align: center;
+            }
+
+            a#download {
+                position: fixed;
+                top: 0;
+                left: 0;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <svg width="$width" height="$height"></svg>
+        <a id="download" href="#">Download SVG</a>
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <script>
+            var svg = d3.select('svg');
+
+            var g = svg
+                .append('g')
+                .attr('transform', 'translate($translateX, $translateY)');
+
+            var stratify = d3.stratify()
+                .parentId(d => d.id.substring(0, d.id.lastIndexOf('.')));
+
+            var tree = d3.tree()
+                .size([2 * Math.PI, 500])
+                .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth);
+
+            var nodes = $nodes;
+            var root = tree(stratify(nodes));
+
+            var link = g.selectAll('.link')
+                .data(root.links())
+                .enter()
+                    .append('path')
+                    .attr('style', 'fill: none; stroke: #555; stroke-opacity: 0.4; stroke-width: 1.5px;')
+                    .attr('d', d3.linkRadial()
+                        .angle(d => d.x)
+                        .radius(d => d.y));
+
+            var node = g.selectAll('.node')
+                .data(root.descendants())
+                .enter()
+                    .append('g')
+                    .attr('transform', d => 'translate(' + radialPoint(d.x, d.y) + ')');
+
+            node
+                .append('circle')
+                .attr('fill', d => d.childen ? '#555' : '#999')
+                .attr('r', 2.5);
+
+#if($textNeeded)
+            node
+                .append('text')
+                .attr('dy', '0.31em')
+                .attr('x', d => d.x < Math.PI === !d.children ? 6 : -6)
+                .attr('style', d => 'font: 14px sans-serif; ' + (d.children ? 'text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;' : ''))
+                .attr('text-anchor', d => d.x < Math.PI === !d.children ? 'start' : 'end')
+                .attr('transform', d => 'rotate(' + (d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI + ')')
+                .text(d => d.id.substring(d.id.lastIndexOf('.') + 1));
+
+#end
+            function radialPoint(x, y) {
+                return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
+            }
+
+            document.querySelector('a#download').addEventListener('click', event => {
+                event.preventDefault();
+
+                var svg = document.querySelector('svg');
+
+                var serializer = new XMLSerializer();
+                var source = serializer.serializeToString(svg);
+                if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+                    source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+                }
+                if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+                    source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+                }
+                source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+                var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'tree.svg';
+                link.target = '_href';
+                link.click();
+            });
+        </script>
+    </body>
+</html>

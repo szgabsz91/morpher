@@ -1,0 +1,55 @@
+apply plugin: 'java'
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = project.javaVersion
+    targetCompatibility = project.javaVersion
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:unchecked'
+}
+
+afterEvaluate {
+    if (!project.hasProperty('moduleName')) {
+        return
+    }
+
+    def testModuleDependencies = project.hasProperty('testModuleDependencies') ? "org.junit.jupiter.api,${project.testModuleDependencies.join(',')}" : 'org.junit.jupiter.api'
+    def testModuleExports = project.hasProperty('testModuleExports') ? project.testModuleExports : []
+
+    compileJava {
+        inputs.property('moduleName', project.moduleName)
+
+        doFirst {
+            options.compilerArgs = [
+                '--module-path', classpath.asPath
+            ]
+            classpath = files()
+        }
+    }
+
+    compileTestJava {
+        inputs.property('moduleName', project.moduleName)
+
+        doFirst {
+            options.compilerArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', testModuleDependencies,
+                '--add-reads', "${project.moduleName}=${testModuleDependencies}",
+                '--patch-module', "${project.moduleName}=" + files(sourceSets.test.java.srcDirs).asPath
+            ]
+            testModuleExports
+                .collect {[
+                    '--add-exports', "${it}=${project.moduleName}"
+                ]}
+                .each {
+                    options.compilerArgs += it
+                }
+            classpath = files()
+        }
+    }
+
+    tasks.withType(Javadoc) {
+        source = sourceSets.main.allJava + file('build/generated/source/proto/main/java')
+        options.addStringOption('-module-path', classpath.asPath.toString())
+        build.dependsOn it
+    }
+}

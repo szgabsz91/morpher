@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.github.szgabsz91.morpher.methods.fst.protocolbuffers;
+
+option java_multiple_files = true;
+option java_package = "com.github.szgabsz91.morpher.methods.fst.protocolbuffers";
+option java_outer_classname = "FSTProtocolBuffers";
+
+import "com/github/szgabsz91/morpher/core/protocolbuffers/morpher_core.proto";
+
+message FSTMethodMessage {
+    bool unidirectional = 1;
+    string affixType = 2;
+    repeated com.github.szgabsz91.morpher.core.protocolbuffers.WordPairMessage wordPairs = 3;
+}
+
+message FSTMethodConfigurationMessage {
+
+}

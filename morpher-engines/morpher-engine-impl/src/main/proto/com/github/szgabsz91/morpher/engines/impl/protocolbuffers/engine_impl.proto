@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package com.github.szgabsz91.morpher.engines.impl.protocolbuffers;
+
+option java_multiple_files = true;
+option java_package = "com.github.szgabsz91.morpher.engines.impl.protocolbuffers";
+option java_outer_classname = "EngineImplProtocolBuffers";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/wrappers.proto";
+
+message MorpherEngineMessage {
+    string methodHolderFactoryQualifier = 1;
+    string abstractMethodFactoryQualifier = 2;
+    google.protobuf.Any abstractMethodFactory = 3;
+    string analyzerAgentQualifier = 4;
+    ProbabilityCalculatorTypeMessage probabilityCalculatorType = 5;
+    google.protobuf.Any analyzerAgent = 6;
+    map<string, google.protobuf.Any> methodMap = 7;
+    google.protobuf.DoubleValue minimumAggregatedWeightThreshold = 8;
+}
+
+enum ProbabilityCalculatorTypeMessage {
+    MIN_MAX = 0;
+    MULTIPLY = 1;
+}

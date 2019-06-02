@@ -1,0 +1,27 @@
+description = 'Hunmorph Analyzer Agent is based on the tool Hunmorph'
+
+apply from: "$rootDir/gradle/test.gradle"
+apply from: "$rootDir/gradle/protobuf.gradle"
+
+ext {
+    moduleName = 'com.github.szgabsz91.morpher.analyzeragents.hunmorph'
+    mockingEnabled = true
+
+    testCoverageLimits = [
+        instruction: 97.89,
+        line: 97.04,
+        branch: 95.26,
+        class: 100.0
+    ]
+}
+
+dependencies {
+    compile project(':morpher-core')
+    compile project(':morpher-analyzer-agents:morpher-analyzer-agent-api')
+
+    compile("org.apache.commons:commons-lang3:${commonsLangVersion}")
+    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+
+    runtime("ch.qos.logback:logback-core:${logbackVersion}")
+    runtime("ch.qos.logback:logback-classic:${logbackVersion}")
+}

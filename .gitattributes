@@ -1,0 +1,3 @@
+morpher-analyzer-agents/data/ocamorph-results.csv filter=lfs diff=lfs merge=lfs -text
+morpher-systems/morpher-system-impl/src/test/resources/com/github/szgabsz91/morpher/systems/impl/graphs/affix-type-orders.csv filter=lfs diff=lfs merge=lfs -text
+morpher-analyzer-agents/morpher-analyzer-agent-hunmorph/out/production/resources/com/github/szgabsz91/morpher/analyzeragents/hunmorph/impl/hunmorph.dic filter=lfs diff=lfs merge=lfs -text
