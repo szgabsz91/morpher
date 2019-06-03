@@ -15,7 +15,6 @@ buildscript {
         spotbugsGradlePluginVersion = '1.7.1'
 
         combinatoricslibVersion = '3.3.0'
-        commonsCliVersion = '1.4'
         commonsCollectionsVersion = '4.3'
         commonsLangVersion = '3.9'
         commonsTextVersion = '1.6'
@@ -31,8 +30,6 @@ buildscript {
         junitJupiterVersion = '5.4.2'
         junitPlatformVersion = '1.4.2'
         mockitoVersion = '2.27.0'
-
-        springBootVersion = '2.1.4.RELEASE'
     }
 
     repositories {
@@ -41,20 +38,11 @@ buildscript {
         maven {
             url 'https://plugins.gradle.org/m2'
         }
-
-        maven {
-            url 'https://repo.spring.io/snapshot'
-        }
-
-        maven {
-            url 'https://repo.spring.io/milestone'
-        }
     }
 
     dependencies {
         classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:${spotbugsGradlePluginVersion}"
         classpath "com.google.protobuf:protobuf-gradle-plugin:${protobufGradlePluginVersion}"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         // Workaround for Spotbugs vs Protobuf:
         // - https://github.com/spotbugs/spotbugs-gradle-plugin/issues/120
         // - https://github.com/GoogleContainerTools/jib/issues/591
@@ -74,13 +62,5 @@ subprojects {
     repositories {
         mavenLocal()
         jcenter()
-
-        maven {
-            url 'https://repo.spring.io/snapshot'
-        }
-
-        maven {
-            url 'https://repo.spring.io/milestone'
-        }
     }
 }
