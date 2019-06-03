@@ -184,6 +184,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -257,6 +258,16 @@ public class HunmorphWordProcessor implements AutoCloseable {
      * @return the resulting optional {@link HunmorphResult} instance
      */
     public Optional<HunmorphResult> process(final String grammaticalForm) {
+        return this.process(grammaticalForm, false);
+    }
+
+    /**
+     * Processes the given grammatical form and returns the resulting optional {@link HunmorphResult} instance.
+     * @param grammaticalForm the grammatical form
+     * @param guess flag that indicates if unknown words should be analyzed or not
+     * @return the resulting optional {@link HunmorphResult} instance
+     */
+    public Optional<HunmorphResult> process(final String grammaticalForm, final boolean guess) {
         LOGGER.debug("Processing {} with hunmorph", grammaticalForm);
 
         // Writing input to a temporary file
@@ -269,12 +280,16 @@ public class HunmorphWordProcessor implements AutoCloseable {
         }
 
         // Invoke ocamorph, log its output and error code
-        final ProcessBuilder processBuilder = new ProcessBuilder(
+        final List<String> command = new ArrayList<>(List.of(
                 OCAMORPH_COMMAND,
                 "--in", String.format("%s", inputPath.toAbsolutePath()),
                 "--out", String.format("%s", outputPath.toAbsolutePath()),
                 "--bin", String.format("%s", binPath.toAbsolutePath())
-        );
+        ));
+        if (guess) {
+            command.addAll(List.of("--guess", "Global"));
+        }
+        final ProcessBuilder processBuilder = new ProcessBuilder(command);
         final int exitCode = invokeProcess(processBuilder);
         if (exitCode != 0) {
             throw new IllegalStateException("Exit code of ocamorph: " + exitCode);

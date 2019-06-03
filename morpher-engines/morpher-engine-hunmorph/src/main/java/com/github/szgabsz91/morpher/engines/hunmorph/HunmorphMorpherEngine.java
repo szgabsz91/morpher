@@ -201,12 +201,15 @@ import static java.util.stream.Collectors.toList;
 public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3> {
 
     private final HunmorphAnalyzerAgent analyzerAgent;
+    private final boolean guess;
 
     /**
      * Default constructor that sets the underlying services.
+     * @param guess flag that indicates if unknown words should be analyzed or not
      */
-    public HunmorphMorpherEngine() {
+    public HunmorphMorpherEngine(final boolean guess) {
         this.analyzerAgent = new HunmorphAnalyzerAgent();
+        this.guess = guess;
     }
 
     /**
@@ -297,7 +300,7 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
     @Override
     public List<MorpherEngineResponse> lemmatize(final LemmatizationInput lemmatizationInput) {
         final Word input = lemmatizationInput.getInput();
-        return this.analyzerAgent.analyzeInternally(FrequencyAwareWord.of(input))
+        return this.analyzerAgent.analyzeInternally(FrequencyAwareWord.of(input), this.guess)
                 .stream()
                 .map(annotationTokenizerResult -> {
                     final List<AffixType> reversedAffixTypes = annotationTokenizerResult.getAffixTypes();

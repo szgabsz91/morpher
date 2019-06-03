@@ -276,6 +276,9 @@ public class HunmorphAnnotationTokenizer {
             final String grammaticalForm,
             final int frequency) {
         String preprocessedExpression = preprocessExpression(expression);
+        if (preprocessedExpression.contains("?")) {
+            preprocessedExpression = preprocessedExpression.replace('?', '/');
+        }
         final int firstSlashIndex = preprocessedExpression.indexOf('/');
         final String lemma = preprocessedExpression.substring(0, firstSlashIndex);
         final AnnotationTokenizerResult result =

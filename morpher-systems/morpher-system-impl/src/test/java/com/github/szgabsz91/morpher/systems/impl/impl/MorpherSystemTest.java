@@ -438,7 +438,7 @@ public class MorpherSystemTest {
     }
 
     private IMorpherEngine<?> createHunmorphEngine() {
-        return new HunmorphMorpherEngine();
+        return new HunmorphMorpherEngine(false);
     }
 
     private IMorpherEngine<?> createMorpherEngine(WordPair wordPair) {

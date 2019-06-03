@@ -141,7 +141,7 @@ public class HunmorphAnalyzerAgentTest {
     public void testAnalyzeInternallyWithOneOutputLine() {
         FrequencyAwareWord input = FrequencyAwareWord.of("almákat");
         String outputLine = "alma/NOUN<PLUR><CAS<ACC>>";
-        when(this.wordProcessor.process(input.getWord().toString()))
+        when(this.wordProcessor.process(input.getWord().toString(), false))
                 .thenReturn(Optional.of(new HunmorphResult(input.getWord().toString(), List.of(
                         outputLine
                 ))));
@@ -160,8 +160,29 @@ public class HunmorphAnalyzerAgentTest {
     }
 
     @Test
+    public void testAnalyzeInternallyWithGuessMode() {
+        FrequencyAwareWord input = FrequencyAwareWord.of("habablát");
+        String outputLine = "hababla?NOUN<CAS<ACC>>";
+        when(this.wordProcessor.process(input.getWord().toString(), true))
+                .thenReturn(Optional.of(new HunmorphResult(input.getWord().toString(), List.of(
+                        outputLine
+                ))));
+
+        List<AnnotationTokenizerResult> annotationTokenizerResults = this.analyzerAgent.analyzeInternally(input, true);
+        assertThat(annotationTokenizerResults).hasSize(1);
+        AnnotationTokenizerResult annotationTokenizerResult = annotationTokenizerResults.get(0);
+        assertThat(annotationTokenizerResult.getExpression()).isEqualTo(outputLine);
+        assertThat(annotationTokenizerResult.getGrammaticalForm()).isEqualTo(input.getWord().toString());
+        assertThat(annotationTokenizerResult.getLemma()).isEqualTo("hababla");
+        assertThat(annotationTokenizerResult.getAffixTypes()).containsExactly(
+                AffixType.of("/NOUN"),
+                AffixType.of("<CAS<ACC>>")
+        );
+    }
+
+    @Test
     public void testAnalyzeWithOneWord() {
-        when(this.wordProcessor.process("almáitokkal"))
+        when(this.wordProcessor.process("almáitokkal", false))
                 .thenReturn(Optional.of(new HunmorphResult("almáitokkal", List.of("alma/NOUN<PLUR>"))));
         AnalyzerAgentResponse response = this.analyzerAgent.analyze(FrequencyAwareWord.of("almáitokkal"));
         assertThat(response.getWordPairMap()).contains(Map.entry(AffixType.of("<PLUR>"), Set.of(FrequencyAwareWordPair.of("alma", "almáitokkal"))));
@@ -185,11 +206,11 @@ public class HunmorphAnalyzerAgentTest {
 
     @Test
     public void testAnalyzeWithMissingMiddle() {
-        when(this.wordProcessor.process("x"))
+        when(this.wordProcessor.process("x", false))
                 .thenReturn(Optional.of(new HunmorphResult("x", List.of("a/NOUN<CAS<ACC>>"))));
-        when(this.wordProcessor.process("xx"))
+        when(this.wordProcessor.process("xx", false))
                 .thenReturn(Optional.of(new HunmorphResult("xx", List.of("a/NOUN<CAS<ACC>><PLUR>"))));
-        when(this.wordProcessor.process("xxx"))
+        when(this.wordProcessor.process("xxx", false))
                 .thenReturn(Optional.of(new HunmorphResult("xxx", List.of("a/NOUN<CAS<ACC>><PLUR><CAS<INS>>"))));
 
         AnalyzerAgentResponse response1 = this.analyzerAgent.analyze(FrequencyAwareWord.of("x"));
@@ -206,7 +227,7 @@ public class HunmorphAnalyzerAgentTest {
     @Test
     public void testAnalyzeWithAlreadyAnalyzedWord() {
         FrequencyAwareWord input = FrequencyAwareWord.of("x");
-        when(this.wordProcessor.process(input.getWord().toString()))
+        when(this.wordProcessor.process(input.getWord().toString(), false))
                 .thenReturn(Optional.of(new HunmorphResult(input.getWord().toString(), List.of("a/NOUN<CAS<ACC>>"))));
 
         FullMarkovModel markovModel = (FullMarkovModel) this.analyzerAgent.getMarkovModel();
@@ -298,12 +319,12 @@ public class HunmorphAnalyzerAgentTest {
     public void testGetPOSCandidatesWithKnownLemma() {
         Word lemma = Word.of("lemma");
 
-        when(this.wordProcessor.process("lemmákat"))
+        when(this.wordProcessor.process("lemmákat", false))
                 .thenReturn(Optional.of(new HunmorphResult("lemmákat", List.of(
                         lemma.toString() + "/NOUN<PLUR>",
                         lemma.toString() + "/VERB<PAST>"
                 ))));
-        when(this.wordProcessor.process("mást"))
+        when(this.wordProcessor.process("mást", false))
                 .thenReturn(Optional.of(new HunmorphResult("mást", List.of(
                         "más/NOUN<PAST>"
                 ))));
