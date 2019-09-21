@@ -21,9 +21,16 @@
         <property name="fileExtensions" value="java" />
     </module>
 
+    <module name="LineLength">
+        <property name="ignorePattern" value="^$" />
+        <property name="max" value="120" />
+    </module>
+
     <module name="NewlineAtEndOfFile">
         <property name="lineSeparator" value="lf" />
     </module>
+
+    <module name="SuppressWarningsFilter" />
 
     <module name="TreeWalker">
         <module name="AbbreviationAsWordInName">
@@ -42,7 +49,7 @@
             <property name="allowSamelineMultipleAnnotations" value="false" />
             <property name="allowSamelineSingleParameterlessAnnotation" value="false" />
             <property name="allowSamelineParameterizedAnnotation" value="false" />
-            <property name="tokens" value="CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF,PARAMETER_DEF,ANNOTATION_DEF" />
+            <property name="tokens" value="CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF,ANNOTATION_DEF" />
         </module>
         <module name="AnnotationUseStyle">
             <property name="elementStyle" value="compact_no_array" />
@@ -236,10 +243,6 @@
             <property name="ignoreEnums" value="false" />
             <property name="tokens" value="INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT" />
         </module>
-        <module name="LineLength">
-            <property name="ignorePattern" value="^$" />
-            <property name="max" value="120" />
-        </module>
         <module name="LocalFinalVariableName">
             <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
             <property name="tokens" value="VARIABLE_DEF,PARAMETER_DEF" />
@@ -388,11 +391,7 @@
         <module name="SummaryJavadocCheck" />
         <module name="SuperClone" />
         <module name="SuperFinalize" />
-        <module name="SuppressionCommentFilter">
-            <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
-            <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
-            <property name="checkFormat" value="$1"/>
-        </module>
+        <module name="SuppressWarningsHolder" />
         <module name="ThrowsCount">
             <property name="max" value="2" />
             <property name="ignorePrivateMethods" value="true" />

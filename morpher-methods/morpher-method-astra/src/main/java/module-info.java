@@ -6,8 +6,8 @@ module com.github.szgabsz91.morpher.methods.astra {
     requires combinatoricslib3;
     requires org.apache.commons.collections4;
     requires org.apache.commons.lang3;
+    requires org.slf4j;
     requires protobuf.java;
-    requires slf4j.api;
 
     exports com.github.szgabsz91.morpher.methods.astra;
     exports com.github.szgabsz91.morpher.methods.astra.config;

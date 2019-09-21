@@ -3,8 +3,8 @@ module com.github.szgabsz91.morpher.methods.tasr {
     requires com.github.szgabsz91.morpher.core;
     requires com.github.szgabsz91.morpher.methods.api;
 
+    requires org.slf4j;
     requires protobuf.java;
-    requires slf4j.api;
 
     exports com.github.szgabsz91.morpher.methods.tasr;
     exports com.github.szgabsz91.morpher.methods.tasr.config;

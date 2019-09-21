@@ -1,7 +1,7 @@
 module com.github.szgabsz91.morpher.core {
 
+    requires org.slf4j;
     requires protobuf.java;
-    requires slf4j.api;
     requires zip4j;
     requires org.junit.jupiter.api;
 

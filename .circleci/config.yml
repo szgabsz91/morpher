@@ -5,7 +5,7 @@ jobs:
         working_directory: ~/morpher
 
         docker:
-            - image: szgabsz91/jdk-ocamorph-pyphen:12.0.0
+            - image: szgabsz91/jdk-ocamorph-pyphen:13.0.0
 
         steps:
 

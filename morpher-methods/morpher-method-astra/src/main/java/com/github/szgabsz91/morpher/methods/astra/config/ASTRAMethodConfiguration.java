@@ -317,8 +317,8 @@ public final class ASTRAMethodConfiguration implements IMethodConfiguration {
             return false;
         }
         final ASTRAMethodConfiguration that = (ASTRAMethodConfiguration) other;
-        // CHECKSTYLE.OFF: LineLength
-        return Double.compare(that.fitnessThreshold, fitnessThreshold) == 0 &&
+        @SuppressWarnings("checkstyle:LineLength")
+        final boolean result = Double.compare(that.fitnessThreshold, fitnessThreshold) == 0 &&
                 maximumNumberOfResponses == that.maximumNumberOfResponses &&
                 searcherType == that.searcherType &&
                 Objects.equals(minimumSupportThreshold, that.minimumSupportThreshold) &&
@@ -329,7 +329,7 @@ public final class ASTRAMethodConfiguration implements IMethodConfiguration {
                 atomicRuleFitnessCalculatorType == that.atomicRuleFitnessCalculatorType &&
                 Double.compare(that.exponentialFactor, exponentialFactor) == 0 &&
                 Objects.equals(maximumResponseProbabilityDifferenceThreshold, that.maximumResponseProbabilityDifferenceThreshold);
-        // CHECKSTYLE.ON: LineLength
+        return result;
     }
 
     /**
@@ -360,8 +360,8 @@ public final class ASTRAMethodConfiguration implements IMethodConfiguration {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("checkstyle:MultipleStringLiterals")
     public String toString() {
-        // CHECKSTYLE.OFF: MultipleStringLiterals
         return "ASTRAMethodConfiguration[" +
                 "searcherType=" + searcherType + ", " +
                 "fitnessThreshold=" + fitnessThreshold + ", " +
@@ -375,7 +375,6 @@ public final class ASTRAMethodConfiguration implements IMethodConfiguration {
                 "exponentialFactor=" + exponentialFactor + ", " +
                 "maximumResponseProbabilityDifferenceThreshold=" + maximumResponseProbabilityDifferenceThreshold +
                 ']';
-        // CHECKSTYLE.ON: MultipleStringLiterals
     }
 
     /**

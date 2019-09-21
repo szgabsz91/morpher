@@ -453,10 +453,9 @@ public class HunmorphAnalyzerAgent implements IAnalyzerAgent<HunmorphAnalyzerAge
                                 return hunmorphResult.getOutputLines()
                                         .stream()
                                         .map(line -> {
-                                            // CHECKSTYLE.OFF: LineLength
+                                            @SuppressWarnings("checkstyle:LineLength")
                                             final AnnotationTokenizerResult result =
                                                     this.hunmorphAnnotationTokenizer.tokenize(line, wordString, frequencyAwareWord.getFrequency());
-                                            // CHECKSTYLE.ON: LineLength
                                             if (result == null) {
                                                 return null;
                                             }
