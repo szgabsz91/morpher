@@ -224,6 +224,7 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
      * @param pos the part-of-speech tag of the lemma and its probability
      * @param affixTypeChainProbability the probability of the affix type chain in the response
      * @param steps the list of steps
+     * @return the newly created inflection response
      */
     public static MorpherEngineResponse inflectionResponse(
             final Word input,
@@ -241,6 +242,7 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
      * @param pos the part-of-speech tag of the lemma and its probability
      * @param affixTypeChainProbability the probability of the affix type chain in the response
      * @param steps the list of steps
+     * @return the newly created lemmatization response
      */
     public static MorpherEngineResponse lemmatizationResponse(
             final Word input,

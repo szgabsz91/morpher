@@ -198,10 +198,10 @@ public class MinimalLatticeBuilder extends AbstractLatticeBuilder {
      * @param characterRepository the underlying {@link ICharacterRepository} instance
      * @param wordConverter the underlying {@link IWordConverter} instance
      */
+    @SuppressWarnings("checkstyle:Indentation")
     public MinimalLatticeBuilder(
             final ICharacterRepository characterRepository,
             final IWordConverter wordConverter) {
-        // CHECKSTYLE.OFF: Indentation
         this(
                 characterRepository,
                 wordConverter,
@@ -217,7 +217,6 @@ public class MinimalLatticeBuilder extends AbstractLatticeBuilder {
                         true
                 )
         );
-        // CHECKSTYLE.ON: Indentation
     }
 
     /**

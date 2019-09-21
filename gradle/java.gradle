@@ -4,7 +4,8 @@ tasks.withType(JavaCompile) {
     sourceCompatibility = project.javaVersion
     targetCompatibility = project.javaVersion
     options.encoding = 'UTF-8'
-    options.compilerArgs << '-Xlint:unchecked'
+    options.compilerArgs << '-Xlint:all' << '-Werror'
+    options.deprecation = true
 }
 
 afterEvaluate {
@@ -12,7 +13,12 @@ afterEvaluate {
         return
     }
 
-    def testModuleDependencies = project.hasProperty('testModuleDependencies') ? "org.junit.jupiter.api,${project.testModuleDependencies.join(',')}" : 'org.junit.jupiter.api'
+    def defaultTestModuleDependencies = [
+        'org.junit.jupiter.api',
+        'org.junit.jupiter.params',
+        'org.assertj.core'
+    ].join(',')
+    def testModuleDependencies = project.hasProperty('testModuleDependencies') ? "${defaultTestModuleDependencies},${project.testModuleDependencies.join(',')}" : defaultTestModuleDependencies
     def testModuleExports = project.hasProperty('testModuleExports') ? project.testModuleExports : []
 
     compileJava {

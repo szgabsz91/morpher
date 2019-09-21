@@ -271,11 +271,10 @@ public class ASTRAConverter implements IConverter<IASTRA, ASTRAMessage> {
         final Integer maximumNumberOfGeneratedAtomicRules = astraMessage.hasMaximumNumberOfGeneratedAtomicRules() ?
                 astraMessage.getMaximumNumberOfGeneratedAtomicRules().getValue() :
                 null;
-        // CHECKSTYLE.OFF: LineLength
+        @SuppressWarnings("checkstyle:LineLength")
         final Double maximumResponseProbabilityDifferenceThreshold = astraMessage.hasMaximumResponseProbabilityDifferenceThreshold() ?
                 astraMessage.getMaximumResponseProbabilityDifferenceThreshold().getValue() :
                 null;
-        // CHECKSTYLE.ON: LineLength
 
         return ComponentFactory.createASTRA(
                 affixType,

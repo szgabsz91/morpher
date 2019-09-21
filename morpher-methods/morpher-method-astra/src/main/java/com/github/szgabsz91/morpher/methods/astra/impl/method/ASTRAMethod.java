@@ -204,11 +204,11 @@ public class ASTRAMethod implements IMorpherMethod<ASTRAMethodMessage> {
      * @param affixType the {@link AffixType} that this method relates to
      * @param configuration the configuration of the method
      */
+    @SuppressWarnings("checkstyle:Indentation")
     public ASTRAMethod(
             final boolean unidirectional,
             final AffixType affixType,
             final ASTRAMethodConfiguration configuration) {
-        // CHECKSTYLE.OFF: Indentation
         this(
                 ComponentFactory.createASTRA(
                         affixType,
@@ -228,7 +228,6 @@ public class ASTRAMethod implements IMorpherMethod<ASTRAMethodMessage> {
                         configuration.getMaximumResponseProbabilityDifferenceThreshold()
                 )
         );
-        // CHECKSTYLE.ON: Indentation
     }
 
     /**
