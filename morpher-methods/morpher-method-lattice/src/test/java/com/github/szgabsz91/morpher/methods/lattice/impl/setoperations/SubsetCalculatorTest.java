@@ -330,7 +330,7 @@ public class SubsetCalculatorTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testIsSubsetOfWithReplacementAndNonCommonAttributeDeltas(ICharacterRepository characterRepository) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement1 = new Replacement(
                 new HashSet(List.of(
                         new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT),
@@ -338,7 +338,7 @@ public class SubsetCalculatorTest {
                 )),
                 characterRepository
         );
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement2 = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.LONG, Length.SHORT)
@@ -352,14 +352,14 @@ public class SubsetCalculatorTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testIsSubsetOfWithReplacementAndInvalidAttributeDelta(ICharacterRepository characterRepository) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement1 = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.LONG, Length.SHORT)
                 ),
                 characterRepository
         );
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement2 = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.SHORT, Length.LONG)
@@ -373,14 +373,14 @@ public class SubsetCalculatorTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testIsSubsetOfWithReplacementAndTrueResult(ICharacterRepository characterRepository) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement1 = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.LONG, Length.SHORT)
                 ),
                 characterRepository
         );
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement2 = new Replacement(
                 new HashSet(List.of(
                         new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT),

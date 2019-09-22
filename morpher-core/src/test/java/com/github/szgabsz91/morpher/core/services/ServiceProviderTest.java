@@ -15,6 +15,7 @@ import static org.mockito.Mockito.when;
 public class ServiceProviderTest {
 
     @Test
+    @SuppressWarnings("rawtypes")
     public void testGetWithQualifierAndKnownService() {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
             if (clazz.equals(MyService.class)) {
@@ -33,6 +34,7 @@ public class ServiceProviderTest {
     }
 
     @Test
+    @SuppressWarnings("rawtypes")
     public void testGetWithQualifierAndUnknownService() {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
             if (clazz.equals(MyService.class)) {
@@ -51,6 +53,7 @@ public class ServiceProviderTest {
     }
 
     @Test
+    @SuppressWarnings("rawtypes")
     public void testGetWithNullQualifierAndKnownService() {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
             if (clazz.equals(MyService.class)) {
@@ -77,6 +80,7 @@ public class ServiceProviderTest {
     }
 
     @Test
+    @SuppressWarnings("rawtypes")
     public void testGetWithoutQualifierAndMultiService() {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
             if (clazz.equals(MultiService.class)) {

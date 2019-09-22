@@ -15,6 +15,7 @@ public class Graph {
         return node;
     }
 
+    @SuppressWarnings("serial")
     public static class GraphMessage extends GeneratedMessageV3 {
 
         @Override

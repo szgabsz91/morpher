@@ -1,7 +1,8 @@
+@SuppressWarnings("module")
 module com.github.szgabsz91.morpher.methods.lattice {
 
     requires com.github.szgabsz91.morpher.core;
-    requires com.github.szgabsz91.morpher.methods.api;
+    requires transitive com.github.szgabsz91.morpher.methods.api;
 
     requires org.apache.commons.collections4;
     requires org.slf4j;

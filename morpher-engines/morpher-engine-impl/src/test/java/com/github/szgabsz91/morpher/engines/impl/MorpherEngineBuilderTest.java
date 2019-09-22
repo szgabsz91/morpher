@@ -42,6 +42,7 @@ public class MorpherEngineBuilderTest {
     private ServiceProvider serviceProvider;
 
     @BeforeEach
+    @SuppressWarnings("rawtypes")
     public void setUp() {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
             if (clazz.equals(IAbstractMethodFactory.class)) {

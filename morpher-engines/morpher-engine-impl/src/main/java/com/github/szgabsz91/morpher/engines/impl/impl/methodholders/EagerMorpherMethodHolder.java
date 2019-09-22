@@ -167,6 +167,7 @@
  */
 package com.github.szgabsz91.morpher.engines.impl.impl.methodholders;
 
+import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import com.github.szgabsz91.morpher.methods.api.IMorpherMethod;
 
 /**

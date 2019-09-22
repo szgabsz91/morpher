@@ -274,7 +274,7 @@ public class CharacterConverter implements IConverter<ICharacter, CharacterMessa
                     final String attributeValue = attributeString.substring(lastDotIndex + 1);
 
                     try {
-                        @SuppressWarnings("unchecked")
+                        @SuppressWarnings({ "rawtypes", "unchecked" })
                         final IAttribute attribute = (IAttribute) Enum.valueOf(
                                 (Class<? extends Enum>) Class.forName(attributeType),
                                 attributeValue

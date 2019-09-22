@@ -6,18 +6,6 @@ apply from: "$rootDir/gradle/protobuf.gradle"
 ext {
     moduleName = 'com.github.szgabsz91.morpher.engines.impl'
     mockingEnabled = true
-    testModuleDependencies = [
-        'com.github.szgabsz91.morpher.methods.astra',
-        'com.github.szgabsz91.morpher.analyzeragents.hunmorph'
-    ]
-    testModuleExports = [
-        'com.github.szgabsz91.morpher.methods.astra/com.github.szgabsz91.morpher.methods.astra.impl',
-        'com.github.szgabsz91.morpher.methods.astra/com.github.szgabsz91.morpher.methods.astra.impl.method',
-        'com.github.szgabsz91.morpher.methods.astra/com.github.szgabsz91.morpher.methods.astra.impl.searchers',
-        'com.github.szgabsz91.morpher.analyzeragents.hunmorph/com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl',
-        'com.github.szgabsz91.morpher.analyzeragents.hunmorph/com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.markov'
-    ]
-
     testCoverageLimits = [
         instruction: 97.35,
         line: 97.72,

@@ -165,7 +165,7 @@
  * permanent authorization for you to choose that version for the
  * Library.
  */
-package com.github.szgabsz91.morpher.engines.impl.impl.methodholders;
+package com.github.szgabsz91.morpher.engines.impl.methodholders;
 
 import com.github.szgabsz91.morpher.methods.api.IMorpherMethod;
 

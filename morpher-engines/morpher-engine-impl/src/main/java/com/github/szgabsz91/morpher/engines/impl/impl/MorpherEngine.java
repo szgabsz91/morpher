@@ -191,7 +191,7 @@ import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.engines.api.model.ProbabilisticStep;
 import com.github.szgabsz91.morpher.engines.api.model.Step;
 import com.github.szgabsz91.morpher.engines.impl.converters.MorpherEngineConverter;
-import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.IMorpherMethodHolder;
+import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.LazyMorpherMethodHolder;
 import com.github.szgabsz91.morpher.engines.impl.impl.model.StepCandidate;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;

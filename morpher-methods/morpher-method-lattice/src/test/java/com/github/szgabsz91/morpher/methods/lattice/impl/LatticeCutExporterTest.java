@@ -1,7 +1,6 @@
 package com.github.szgabsz91.morpher.methods.lattice.impl;
 
 import com.github.szgabsz91.morpher.core.model.WordPair;
-import com.github.szgabsz91.morpher.core.utils.ExcludeDuringBuild;
 import com.github.szgabsz91.morpher.methods.api.characters.repositories.HungarianAttributedCharacterRepository;
 import com.github.szgabsz91.morpher.methods.api.characters.repositories.HungarianSimpleCharacterRepository;
 import com.github.szgabsz91.morpher.methods.api.characters.repositories.ICharacterRepository;
@@ -16,6 +15,7 @@ import com.github.szgabsz91.morpher.methods.lattice.impl.trainingsetprocessor.Tr
 import com.github.szgabsz91.morpher.methods.lattice.impl.trainingsetprocessor.WordPairProcessor;
 import com.github.szgabsz91.morpher.methods.lattice.impl.trainingsetprocessor.costcalculator.AttributeBasedCostCalculator;
 import com.github.szgabsz91.morpher.methods.lattice.impl.trainingsetprocessor.costcalculator.ICostCalculator;
+import com.github.szgabsz91.morpher.methods.lattice.utils.ExcludeDuringBuild;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

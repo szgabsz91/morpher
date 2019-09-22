@@ -1,7 +1,8 @@
+@SuppressWarnings("module")
 module com.github.szgabsz91.morpher.methods.dictionary {
 
-    requires com.github.szgabsz91.morpher.core;
-    requires com.github.szgabsz91.morpher.methods.api;
+    requires transitive com.github.szgabsz91.morpher.core;
+    requires transitive com.github.szgabsz91.morpher.methods.api;
 
     requires org.apache.commons.lang3;
     requires protobuf.java;

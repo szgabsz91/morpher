@@ -39,7 +39,9 @@ public class CharacterTest {
         Letter letter = Letter.A;
         Character character = Character.create(letter);
         assertThat(character.getAttributes()).hasSize(1);
-        assertThat((Collection<IAttribute>) character.getAttributes()).contains(letter);
+        @SuppressWarnings("unchecked")
+        Collection<IAttribute> attributeCollection = (Collection<IAttribute>) character.getAttributes();
+        assertThat(attributeCollection).contains(letter);
     }
 
     @Test

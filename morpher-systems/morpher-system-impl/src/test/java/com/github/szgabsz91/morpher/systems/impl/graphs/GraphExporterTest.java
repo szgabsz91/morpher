@@ -1,11 +1,11 @@
 package com.github.szgabsz91.morpher.systems.impl.graphs;
 
-import com.github.szgabsz91.morpher.core.utils.ExcludeDuringBuild;
 import com.github.szgabsz91.morpher.systems.impl.graphs.exporters.IGraphExporter;
 import com.github.szgabsz91.morpher.systems.impl.graphs.exporters.forcedirectedgraph.FullForceDirectedGraphExporter;
 import com.github.szgabsz91.morpher.systems.impl.graphs.exporters.forcedirectedgraph.PartialForceDirectedGraphExporter;
 import com.github.szgabsz91.morpher.systems.impl.graphs.exporters.radialtree.FullRadialTreeExporter;
 import com.github.szgabsz91.morpher.systems.impl.graphs.exporters.radialtree.PartialRadialTreeExporter;
+import com.github.szgabsz91.morpher.systems.impl.utils.ExcludeDuringBuild;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

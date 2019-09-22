@@ -1,3 +1,4 @@
+@SuppressWarnings("module")
 module com.github.szgabsz91.morpher.analyzeragents.hunmorph {
 
     requires com.github.szgabsz91.morpher.analyzeragents.api;

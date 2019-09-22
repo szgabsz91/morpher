@@ -4,6 +4,7 @@ import com.google.protobuf.GeneratedMessageV3;
 
 public class CustomNonSavable {
 
+    @SuppressWarnings("serial")
     public static class Message extends GeneratedMessageV3 {
 
         @Override

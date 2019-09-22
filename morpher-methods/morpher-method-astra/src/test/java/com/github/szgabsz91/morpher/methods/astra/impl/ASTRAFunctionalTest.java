@@ -3,7 +3,6 @@ package com.github.szgabsz91.morpher.methods.astra.impl;
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWordPair;
 import com.github.szgabsz91.morpher.core.model.Word;
-import com.github.szgabsz91.morpher.core.utils.ExcludeDuringBuild;
 import com.github.szgabsz91.morpher.methods.api.characters.repositories.HungarianAttributedCharacterRepository;
 import com.github.szgabsz91.morpher.methods.api.characters.repositories.HungarianSimpleCharacterRepository;
 import com.github.szgabsz91.morpher.methods.api.model.MethodResponse;
@@ -16,6 +15,7 @@ import com.github.szgabsz91.morpher.methods.astra.impl.factories.ComponentFactor
 import com.github.szgabsz91.morpher.methods.astra.impl.fitnesscalculators.atomicrule.DefaultAtomicRuleFitnessCalculator;
 import com.github.szgabsz91.morpher.methods.astra.impl.searchers.SequentialSearcher;
 import com.github.szgabsz91.morpher.methods.astra.impl.testutils.ASTRABuilder;
+import com.github.szgabsz91.morpher.methods.astra.utils.ExcludeDuringBuild;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

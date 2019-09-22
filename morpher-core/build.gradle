@@ -18,7 +18,6 @@ ext {
 dependencies {
     compile("org.slf4j:slf4j-api:${slf4jVersion}")
     compile("net.lingala.zip4j:zip4j:${zip4jVersion}")
-    compile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
     
     runtime("ch.qos.logback:logback-core:${logbackVersion}")
     runtime("ch.qos.logback:logback-classic:${logbackVersion}")

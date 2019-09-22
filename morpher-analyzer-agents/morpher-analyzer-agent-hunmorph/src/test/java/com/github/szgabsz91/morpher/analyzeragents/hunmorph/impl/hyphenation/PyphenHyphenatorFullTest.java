@@ -1,7 +1,7 @@
 package com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.hyphenation;
 
+import com.github.szgabsz91.morpher.analyzeragents.hunmorph.utils.ExcludeDuringBuild;
 import com.github.szgabsz91.morpher.core.model.Word;
-import com.github.szgabsz91.morpher.core.utils.ExcludeDuringBuild;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;

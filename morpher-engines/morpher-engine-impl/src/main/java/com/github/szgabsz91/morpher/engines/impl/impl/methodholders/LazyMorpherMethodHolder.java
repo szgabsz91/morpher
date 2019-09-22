@@ -168,6 +168,7 @@
 package com.github.szgabsz91.morpher.engines.impl.impl.methodholders;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
+import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import com.github.szgabsz91.morpher.methods.api.IMorpherMethod;
 import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
 import com.google.protobuf.Any;

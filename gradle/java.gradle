@@ -4,7 +4,7 @@ tasks.withType(JavaCompile) {
     sourceCompatibility = project.javaVersion
     targetCompatibility = project.javaVersion
     options.encoding = 'UTF-8'
-    options.compilerArgs << '-Xlint:all' << '-Werror'
+    options.compilerArgs << '-Xlint:all' << '-Xlint:-requires-automatic' << '-Xlint:-requires-transitive-automatic'
     options.deprecation = true
 }
 
@@ -13,42 +13,11 @@ afterEvaluate {
         return
     }
 
-    def defaultTestModuleDependencies = [
-        'org.junit.jupiter.api',
-        'org.junit.jupiter.params',
-        'org.assertj.core'
-    ].join(',')
-    def testModuleDependencies = project.hasProperty('testModuleDependencies') ? "${defaultTestModuleDependencies},${project.testModuleDependencies.join(',')}" : defaultTestModuleDependencies
-    def testModuleExports = project.hasProperty('testModuleExports') ? project.testModuleExports : []
-
     compileJava {
         inputs.property('moduleName', project.moduleName)
 
         doFirst {
-            options.compilerArgs = [
-                '--module-path', classpath.asPath
-            ]
-            classpath = files()
-        }
-    }
-
-    compileTestJava {
-        inputs.property('moduleName', project.moduleName)
-
-        doFirst {
-            options.compilerArgs = [
-                '--module-path', classpath.asPath,
-                '--add-modules', testModuleDependencies,
-                '--add-reads', "${project.moduleName}=${testModuleDependencies}",
-                '--patch-module', "${project.moduleName}=" + files(sourceSets.test.java.srcDirs).asPath
-            ]
-            testModuleExports
-                .collect {[
-                    '--add-exports', "${it}=${project.moduleName}"
-                ]}
-                .each {
-                    options.compilerArgs += it
-                }
+            options.compilerArgs << '--module-path' << classpath.asPath
             classpath = files()
         }
     }

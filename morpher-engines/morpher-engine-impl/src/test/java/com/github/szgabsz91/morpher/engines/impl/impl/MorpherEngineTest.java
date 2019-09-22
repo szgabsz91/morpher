@@ -642,6 +642,7 @@ public class MorpherEngineTest {
         return createMorpherEngine(lazy, null);
     }
 
+    @SuppressWarnings("rawtypes")
     private MorpherEngine createMorpherEngine(boolean lazy, Double minimumAggregatedWeightThreshold) {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
             if (clazz.equals(IAbstractMethodFactory.class)) {

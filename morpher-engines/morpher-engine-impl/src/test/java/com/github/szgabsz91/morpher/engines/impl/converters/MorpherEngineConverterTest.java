@@ -50,6 +50,7 @@ public class MorpherEngineConverterTest {
     private MorpherEngineConverter converter;
 
     @BeforeEach
+    @SuppressWarnings("rawtypes")
     public void setUp() {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
             if (clazz.equals(IMorpherMethodHolderFactory.class)) {

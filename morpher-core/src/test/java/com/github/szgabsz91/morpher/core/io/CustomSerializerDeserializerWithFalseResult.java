@@ -17,6 +17,7 @@ public class CustomSerializerDeserializerWithFalseResult implements ICustomSeria
         return false;
     }
 
+    @SuppressWarnings("serial")
     public static class Message extends GeneratedMessageV3 {
 
         @Override
@@ -25,17 +26,17 @@ public class CustomSerializerDeserializerWithFalseResult implements ICustomSeria
         }
 
         @Override
-        protected Message.Builder newBuilderForType(BuilderParent parent) {
+        protected Message.Builder<?> newBuilderForType(BuilderParent parent) {
             return null;
         }
 
         @Override
-        public Message.Builder newBuilderForType() {
+        public Message.Builder<?> newBuilderForType() {
             return null;
         }
 
         @Override
-        public Message.Builder toBuilder() {
+        public Message.Builder<?> toBuilder() {
             return null;
         }
 

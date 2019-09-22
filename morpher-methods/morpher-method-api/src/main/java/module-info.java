@@ -1,6 +1,7 @@
+@SuppressWarnings("module")
 module com.github.szgabsz91.morpher.methods.api {
 
-    requires com.github.szgabsz91.morpher.core;
+    requires transitive com.github.szgabsz91.morpher.core;
 
     requires combinatoricslib3;
     requires protobuf.java;

@@ -458,32 +458,44 @@ public class IntersectionCalculatorTest {
 
     @Test
     public void testIntersectWithAttributeDeltasAndDifferentClasses() {
+        @SuppressWarnings("rawtypes")
         AttributeDelta attributeDelta1 = new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT);
+        @SuppressWarnings("rawtypes")
         AttributeDelta attributeDelta2 = new AttributeDelta<>(LipShape.class, LipShape.ROUNDED, LipShape.UNROUNDED);
+        @SuppressWarnings("unchecked")
         IntersectionException exception = assertThrows(IntersectionException.class, () -> intersect(attributeDelta1, attributeDelta2));
         assertThat(exception.getMessage()).isEqualTo("The class of the two attribute deltas are not the same");
     }
 
     @Test
     public void testIntersectWithAttributeDeltasAndDifferentFroms() {
+        @SuppressWarnings("rawtypes")
         AttributeDelta attributeDelta1 = new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT);
+        @SuppressWarnings("rawtypes")
         AttributeDelta attributeDelta2 = new AttributeDelta<>(Length.class, Length.SHORT, Length.SHORT);
+        @SuppressWarnings("unchecked")
         IntersectionException exception = assertThrows(IntersectionException.class, () -> intersect(attributeDelta1, attributeDelta2));
         assertThat(exception.getMessage()).isEqualTo("The from property of the two attribute deltas are not the same");
     }
 
     @Test
     public void testIntersectWithAttributeDeltasAndDifferentTos() {
+        @SuppressWarnings("rawtypes")
         AttributeDelta attributeDelta1 = new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT);
+        @SuppressWarnings("rawtypes")
         AttributeDelta attributeDelta2 = new AttributeDelta<>(Length.class, Length.LONG, Length.LONG);
+        @SuppressWarnings("unchecked")
         IntersectionException exception = assertThrows(IntersectionException.class, () -> intersect(attributeDelta1, attributeDelta2));
         assertThat(exception.getMessage()).isEqualTo("The to property of the two attribute deltas are not the same");
     }
 
     @Test
     public void testIntersectWithAttributeDeltasAndSameProperties() throws IntersectionException {
+        @SuppressWarnings("rawtypes")
         AttributeDelta attributeDelta1 = new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT);
+        @SuppressWarnings("rawtypes")
         AttributeDelta attributeDelta2 = new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT);
+        @SuppressWarnings("unchecked")
         AttributeDelta<? extends IAttribute> intersection = intersect(attributeDelta1, attributeDelta2);
         assertThat(intersection).isEqualTo(attributeDelta1);
     }
@@ -529,14 +541,14 @@ public class IntersectionCalculatorTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testIntersectWithReplacementAndReplacement(ICharacterRepository characterRepository) throws IntersectionException {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement1 = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.LONG, Length.SHORT)
                 ),
                 characterRepository
         );
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement2 = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.LONG, Length.SHORT)
@@ -1243,7 +1255,7 @@ public class IntersectionCalculatorTest {
             ICharacterRepository characterRepository,
             IWordConverter wordConverter,
             IWordPairProcessor wordPairProcessor) throws IntersectionException {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Rule rule1 = new Rule(
                 new Context(
                         List.of(),
@@ -1265,7 +1277,7 @@ public class IntersectionCalculatorTest {
                 characterRepository,
                 null
         );
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Rule rule2 = new Rule(
                 new Context(
                         List.of(),

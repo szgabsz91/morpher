@@ -78,7 +78,7 @@ public class TransformationConverterTest {
     public void testConversionWithReplacement(
             ICharacterRepository characterRepository,
             TransformationConverter transformationConverter) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.LONG, Length.SHORT)
@@ -164,7 +164,9 @@ public class TransformationConverterTest {
         assertThat(transformation).isInstanceOf(Addition.class);
         Addition addition = (Addition) transformation;
         assertThat(addition.getAttributes()).hasSize(1);
-        assertThat((Collection<IAttribute>) addition.getAttributes()).contains(Letter.A);
+        @SuppressWarnings("unchecked")
+        Collection<IAttribute> attributeCollection = (Collection<IAttribute>) addition.getAttributes();
+        assertThat(attributeCollection).contains(Letter.A);
     }
 
     @ParameterizedTest

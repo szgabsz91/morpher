@@ -165,25 +165,10 @@
  * permanent authorization for you to choose that version for the
  * Library.
  */
-package com.github.szgabsz91.morpher.core.utils;
-
-import org.junit.jupiter.api.Tag;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 /**
- * Marks test classes to be ignored during Gradle build as they would be too time consuming.
+ * Package for the
+ * {@link com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder} interface.
  *
  * @author szgabsz91
  */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Tag("exclude-during-build")
-public @interface ExcludeDuringBuild {
-
-}
+package com.github.szgabsz91.morpher.engines.impl.methodholders;
