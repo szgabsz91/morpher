@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class VowelTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testFactoryMethod() {
         Vowel vowel = Vowel.create(Length.LONG, LipShape.ROUNDED);
         assertThat(vowel.getAttributes()).hasSize(2);

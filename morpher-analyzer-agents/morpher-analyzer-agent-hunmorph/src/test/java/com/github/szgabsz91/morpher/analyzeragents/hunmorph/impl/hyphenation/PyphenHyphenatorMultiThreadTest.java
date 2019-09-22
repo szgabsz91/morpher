@@ -1,7 +1,7 @@
 package com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.hyphenation;
 
+import com.github.szgabsz91.morpher.analyzeragents.hunmorph.utils.ExcludeDuringBuild;
 import com.github.szgabsz91.morpher.core.model.Word;
-import com.github.szgabsz91.morpher.core.utils.ExcludeDuringBuild;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,7 +139,7 @@ public class PyphenHyphenatorMultiThreadTest {
         }
 
         @Override
-        public void close() throws Exception {
+        public void close() throws IOException {
             this.writer.close();
         }
 

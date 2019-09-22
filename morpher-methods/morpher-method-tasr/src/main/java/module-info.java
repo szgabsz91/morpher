@@ -1,7 +1,8 @@
+@SuppressWarnings("module")
 module com.github.szgabsz91.morpher.methods.tasr {
 
     requires com.github.szgabsz91.morpher.core;
-    requires com.github.szgabsz91.morpher.methods.api;
+    requires transitive com.github.szgabsz91.morpher.methods.api;
 
     requires org.slf4j;
     requires protobuf.java;

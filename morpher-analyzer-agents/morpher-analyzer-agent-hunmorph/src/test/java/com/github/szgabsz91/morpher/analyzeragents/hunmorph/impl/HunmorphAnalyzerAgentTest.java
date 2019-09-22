@@ -58,6 +58,7 @@ public class HunmorphAnalyzerAgentTest {
     }
 
     @Test
+    @SuppressWarnings("try")
     public void testDefaultConstructor() {
         try (HunmorphAnalyzerAgent agent = new HunmorphAnalyzerAgent()) {
             // Do nothing

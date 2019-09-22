@@ -2,7 +2,6 @@ package com.github.szgabsz91.morpher.methods.lattice.impl.trainingsetprocessor;
 
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.core.model.WordPair;
-import com.github.szgabsz91.morpher.core.utils.ExcludeDuringBuild;
 import com.github.szgabsz91.morpher.methods.api.characters.repositories.HungarianAttributedCharacterRepository;
 import com.github.szgabsz91.morpher.methods.api.characters.repositories.HungarianSimpleCharacterRepository;
 import com.github.szgabsz91.morpher.methods.api.utils.TrainingDataRetriever;
@@ -13,6 +12,7 @@ import com.github.szgabsz91.morpher.methods.lattice.impl.testutils.LazyLogger;
 import com.github.szgabsz91.morpher.methods.lattice.impl.trainingsetprocessor.costcalculator.AttributeBasedCostCalculator;
 import com.github.szgabsz91.morpher.methods.lattice.impl.trainingsetprocessor.costcalculator.ICostCalculator;
 import com.github.szgabsz91.morpher.methods.lattice.impl.trainingsetprocessor.model.WordPairProcessorResponse;
+import com.github.szgabsz91.morpher.methods.lattice.utils.ExcludeDuringBuild;
 import org.apache.commons.text.RandomStringGenerator;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;

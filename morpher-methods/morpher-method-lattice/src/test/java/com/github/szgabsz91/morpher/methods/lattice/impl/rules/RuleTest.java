@@ -794,7 +794,7 @@ public class RuleTest {
             ICharacterRepository characterRepository,
             IWordConverter wordConverter,
             IWordPairProcessor wordPairProcessor) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Rule rule1 = new Rule(
                 new Context(
                         new LinkedList<>(),
@@ -824,7 +824,7 @@ public class RuleTest {
                 characterRepository,
                 null
         );
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Rule rule2 = new Rule(
                 new Context(
                         new LinkedList<>(),
@@ -1060,7 +1060,7 @@ public class RuleTest {
     public void testTransformRegression3() {
         ICharacterRepository characterRepository = HungarianAttributedCharacterRepository.get();
         IWordConverter wordConverter = new DoubleConsonantWordConverter();
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Rule rule = new Rule(
                 new Context(
                         List.of(),

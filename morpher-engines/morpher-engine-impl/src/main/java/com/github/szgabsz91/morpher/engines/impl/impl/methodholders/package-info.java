@@ -166,7 +166,7 @@
  * Library.
  */
 /**
- * Package for the {@link com.github.szgabsz91.morpher.engines.impl.impl.methodholders.IMorpherMethodHolder}
+ * Package for the {@link com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder}
  * implementations.
  *
  * @author szgabsz91

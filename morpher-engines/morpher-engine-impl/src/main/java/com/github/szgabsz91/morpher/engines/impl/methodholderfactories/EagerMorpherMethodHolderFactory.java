@@ -169,7 +169,7 @@ package com.github.szgabsz91.morpher.engines.impl.methodholderfactories;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.EagerMorpherMethodHolder;
-import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.IMorpherMethodHolder;
+import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import com.github.szgabsz91.morpher.methods.api.IMorpherMethod;
 import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
 

@@ -182,6 +182,8 @@ import java.util.List;
  */
 public class UniqueSortedList<T> extends ArrayList<T> {
 
+    private static final long serialVersionUID = -6735256122005238100L;
+
     private final Comparator<? super T> comparator;
 
     /**

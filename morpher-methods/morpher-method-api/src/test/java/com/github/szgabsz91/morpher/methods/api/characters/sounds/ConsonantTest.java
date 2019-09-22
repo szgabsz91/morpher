@@ -21,7 +21,9 @@ public class ConsonantTest {
     public void testFactoryMethod() {
         Consonant consonant = Consonant.create(SoundProductionPlace.BILABIAL, SoundProductionWay.FRICATIVE);
         assertThat(consonant.getAttributes()).hasSize(2);
-        assertThat((Collection<IAttribute>) consonant.getAttributes()).contains(SoundProductionPlace.BILABIAL, SoundProductionWay.FRICATIVE);
+        @SuppressWarnings("unchecked")
+        Collection<IAttribute> attributeCollection = (Collection<IAttribute>) consonant.getAttributes();
+        assertThat(attributeCollection).contains(SoundProductionPlace.BILABIAL, SoundProductionWay.FRICATIVE);
         assertThat(consonant.get(SoundProductionPlace.class)).isEqualTo(SoundProductionPlace.BILABIAL);
         assertThat(consonant.get(SoundProductionWay.class)).isEqualTo(SoundProductionWay.FRICATIVE);
         assertThat(consonant.get(Length.class)).isNull();

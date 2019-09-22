@@ -116,7 +116,9 @@ public class HungarianAttributedCharacterRepositoryTest {
         ICharacter character = characterRepository.getCharacter(Set.of(SoundProductionPlace.BILABIAL));
         assertThat(character).isNotNull();
         assertThat(character.getAttributes()).hasSize(1);
-        assertThat((Collection<IAttribute>) character.getAttributes()).containsSequence(SoundProductionPlace.BILABIAL);
+        @SuppressWarnings("unchecked")
+        Collection<IAttribute> attributeCollection = (Collection<IAttribute>) character.getAttributes();
+        assertThat(attributeCollection).containsSequence(SoundProductionPlace.BILABIAL);
     }
 
     @Test

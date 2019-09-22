@@ -237,7 +237,7 @@ public class Replacement implements ITransformation {
         final Set<Class<?>> onlyToAttributeTypes = new HashSet<>(toAttributeTypes);
         onlyToAttributeTypes.removeAll(commonAttributeTypes);
 
-        for (final Class commonAttributeType : commonAttributeTypes) {
+        for (@SuppressWarnings("rawtypes") final Class commonAttributeType : commonAttributeTypes) {
             final IAttribute fromAttribute = fromAttributeGroups.get(commonAttributeType).get(0);
             final IAttribute toAttribute = toAttributeGroups.get(commonAttributeType).get(0);
 
@@ -252,7 +252,7 @@ public class Replacement implements ITransformation {
             }
         }
 
-        for (final Class onlyFromAttributeType : onlyFromAttributeTypes) {
+        for (@SuppressWarnings("rawtypes") final Class onlyFromAttributeType : onlyFromAttributeTypes) {
             final IAttribute fromAttribute = fromAttributeGroups.get(onlyFromAttributeType).get(0);
             @SuppressWarnings("unchecked")
             final AttributeDelta<? super IAttribute> attributeDelta = AttributeDelta.remove(
@@ -262,7 +262,7 @@ public class Replacement implements ITransformation {
             this.attributeDeltas.add(attributeDelta);
         }
 
-        for (final Class onlyToAttributeType : onlyToAttributeTypes) {
+        for (@SuppressWarnings("rawtypes") final Class onlyToAttributeType : onlyToAttributeTypes) {
             final IAttribute toAttribute = toAttributeGroups.get(onlyToAttributeType).get(0);
             @SuppressWarnings("unchecked")
             final AttributeDelta<? super IAttribute> attributeDelta = AttributeDelta.add(

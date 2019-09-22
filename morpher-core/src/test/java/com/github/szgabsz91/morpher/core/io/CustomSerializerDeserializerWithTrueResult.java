@@ -44,6 +44,7 @@ public class CustomSerializerDeserializerWithTrueResult implements ICustomSerial
         return true;
     }
 
+    @SuppressWarnings("serial")
     public static class Message extends GeneratedMessageV3 {
 
         @Override
@@ -52,17 +53,17 @@ public class CustomSerializerDeserializerWithTrueResult implements ICustomSerial
         }
 
         @Override
-        protected CustomSerializerDeserializerWithFalseResult.Message.Builder newBuilderForType(BuilderParent parent) {
+        protected CustomSerializerDeserializerWithFalseResult.Message.Builder<?> newBuilderForType(BuilderParent parent) {
             return null;
         }
 
         @Override
-        public CustomSerializerDeserializerWithFalseResult.Message.Builder newBuilderForType() {
+        public CustomSerializerDeserializerWithFalseResult.Message.Builder<?> newBuilderForType() {
             return null;
         }
 
         @Override
-        public CustomSerializerDeserializerWithFalseResult.Message.Builder toBuilder() {
+        public CustomSerializerDeserializerWithFalseResult.Message.Builder<?> toBuilder() {
             return null;
         }
 

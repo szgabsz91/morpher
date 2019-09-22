@@ -128,6 +128,7 @@ public class MorpherSystemConverterTest {
     private IMorpherEngine<?> createMorpherEngine(WordPair wordPair) {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
             if (clazz.equals(IAbstractMethodFactory.class)) {
+                @SuppressWarnings("rawtypes")
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
                 when(provider.type()).thenReturn(ASTRAAbstractMethodFactory.class);
                 when(provider.get()).thenReturn(new ASTRAAbstractMethodFactory());
@@ -135,6 +136,7 @@ public class MorpherSystemConverterTest {
             }
 
             if (clazz.equals(IAnalyzerAgent.class)) {
+                @SuppressWarnings("rawtypes")
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
                 when(provider.type()).thenReturn(HunmorphAnalyzerAgent.class);
                 when(provider.get()).thenReturn(new HunmorphAnalyzerAgent());

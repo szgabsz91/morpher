@@ -172,7 +172,7 @@ import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.io.IConverter;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
 import com.github.szgabsz91.morpher.engines.impl.impl.MorpherEngine;
-import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.IMorpherMethodHolder;
+import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MinMaxProbabilityCalclator;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;

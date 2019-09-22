@@ -1,7 +1,7 @@
 package com.github.szgabsz91.morpher.engines.impl.methodholderfactories;
 
 import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.EagerMorpherMethodHolder;
-import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.IMorpherMethodHolder;
+import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -281,7 +281,7 @@ public class TransformationConverter implements IConverter<ITransformation, Tran
                                     (Class<? extends IAttribute>) Class.forName(attributeType);
                             final IAttribute fromAttribute = getAttributeValue(attributeType, fromAttributeValue);
                             final IAttribute toAttribute = getAttributeValue(attributeType, toAttributeValue);
-                            @SuppressWarnings("unchecked")
+                            @SuppressWarnings({ "rawtypes", "unchecked" })
                             final AttributeDelta<? super IAttribute> attributeDelta = new AttributeDelta(
                                     attributeClass,
                                     fromAttribute,
@@ -328,7 +328,7 @@ public class TransformationConverter implements IConverter<ITransformation, Tran
 
     private static IAttribute getAttributeValue(final String attributeType, final String attributeValue) {
         try {
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings({ "rawtypes", "unchecked" })
             final Class<? extends Enum> enumClass = (Class<? extends Enum>) Class.forName(attributeType);
 
             try {

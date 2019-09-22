@@ -1,7 +1,8 @@
+@SuppressWarnings("module")
 module com.github.szgabsz91.morpher.methods.astra {
 
     requires com.github.szgabsz91.morpher.core;
-    requires com.github.szgabsz91.morpher.methods.api;
+    requires transitive com.github.szgabsz91.morpher.methods.api;
 
     requires combinatoricslib3;
     requires org.apache.commons.collections4;

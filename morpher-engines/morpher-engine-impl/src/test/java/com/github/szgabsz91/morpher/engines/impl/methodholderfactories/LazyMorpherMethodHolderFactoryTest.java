@@ -1,6 +1,6 @@
 package com.github.szgabsz91.morpher.engines.impl.methodholderfactories;
 
-import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.IMorpherMethodHolder;
+import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.LazyMorpherMethodHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

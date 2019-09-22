@@ -1,7 +1,8 @@
+@SuppressWarnings("module")
 module com.github.szgabsz91.morpher.methods.fst {
 
-    requires com.github.szgabsz91.morpher.core;
-    requires com.github.szgabsz91.morpher.methods.api;
+    requires transitive com.github.szgabsz91.morpher.core;
+    requires transitive com.github.szgabsz91.morpher.methods.api;
 
     requires lucene.core;
     requires org.slf4j;

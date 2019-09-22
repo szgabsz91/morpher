@@ -64,7 +64,7 @@ public class DefaultCostCalculatorTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testCostOfVariantReplacement(ICharacterRepository characterRepository, ICostCalculator costCalculator) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Set<AttributeDelta<? super IAttribute>> attributeDeltas = Set.of(
                 new AttributeDelta(SoundProductionPlace.class, SoundProductionPlace.BILABIAL, SoundProductionPlace.DENTAL_ALVEOLAR),
                 new AttributeDelta(SoundProductionWay.class, SoundProductionWay.FRICATIVE, SoundProductionWay.LATERAL_APPROXIMATIVE)

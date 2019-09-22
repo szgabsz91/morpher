@@ -35,7 +35,7 @@ public class ReplacementTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testConstructorWithAttributeDeltas(ICharacterRepository characterRepository) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Set<AttributeDelta<? super IAttribute>> attributeDeltas = Set.of(
                 new AttributeDelta(Length.class, Length.LONG, Length.SHORT),
                 new AttributeDelta(LipShape.class, LipShape.ROUNDED, LipShape.UNROUNDED)
@@ -50,7 +50,7 @@ public class ReplacementTest {
         ICharacter from = characterRepository.getCharacter("a");
         ICharacter to = characterRepository.getCharacter("á");
         Replacement replacement = new Replacement(from, to, characterRepository);
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Set<AttributeDelta<? super IAttribute>> expected = Set.of(
                 new AttributeDelta(Length.class, Length.SHORT, Length.LONG)
         );
@@ -63,7 +63,7 @@ public class ReplacementTest {
         Replacement inhomogeneousReplacement = new Replacement(Set.of(), characterRepository);
         assertThat(inhomogeneousReplacement.isInhomogeneous()).isTrue();
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement homogeneousReplacement = new Replacement(
                 new HashSet(List.of(Length.class, Length.LONG, Length.SHORT)),
                 characterRepository
@@ -94,7 +94,7 @@ public class ReplacementTest {
     @MethodSource("parameters")
     public void testPerformWithInvalidAttributeTypeInAttributeDelta(ICharacterRepository characterRepository) {
         ISound from = Vowel.create(LipShape.UNROUNDED, HorizontalTonguePosition.FRONT, VerticalTonguePosition.SEMI_OPEN);
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.SHORT, Length.LONG)
@@ -126,7 +126,7 @@ public class ReplacementTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testEquals(ICharacterRepository characterRepository) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement1 = new Replacement(
                 new HashSet(List.of(
                         new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT),
@@ -134,7 +134,7 @@ public class ReplacementTest {
                 )),
                 characterRepository
         );
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement2 = new Replacement(
                 Set.of(
                         new AttributeDelta(Length.class, Length.LONG, Length.SHORT)
@@ -151,7 +151,7 @@ public class ReplacementTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testHashCode(ICharacterRepository characterRepository) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement = new Replacement(
                 new HashSet(List.of(
                         new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT),
@@ -172,7 +172,7 @@ public class ReplacementTest {
     @ParameterizedTest
     @MethodSource("parameters")
     public void testToStringWithVariantReplacement(ICharacterRepository characterRepository) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement = new Replacement(
                 new HashSet(List.of(
                         new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT),
@@ -208,7 +208,7 @@ public class ReplacementTest {
     @Test
     public void testPerformWithInvalidResultingCharacter() {
         ICharacterRepository characterRepository = HungarianAttributedCharacterRepository.get();
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         Replacement replacement = new Replacement(
                 Set.of(
                         new AttributeDelta(
