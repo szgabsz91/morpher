@@ -10,7 +10,7 @@ public class AffixTypeTest {
     public void testOfAndGetter() {
         String token = "TOK";
         AffixType affixType = AffixType.of(token);
-        assertThat(affixType.getToken()).isEqualTo(token);
+        assertThat(affixType.toString()).isEqualTo(token);
     }
 
     @Test
@@ -30,13 +30,13 @@ public class AffixTypeTest {
     public void testHashCode() {
         AffixType affixType = AffixType.of("AFF");
         int result = affixType.hashCode();
-        assertThat(result).isEqualTo(affixType.getToken().hashCode());
+        assertThat(result).isEqualTo(affixType.toString().hashCode());
     }
 
     @Test
     public void testToString() {
         AffixType affixType = AffixType.of("AFF");
-        assertThat(affixType).hasToString(affixType.getToken());
+        assertThat(affixType).hasToString(affixType.toString());
     }
 
 }

@@ -1,0 +1,21 @@
+description = 'Morpher Transformation Engine API contains the base interfaces and classes for Morpher transformation engine implementations'
+
+apply from: "$rootDir/gradle/test.gradle"
+apply from: "$rootDir/gradle/protobuf.gradle"
+
+ext {
+    moduleName = 'com.github.szgabsz91.morpher.transformationengines.api'
+
+    testCoverageLimits = [
+        instruction: 99.77,
+        line: 99.69,
+        branch: 99.17,
+        class: 100.0
+    ]
+}
+
+dependencies {
+    compile project(':morpher-core')
+    
+    compile("com.github.dpaukov:combinatoricslib3:${combinatoricslibVersion}")
+}

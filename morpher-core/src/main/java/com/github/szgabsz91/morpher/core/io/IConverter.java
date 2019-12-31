@@ -173,7 +173,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * Converter interface that defines the contract of converting a certain type to another one, as well as convert the
+ * Converter interface that defines the contract of converting a certain type to another one, as well as converting the
  * target type back.
  *
  * @author szgabsz91

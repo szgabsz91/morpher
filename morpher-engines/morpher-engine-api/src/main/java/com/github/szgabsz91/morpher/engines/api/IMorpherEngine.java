@@ -168,23 +168,22 @@
 package com.github.szgabsz91.morpher.engines.api;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
 import com.github.szgabsz91.morpher.core.io.IConvertable;
 import com.github.szgabsz91.morpher.core.io.ISavable;
 import com.github.szgabsz91.morpher.core.model.Corpus;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionOrderedInput;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItems;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
 import com.google.protobuf.GeneratedMessageV3;
 
 import java.util.List;
 import java.util.Set;
 
 /**
- * Main interface of the Morpher engine that can incrementally learn a language's morphology and inflect/lemmatize
- * words.
+ * Main interface of the Morpher engine that can incrementally learn a language's morphology and inflect/analyze words.
  *
  * @author szgabsz91
  * @param <TMessage> the type of Protocol Buffer message
@@ -212,7 +211,7 @@ public interface IMorpherEngine<TMessage extends GeneratedMessageV3>
 
     /**
      * Tries to morphologically analyze the words in the given corpus and generate the appropriate word pairs, then has
-     * the new word pairs learnt with the method of the appropriate affix types.
+     * the new word pairs learnt with the transformation engine of the appropriate affix types.
      *
      * @param corpus the corpus containing the new words
      */
@@ -235,7 +234,7 @@ public interface IMorpherEngine<TMessage extends GeneratedMessageV3>
      * affix types.
      *
      * @param inflectionInput the inflection input
-     * @return the list of responses, ordered by descending probability values
+     * @return the list of responses, sorted by descending probability values
      */
     List<MorpherEngineResponse> inflect(InflectionInput inflectionInput);
 
@@ -249,11 +248,11 @@ public interface IMorpherEngine<TMessage extends GeneratedMessageV3>
     List<MorpherEngineResponse> inflect(InflectionOrderedInput inflectionOrderedInput);
 
     /**
-     * Performs lemmatization using the given inflected word form.
-     * @param lemmatizationInput the input containing the inflected word form
-     * @return the list of responses, ordered by descending probability values
+     * Performs morphological analysis using the given inflected word form.
+     * @param analysisInput the input containing the inflected word form
+     * @return the list of responses, sorted by descending probability values
      */
-    List<MorpherEngineResponse> lemmatize(LemmatizationInput lemmatizationInput);
+    List<MorpherEngineResponse> analyze(AnalysisInput analysisInput);
 
     /**
      * Returns the set of supported affix types.

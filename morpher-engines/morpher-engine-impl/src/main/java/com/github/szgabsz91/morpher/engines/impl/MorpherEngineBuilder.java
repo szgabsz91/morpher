@@ -167,15 +167,15 @@
  */
 package com.github.szgabsz91.morpher.engines.impl;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
 import com.github.szgabsz91.morpher.core.utils.Timer;
 import com.github.szgabsz91.morpher.engines.api.IMorpherEngine;
 import com.github.szgabsz91.morpher.engines.impl.impl.MorpherEngine;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.IMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.api.factories.IMethodConfiguration;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.ITransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.ITransformationEngineConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -186,17 +186,17 @@ import java.nio.file.Path;
  * Builder class for the {@link IMorpherEngine} interface.
  *
  * @author szgabsz91
- * @param <T> the type of method configuration
+ * @param <T> the type of transformation engine configuration
  */
-public class MorpherEngineBuilder<T extends IMethodConfiguration> {
+public class MorpherEngineBuilder<T extends ITransformationEngineConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MorpherEngineBuilder.class);
 
     private ServiceProvider serviceProvider;
-    private IMorpherMethodHolderFactory methodHolderFactory;
-    private String methodQualifier;
-    private T methodConfiguration;
-    private String analyzerAgentQualifier;
+    private ITransformationEngineHolderFactory transformationEngineHolderFactory;
+    private String transformationEngineQualifier;
+    private T transformationEngineConfiguration;
+    private String languageHandlerQualifier;
     private IProbabilityCalculator probabilityCalculator;
     private Double minimumAggregatedWeightThreshold;
     private Path loadFrom;
@@ -212,42 +212,43 @@ public class MorpherEngineBuilder<T extends IMethodConfiguration> {
     }
 
     /**
-     * Sets the method holder factory.
-     * @param methodHolderFactory the method holder factory
+     * Sets the transformation engine holder factory.
+     * @param transformationEngineHolderFactory the transformation engine holder factory
      * @return the builder instance
      */
-    public MorpherEngineBuilder<T> methodHolderFactory(final IMorpherMethodHolderFactory methodHolderFactory) {
-        this.methodHolderFactory = methodHolderFactory;
+    public MorpherEngineBuilder<T> transformationEngineHolderFactory(
+            final ITransformationEngineHolderFactory transformationEngineHolderFactory) {
+        this.transformationEngineHolderFactory = transformationEngineHolderFactory;
         return this;
     }
 
     /**
-     * Sets the method qualifier.
-     * @param methodQualifier the qualifier of the method
+     * Sets the transformation engine qualifier.
+     * @param transformationEngineQualifier the qualifier of the transformation engine
      * @return the builder instance
      */
-    public MorpherEngineBuilder<T> methodQualifier(final String methodQualifier) {
-        this.methodQualifier = methodQualifier;
+    public MorpherEngineBuilder<T> transformationEngineQualifier(final String transformationEngineQualifier) {
+        this.transformationEngineQualifier = transformationEngineQualifier;
         return this;
     }
 
     /**
-     * Sets the method configuration.
-     * @param methodConfiguration the configuration of the method
+     * Sets the transformation engine configuration.
+     * @param transformationEngineConfiguration the configuration of the transformation engine
      * @return the builder instance
      */
-    public MorpherEngineBuilder<T> methodConfiguration(final T methodConfiguration) {
-        this.methodConfiguration = methodConfiguration;
+    public MorpherEngineBuilder<T> transformationEngineConfiguration(final T transformationEngineConfiguration) {
+        this.transformationEngineConfiguration = transformationEngineConfiguration;
         return this;
     }
 
     /**
-     * Sets the analyzer agent qualifier.
-     * @param analyzerAgentQualifier the qualifier of the analyzer agent
+     * Sets the language handler qualifier.
+     * @param languageHandlerQualifier the qualifier of the language handler
      * @return the builder instance
      */
-    public MorpherEngineBuilder<T> analyzerAgentQualifier(final String analyzerAgentQualifier) {
-        this.analyzerAgentQualifier = analyzerAgentQualifier;
+    public MorpherEngineBuilder<T> languageHandlerQualifier(final String languageHandlerQualifier) {
+        this.languageHandlerQualifier = languageHandlerQualifier;
         return this;
     }
 
@@ -289,26 +290,26 @@ public class MorpherEngineBuilder<T extends IMethodConfiguration> {
      * @return the newly built {@link IMorpherEngine} instance
      */
     public IMorpherEngine<?> build() {
-        if (this.methodHolderFactory == null) {
-            throw new IllegalStateException("The method holder factory must not be null");
+        if (this.transformationEngineHolderFactory == null) {
+            throw new IllegalStateException("The transformation engine holder factory must not be null");
         }
         if (this.probabilityCalculator == null) {
             throw new IllegalStateException("The probability calculator must not be null");
         }
         @SuppressWarnings("unchecked")
-        final IAbstractMethodFactory<T, ?> abstractMethodFactory = getInstance(
-                IAbstractMethodFactory.class,
-                this.methodQualifier
+        final IAbstractTransformationEngineFactory<T, ?> abstractTransformationEngineFactory = getInstance(
+                IAbstractTransformationEngineFactory.class,
+                this.transformationEngineQualifier
         );
-        if (this.methodConfiguration != null) {
-            abstractMethodFactory.setConfiguration(this.methodConfiguration);
+        if (this.transformationEngineConfiguration != null) {
+            abstractTransformationEngineFactory.setConfiguration(this.transformationEngineConfiguration);
         }
-        final IAnalyzerAgent<?> analyzerAgent = getInstance(IAnalyzerAgent.class, this.analyzerAgentQualifier);
+        final ILanguageHandler<?> languageHandler = getInstance(ILanguageHandler.class, this.languageHandlerQualifier);
         final MorpherEngine morpherEngine = new MorpherEngine(
                 this.serviceProvider,
-                this.methodHolderFactory,
-                abstractMethodFactory,
-                analyzerAgent,
+                this.transformationEngineHolderFactory,
+                abstractTransformationEngineFactory,
+                languageHandler,
                 this.probabilityCalculator,
                 this.minimumAggregatedWeightThreshold
         );

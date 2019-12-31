@@ -1,17 +1,17 @@
 package com.github.szgabsz91.morpher.engines.hunmorph.impl;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
 import com.github.szgabsz91.morpher.core.model.Corpus;
 import com.github.szgabsz91.morpher.core.model.Word;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionOrderedInput;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
 import com.github.szgabsz91.morpher.engines.api.model.Mode;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.engines.api.model.ProbabilisticStep;
 import com.github.szgabsz91.morpher.engines.hunmorph.HunmorphMorpherEngine;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
 import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
 import org.junit.jupiter.api.AfterEach;
@@ -82,13 +82,13 @@ public class HunmorphMorpherEngineTest {
     }
 
     @Test
-    public void testLemmatize() {
+    public void testAnalyze() {
         Word input = Word.of("almákat");
-        LemmatizationInput lemmatizationInput = LemmatizationInput.of(input);
-        List<MorpherEngineResponse> response = this.engine.lemmatize(lemmatizationInput);
+        AnalysisInput analysisInput = AnalysisInput.of(input);
+        List<MorpherEngineResponse> response = this.engine.analyze(analysisInput);
         assertThat(response).hasSize(1);
         MorpherEngineResponse morpherEngineResponse = response.get(0);
-        assertThat(morpherEngineResponse.getMode()).isEqualTo(Mode.LEMMATIZATION);
+        assertThat(morpherEngineResponse.getMode()).isEqualTo(Mode.ANALYSIS);
         assertThat(morpherEngineResponse.getInput()).isEqualTo(input);
         assertThat(morpherEngineResponse.getOutput()).hasToString("alma");
         assertThat(morpherEngineResponse.getAffixTypeChainProbability()).isOne();
@@ -102,11 +102,11 @@ public class HunmorphMorpherEngineTest {
     }
 
     @Test
-    public void testLemmatizeWithGuessMode() {
+    public void testAnalyzeWithGuessMode() {
         Word input = Word.of("habablát");
-        LemmatizationInput lemmatizationInput = LemmatizationInput.of(input);
+        AnalysisInput analysisInput = AnalysisInput.of(input);
         HunmorphMorpherEngine hunmorphMorpherEngine = new HunmorphMorpherEngine(true);
-        List<MorpherEngineResponse> responses = hunmorphMorpherEngine.lemmatize(lemmatizationInput);
+        List<MorpherEngineResponse> responses = hunmorphMorpherEngine.analyze(analysisInput);
         assertThat(responses).hasSize(4);
         List<String> outputs = responses
                 .stream()

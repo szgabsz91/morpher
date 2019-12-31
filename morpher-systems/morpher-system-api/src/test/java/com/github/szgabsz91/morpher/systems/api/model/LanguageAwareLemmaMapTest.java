@@ -1,7 +1,7 @@
 package com.github.szgabsz91.morpher.systems.api.model;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
 import com.github.szgabsz91.morpher.core.model.Word;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;

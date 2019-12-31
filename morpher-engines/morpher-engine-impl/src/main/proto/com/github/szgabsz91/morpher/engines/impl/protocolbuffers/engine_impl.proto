@@ -10,13 +10,13 @@ import "google/protobuf/any.proto";
 import "google/protobuf/wrappers.proto";
 
 message MorpherEngineMessage {
-    string methodHolderFactoryQualifier = 1;
-    string abstractMethodFactoryQualifier = 2;
-    google.protobuf.Any abstractMethodFactory = 3;
-    string analyzerAgentQualifier = 4;
+    string transformationEngineHolderFactoryQualifier = 1;
+    string abstractTransformationEngineFactoryQualifier = 2;
+    google.protobuf.Any abstractTransformationEngineFactory = 3;
+    string languageHandlerQualifier = 4;
     ProbabilityCalculatorTypeMessage probabilityCalculatorType = 5;
-    google.protobuf.Any analyzerAgent = 6;
-    map<string, google.protobuf.Any> methodMap = 7;
+    google.protobuf.Any languageHandler = 6;
+    map<string, google.protobuf.Any> transformationEngineMap = 7;
     google.protobuf.DoubleValue minimumAggregatedWeightThreshold = 8;
 }
 

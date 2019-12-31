@@ -1,4 +1,4 @@
-description = 'Morpher Engine Impl that can inflect/lemmatize arbitrary words using multiple affix types, and learn incrementally'
+description = 'Morpher Engine Impl that can inflect/analyze arbitrary words using multiple affix types, and learn incrementally'
 
 apply from: "$rootDir/gradle/test.gradle"
 apply from: "$rootDir/gradle/protobuf.gradle"
@@ -8,7 +8,7 @@ ext {
     mockingEnabled = true
     testCoverageLimits = [
         instruction: 97.35,
-        line: 97.72,
+        line: 97.77,
         branch: 93.08,
         class: 100.0
     ]
@@ -17,16 +17,16 @@ ext {
 dependencies {
     compile project(':morpher-core')
     compile project(':morpher-engines:morpher-engine-api')
-    compile project(':morpher-methods:morpher-method-api')
-    compile project(':morpher-analyzer-agents:morpher-analyzer-agent-api')
+    compile project(':morpher-transformation-engines:morpher-transformation-engine-api')
+    compile project(':morpher-language-handlers:morpher-language-handler-api')
 
     compile("org.slf4j:slf4j-api:${slf4jVersion}")
 
     runtime("ch.qos.logback:logback-core:${logbackVersion}")
     runtime("ch.qos.logback:logback-classic:${logbackVersion}")
 
-    testCompile project(':morpher-methods:morpher-method-astra')
-    testCompile project(':morpher-analyzer-agents:morpher-analyzer-agent-hunmorph')
+    testCompile project(':morpher-transformation-engines:morpher-transformation-engine-astra')
+    testCompile project(':morpher-language-handlers:morpher-language-handler-hunmorph')
 
     testCompile("org.apache.commons:commons-text:${commonsTextVersion}")
 }

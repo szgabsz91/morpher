@@ -168,7 +168,7 @@
 package com.github.szgabsz91.morpher.engines.api.model;
 
 /**
- * Enumeration type that represents the mode of the Morpher engine: either inflection or lemmatization.
+ * Enumeration type that represents the mode of the Morpher engine: either inflection or analysis.
  *
  * @author szgabsz91
  */
@@ -180,8 +180,8 @@ public enum Mode {
     INFLECTION,
 
     /**
-     * Lemmatization mode.
+     * Analysis mode.
      */
-    LEMMATIZATION
+    ANALYSIS
 
 }

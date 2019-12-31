@@ -167,7 +167,7 @@
  */
 package com.github.szgabsz91.morpher.systems.api.model;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
 
 /**
  * Model class that represents a {@link Language} aware {@link LemmaMap}.

@@ -1,30 +1,30 @@
 package com.github.szgabsz91.morpher.engines.impl.converters;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.IHunmorphAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.HunmorphAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.markov.FullMarkovModel;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.protocolbuffers.HunmorphAnalyzerAgentMessage;
 import com.github.szgabsz91.morpher.core.io.Serializer;
 import com.github.szgabsz91.morpher.core.model.Corpus;
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
 import com.github.szgabsz91.morpher.engines.impl.impl.MorpherEngine;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MinMaxProbabilityCalclator;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.EagerMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.IMorpherMethodHolderFactory;
 import com.github.szgabsz91.morpher.engines.impl.protocolbuffers.MorpherEngineMessage;
 import com.github.szgabsz91.morpher.engines.impl.protocolbuffers.ProbabilityCalculatorTypeMessage;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.astra.IASTRAMethod;
-import com.github.szgabsz91.morpher.methods.astra.config.ASTRAMethodConfiguration;
-import com.github.szgabsz91.morpher.methods.astra.config.SearcherType;
-import com.github.szgabsz91.morpher.methods.astra.impl.method.ASTRAAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.astra.protocolbuffers.ASTRAMethodConfigurationMessage;
-import com.github.szgabsz91.morpher.methods.astra.protocolbuffers.SearcherTypeMessage;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.EagerTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.ITransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.IHunmorphLanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.HunmorphLanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.markov.FullMarkovModel;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.protocolbuffers.HunmorphLanguageHandlerMessage;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.astra.IASTRATransformationEngine;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.ASTRATransformationEngineConfiguration;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.SearcherType;
+import com.github.szgabsz91.morpher.transformationengines.astra.impl.transformationengine.ASTRAAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.astra.protocolbuffers.ASTRATransformationEngineConfigurationMessage;
+import com.github.szgabsz91.morpher.transformationengines.astra.protocolbuffers.SearcherTypeMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,24 +53,24 @@ public class MorpherEngineConverterTest {
     @SuppressWarnings("rawtypes")
     public void setUp() {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
-            if (clazz.equals(IMorpherMethodHolderFactory.class)) {
+            if (clazz.equals(ITransformationEngineHolderFactory.class)) {
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(EagerMorpherMethodHolderFactory.class);
-                when(provider.get()).thenReturn(new EagerMorpherMethodHolderFactory());
+                when(provider.type()).thenReturn(EagerTransformationEngineHolderFactory.class);
+                when(provider.get()).thenReturn(new EagerTransformationEngineHolderFactory());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
-            if (clazz.equals(IAbstractMethodFactory.class)) {
+            if (clazz.equals(IAbstractTransformationEngineFactory.class)) {
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(ASTRAAbstractMethodFactory.class);
-                when(provider.get()).thenReturn(new ASTRAAbstractMethodFactory());
+                when(provider.type()).thenReturn(ASTRAAbstractTransformationEngineFactory.class);
+                when(provider.get()).thenReturn(new ASTRAAbstractTransformationEngineFactory());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
-            if (clazz.equals(IAnalyzerAgent.class)) {
+            if (clazz.equals(ILanguageHandler.class)) {
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(HunmorphAnalyzerAgent.class);
-                when(provider.get()).thenReturn(new HunmorphAnalyzerAgent());
+                when(provider.type()).thenReturn(HunmorphLanguageHandler.class);
+                when(provider.get()).thenReturn(new HunmorphLanguageHandler());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
@@ -82,26 +82,26 @@ public class MorpherEngineConverterTest {
 
     @Test
     public void testConvertAndCovertBackAndParse() throws IOException {
-        ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PREFIX_TREE)
                 .build();
-        ASTRAAbstractMethodFactory abstractMethodFactory = new ASTRAAbstractMethodFactory(configuration);
-        IAnalyzerAgent<HunmorphAnalyzerAgentMessage> analyzerAgent = new HunmorphAnalyzerAgent();
+        ASTRAAbstractTransformationEngineFactory abstractTransformationEngineFactory = new ASTRAAbstractTransformationEngineFactory(configuration);
+        ILanguageHandler<HunmorphLanguageHandlerMessage> languageHandler = new HunmorphLanguageHandler();
         IProbabilityCalculator probabilityCalculator = new MultiplyProbabilityCalculator();
-        MorpherEngine engine = new MorpherEngine(this.serviceProvider, new EagerMorpherMethodHolderFactory(), abstractMethodFactory, analyzerAgent, probabilityCalculator, null);
+        MorpherEngine engine = new MorpherEngine(this.serviceProvider, new EagerTransformationEngineHolderFactory(), abstractTransformationEngineFactory, languageHandler, probabilityCalculator, null);
 
         Word word = Word.of("almák");
         engine.learn(Corpus.of(word));
-        engine.lemmatize(LemmatizationInput.of(word));
+        engine.analyze(AnalysisInput.of(word));
 
         MorpherEngineMessage message = this.converter.convert(engine);
-        assertThat(message.getAbstractMethodFactoryQualifier()).isEqualTo(IASTRAMethod.QUALIFIER);
-        assertThat(message.getAnalyzerAgentQualifier()).isEqualTo(IHunmorphAnalyzerAgent.QUALIFIER);
+        assertThat(message.getAbstractTransformationEngineFactoryQualifier()).isEqualTo(IASTRATransformationEngine.QUALIFIER);
+        assertThat(message.getLanguageHandlerQualifier()).isEqualTo(IHunmorphLanguageHandler.QUALIFIER);
         assertThat(message.getProbabilityCalculatorType()).isEqualTo(ProbabilityCalculatorTypeMessage.MULTIPLY);
 
         MorpherEngine result = this.converter.convertBack(message);
-        assertThat(result.getAbstractMethodFactory()).isInstanceOf(ASTRAAbstractMethodFactory.class);
-        assertThat(result.getAnalyzerAgent()).isInstanceOf(HunmorphAnalyzerAgent.class);
+        assertThat(result.getAbstractTransformationEngineFactory()).isInstanceOf(ASTRAAbstractTransformationEngineFactory.class);
+        assertThat(result.getLanguageHandler()).isInstanceOf(HunmorphLanguageHandler.class);
         assertThat(result.getProbabilityCalculator()).isInstanceOf(MultiplyProbabilityCalculator.class);
 
         Path file = Files.createTempFile("morpher", "engine");
@@ -113,67 +113,67 @@ public class MorpherEngineConverterTest {
         }
         finally {
             Files.delete(file);
-            analyzerAgent.close();
+            languageHandler.close();
             engine.close();
             result.close();
         }
     }
 
     @Test
-    public void testConvertBackWithInvalidAbstractMethodFactory() {
+    public void testConvertBackWithInvalidAbstractTransformationEngineFactory() {
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(EagerMorpherMethodHolderFactory.class.getName())
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(MorpherEngineMessage.newBuilder().build()))
+                .setTransformationEngineHolderFactoryQualifier(EagerTransformationEngineHolderFactory.class.getName())
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(MorpherEngineMessage.newBuilder().build()))
                 .build();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> this.converter.convertBack(message));
-        assertThat(exception).hasMessage("Cannot load abstract method factory");
+        assertThat(exception).hasMessage("Cannot load abstract transformation engine factory");
         assertThat(exception).hasCauseExactlyInstanceOf(InvalidProtocolBufferException.class);
     }
 
     @Test
-    public void testConvertBackWithInvalidAnalyzerAgent() {
+    public void testConvertBackWithInvalidLanguageHandler() {
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(EagerMorpherMethodHolderFactory.class.getName())
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(ASTRAMethodConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
-                .setAnalyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
-                .setAnalyzerAgent(Any.pack(MorpherEngineMessage.newBuilder().build()))
+                .setTransformationEngineHolderFactoryQualifier(EagerTransformationEngineHolderFactory.class.getName())
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(ASTRATransformationEngineConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
+                .setLanguageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .setLanguageHandler(Any.pack(MorpherEngineMessage.newBuilder().build()))
                 .build();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> this.converter.convertBack(message));
-        assertThat(exception).hasMessage("Cannot load analyzer agent");
+        assertThat(exception).hasMessage("Cannot load language handler");
         assertThat(exception).hasCauseExactlyInstanceOf(InvalidProtocolBufferException.class);
     }
 
     @Test
-    public void testConvertBackWithInvalidMethod() {
+    public void testConvertBackWithInvalidTransformationEngine() {
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(EagerMorpherMethodHolderFactory.class.getName())
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(ASTRAMethodConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
-                .setAnalyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
-                .setAnalyzerAgent(Any.pack(HunmorphAnalyzerAgentMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
-                .putAllMethodMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
+                .setTransformationEngineHolderFactoryQualifier(EagerTransformationEngineHolderFactory.class.getName())
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(ASTRATransformationEngineConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
+                .setLanguageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .setLanguageHandler(Any.pack(HunmorphLanguageHandlerMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
+                .putAllTransformationEngineMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
                 .build();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> this.converter.convertBack(message));
-        assertThat(exception).hasMessage("Cannot load method for <PLUR>");
+        assertThat(exception).hasMessage("Cannot load transformation engine for <PLUR>");
         assertThat(exception).hasCauseExactlyInstanceOf(InvalidProtocolBufferException.class);
     }
 
     @Test
-    public void testConvertBackWithInvalidMethodHolderFactoryQualifierForClassNotFoundException() {
+    public void testConvertBackWithInvalidTransformationEngineHolderFactoryQualifierForClassNotFoundException() {
         String classString = "non-existent";
 
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(classString)
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(ASTRAMethodConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
-                .setAnalyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
-                .setAnalyzerAgent(Any.pack(HunmorphAnalyzerAgentMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
-                .putAllMethodMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
+                .setTransformationEngineHolderFactoryQualifier(classString)
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(ASTRATransformationEngineConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
+                .setLanguageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .setLanguageHandler(Any.pack(HunmorphLanguageHandlerMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
+                .putAllTransformationEngineMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
                 .build();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> this.converter.convertBack(message));
@@ -182,138 +182,138 @@ public class MorpherEngineConverterTest {
     }
 
     @Test
-    public void testConvertBackWithInvalidMethodHolderFactoryQualifierForIllegalAccessException() {
-        Class<?> methodHolderFactoryClass = PrivateMethodHolderFactory.class;
+    public void testConvertBackWithInvalidTransformationEngineHolderFactoryQualifierForIllegalAccessException() {
+        Class<?> transformationEngineFactoryClass = PrivateMethodHolderFactory.class;
 
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(methodHolderFactoryClass.getName())
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(ASTRAMethodConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
-                .setAnalyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
-                .setAnalyzerAgent(Any.pack(HunmorphAnalyzerAgentMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
-                .putAllMethodMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
+                .setTransformationEngineHolderFactoryQualifier(transformationEngineFactoryClass.getName())
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(ASTRATransformationEngineConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
+                .setLanguageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .setLanguageHandler(Any.pack(HunmorphLanguageHandlerMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
+                .putAllTransformationEngineMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
                 .build();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> this.converter.convertBack(message));
-        assertThat(exception).hasMessage("Cannot instantiate class " + methodHolderFactoryClass.getName());
+        assertThat(exception).hasMessage("Cannot instantiate class " + transformationEngineFactoryClass.getName());
         assertThat(exception).hasCauseExactlyInstanceOf(IllegalAccessException.class);
     }
 
     @Test
-    public void testConvertBackWithInvalidMethodHolderFactoryQualifierForInvocationTargetException() {
-        Class<?> methodHolderFactoryClass = ErroneousMethodHolderFactory.class;
+    public void testConvertBackWithInvalidTransformationEngineHolderFactoryQualifierForInvocationTargetException() {
+        Class<?> transformationEngineFactoryClass = ErroneousMethodHolderFactory.class;
 
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(methodHolderFactoryClass.getName())
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(ASTRAMethodConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
-                .setAnalyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
-                .setAnalyzerAgent(Any.pack(HunmorphAnalyzerAgentMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
-                .putAllMethodMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
+                .setTransformationEngineHolderFactoryQualifier(transformationEngineFactoryClass.getName())
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(ASTRATransformationEngineConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
+                .setLanguageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .setLanguageHandler(Any.pack(HunmorphLanguageHandlerMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
+                .putAllTransformationEngineMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
                 .build();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> this.converter.convertBack(message));
-        assertThat(exception).hasMessage("Cannot instantiate class " + methodHolderFactoryClass.getName());
+        assertThat(exception).hasMessage("Cannot instantiate class " + transformationEngineFactoryClass.getName());
         assertThat(exception).hasCauseExactlyInstanceOf(InvocationTargetException.class);
     }
 
     @Test
-    public void testConvertBackWithInvalidMethodHolderFactoryQualifierForInstantiationException() {
-        Class<?> methodHolderFactoryClass = AbstractMethodHolderFactory.class;
+    public void testConvertBackWithInvalidTransformationEngineHolderFactoryQualifierForInstantiationException() {
+        Class<?> transformationEngineFactoryClass = AbstractMethodHolderFactory.class;
 
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(methodHolderFactoryClass.getName())
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(ASTRAMethodConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
-                .setAnalyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
-                .setAnalyzerAgent(Any.pack(HunmorphAnalyzerAgentMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
-                .putAllMethodMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
+                .setTransformationEngineHolderFactoryQualifier(transformationEngineFactoryClass.getName())
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(ASTRATransformationEngineConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
+                .setLanguageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .setLanguageHandler(Any.pack(HunmorphLanguageHandlerMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
+                .putAllTransformationEngineMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
                 .build();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> this.converter.convertBack(message));
-        assertThat(exception).hasMessage("Cannot instantiate class " + methodHolderFactoryClass.getName());
+        assertThat(exception).hasMessage("Cannot instantiate class " + transformationEngineFactoryClass.getName());
         assertThat(exception).hasCauseExactlyInstanceOf(InstantiationException.class);
     }
 
     @Test
-    public void testConvertBackWithInvalidMethodHolderFactoryQualifierForNoSuchMethodException() {
-        Class<?> methodHolderFactoryClass = ComplexMethodHolderFactory.class;
+    public void testConvertBackWithInvalidTransformationEngineHolderFactoryQualifierForNoSuchMethodException() {
+        Class<?> transformationEngineFactoryClass = ComplexMethodHolderFactory.class;
 
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(methodHolderFactoryClass.getName())
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(ASTRAMethodConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
-                .setAnalyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
-                .setAnalyzerAgent(Any.pack(HunmorphAnalyzerAgentMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
-                .putAllMethodMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
+                .setTransformationEngineHolderFactoryQualifier(transformationEngineFactoryClass.getName())
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(ASTRATransformationEngineConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
+                .setLanguageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .setLanguageHandler(Any.pack(HunmorphLanguageHandlerMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
+                .putAllTransformationEngineMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
                 .build();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> this.converter.convertBack(message));
-        assertThat(exception).hasMessage("Cannot instantiate class " + methodHolderFactoryClass.getName());
+        assertThat(exception).hasMessage("Cannot instantiate class " + transformationEngineFactoryClass.getName());
         assertThat(exception).hasCauseExactlyInstanceOf(NoSuchMethodException.class);
     }
 
     @Test
     public void testConvertWithLazyConverter() {
-        ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PREFIX_TREE)
                 .build();
-        ASTRAAbstractMethodFactory abstractMethodFactory = new ASTRAAbstractMethodFactory(configuration);
-        IAnalyzerAgent<HunmorphAnalyzerAgentMessage> analyzerAgent = new HunmorphAnalyzerAgent();
+        ASTRAAbstractTransformationEngineFactory abstractTransformationEngineFactory = new ASTRAAbstractTransformationEngineFactory(configuration);
+        ILanguageHandler<HunmorphLanguageHandlerMessage> languageHandler = new HunmorphLanguageHandler();
         IProbabilityCalculator probabilityCalculator = new MultiplyProbabilityCalculator();
-        MorpherEngine engine = new MorpherEngine(this.serviceProvider, new EagerMorpherMethodHolderFactory(), abstractMethodFactory, analyzerAgent, probabilityCalculator, null);
+        MorpherEngine engine = new MorpherEngine(this.serviceProvider, new EagerTransformationEngineHolderFactory(), abstractTransformationEngineFactory, languageHandler, probabilityCalculator, null);
         engine.learn(Corpus.of(Word.of("almát")));
 
         MorpherEngineConverter converter = new MorpherEngineConverter(this.serviceProvider, true);
         MorpherEngineMessage message = converter.convert(engine);
 
-        assertThat(message.getMethodMapCount()).isZero();
+        assertThat(message.getTransformationEngineMapCount()).isZero();
     }
 
     @Test
     public void testConvertBackWithLazyConverter() {
         MorpherEngineMessage message = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(EagerMorpherMethodHolderFactory.class.getName())
-                .setAbstractMethodFactoryQualifier(IASTRAMethod.QUALIFIER)
-                .setAbstractMethodFactory(Any.pack(ASTRAMethodConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
-                .setAnalyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
-                .setAnalyzerAgent(Any.pack(HunmorphAnalyzerAgentMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
-                .putAllMethodMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
+                .setTransformationEngineHolderFactoryQualifier(EagerTransformationEngineHolderFactory.class.getName())
+                .setAbstractTransformationEngineFactoryQualifier(IASTRATransformationEngine.QUALIFIER)
+                .setAbstractTransformationEngineFactory(Any.pack(ASTRATransformationEngineConfigurationMessage.newBuilder().setSearcherType(SearcherTypeMessage.SEQUENTIAL).setMaximumNumberOfResponses(1).build()))
+                .setLanguageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .setLanguageHandler(Any.pack(HunmorphLanguageHandlerMessage.newBuilder().setMarkovModelClassName(FullMarkovModel.class.getName()).build()))
+                .putAllTransformationEngineMap(Map.of("<PLUR>", Any.pack(MorpherEngineMessage.newBuilder().build())))
                 .build();
 
         MorpherEngineConverter converter = new MorpherEngineConverter(this.serviceProvider, true);
         MorpherEngine engine = converter.convertBack(message);
 
-        assertThat(engine.getMethodHolderMap()).isEmpty();
+        assertThat(engine.getTransformationEngineHolderMap()).isEmpty();
     }
 
     @Test
     public void testConvertWithMinMaxProbabilityCalculator() {
-        ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PREFIX_TREE)
                 .build();
-        ASTRAAbstractMethodFactory abstractMethodFactory = new ASTRAAbstractMethodFactory(configuration);
-        IAnalyzerAgent<HunmorphAnalyzerAgentMessage> analyzerAgent = new HunmorphAnalyzerAgent();
+        ASTRAAbstractTransformationEngineFactory abstractTransformationEngineFactory = new ASTRAAbstractTransformationEngineFactory(configuration);
+        ILanguageHandler<HunmorphLanguageHandlerMessage> languageHandler = new HunmorphLanguageHandler();
         IProbabilityCalculator probabilityCalculator = new MinMaxProbabilityCalclator();
-        MorpherEngine engine = new MorpherEngine(this.serviceProvider, new EagerMorpherMethodHolderFactory(), abstractMethodFactory, analyzerAgent, probabilityCalculator, null);
+        MorpherEngine engine = new MorpherEngine(this.serviceProvider, new EagerTransformationEngineHolderFactory(), abstractTransformationEngineFactory, languageHandler, probabilityCalculator, null);
         engine.learn(Corpus.of(Word.of("almát")));
 
         MorpherEngineConverter converter = new MorpherEngineConverter(this.serviceProvider, true);
         MorpherEngineMessage message = converter.convert(engine);
 
-        assertThat(message.getMethodMapCount()).isZero();
+        assertThat(message.getTransformationEngineMapCount()).isZero();
     }
 
     @Test
     public void testConvertAndConvertBackWithMinimumAggregatedWeightThreshold() {
-        ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PREFIX_TREE)
                 .build();
-        ASTRAAbstractMethodFactory abstractMethodFactory = new ASTRAAbstractMethodFactory(configuration);
-        IAnalyzerAgent<HunmorphAnalyzerAgentMessage> analyzerAgent = new HunmorphAnalyzerAgent();
+        ASTRAAbstractTransformationEngineFactory abstractTransformationEngineFactory = new ASTRAAbstractTransformationEngineFactory(configuration);
+        ILanguageHandler<HunmorphLanguageHandlerMessage> languageHandler = new HunmorphLanguageHandler();
         IProbabilityCalculator probabilityCalculator = new MinMaxProbabilityCalclator();
         double minimumAggregatedWeightThreshold = 2.0;
-        MorpherEngine engine = new MorpherEngine(this.serviceProvider, new EagerMorpherMethodHolderFactory(), abstractMethodFactory, analyzerAgent, probabilityCalculator, minimumAggregatedWeightThreshold);
+        MorpherEngine engine = new MorpherEngine(this.serviceProvider, new EagerTransformationEngineHolderFactory(), abstractTransformationEngineFactory, languageHandler, probabilityCalculator, minimumAggregatedWeightThreshold);
 
         MorpherEngineConverter converter = new MorpherEngineConverter(this.serviceProvider, true);
         MorpherEngineMessage message = converter.convert(engine);

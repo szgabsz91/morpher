@@ -1,11 +1,5 @@
 package com.github.szgabsz91.morpher.engines.impl.impl;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.AnnotationTokenizerResult;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.HunmorphAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.HunmorphAnnotationTokenizer;
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Corpus;
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWord;
@@ -16,15 +10,21 @@ import com.github.szgabsz91.morpher.core.services.ServiceProvider;
 import com.github.szgabsz91.morpher.engines.api.model.*;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.EagerMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.IMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.LazyMorpherMethodHolderFactory;
 import com.github.szgabsz91.morpher.engines.impl.protocolbuffers.MorpherEngineMessage;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.astra.config.ASTRAMethodConfiguration;
-import com.github.szgabsz91.morpher.methods.astra.config.SearcherType;
-import com.github.szgabsz91.morpher.methods.astra.impl.method.ASTRAAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.astra.protocolbuffers.ASTRAMethodMessage;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.EagerTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.ITransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.LazyTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.AnnotationTokenizerResult;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.HunmorphAnnotationTokenizer;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.HunmorphLanguageHandler;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.ASTRATransformationEngineConfiguration;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.SearcherType;
+import com.github.szgabsz91.morpher.transformationengines.astra.impl.transformationengine.ASTRAAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.astra.protocolbuffers.ASTRATransformationEngineMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.junit.jupiter.api.AfterEach;
@@ -106,7 +106,7 @@ public class MorpherEngineTest {
         assertThat(this.engine.isDirty()).isTrue();
         this.reload();
 
-        List<MorpherEngineResponse> responses = this.engine.lemmatize(LemmatizationInput.of(Word.of("almát")));
+        List<MorpherEngineResponse> responses = this.engine.analyze(AnalysisInput.of(Word.of("almát")));
         assertThat(responses).hasSize(1);
         MorpherEngineResponse response = responses.get(0);
         assertThat(response.getOutput()).isEqualTo(Word.of("alma"));
@@ -124,7 +124,7 @@ public class MorpherEngineTest {
         assertThat(this.engine.isDirty()).isFalse();
         this.reload();
 
-        List<MorpherEngineResponse> responses = this.engine.lemmatize(LemmatizationInput.of(Word.of("almát")));
+        List<MorpherEngineResponse> responses = this.engine.analyze(AnalysisInput.of(Word.of("almát")));
         assertThat(responses).isEmpty();
     }
 
@@ -138,15 +138,15 @@ public class MorpherEngineTest {
                 .stream()
                 .map(entry -> Map.entry(entry.getKey().toString(), entry.getValue()))
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
-        HunmorphAnalyzerAgent analyzerAgent = (HunmorphAnalyzerAgent) this.engine.getAnalyzerAgent();
-        assertThat(analyzerAgent.getLemmaMap()).isEmpty();
+        HunmorphLanguageHandler languageHandler = (HunmorphLanguageHandler) this.engine.getLanguageHandler();
+        assertThat(languageHandler.getLemmaMap()).isEmpty();
         this.engine.learn(LemmaMap.of(lemmaMap));
         this.reload();
-        assertThat(analyzerAgent.getLemmaMap()).isEqualTo(stringLemmaMap);
+        assertThat(languageHandler.getLemmaMap()).isEqualTo(stringLemmaMap);
     }
 
     @Test
-    public void testLemmatizeWithKnownPosOfLemma() throws IOException {
+    public void testAnalyzeWithKnownPosOfLemma() throws IOException {
         /*
          * - START:6
          *     - <PLUR>:2
@@ -173,11 +173,11 @@ public class MorpherEngineTest {
         this.reload();
 
         Word input = Word.of("almákat");
-        List<MorpherEngineResponse> result = this.engine.lemmatize(LemmatizationInput.of(input));
+        List<MorpherEngineResponse> result = this.engine.analyze(AnalysisInput.of(input));
 
         assertThat(result).hasSize(1);
         MorpherEngineResponse response = result.get(0);
-        assertThat(response.getMode()).isEqualTo(Mode.LEMMATIZATION);
+        assertThat(response.getMode()).isEqualTo(Mode.ANALYSIS);
         assertThat(response.getInput()).isEqualTo(input);
         assertThat(response.getOutput()).isEqualTo(Word.of("alma"));
         assertThat(response.getPos()).isEqualTo(ProbabilisticAffixType.of(AffixType.of("/NOUN"), 1.0));
@@ -200,12 +200,12 @@ public class MorpherEngineTest {
     }
 
     @Test
-    public void testLemmatizeWithNoResponse() throws IOException {
+    public void testAnalyzeWithNoResponse() throws IOException {
         this.engine.learn(Corpus.of(Set.of(FrequencyAwareWord.of("almát"))));
         this.reload();
 
         Word input = Word.of("balmát");
-        List<MorpherEngineResponse> result = this.engine.lemmatize(LemmatizationInput.of(input));
+        List<MorpherEngineResponse> result = this.engine.analyze(AnalysisInput.of(input));
         assertThat(result).isEmpty();
     }
 
@@ -397,7 +397,7 @@ public class MorpherEngineTest {
         this.reload();
 
         // Convert back from message
-        Any anyMessage = Any.pack(ASTRAMethodMessage.newBuilder().build());
+        Any anyMessage = Any.pack(ASTRATransformationEngineMessage.newBuilder().build());
         InvalidProtocolBufferException exception = assertThrows(InvalidProtocolBufferException.class, () -> this.engine.fromMessage(anyMessage));
         assertThat(exception.getMessage()).startsWith("The provided message is not a MorpherEngineMessage: ");
     }
@@ -417,7 +417,7 @@ public class MorpherEngineTest {
             boolean deserializationResult = result.deserialize(file);
             assertThat(deserializationResult).isTrue();
 
-            List<MorpherEngineResponse> responses = result.lemmatize(LemmatizationInput.of(Word.of("almát")));
+            List<MorpherEngineResponse> responses = result.analyze(AnalysisInput.of(Word.of("almát")));
             assertThat(responses).hasSize(1);
             MorpherEngineResponse response = responses.get(0);
             assertThat(response.getOutput()).hasToString("alma");
@@ -483,7 +483,7 @@ public class MorpherEngineTest {
     }
 
     @Test
-    public void testProbabilityCalculationForSimpleLemmatization() throws IOException {
+    public void testProbabilityCalculationForSimpleAnalysis() throws IOException {
         this.engine.learn(Corpus.of(Set.of(
                 FrequencyAwareWord.of("alma"),
                 FrequencyAwareWord.of("almát"),
@@ -494,7 +494,7 @@ public class MorpherEngineTest {
         this.reload();
 
         assertProbabilities(
-                (inputWord, affixTypes) -> this.engine.lemmatize(LemmatizationInput.of(inputWord)),
+                (inputWord, affixTypes) -> this.engine.analyze(AnalysisInput.of(inputWord)),
                 affixTypes -> affixTypes.size() - 1,
                 List::add,
                 new AssertProbabilityModel(
@@ -538,7 +538,7 @@ public class MorpherEngineTest {
     }
 
     @Test
-    public void testLemmatizationWithAffixTypes() throws IOException {
+    public void testAnalyzeWithAffixTypes() throws IOException {
         this.engine.learn(Corpus.of(Set.of(
                 FrequencyAwareWord.of("alma"),
                 FrequencyAwareWord.of("almát"),
@@ -550,12 +550,12 @@ public class MorpherEngineTest {
 
         Word input = Word.of("almákat");
         List<AffixType> affixTypes = List.of(AffixType.of("/NOUN"), AffixType.of("<PLUR>"), AffixType.of("<CAS<ACC>>"));
-        LemmatizationInputWithAffixTypes lemmatizationInputWithAffixTypes = LemmatizationInputWithAffixTypes.of(input, affixTypes);
-        List<MorpherEngineResponse> lemmatizationResponses = this.engine.lemmatize(lemmatizationInputWithAffixTypes);
+        AnalysisInputWithAffixTypes analysisInputWithAffixTypes = AnalysisInputWithAffixTypes.of(input, affixTypes);
+        List<MorpherEngineResponse> analysisResponses = this.engine.analyze(analysisInputWithAffixTypes);
 
-        assertThat(lemmatizationResponses).hasSize(1);
-        MorpherEngineResponse lemmatizationResponse = lemmatizationResponses.get(0);
-        assertThat(lemmatizationResponse.getOutput()).hasToString("alma");
+        assertThat(analysisResponses).hasSize(1);
+        MorpherEngineResponse analysisResponse = analysisResponses.get(0);
+        assertThat(analysisResponse.getOutput()).hasToString("alma");
     }
 
     @Test
@@ -603,7 +603,7 @@ public class MorpherEngineTest {
     }
 
     @Test
-    public void lemmatizeWithMinimumAggregatedWeightThreshold() throws IOException {
+    public void testAnalyzeWithMinimumAggregatedWeightThreshold() throws IOException {
         MorpherEngine engine = createMorpherEngine(0.8);
         engine.learn(Corpus.of(Word.of("almát")));
         engine.learn(LemmaMap.of(Map.of(Word.of("kal"), Set.of(AffixType.of("/NOUN")))));
@@ -616,8 +616,8 @@ public class MorpherEngineTest {
         this.reload();
 
         Word input = Word.of("kalmát");
-        LemmatizationInput lemmatizationInput = LemmatizationInput.of(input);
-        List<MorpherEngineResponse> responses = engine.lemmatize(lemmatizationInput);
+        AnalysisInput analysisInput = AnalysisInput.of(input);
+        List<MorpherEngineResponse> responses = engine.analyze(analysisInput);
         assertThat(responses).hasSize(1);
         assertThat(responses.get(0).getAggregatedWeight()).isEqualTo(0.875);
         assertThat(responses.get(0).getOutput()).hasToString("kal");
@@ -645,31 +645,31 @@ public class MorpherEngineTest {
     @SuppressWarnings("rawtypes")
     private MorpherEngine createMorpherEngine(boolean lazy, Double minimumAggregatedWeightThreshold) {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
-            if (clazz.equals(IAbstractMethodFactory.class)) {
+            if (clazz.equals(IAbstractTransformationEngineFactory.class)) {
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(ASTRAAbstractMethodFactory.class);
-                when(provider.get()).thenReturn(new ASTRAAbstractMethodFactory());
+                when(provider.type()).thenReturn(ASTRAAbstractTransformationEngineFactory.class);
+                when(provider.get()).thenReturn(new ASTRAAbstractTransformationEngineFactory());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
-            if (clazz.equals(IAnalyzerAgent.class)) {
+            if (clazz.equals(ILanguageHandler.class)) {
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(HunmorphAnalyzerAgent.class);
-                when(provider.get()).thenReturn(new HunmorphAnalyzerAgent());
+                when(provider.type()).thenReturn(HunmorphLanguageHandler.class);
+                when(provider.get()).thenReturn(new HunmorphLanguageHandler());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
             return Stream.empty();
         };
         ServiceProvider serviceProvider = new ServiceProvider(serviceLoader);
-        ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PREFIX_TREE)
                 .build();
-        IAbstractMethodFactory<?, ?> abstractMethodFactory = new ASTRAAbstractMethodFactory(configuration);
-        HunmorphAnalyzerAgent analyzerAgent = new HunmorphAnalyzerAgent();
+        IAbstractTransformationEngineFactory<?, ?> abstractTransformationEngineFactory = new ASTRAAbstractTransformationEngineFactory(configuration);
+        HunmorphLanguageHandler languageHandler = new HunmorphLanguageHandler();
         IProbabilityCalculator probabilityCalculator = new MultiplyProbabilityCalculator();
-        IMorpherMethodHolderFactory methodHolderFactory = lazy ? new LazyMorpherMethodHolderFactory() : new EagerMorpherMethodHolderFactory();
-        return new MorpherEngine(serviceProvider, methodHolderFactory, abstractMethodFactory, analyzerAgent, probabilityCalculator, minimumAggregatedWeightThreshold);
+        ITransformationEngineHolderFactory transformationEngineHolderFactory = lazy ? new LazyTransformationEngineHolderFactory() : new EagerTransformationEngineHolderFactory();
+        return new MorpherEngine(serviceProvider, transformationEngineHolderFactory, abstractTransformationEngineFactory, languageHandler, probabilityCalculator, minimumAggregatedWeightThreshold);
     }
 
     private void assertProbabilities(

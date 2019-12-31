@@ -1,8 +1,5 @@
 package com.github.szgabsz91.morpher.engines.impl.impl.probability;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
-import com.github.szgabsz91.morpher.core.model.AffixType;
-import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.ProbabilisticStep;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package com.github.szgabsz91.morpher.engines.api.model;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.model.AnnotationTokenizerResult;
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWordPair;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.AnnotationTokenizerResult;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;

@@ -169,7 +169,7 @@ package com.github.szgabsz91.morpher.core.model;
 
 /**
  * Model class for word pairs, containing two words: the left word is the base for training, the right word is the
- * target.
+ * inflected form.
  *
  * @author szgabsz91
  */
@@ -226,7 +226,7 @@ public final class WordPair {
 
     /**
      * Returns the inverse of the word pair, swapping the left and right parts.
-     * @return the invers of the word pair
+     * @return the inverse of the word pair
      */
     public WordPair inverse() {
         return WordPair.of(rightWord, leftWord);

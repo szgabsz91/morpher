@@ -348,7 +348,7 @@ public class Serializer<TSource, TTarget extends GeneratedMessageV3> {
             });
         }
         catch (final IOException e) {
-            throw new IllegalStateException("Cannot delete temp folder " + folder, e);
+            throw new IllegalStateException("Cannot delete folder " + folder, e);
         }
     }
 

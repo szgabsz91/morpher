@@ -1,8 +1,8 @@
 package com.github.szgabsz91.morpher.engines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -37,14 +37,14 @@ public class MorpherEngineResponseTest {
     }
 
     @Test
-    public void testLemmatizationResponseAndGetters() {
+    public void testAnalysisResponseAndGetters() {
         Word input = Word.of("input");
         Word output = Word.of("output");
         double probability = 0.6;
         ProbabilisticAffixType pos = ProbabilisticAffixType.of(AffixType.of("POS"), 0.5);
         List<ProbabilisticStep> steps = List.of(new ProbabilisticStep(input, output, AffixType.of("AFF"), 0.7, 0.8, 0.9));
-        MorpherEngineResponse response = MorpherEngineResponse.lemmatizationResponse(input, output, pos, probability, steps);
-        assertThat(response.getMode()).isEqualTo(Mode.LEMMATIZATION);
+        MorpherEngineResponse response = MorpherEngineResponse.analysisResponse(input, output, pos, probability, steps);
+        assertThat(response.getMode()).isEqualTo(Mode.ANALYSIS);
         assertThat(response.getInput()).isEqualTo(input);
         assertThat(response.getOutput()).isEqualTo(output);
         assertThat(response.getPos()).isEqualTo(pos);
@@ -93,7 +93,7 @@ public class MorpherEngineResponseTest {
     @Test
     public void testEquals() {
         MorpherEngineResponse response1 = MorpherEngineResponse.inflectionResponse(Word.of("input"), Word.of("output"), ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5), 0.5, Collections.emptyList());
-        MorpherEngineResponse response2 = MorpherEngineResponse.lemmatizationResponse(Word.of("input"), Word.of("output"), ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5), 0.5, Collections.emptyList());
+        MorpherEngineResponse response2 = MorpherEngineResponse.analysisResponse(Word.of("input"), Word.of("output"), ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5), 0.5, Collections.emptyList());
         MorpherEngineResponse response3 = MorpherEngineResponse.inflectionResponse(Word.of("input2"), Word.of("output"), ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5), 0.5, Collections.emptyList());
         MorpherEngineResponse response4 = MorpherEngineResponse.inflectionResponse(Word.of("input"), Word.of("output2"), ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5), 0.5, Collections.emptyList());
         MorpherEngineResponse response5 = MorpherEngineResponse.inflectionResponse(Word.of("input"), Word.of("output"), ProbabilisticAffixType.of(AffixType.of("AFF2"), 0.5), 0.5, Collections.emptyList());

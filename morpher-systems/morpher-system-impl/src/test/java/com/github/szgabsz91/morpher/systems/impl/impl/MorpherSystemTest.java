@@ -1,11 +1,6 @@
 package com.github.szgabsz91.morpher.systems.impl.impl;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
 import com.github.szgabsz91.morpher.core.model.AffixType;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.AnnotationTokenizerResult;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.IHunmorphAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.HunmorphAnalyzerAgent;
 import com.github.szgabsz91.morpher.core.io.ICustomDeserializer;
 import com.github.szgabsz91.morpher.core.model.Corpus;
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWordPair;
@@ -13,35 +8,40 @@ import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.core.model.WordPair;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
 import com.github.szgabsz91.morpher.engines.api.IMorpherEngine;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionOrderedInput;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItem;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.engines.hunmorph.HunmorphMorpherEngine;
 import com.github.szgabsz91.morpher.engines.impl.MorpherEngineBuilder;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.EagerMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.LazyMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.api.factories.IMethodConfiguration;
-import com.github.szgabsz91.morpher.methods.astra.IASTRAMethod;
-import com.github.szgabsz91.morpher.methods.astra.config.ASTRAMethodConfiguration;
-import com.github.szgabsz91.morpher.methods.astra.config.SearcherType;
-import com.github.szgabsz91.morpher.methods.astra.impl.method.ASTRAAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.astra.protocolbuffers.ASTRAMethodMessage;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.EagerTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.LazyTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.AnnotationTokenizerResult;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.IHunmorphLanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.HunmorphLanguageHandler;
 import com.github.szgabsz91.morpher.systems.api.IMorpherSystem;
 import com.github.szgabsz91.morpher.systems.api.model.Language;
+import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareAnalysisInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareCorpus;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareInflectionInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareInflectionOrderedInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareLemmaMap;
-import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareLemmatizationInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwarePreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.systems.api.model.MorpherSystemResponse;
 import com.github.szgabsz91.morpher.systems.impl.MorpherSystemBuilder;
 import com.github.szgabsz91.morpher.systems.impl.protocolbuffers.MorpherSystemMessage;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.ITransformationEngineConfiguration;
+import com.github.szgabsz91.morpher.transformationengines.astra.IASTRATransformationEngine;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.ASTRATransformationEngineConfiguration;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.SearcherType;
+import com.github.szgabsz91.morpher.transformationengines.astra.impl.transformationengine.ASTRAAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.astra.protocolbuffers.ASTRATransformationEngineMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -101,7 +101,7 @@ public class MorpherSystemTest {
         this.morpherSystem.learn(languageAwareCorpus);
 
         // Assert
-        MorpherSystemResponse morpherSystemResponse = this.morpherSystem.lemmatize(new LanguageAwareLemmatizationInput(LANGUAGE_HU, LemmatizationInput.of(Word.of("asztalt"))));
+        MorpherSystemResponse morpherSystemResponse = this.morpherSystem.analyze(new LanguageAwareAnalysisInput(LANGUAGE_HU, AnalysisInput.of(Word.of("asztalt"))));
         List<MorpherEngineResponse> morpherEngineResponses = morpherSystemResponse.getMorpherEngineResponses();
         assertThat(morpherEngineResponses).hasSize(1);
         MorpherEngineResponse morpherEngineResponse = morpherEngineResponses.get(0);
@@ -128,7 +128,7 @@ public class MorpherSystemTest {
         this.morpherSystem.learn(languageAwarePreanalyzedTrainingItems);
 
         // Assert
-        MorpherSystemResponse morpherSystemResponse = this.morpherSystem.lemmatize(new LanguageAwareLemmatizationInput(LANGUAGE_HU, LemmatizationInput.of(Word.of("asztalt"))));
+        MorpherSystemResponse morpherSystemResponse = this.morpherSystem.analyze(new LanguageAwareAnalysisInput(LANGUAGE_HU, AnalysisInput.of(Word.of("asztalt"))));
         List<MorpherEngineResponse> morpherEngineResponses = morpherSystemResponse.getMorpherEngineResponses();
         assertThat(morpherEngineResponses).hasSize(1);
         MorpherEngineResponse morpherEngineResponse = morpherEngineResponses.get(0);
@@ -152,7 +152,7 @@ public class MorpherSystemTest {
         this.morpherSystem.learn(languageAwareLemmaMap);
 
         // Assert
-        MorpherSystemResponse morpherSystemResponse = this.morpherSystem.lemmatize(new LanguageAwareLemmatizationInput(LANGUAGE_HU, LemmatizationInput.of(Word.of("balmát"))));
+        MorpherSystemResponse morpherSystemResponse = this.morpherSystem.analyze(new LanguageAwareAnalysisInput(LANGUAGE_HU, AnalysisInput.of(Word.of("balmát"))));
         List<MorpherEngineResponse> morpherEngineResponses = morpherSystemResponse.getMorpherEngineResponses();
         assertThat(morpherEngineResponses).hasSize(1);
         MorpherEngineResponse morpherEngineResponse = morpherEngineResponses.get(0);
@@ -207,10 +207,10 @@ public class MorpherSystemTest {
     }
 
     @Test
-    public void testLemmatizeWithExistingLanguage() {
-        LemmatizationInput lemmatizationInput = LemmatizationInput.of(Word.of("almát"));
-        LanguageAwareLemmatizationInput languageAwareLemmatizationInput = new LanguageAwareLemmatizationInput(LANGUAGE_HU, lemmatizationInput);
-        MorpherSystemResponse morpherSystemResponse = this.morpherSystem.lemmatize(languageAwareLemmatizationInput);
+    public void testAnalyzeWithExistingLanguage() {
+        AnalysisInput analysisInput = AnalysisInput.of(Word.of("almát"));
+        LanguageAwareAnalysisInput languageAwareAnalysisInput = new LanguageAwareAnalysisInput(LANGUAGE_HU, analysisInput);
+        MorpherSystemResponse morpherSystemResponse = this.morpherSystem.analyze(languageAwareAnalysisInput);
         Language language = morpherSystemResponse.getLanguage();
         assertThat(language).hasToString("hu");
         List<MorpherEngineResponse> morpherEngineResponses = morpherSystemResponse.getMorpherEngineResponses();
@@ -220,9 +220,9 @@ public class MorpherSystemTest {
     }
 
     @Test
-    public void testLemmatizeWithNonExistentLanguage() {
-        LanguageAwareLemmatizationInput languageAwareLemmatizationInput = new LanguageAwareLemmatizationInput(LANGUAGE_EN, null);
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> this.morpherSystem.lemmatize(languageAwareLemmatizationInput));
+    public void testAnalyzeWithNonExistentLanguage() {
+        LanguageAwareAnalysisInput languageAwareAnalysisInput = new LanguageAwareAnalysisInput(LANGUAGE_EN, null);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> this.morpherSystem.analyze(languageAwareAnalysisInput));
         assertThat(exception).hasMessage("Language en is not present in this system");
     }
 
@@ -274,7 +274,7 @@ public class MorpherSystemTest {
 
         try {
             MorpherSystemMessage morpherSystemMessage = MorpherSystemMessage.newBuilder()
-                    .putEngineMap("hu", Any.pack(ASTRAMethodMessage.newBuilder().build()))
+                    .putEngineMap("hu", Any.pack(ASTRATransformationEngineMessage.newBuilder().build()))
                     .build();
             try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(Files.newOutputStream(tempFile))) {
                 morpherSystemMessage.writeTo(gzipOutputStream);
@@ -307,7 +307,7 @@ public class MorpherSystemTest {
             boolean deserializationResult = resultingMorpherSystem.deserialize(file);
             assertThat(deserializationResult).isTrue();
 
-            MorpherSystemResponse response = resultingMorpherSystem.lemmatize(new LanguageAwareLemmatizationInput(language, LemmatizationInput.of(Word.of("almát"))));
+            MorpherSystemResponse response = resultingMorpherSystem.analyze(new LanguageAwareAnalysisInput(language, AnalysisInput.of(Word.of("almát"))));
             List<MorpherEngineResponse> morpherEngineResponses = response.getMorpherEngineResponses();
             assertThat(morpherEngineResponses).hasSize(1);
             MorpherEngineResponse morpherEngineResponse = morpherEngineResponses.get(0);
@@ -377,7 +377,7 @@ public class MorpherSystemTest {
             boolean result = resultingMorpherSystem.deserialize(file);
             assertThat(result).isFalse();
 
-            MorpherSystemResponse response = resultingMorpherSystem.lemmatize(new LanguageAwareLemmatizationInput(language, LemmatizationInput.of(Word.of("tollat"))));
+            MorpherSystemResponse response = resultingMorpherSystem.analyze(new LanguageAwareAnalysisInput(language, AnalysisInput.of(Word.of("tollat"))));
             List<MorpherEngineResponse> morpherEngineResponses = response.getMorpherEngineResponses();
             assertThat(morpherEngineResponses).hasSize(1);
             MorpherEngineResponse morpherEngineResponse = morpherEngineResponses.get(0);
@@ -447,41 +447,41 @@ public class MorpherSystemTest {
 
     private IMorpherEngine<?> createMorpherEngine(WordPair wordPair, boolean lazy) {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
-            if (clazz.equals(IAbstractMethodFactory.class)) {
+            if (clazz.equals(IAbstractTransformationEngineFactory.class)) {
                 @SuppressWarnings("rawtypes")
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(ASTRAAbstractMethodFactory.class);
-                when(provider.get()).thenReturn(new ASTRAAbstractMethodFactory());
+                when(provider.type()).thenReturn(ASTRAAbstractTransformationEngineFactory.class);
+                when(provider.get()).thenReturn(new ASTRAAbstractTransformationEngineFactory());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
-            if (clazz.equals(IAnalyzerAgent.class)) {
+            if (clazz.equals(ILanguageHandler.class)) {
                 @SuppressWarnings("rawtypes")
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(HunmorphAnalyzerAgent.class);
-                when(provider.get()).thenReturn(new HunmorphAnalyzerAgent());
+                when(provider.type()).thenReturn(HunmorphLanguageHandler.class);
+                when(provider.get()).thenReturn(new HunmorphLanguageHandler());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
             return Stream.empty();
         };
         final ServiceProvider serviceProvider = new ServiceProvider(serviceLoader);
-        final ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        final ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PARALLEL)
                 .fitnessThreshold(FITNESS_THRESHOLD)
                 .maximumNumberOfResponses(MAXIMUM_NUMBER_OF_RESPONSES)
                 .build();
-        MorpherEngineBuilder<IMethodConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<>()
+        MorpherEngineBuilder<ITransformationEngineConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodQualifier(IASTRAMethod.QUALIFIER)
-                .methodConfiguration(configuration)
-                .analyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
+                .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
+                .transformationEngineConfiguration(configuration)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
                 .probabilityCalculator(new MultiplyProbabilityCalculator());
         if (lazy) {
-            morpherEngineBuilder = morpherEngineBuilder.methodHolderFactory(new LazyMorpherMethodHolderFactory());
+            morpherEngineBuilder = morpherEngineBuilder.transformationEngineHolderFactory(new LazyTransformationEngineHolderFactory());
         }
         else {
-            morpherEngineBuilder = morpherEngineBuilder.methodHolderFactory(new EagerMorpherMethodHolderFactory());
+            morpherEngineBuilder = morpherEngineBuilder.transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory());
         }
         IMorpherEngine<?> morpherEngine = morpherEngineBuilder.build();
         if (wordPair != null) {
@@ -533,7 +533,7 @@ public class MorpherSystemTest {
         }
 
         @Override
-        public List<MorpherEngineResponse> lemmatize(LemmatizationInput lemmatizationInput) {
+        public List<MorpherEngineResponse> analyze(AnalysisInput analysisInput) {
             return null;
         }
 
@@ -563,17 +563,17 @@ public class MorpherSystemTest {
         }
 
         @Override
-        public void fromMessage(Any message) throws InvalidProtocolBufferException {
+        public void fromMessage(Any message) {
 
         }
 
         @Override
-        public void saveTo(Path file) throws IOException {
+        public void saveTo(Path file) {
 
         }
 
         @Override
-        public void loadFrom(Path file) throws IOException {
+        public void loadFrom(Path file) {
 
         }
 

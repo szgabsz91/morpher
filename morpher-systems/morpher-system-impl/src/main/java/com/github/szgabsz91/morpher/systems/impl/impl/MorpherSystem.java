@@ -168,24 +168,24 @@
 package com.github.szgabsz91.morpher.systems.impl.impl;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
 import com.github.szgabsz91.morpher.core.io.ICustomDeserializer;
 import com.github.szgabsz91.morpher.core.io.ICustomSerializer;
 import com.github.szgabsz91.morpher.core.io.Serializer;
 import com.github.szgabsz91.morpher.core.model.Corpus;
 import com.github.szgabsz91.morpher.engines.api.IMorpherEngine;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionOrderedInput;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItems;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
 import com.github.szgabsz91.morpher.systems.api.IMorpherSystem;
 import com.github.szgabsz91.morpher.systems.api.model.Language;
+import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareAnalysisInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareCorpus;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareInflectionInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareInflectionOrderedInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareLemmaMap;
-import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareLemmatizationInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwarePreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.systems.api.model.MorpherSystemResponse;
 import com.github.szgabsz91.morpher.systems.impl.converters.MorpherSystemConverter;
@@ -305,17 +305,18 @@ public class MorpherSystem implements IMorpherSystem {
     }
 
     /**
-     * Performs lemmatization using the given {@link LanguageAwareLemmatizationInput} that contains the {@link Language}
-     * and the inflected form of the word.
-     * @param languageAwareLemmatizationInput the {@link LanguageAwareLemmatizationInput} instance
+     * Performs morphological analysis using the given {@link LanguageAwareAnalysisInput} that contains the
+     * {@link Language} and the inflected form of the word.
+     *
+     * @param languageAwareAnalysisInput the {@link LanguageAwareAnalysisInput} instance
      * @return the {@link MorpherSystemResponse} instance
      */
     @Override
-    public MorpherSystemResponse lemmatize(final LanguageAwareLemmatizationInput languageAwareLemmatizationInput) {
-        final Language language = languageAwareLemmatizationInput.getLanguage();
+    public MorpherSystemResponse analyze(final LanguageAwareAnalysisInput languageAwareAnalysisInput) {
+        final Language language = languageAwareAnalysisInput.getLanguage();
         final IMorpherEngine<?> morpherEngine = getMorpherEngine(language);
-        final LemmatizationInput lemmatizationInput = languageAwareLemmatizationInput.getContent();
-        final List<MorpherEngineResponse> morpherEngineResponses = morpherEngine.lemmatize(lemmatizationInput);
+        final AnalysisInput analysisInput = languageAwareAnalysisInput.getContent();
+        final List<MorpherEngineResponse> morpherEngineResponses = morpherEngine.analyze(analysisInput);
         return new MorpherSystemResponse(language, morpherEngineResponses);
     }
 
@@ -351,7 +352,7 @@ public class MorpherSystem implements IMorpherSystem {
     }
 
     /**
-     * Saves the internal state of the system to the given file.
+     * Saves the state of the system to the given file.
      * @param file the file to save the state to
      * @throws IOException if the state cannot be saved
      */
@@ -365,7 +366,7 @@ public class MorpherSystem implements IMorpherSystem {
     }
 
     /**
-     * Loads the internal state of the system from the given file.
+     * Loads the state of the system from the given file.
      * @param file the file to load the state from
      * @throws IOException if the state cannot be loaded
      */

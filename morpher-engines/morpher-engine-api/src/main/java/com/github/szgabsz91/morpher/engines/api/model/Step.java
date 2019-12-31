@@ -173,7 +173,7 @@ import com.github.szgabsz91.morpher.core.model.Word;
 import java.util.Objects;
 
 /**
- * Model class for inflection/lemmatization steps.
+ * Model class for inflection/analysis steps.
  *
  * @author szgabsz91
  */

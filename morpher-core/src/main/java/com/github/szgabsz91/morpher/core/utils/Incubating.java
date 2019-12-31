@@ -174,7 +174,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks classes as interfaces as incubating features that will change in the future.
+ * Marks classes and interfaces as incubating features that will likely change in the future.
  *
  * @author szgabsz91
  */

@@ -1,9 +1,5 @@
 package com.github.szgabsz91.morpher.engines.impl;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.IHunmorphAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.HunmorphAnalyzerAgent;
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
@@ -14,13 +10,17 @@ import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.ProbabilisticStep;
 import com.github.szgabsz91.morpher.engines.impl.impl.MorpherEngine;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.EagerMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.api.factories.IMethodConfiguration;
-import com.github.szgabsz91.morpher.methods.astra.IASTRAMethod;
-import com.github.szgabsz91.morpher.methods.astra.config.ASTRAMethodConfiguration;
-import com.github.szgabsz91.morpher.methods.astra.config.SearcherType;
-import com.github.szgabsz91.morpher.methods.astra.impl.method.ASTRAAbstractMethodFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.EagerTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.IHunmorphLanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.HunmorphLanguageHandler;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.ITransformationEngineConfiguration;
+import com.github.szgabsz91.morpher.transformationengines.astra.IASTRATransformationEngine;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.ASTRATransformationEngineConfiguration;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.SearcherType;
+import com.github.szgabsz91.morpher.transformationengines.astra.impl.transformationengine.ASTRAAbstractTransformationEngineFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,17 +45,17 @@ public class MorpherEngineBuilderTest {
     @SuppressWarnings("rawtypes")
     public void setUp() {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
-            if (clazz.equals(IAbstractMethodFactory.class)) {
+            if (clazz.equals(IAbstractTransformationEngineFactory.class)) {
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(ASTRAAbstractMethodFactory.class);
-                when(provider.get()).thenReturn(new ASTRAAbstractMethodFactory());
+                when(provider.type()).thenReturn(ASTRAAbstractTransformationEngineFactory.class);
+                when(provider.get()).thenReturn(new ASTRAAbstractTransformationEngineFactory());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
-            if (clazz.equals(IAnalyzerAgent.class)) {
+            if (clazz.equals(ILanguageHandler.class)) {
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(HunmorphAnalyzerAgent.class);
-                when(provider.get()).thenReturn(new HunmorphAnalyzerAgent());
+                when(provider.type()).thenReturn(HunmorphLanguageHandler.class);
+                when(provider.get()).thenReturn(new HunmorphLanguageHandler());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
@@ -66,15 +66,15 @@ public class MorpherEngineBuilderTest {
 
     @Test
     public void testBuildWithoutLoading() {
-        ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PREFIX_TREE)
                 .build();
-        MorpherEngineBuilder<IMethodConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<>()
+        MorpherEngineBuilder<ITransformationEngineConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodHolderFactory(new EagerMorpherMethodHolderFactory())
-                .methodQualifier(IASTRAMethod.QUALIFIER)
-                .methodConfiguration(configuration)
-                .analyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
+                .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
+                .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
+                .transformationEngineConfiguration(configuration)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
                 .probabilityCalculator(new MultiplyProbabilityCalculator());
 
         try (IMorpherEngine<?> morpherEngine = morpherEngineBuilder.build()) {
@@ -84,15 +84,15 @@ public class MorpherEngineBuilderTest {
 
     @Test
     public void testBuildWithLoading() {
-        ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PREFIX_TREE)
                 .build();
-        MorpherEngineBuilder<ASTRAMethodConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<ASTRAMethodConfiguration>()
+        MorpherEngineBuilder<ASTRATransformationEngineConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<ASTRATransformationEngineConfiguration>()
                 .serviceProvider(serviceProvider)
-                .methodHolderFactory(new EagerMorpherMethodHolderFactory())
-                .methodQualifier(IASTRAMethod.QUALIFIER)
-                .methodConfiguration(configuration)
-                .analyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
+                .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
+                .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
+                .transformationEngineConfiguration(configuration)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
                 .probabilityCalculator(new MultiplyProbabilityCalculator())
                 .loadFrom(Paths.get("src/test/resources/simple-morpher-engine.pb"));
 
@@ -115,15 +115,15 @@ public class MorpherEngineBuilderTest {
     @Test
     public void testBuildWithLoadingAndNonExistentFolder() {
         Path file = Paths.get("src/test/resources/complex-morpher-engine");
-        ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PREFIX_TREE)
                 .build();
-        MorpherEngineBuilder<IMethodConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<>()
+        MorpherEngineBuilder<ITransformationEngineConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodHolderFactory(new EagerMorpherMethodHolderFactory())
-                .methodQualifier(IASTRAMethod.QUALIFIER)
-                .methodConfiguration(configuration)
-                .analyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
+                .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
+                .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
+                .transformationEngineConfiguration(configuration)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
                 .probabilityCalculator(new MultiplyProbabilityCalculator())
                 .loadFrom(file);
         IllegalStateException exception = assertThrows(IllegalStateException.class, morpherEngineBuilder::build);
@@ -134,30 +134,30 @@ public class MorpherEngineBuilderTest {
     public void testBuildWithNullConfiguration() {
         new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodHolderFactory(new EagerMorpherMethodHolderFactory())
-                .methodQualifier(IASTRAMethod.QUALIFIER)
-                .analyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
+                .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
+                .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
                 .probabilityCalculator(new MultiplyProbabilityCalculator())
                 .build();
     }
 
     @Test
-    public void testBuildWithNullMethodHolderFactory() {
-        MorpherEngineBuilder<IMethodConfiguration> builder = new MorpherEngineBuilder<>()
+    public void testBuildWithNullTransformationEngineHolderFactory() {
+        MorpherEngineBuilder<ITransformationEngineConfiguration> builder = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodQualifier(IASTRAMethod.QUALIFIER)
-                .analyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER);
+                .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER);
         IllegalStateException exception = assertThrows(IllegalStateException.class, builder::build);
-        assertThat(exception).hasMessage("The method holder factory must not be null");
+        assertThat(exception).hasMessage("The transformation engine holder factory must not be null");
     }
 
     @Test
     public void testBuildWithNullProbabilityCalculator() {
-        MorpherEngineBuilder<IMethodConfiguration> builder = new MorpherEngineBuilder<>()
+        MorpherEngineBuilder<ITransformationEngineConfiguration> builder = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodHolderFactory(new EagerMorpherMethodHolderFactory())
-                .methodQualifier(IASTRAMethod.QUALIFIER)
-                .analyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER);
+                .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
+                .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER);
         IllegalStateException exception = assertThrows(IllegalStateException.class, builder::build);
         assertThat(exception).hasMessage("The probability calculator must not be null");
     }
@@ -166,9 +166,9 @@ public class MorpherEngineBuilderTest {
     public void testBuildWithMinimumAggregatedWeightThreshold() {
         double minimumAggregatedWeightThreshold = 2.0;
 
-        MorpherEngineBuilder<IMethodConfiguration> builder = new MorpherEngineBuilder<>()
+        MorpherEngineBuilder<ITransformationEngineConfiguration> builder = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodHolderFactory(new EagerMorpherMethodHolderFactory())
+                .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
                 .probabilityCalculator(new MultiplyProbabilityCalculator())
                 .minimumAggregatedWeightThreshold(minimumAggregatedWeightThreshold);
 

@@ -167,20 +167,20 @@
  */
 package com.github.szgabsz91.morpher.engines.impl.converters;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.io.IConverter;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
 import com.github.szgabsz91.morpher.engines.impl.impl.MorpherEngine;
-import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MinMaxProbabilityCalclator;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.IMorpherMethodHolderFactory;
 import com.github.szgabsz91.morpher.engines.impl.protocolbuffers.MorpherEngineMessage;
 import com.github.szgabsz91.morpher.engines.impl.protocolbuffers.ProbabilityCalculatorTypeMessage;
-import com.github.szgabsz91.morpher.methods.api.IMorpherMethod;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.ITransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholders.ITransformationEngineHolder;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.transformationengines.api.IBidirectionalTransformationEngine;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
 import com.google.protobuf.Any;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.DoubleValue;
@@ -210,7 +210,8 @@ public class MorpherEngineConverter implements IConverter<MorpherEngine, Morpher
     /**
      * Constructor that sets the {@link ServiceProvider} instance and the lazy flag.
      * @param serviceProvider the {@link ServiceProvider} instance
-     * @param lazy flag that indicates if the methods should not be serialized/deserialized (true) or should be (false)
+     * @param lazy flag that indicates if the transformation engines should not be serialized/deserialized (true) or
+     *             should be (false)
      */
     public MorpherEngineConverter(final ServiceProvider serviceProvider, final boolean lazy) {
         this.serviceProvider = serviceProvider;
@@ -232,23 +233,26 @@ public class MorpherEngineConverter implements IConverter<MorpherEngine, Morpher
      */
     @Override
     public MorpherEngineMessage convert(final MorpherEngine morpherEngine) {
-        final String methodHolderFactoryQualifier = morpherEngine.getMethodHolderFactory().getClass().getName();
+        final String transformationEngineHolderFactoryQualifier =
+                morpherEngine.getTransformationEngineHolderFactory().getClass().getName();
 
-        final String abstractMethodFactoryQualifier = toString(morpherEngine.getAbstractMethodFactory());
-        final Any abstractMethodFactoryMessage = Any.pack(morpherEngine.getAbstractMethodFactory().toMessage());
+        final String abstractTransformationEngineFactoryQualifier =
+                toString(morpherEngine.getAbstractTransformationEngineFactory());
+        final Any abstractTransformationEngineFactoryMessage =
+                Any.pack(morpherEngine.getAbstractTransformationEngineFactory().toMessage());
 
-        final String analyzerAgentQualifier = toString(morpherEngine.getAnalyzerAgent());
-        final Any analyzerAgentMessage = Any.pack(morpherEngine.getAnalyzerAgent().toMessage());
+        final String languageHandlerQualifier = toString(morpherEngine.getLanguageHandler());
+        final Any languageHandlerMessage = Any.pack(morpherEngine.getLanguageHandler().toMessage());
 
         final ProbabilityCalculatorTypeMessage probabilityCalculatorType =
                 getProbabilityCalculatorType(morpherEngine.getProbabilityCalculator());
 
         MorpherEngineMessage.Builder morpherEngineMessageBuilder = MorpherEngineMessage.newBuilder()
-                .setMethodHolderFactoryQualifier(methodHolderFactoryQualifier)
-                .setAbstractMethodFactoryQualifier(abstractMethodFactoryQualifier)
-                .setAbstractMethodFactory(abstractMethodFactoryMessage)
-                .setAnalyzerAgentQualifier(analyzerAgentQualifier)
-                .setAnalyzerAgent(analyzerAgentMessage)
+                .setTransformationEngineHolderFactoryQualifier(transformationEngineHolderFactoryQualifier)
+                .setAbstractTransformationEngineFactoryQualifier(abstractTransformationEngineFactoryQualifier)
+                .setAbstractTransformationEngineFactory(abstractTransformationEngineFactoryMessage)
+                .setLanguageHandlerQualifier(languageHandlerQualifier)
+                .setLanguageHandler(languageHandlerMessage)
                 .setProbabilityCalculatorType(probabilityCalculatorType);
 
         final Double minimumAggregatedWeightThreshold = morpherEngine.getMinimumAggregatedWeightThreshold();
@@ -258,18 +262,19 @@ public class MorpherEngineConverter implements IConverter<MorpherEngine, Morpher
         }
 
         if (!this.lazy) {
-            final Map<String, Any> methodMap = morpherEngine.getMethodHolderMap().entrySet()
+            final Map<String, Any> transformationEngineMap = morpherEngine.getTransformationEngineHolderMap().entrySet()
                     .stream()
                     .map(entry -> {
                         final AffixType affixType = entry.getKey();
-                        final IMorpherMethodHolder methodHolder = entry.getValue();
-                        final IMorpherMethod<?> method = methodHolder.get();
-                        methodHolder.clear();
-                        final Any methodMessage = Any.pack(method.toMessage());
-                        return Map.entry(affixType.toString(), methodMessage);
+                        final ITransformationEngineHolder transformationEngineHolder = entry.getValue();
+                        final IBidirectionalTransformationEngine<?> transformationEngine =
+                                transformationEngineHolder.get();
+                        transformationEngineHolder.clear();
+                        final Any transformationEngineMessage = Any.pack(transformationEngine.toMessage());
+                        return Map.entry(affixType.toString(), transformationEngineMessage);
                     })
                     .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
-            morpherEngineMessageBuilder = morpherEngineMessageBuilder.putAllMethodMap(methodMap);
+            morpherEngineMessageBuilder.putAllTransformationEngineMap(transformationEngineMap);
         }
 
         return morpherEngineMessageBuilder.build();
@@ -282,31 +287,33 @@ public class MorpherEngineConverter implements IConverter<MorpherEngine, Morpher
      */
     @Override
     public MorpherEngine convertBack(final MorpherEngineMessage morpherEngineMessage) {
-        final IMorpherMethodHolderFactory morpherMethodHolderFactory = instantiate(
-                morpherEngineMessage.getMethodHolderFactoryQualifier()
+        final ITransformationEngineHolderFactory transformationEngineHolderFactory = instantiate(
+                morpherEngineMessage.getTransformationEngineHolderFactoryQualifier()
         );
 
         @SuppressWarnings("unchecked")
-        final IAbstractMethodFactory<?, ?> abstractMethodFactory = toInstance(
-                IAbstractMethodFactory.class,
-                morpherEngineMessage.getAbstractMethodFactoryQualifier()
+        final IAbstractTransformationEngineFactory<?, ?> abstractTransformationEngineFactory = toInstance(
+                IAbstractTransformationEngineFactory.class,
+                morpherEngineMessage.getAbstractTransformationEngineFactoryQualifier()
         );
         try {
-            abstractMethodFactory.fromMessage(morpherEngineMessage.getAbstractMethodFactory());
+            abstractTransformationEngineFactory.fromMessage(
+                    morpherEngineMessage.getAbstractTransformationEngineFactory()
+            );
         }
         catch (final InvalidProtocolBufferException e) {
-            throw new IllegalStateException("Cannot load abstract method factory", e);
+            throw new IllegalStateException("Cannot load abstract transformation engine factory", e);
         }
 
-        final IAnalyzerAgent<?> analyzerAgent = toInstance(
-                IAnalyzerAgent.class,
-                morpherEngineMessage.getAnalyzerAgentQualifier()
+        final ILanguageHandler<?> languageHandler = toInstance(
+                ILanguageHandler.class,
+                morpherEngineMessage.getLanguageHandlerQualifier()
         );
         try {
-            analyzerAgent.fromMessage(morpherEngineMessage.getAnalyzerAgent());
+            languageHandler.fromMessage(morpherEngineMessage.getLanguageHandler());
         }
         catch (final InvalidProtocolBufferException e) {
-            throw new IllegalStateException("Cannot load analyzer agent", e);
+            throw new IllegalStateException("Cannot load language handler", e);
         }
 
         final IProbabilityCalculator probabilityCalculator =
@@ -316,41 +323,44 @@ public class MorpherEngineConverter implements IConverter<MorpherEngine, Morpher
                 morpherEngineMessage.getMinimumAggregatedWeightThreshold().getValue() :
                 null;
 
-        final Map<AffixType, IMorpherMethodHolder> methodHolderMap;
+        final Map<AffixType, ITransformationEngineHolder> transformationEngineHolderMap;
         if (!this.lazy) {
-            methodHolderMap = morpherEngineMessage.getMethodMapMap().entrySet()
+            transformationEngineHolderMap = morpherEngineMessage.getTransformationEngineMapMap().entrySet()
                     .stream()
                     .map(entry -> {
                         final AffixType affixType = AffixType.of(entry.getKey());
-                        final Any methodMessage = entry.getValue();
-                        final Supplier<IMorpherMethod<?>> bidirectionalFactory =
-                                abstractMethodFactory.getBidirectionalFactory(affixType);
-                        final IMorpherMethod<?> morpherMethod = bidirectionalFactory.get();
+                        final Any transformationEngineMessage = entry.getValue();
+                        @SuppressWarnings("checkstyle:LineLength")
+                        final Supplier<IBidirectionalTransformationEngine<?>> bidirectionalTransformationEngineFactory =
+                                abstractTransformationEngineFactory.getBidirectionalFactory(affixType);
+                        final IBidirectionalTransformationEngine<?> bidirectionalTransformationEngine =
+                                bidirectionalTransformationEngineFactory.get();
                         try {
-                            morpherMethod.fromMessage(methodMessage);
+                            bidirectionalTransformationEngine.fromMessage(transformationEngineMessage);
                         }
                         catch (final InvalidProtocolBufferException e) {
-                            throw new IllegalStateException("Cannot load method for " + affixType, e);
+                            throw new IllegalStateException("Cannot load transformation engine for " + affixType, e);
                         }
-                        final IMorpherMethodHolder methodHolder = morpherMethodHolderFactory.create(
+                        @SuppressWarnings("checkstyle:LineLength")
+                        final ITransformationEngineHolder transformationEngineHolder = transformationEngineHolderFactory.create(
                                 affixType,
-                                abstractMethodFactory,
-                                morpherMethod
+                                abstractTransformationEngineFactory,
+                                bidirectionalTransformationEngine
                         );
-                        return Map.entry(affixType, methodHolder);
+                        return Map.entry(affixType, transformationEngineHolder);
                     })
                     .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
         else {
-            methodHolderMap = new HashMap<>();
+            transformationEngineHolderMap = new HashMap<>();
         }
 
         return new MorpherEngine(
                 this.serviceProvider,
-                methodHolderMap,
-                morpherMethodHolderFactory,
-                abstractMethodFactory,
-                analyzerAgent,
+                transformationEngineHolderMap,
+                transformationEngineHolderFactory,
+                abstractTransformationEngineFactory,
+                languageHandler,
                 probabilityCalculator,
                 minimumAggregatedWeightThreshold
         );

@@ -168,20 +168,20 @@
 package com.github.szgabsz91.morpher.engines.impl.impl.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
-import com.github.szgabsz91.morpher.methods.api.model.ProbabilisticWord;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
+import com.github.szgabsz91.morpher.transformationengines.api.model.ProbabilisticWord;
 
 import java.util.Objects;
 
 /**
  * Model class that represents a step candidate.
  *
- * <p>When finding the appropriate route in the network of affix types, we create step candidates choose the next
+ * <p>When finding the appropriate affix type chain, we create step candidates to choose the next
  * candidate to process among them, until we find a route from a lemma to the fully inflected form. Therefore a
  * candidate contains every information about the route already processed.</p>
  *
- * <p>After we found one or more full routes, we create the final response objects from these candidates.</p>
+ * <p>After we found one or more full affix type chains, we create the final response objects from these candidates.</p>
  *
  * @author szgabsz91
  */
