@@ -4,6 +4,7 @@ apply from: "$rootDir/gradle/test.gradle"
 apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
+    displayName = 'Morpher Engine API'
     moduleName = 'com.github.szgabsz91.morpher.engines.api'
 
     testCoverageLimits = [
@@ -16,5 +17,5 @@ ext {
 
 dependencies {
     compile project(':morpher-core')
-    compile project(':morpher-language-handlers:morpher-language-handler-api')
+    compile project(':morpher-language-handler-api')
 }

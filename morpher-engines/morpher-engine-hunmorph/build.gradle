@@ -4,6 +4,7 @@ apply from: "$rootDir/gradle/test.gradle"
 apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
+    displayName = 'Morpher Engine Hunmorph'
     moduleName = 'com.github.szgabsz91.morpher.engines.hunmorph'
 
     testCoverageLimits = [
@@ -16,7 +17,7 @@ ext {
 
 dependencies {
     compile project(':morpher-core')
-    compile project(':morpher-engines:morpher-engine-api')
-    compile project(':morpher-language-handlers:morpher-language-handler-api')
-    compile project(':morpher-language-handlers:morpher-language-handler-hunmorph')
+    compile project(':morpher-engine-api')
+    compile project(':morpher-language-handler-api')
+    compile project(':morpher-language-handler-hunmorph')
 }

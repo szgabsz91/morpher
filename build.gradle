@@ -3,9 +3,15 @@ buildscript {
         morpherGroupId = 'com.github.szgabsz91'
         morpherVersion = '1.0.0-SNAPSHOT'
 
+        bintrayKey = System.getenv('BINTRAY_KEY')
+        mavenCentralPassword = System.getenv('MAVEN_CENTRAL_PASSWORD')
+        buildNumber = System.getenv('CIRCLE_BUILD_NUM')
+
         javaVersion = '13'
 
+        buildInfoExtractorGradleVersion = 'latest.release'
         checkstyleVersion = '8.24'
+        gradleBintrayPluginVersion = '1.8.4'
         guavaVersion = '28.1-jre'
         jacocoVersion = '0.8.4'
         pmdVersion = '6.18.0'
@@ -34,6 +40,7 @@ buildscript {
 
     repositories {
         mavenCentral()
+        jcenter()
 
         maven {
             url 'https://plugins.gradle.org/m2'
@@ -47,6 +54,8 @@ buildscript {
         // - https://github.com/spotbugs/spotbugs-gradle-plugin/issues/120
         // - https://github.com/GoogleContainerTools/jib/issues/591
         classpath "com.google.guava:guava:${guavaVersion}"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${gradleBintrayPluginVersion}"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:${buildInfoExtractorGradleVersion}"
     }
 }
 
@@ -58,9 +67,12 @@ subprojects {
     apply from: "$rootDir/gradle/static-code-analysis.gradle"
     apply from: "$rootDir/gradle/maven.gradle"
     apply from: "$rootDir/gradle/ide.gradle"
+    apply from: "$rootDir/gradle/bintray.gradle"
 
     repositories {
         mavenLocal()
         jcenter()
     }
 }
+
+bintrayPublish.enabled = false
