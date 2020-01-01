@@ -167,15 +167,15 @@
  */
 package com.github.szgabsz91.morpher.engines.api.model;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
 
 import java.util.List;
 
 /**
- * Model class that represents an inflection/lemmatization response of the Morpher engine.
+ * Model class that represents an inflection/analysis response of the Morpher engine.
  *
- * <p>The response contains the input and output words, the part-of-speech tag of the lemma and its probability,
+ * <p>The response contains the input and output words, the part of speech tag of the lemma and its probability,
  * the mode, the probability of the response and the individual steps.</p>
  *
  * @author szgabsz91
@@ -192,13 +192,13 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
     private double aggregatedWeight;
 
     /**
-     * Constructor that sets the mode, the input and output words, the part-of-speech tag of the lemma and its
+     * Constructor that sets the mode, the input and output words, the part of speech tag of the lemma and its
      * affix type chain probability and the list of steps.
      *
-     * @param mode the mode (inflection or lemmatization)
+     * @param mode the mode (inflection or analysis)
      * @param input the input word
      * @param output the output word
-     * @param pos the part-of-speech tag of the lemma and its probability
+     * @param pos the part of speech tag of the lemma and its probability
      * @param affixTypeChainProbability the probability of the affix type chain in the response
      * @param steps the list of steps
      */
@@ -221,7 +221,7 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
      * Returns a new inflection response with the given properties.
      * @param input the input word
      * @param output the output word
-     * @param pos the part-of-speech tag of the lemma and its probability
+     * @param pos the part of speech tag of the lemma and its probability
      * @param affixTypeChainProbability the probability of the affix type chain in the response
      * @param steps the list of steps
      * @return the newly created inflection response
@@ -236,26 +236,26 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
     }
 
     /**
-     * Returns a new lemmatization response with the given properties.
+     * Returns a new analysis response with the given properties.
      * @param input the input word
      * @param output the output word
-     * @param pos the part-of-speech tag of the lemma and its probability
+     * @param pos the part of speech tag of the lemma and its probability
      * @param affixTypeChainProbability the probability of the affix type chain in the response
      * @param steps the list of steps
-     * @return the newly created lemmatization response
+     * @return the newly created analysis response
      */
-    public static MorpherEngineResponse lemmatizationResponse(
+    public static MorpherEngineResponse analysisResponse(
             final Word input,
             final Word output,
             final ProbabilisticAffixType pos,
             final double affixTypeChainProbability,
             final List<ProbabilisticStep> steps) {
-        return new MorpherEngineResponse(Mode.LEMMATIZATION, input, output, pos, affixTypeChainProbability, steps);
+        return new MorpherEngineResponse(Mode.ANALYSIS, input, output, pos, affixTypeChainProbability, steps);
     }
 
     /**
-     * Returns the mode, either inflection or lemmatization.
-     * @return the mode, either inflection or lemmatization
+     * Returns the mode, either inflection or analysis.
+     * @return the mode, either inflection or analysis
      */
     public Mode getMode() {
         return mode;
@@ -278,8 +278,8 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
     }
 
     /**
-     * Returns the part-of-speech tag of the lemma and its probability.
-     * @return the part-of-speech tag of the lemma and its probability
+     * Returns the part of speech tag of the lemma and its probability.
+     * @return the part of speech tag of the lemma and its probability
      */
     public ProbabilisticAffixType getPos() {
         return pos;
@@ -336,7 +336,7 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
     /**
      * Compares two responses.
      * @param other the other response
-     * @return negative number if this response has a heigher aggregated weight, positive if the other,
+     * @return negative number if this response has a higher aggregated weight, positive if the other,
      *         and zero if they are equal
      */
     @Override

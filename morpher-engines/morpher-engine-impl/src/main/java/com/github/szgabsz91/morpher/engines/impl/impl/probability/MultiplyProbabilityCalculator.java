@@ -179,6 +179,7 @@ public class MultiplyProbabilityCalculator implements IProbabilityCalculator {
     /**
      * The result will be the multiplication of the normalized affix type chain probability and
      * the output word probabilities of the steps.
+     *
      * @param response the {@link MorpherEngineResponse}
      * @return the aggregated probability
      */

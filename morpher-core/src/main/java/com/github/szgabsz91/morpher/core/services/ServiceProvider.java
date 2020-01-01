@@ -196,7 +196,7 @@ public class ServiceProvider {
     }
 
     /**
-     * Returns a new insance of the given service class with the given qualifier.
+     * Returns a new instance of the given service class with the given qualifier.
      *
      * <p>If the service class is not found or it has no qualifiers or no service classes with the given qualifier is
      * found, an {@link IllegalArgumentException} is thrown.</p>
@@ -230,7 +230,7 @@ public class ServiceProvider {
     }
 
     /**
-     * Returns a new insance of the given service class.
+     * Returns a new instance of the given service class.
      *
      * <p>If the service class is not found or there are multiple implementation classes,
      * an {@link IllegalArgumentException} is thrown.</p>

@@ -173,7 +173,7 @@ import com.github.szgabsz91.morpher.core.model.Word;
 import java.util.Objects;
 
 /**
- * Model class for inflection/lemmatization steps with probability.
+ * Model class for inflection/analysis steps with probability.
  *
  * @author szgabsz91
  */

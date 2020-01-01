@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package com.github.szgabsz91.morpher.transformationengines.dictionary.protocolbuffers;
+
+option java_multiple_files = true;
+option java_package = "com.github.szgabsz91.morpher.transformationengines.dictionary.protocolbuffers";
+option java_outer_classname = "DictionaryProtocolBuffers";
+
+import "com/github/szgabsz91/morpher/core/protocolbuffers/morpher_core.proto";
+
+message DictionaryTransformationEngineMessage {
+    string affixType = 1;
+    repeated com.github.szgabsz91.morpher.core.protocolbuffers.WordPairMessage wordPairs = 2;
+}
+
+message DictionaryTransformationEngineConfigurationMessage {
+
+}

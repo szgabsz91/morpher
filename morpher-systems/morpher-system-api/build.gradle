@@ -15,6 +15,6 @@ ext {
 
 dependencies {
     compile project(':morpher-core')
-    compile project(':morpher-analyzer-agents:morpher-analyzer-agent-api')
+    compile project(':morpher-language-handlers:morpher-language-handler-api')
     compile project(':morpher-engines:morpher-engine-api')
 }

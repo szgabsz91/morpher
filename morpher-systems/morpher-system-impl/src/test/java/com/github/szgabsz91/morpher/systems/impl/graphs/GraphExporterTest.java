@@ -39,7 +39,7 @@ public class GraphExporterTest {
 
         routeMap = new HashMap<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(GraphExporterTest.class.getResourceAsStream("affix-type-orders.csv"), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(GraphExporterTest.class.getResourceAsStream("affix-type-chains.csv"), StandardCharsets.UTF_8))) {
             routeMap = reader
                     .lines()
                     .map(line -> {

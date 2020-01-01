@@ -1,9 +1,5 @@
 package com.github.szgabsz91.morpher.engines.impl.sorting;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.AnnotationTokenizerResult;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.HunmorphAnalyzerAgent;
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWordPair;
 import com.github.szgabsz91.morpher.core.model.Word;
@@ -11,23 +7,27 @@ import com.github.szgabsz91.morpher.core.model.WordPair;
 import com.github.szgabsz91.morpher.core.services.ClassBasedServiceProvider;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
 import com.github.szgabsz91.morpher.core.utils.Timer;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionOrderedInput;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItem;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.engines.api.model.Step;
 import com.github.szgabsz91.morpher.engines.impl.MorpherEngineBuilder;
 import com.github.szgabsz91.morpher.engines.impl.impl.MorpherEngine;
-import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.EagerMorpherMethodHolder;
-import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.EagerMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.engines.impl.sorting.components.CharacterAbstractMethodFactory;
-import com.github.szgabsz91.morpher.engines.impl.sorting.components.CharacterMorpherMethod;
+import com.github.szgabsz91.morpher.engines.impl.impl.transformationengineholders.EagerTransformationEngineHolder;
+import com.github.szgabsz91.morpher.engines.impl.sorting.components.CharacterAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.engines.impl.sorting.components.CharacterTransformationEngine;
 import com.github.szgabsz91.morpher.engines.impl.sorting.model.GeneratedItem;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.EagerTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholders.ITransformationEngineHolder;
 import com.github.szgabsz91.morpher.engines.impl.utils.ExcludeDuringBuild;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.AnnotationTokenizerResult;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.HunmorphLanguageHandler;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
 import org.apache.commons.text.RandomStringGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -75,28 +75,28 @@ public class MorpherEngineSortingTest {
         random = new Random();
 
         final Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
-            if (clazz.equals(IAbstractMethodFactory.class)) {
-                ServiceLoader.Provider<?> abstractMethodFactoryProvider = new ClassBasedServiceProvider<>(CharacterAbstractMethodFactory.class);
-                return Stream.of(abstractMethodFactoryProvider);
+            if (clazz.equals(IAbstractTransformationEngineFactory.class)) {
+                ServiceLoader.Provider<?> abstractTransformationEngineFactoryProvider = new ClassBasedServiceProvider<>(CharacterAbstractTransformationEngineFactory.class);
+                return Stream.of(abstractTransformationEngineFactoryProvider);
             }
-            else if (clazz.equals(IAnalyzerAgent.class)) {
-                ServiceLoader.Provider<?> analyzerAgentProvider = new ClassBasedServiceProvider<>(HunmorphAnalyzerAgent.class);
-                return Stream.of(analyzerAgentProvider);
+            else if (clazz.equals(ILanguageHandler.class)) {
+                ServiceLoader.Provider<?> languageHandlerProvider = new ClassBasedServiceProvider<>(HunmorphLanguageHandler.class);
+                return Stream.of(languageHandlerProvider);
             }
             throw new IllegalArgumentException("Cannot load service for class " + clazz.getName());
         };
         final ServiceProvider serviceProvider = new ServiceProvider(serviceLoader);
         this.engine = (MorpherEngine) new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodHolderFactory(new EagerMorpherMethodHolderFactory())
+                .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
                 .probabilityCalculator(new MultiplyProbabilityCalculator())
                 .build();
 
         // Training
-        for (String letter : CharacterMorpherMethod.ALPHABET) {
+        for (String letter : CharacterTransformationEngine.ALPHABET) {
             AffixType affixType = AffixType.of(letter);
-            IMorpherMethodHolder methodHolder = new EagerMorpherMethodHolder(new CharacterMorpherMethod(letter, random));
-            this.engine.getMethodHolderMap().put(affixType, methodHolder);
+            ITransformationEngineHolder transformationEngineHolder = new EagerTransformationEngineHolder(new CharacterTransformationEngine(letter, random));
+            this.engine.getTransformationEngineHolderMap().put(affixType, transformationEngineHolder);
         }
     }
 
@@ -134,8 +134,8 @@ public class MorpherEngineSortingTest {
                     .map(index -> reversedAffixTypes.size() - index - 1)
                     .mapToObj(reversedAffixTypes::get)
                     .collect(toList());
-            LemmatizationInput lemmatizationInput = LemmatizationInput.of(input);
-            List<MorpherEngineResponse> responses = timer.measure(() -> this.engine.lemmatize(lemmatizationInput));
+            AnalysisInput analysisInput = AnalysisInput.of(input);
+            List<MorpherEngineResponse> responses = timer.measure(() -> this.engine.analyze(analysisInput));
             assertThat(responses).hasSize(1);
             MorpherEngineResponse response = responses.get(0);
             List<AffixType> affixTypes = response.getSteps()
@@ -163,9 +163,7 @@ public class MorpherEngineSortingTest {
                     .mapToObj(character -> Character.toString((char) character))
                     .sorted()
                     .collect(toList());
-            String sortedString = characters
-                    .stream()
-                    .collect(joining());
+            String sortedString = String.join("", characters);
             Word sortedWord = Word.of(sortedString);
             List<String> uniqueCharacters = characters
                     .stream()

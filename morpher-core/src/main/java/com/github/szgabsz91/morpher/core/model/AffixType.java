@@ -174,27 +174,19 @@ package com.github.szgabsz91.morpher.core.model;
  */
 public final class AffixType {
 
-    private final String token;
+    private final String tag;
 
-    private AffixType(final String token) {
-        this.token = token;
+    private AffixType(final String tag) {
+        this.tag = tag;
     }
 
     /**
-     * Wraps the given token in an affix type.
-     * @param token the token
+     * Wraps the given tag in an affix type.
+     * @param tag the tag of the affix type
      * @return the affix type
      */
-    public static AffixType of(final String token) {
-        return new AffixType(token);
-    }
-
-    /**
-     * Returns the token.
-     * @return the token
-     */
-    public String getToken() {
-        return token;
+    public static AffixType of(final String tag) {
+        return new AffixType(tag);
     }
 
     /**
@@ -211,7 +203,7 @@ public final class AffixType {
             return false;
         }
         final AffixType affixType = (AffixType) other;
-        return token.equals(affixType.token);
+        return tag.equals(affixType.tag);
     }
 
     /**
@@ -221,7 +213,7 @@ public final class AffixType {
      */
     @Override
     public int hashCode() {
-        return token.hashCode();
+        return tag.hashCode();
     }
 
     /**
@@ -231,7 +223,7 @@ public final class AffixType {
      */
     @Override
     public String toString() {
-        return token;
+        return tag;
     }
 
 }

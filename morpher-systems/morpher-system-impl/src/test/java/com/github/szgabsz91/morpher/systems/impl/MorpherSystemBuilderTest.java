@@ -1,26 +1,26 @@
 package com.github.szgabsz91.morpher.systems.impl;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.IHunmorphAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.HunmorphAnalyzerAgent;
 import com.github.szgabsz91.morpher.core.model.Corpus;
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.core.model.WordPair;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
 import com.github.szgabsz91.morpher.engines.api.IMorpherEngine;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.impl.MorpherEngineBuilder;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.EagerMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.astra.IASTRAMethod;
-import com.github.szgabsz91.morpher.methods.astra.config.ASTRAMethodConfiguration;
-import com.github.szgabsz91.morpher.methods.astra.config.SearcherType;
-import com.github.szgabsz91.morpher.methods.astra.impl.method.ASTRAAbstractMethodFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.EagerTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.IHunmorphLanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.HunmorphLanguageHandler;
 import com.github.szgabsz91.morpher.systems.api.IMorpherSystem;
 import com.github.szgabsz91.morpher.systems.api.model.Language;
-import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareLemmatizationInput;
+import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareAnalysisInput;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.astra.IASTRATransformationEngine;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.ASTRATransformationEngineConfiguration;
+import com.github.szgabsz91.morpher.transformationengines.astra.config.SearcherType;
+import com.github.szgabsz91.morpher.transformationengines.astra.impl.transformationengine.ASTRAAbstractTransformationEngineFactory;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.NoSuchFileException;
@@ -48,7 +48,7 @@ public class MorpherSystemBuilderTest {
                 .build();
 
         // HU
-        List<MorpherEngineResponse> huResponses = morpherSystem.lemmatize(new LanguageAwareLemmatizationInput(Language.of("hu"), LemmatizationInput.of(Word.of("almát")))).getMorpherEngineResponses();
+        List<MorpherEngineResponse> huResponses = morpherSystem.analyze(new LanguageAwareAnalysisInput(Language.of("hu"), AnalysisInput.of(Word.of("almát")))).getMorpherEngineResponses();
         assertThat(huResponses).hasSize(1);
         MorpherEngineResponse huResponse = huResponses.get(0);
         assertThat(huResponse.getOutput()).hasToString("alma");
@@ -62,7 +62,7 @@ public class MorpherSystemBuilderTest {
                 .build();
 
         // HU
-        List<MorpherEngineResponse> huResponses = morpherSystem.lemmatize(new LanguageAwareLemmatizationInput(Language.of("hu"), LemmatizationInput.of(Word.of("almát")))).getMorpherEngineResponses();
+        List<MorpherEngineResponse> huResponses = morpherSystem.analyze(new LanguageAwareAnalysisInput(Language.of("hu"), AnalysisInput.of(Word.of("almát")))).getMorpherEngineResponses();
         assertThat(huResponses).hasSize(1);
         MorpherEngineResponse huResponse = huResponses.get(0);
         assertThat(huResponse.getOutput()).hasToString("alma");
@@ -84,36 +84,36 @@ public class MorpherSystemBuilderTest {
 
     private IMorpherEngine<?> createMorpherEngine(WordPair wordPair) {
         Function<Class<?>, Stream<? extends ServiceLoader.Provider<?>>> serviceLoader = clazz -> {
-            if (clazz.equals(IAbstractMethodFactory.class)) {
+            if (clazz.equals(IAbstractTransformationEngineFactory.class)) {
                 @SuppressWarnings("rawtypes")
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(ASTRAAbstractMethodFactory.class);
-                when(provider.get()).thenReturn(new ASTRAAbstractMethodFactory());
+                when(provider.type()).thenReturn(ASTRAAbstractTransformationEngineFactory.class);
+                when(provider.get()).thenReturn(new ASTRAAbstractTransformationEngineFactory());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
-            if (clazz.equals(IAnalyzerAgent.class)) {
+            if (clazz.equals(ILanguageHandler.class)) {
                 @SuppressWarnings("rawtypes")
                 ServiceLoader.Provider provider = mock(ServiceLoader.Provider.class);
-                when(provider.type()).thenReturn(HunmorphAnalyzerAgent.class);
-                when(provider.get()).thenReturn(new HunmorphAnalyzerAgent());
+                when(provider.type()).thenReturn(HunmorphLanguageHandler.class);
+                when(provider.get()).thenReturn(new HunmorphLanguageHandler());
                 return Stream.<ServiceLoader.Provider<?>>of(provider);
             }
 
             return Stream.empty();
         };
         final ServiceProvider serviceProvider = new ServiceProvider(serviceLoader);
-        final ASTRAMethodConfiguration configuration = new ASTRAMethodConfiguration.Builder()
+        final ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
                 .searcherType(SearcherType.PARALLEL)
                 .fitnessThreshold(FITNESS_THRESHOLD)
                 .maximumNumberOfResponses(MAXIMUM_NUMBER_OF_RESPONSES)
                 .build();
         IMorpherEngine<?> morpherEngine = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
-                .methodHolderFactory(new EagerMorpherMethodHolderFactory())
-                .methodQualifier(IASTRAMethod.QUALIFIER)
-                .methodConfiguration(configuration)
-                .analyzerAgentQualifier(IHunmorphAnalyzerAgent.QUALIFIER)
+                .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
+                .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
+                .transformationEngineConfiguration(configuration)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
                 .probabilityCalculator(new MultiplyProbabilityCalculator())
                 .build();
         if (wordPair != null) {

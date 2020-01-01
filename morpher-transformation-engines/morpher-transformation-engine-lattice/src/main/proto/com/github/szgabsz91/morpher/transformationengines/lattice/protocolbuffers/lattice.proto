@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package com.github.szgabsz91.morpher.transformationengines.lattice.protocolbuffers;
+
+option java_multiple_files = true;
+option java_package = "com.github.szgabsz91.morpher.transformationengines.lattice.protocolbuffers";
+option java_outer_classname = "LatticeProtocolBuffers";
+
+import "com/github/szgabsz91/morpher/transformationengines/api/protocolbuffers/transformationengine_api.proto";
+
+message LatticeTransformationEngineMessage {
+    bool unidirectional = 1;
+    string affixType = 2;
+    TrainingSetProcessorMessage forwardsTrainingSetProcessor = 3;
+    LatticeBuilderMessage forwardsLatticeBuilder = 4;
+    TrainingSetProcessorMessage backwardsTrainingSetProcessor = 5;
+    LatticeBuilderMessage backwardsLatticeBuilder = 6;
+}
+
+message TrainingSetProcessorMessage {
+    CostCalculatorTypeMessage costCalculatorType = 1;
+    CharacterRepositoryTypeMessage characterRepositoryType = 2;
+    WordConverterTypeMessage wordConverterType = 3;
+    int32 maximalContextSize = 4;
+    repeated TransformationListMessage transformationLists = 5;
+    map<int32, int64> frequencyMap = 6;
+}
+
+message TransformationListMessage {
+    repeated TransformationMessage transformations = 1;
+}
+
+message LatticeBuilderMessage {
+    CharacterRepositoryTypeMessage characterRepositoryType = 1;
+    WordConverterTypeMessage wordConverterType = 2;
+    LatticeBuilderTypeMessage latticeBuilderType = 3;
+    bool skipFrequencyCalculation = 4;
+    bool skipDominantRuleSelection = 5;
+    LatticeBuilderMessage internalLatticeBuilder1 = 6;
+    LatticeBuilderMessage internalLatticeBuilder2 = 7;
+    LatticeMessage lattice = 8;
+}
+
+message LatticeTransformationEngineConfigurationMessage {
+    LatticeBuilderTypeMessage latticeBuilderType = 1;
+    WordConverterTypeMessage wordConverterType = 2;
+    CostCalculatorTypeMessage costCalculatorType = 3;
+    CharacterRepositoryTypeMessage characterRepositoryType = 4;
+    int32 maximalContextSize = 5;
+}
+
+enum CharacterRepositoryTypeMessage {
+    SIMPLE = 0;
+    ATTRIBUTED = 1;
+}
+
+enum CostCalculatorTypeMessage {
+    DEFAULT = 0;
+    ATTRIBUTE_BASED = 1;
+}
+
+enum WordConverterTypeMessage {
+    IDENTITY = 0;
+    DOUBLE_CONSONANT = 1;
+}
+
+enum LatticeBuilderTypeMessage {
+    COMPLETE = 0;
+    CONSISTENT = 1;
+    MAXIMAL_CONSISTENT = 2;
+    MINIMAL = 3;
+}
+
+message LatticeMessage {
+    repeated NodeMessage node = 1;
+    map<int32, NeighborhoodListMessage> neighborhood = 2;
+}
+
+message NeighborhoodListMessage {
+    repeated int32 neighbor = 1;
+}
+
+message NodeMessage {
+    repeated com.github.szgabsz91.morpher.transformationengines.api.protocolbuffers.CharacterMessage prefix = 1;
+    repeated com.github.szgabsz91.morpher.transformationengines.api.protocolbuffers.CharacterMessage core = 2;
+    repeated com.github.szgabsz91.morpher.transformationengines.api.protocolbuffers.CharacterMessage postfix = 3;
+    PositionMessage frontPosition = 4;
+    PositionMessage backPosition = 5;
+    repeated TransformationMessage transformation = 6;
+    bool inconsistent = 7;
+    int64 level = 8;
+    int64 frequency = 9;
+    string type = 10;
+}
+
+message PositionMessage {
+    int32 position = 1;
+}
+
+message TransformationMessage {
+    string type = 1;
+    repeated string change = 2;
+}

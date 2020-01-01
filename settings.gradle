@@ -2,15 +2,15 @@ rootProject.name = 'morpher'
 
 include 'morpher-core'
 
-include 'morpher-methods:morpher-method-api'
-include 'morpher-methods:morpher-method-astra'
-include 'morpher-methods:morpher-method-dictionary'
-include 'morpher-methods:morpher-method-fst'
-include 'morpher-methods:morpher-method-lattice'
-include 'morpher-methods:morpher-method-tasr'
+include 'morpher-transformation-engines:morpher-transformation-engine-api'
+include 'morpher-transformation-engines:morpher-transformation-engine-astra'
+include 'morpher-transformation-engines:morpher-transformation-engine-dictionary'
+include 'morpher-transformation-engines:morpher-transformation-engine-fst'
+include 'morpher-transformation-engines:morpher-transformation-engine-lattice'
+include 'morpher-transformation-engines:morpher-transformation-engine-tasr'
 
-include 'morpher-analyzer-agents:morpher-analyzer-agent-api'
-include 'morpher-analyzer-agents:morpher-analyzer-agent-hunmorph'
+include 'morpher-language-handlers:morpher-language-handler-api'
+include 'morpher-language-handlers:morpher-language-handler-hunmorph'
 
 include 'morpher-engines:morpher-engine-api'
 include 'morpher-engines:morpher-engine-impl'

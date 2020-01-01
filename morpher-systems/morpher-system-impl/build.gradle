@@ -23,8 +23,8 @@ dependencies {
     runtime("ch.qos.logback:logback-core:${logbackVersion}")
     runtime("ch.qos.logback:logback-classic:${logbackVersion}")
 
-    testCompile project(':morpher-methods:morpher-method-astra')
-    testCompile project(':morpher-analyzer-agents:morpher-analyzer-agent-hunmorph')
+    testCompile project(':morpher-transformation-engines:morpher-transformation-engine-astra')
+    testCompile project(':morpher-language-handlers:morpher-language-handler-hunmorph')
     testCompile project(':morpher-engines:morpher-engine-impl')
     testCompile project(':morpher-engines:morpher-engine-hunmorph')
     testCompile("com.google.code.gson:gson:${gsonVersion}")

@@ -8,13 +8,13 @@ public class ModeTest {
 
     @Test
     public void testValues() {
-        assertThat(Mode.values()).contains(Mode.INFLECTION, Mode.LEMMATIZATION);
+        assertThat(Mode.values()).contains(Mode.INFLECTION, Mode.ANALYSIS);
     }
 
     @Test
     public void testValueOf() {
         assertThat(Mode.valueOf("INFLECTION")).isEqualTo(Mode.INFLECTION);
-        assertThat(Mode.valueOf("LEMMATIZATION")).isEqualTo(Mode.LEMMATIZATION);
+        assertThat(Mode.valueOf("ANALYSIS")).isEqualTo(Mode.ANALYSIS);
     }
 
 }

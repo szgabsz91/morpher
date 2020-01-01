@@ -169,7 +169,7 @@ package com.github.szgabsz91.morpher.core.io;
 
 /**
  * Converter interface that defines the contract of converting a certain enumeration type to another enumeration type,
- * as well as converting implemenation instances back and forth to and from enumeration types.
+ * as well as converting implementation instances back and forth to and from enumeration types.
  *
  * @author szgabsz91
  *

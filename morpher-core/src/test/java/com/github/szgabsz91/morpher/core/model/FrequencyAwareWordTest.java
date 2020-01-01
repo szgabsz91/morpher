@@ -58,7 +58,7 @@ public class FrequencyAwareWordTest {
     }
 
     @Test
-    public void tetHashCode() {
+    public void testHashCode() {
         FrequencyAwareWord frequencyAwareWord = FrequencyAwareWord.of(Word.of("word"), 2);
         int result = frequencyAwareWord.hashCode();
         assertThat(result).isEqualTo(Objects.hash(frequencyAwareWord.getWord(), frequencyAwareWord.getFrequency()));

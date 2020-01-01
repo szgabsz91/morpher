@@ -1,9 +1,9 @@
 package com.github.szgabsz91.morpher.engines.impl.impl.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
-import com.github.szgabsz91.morpher.methods.api.model.ProbabilisticWord;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
+import com.github.szgabsz91.morpher.transformationengines.api.model.ProbabilisticWord;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

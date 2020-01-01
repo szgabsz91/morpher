@@ -176,7 +176,7 @@ import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareCorpus;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareInflectionInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareInflectionOrderedInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareLemmaMap;
-import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareLemmatizationInput;
+import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareAnalysisInput;
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwarePreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.systems.api.model.MorpherSystemResponse;
 
@@ -232,12 +232,13 @@ public interface IMorpherSystem extends AutoCloseable, ISavable, ICustomSerializ
     MorpherSystemResponse inflect(LanguageAwareInflectionOrderedInput languageAwareInflectionOrderedInput);
 
     /**
-     * Performs lemmatization using the given {@link LanguageAwareLemmatizationInput} that contains the {@link Language}
-     * and the inflected form of the word.
-     * @param languageAwareLemmatizationInput the {@link LanguageAwareLemmatizationInput} instance
+     * Performs morphological analysis using the given {@link LanguageAwareAnalysisInput} that contains the
+     * {@link Language} and the inflected form of the word.
+     *
+     * @param languageAwareAnalysisInput the {@link LanguageAwareAnalysisInput} instance
      * @return the {@link MorpherSystemResponse} instance
      */
-    MorpherSystemResponse lemmatize(LanguageAwareLemmatizationInput languageAwareLemmatizationInput);
+    MorpherSystemResponse analyze(LanguageAwareAnalysisInput languageAwareAnalysisInput);
 
     /**
      * Returns the set of supported {@link Language}s.

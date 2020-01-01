@@ -1,0 +1,20 @@
+description = 'Language handler API contains the core interfaces and classes for language handler implementations'
+
+apply from: "$rootDir/gradle/test.gradle"
+
+ext {
+    moduleName = 'com.github.szgabsz91.morpher.languagehandlers.api'
+
+    testCoverageLimits = [
+        instruction: 100.0,
+        line: 100.0,
+        branch: 100.0,
+        class: 100.0
+    ]
+}
+
+dependencies {
+    compile project(':morpher-core')
+
+    compile("com.google.protobuf:protobuf-java:${protobufVersion}")
+}

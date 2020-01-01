@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package com.github.szgabsz91.morpher.languagehandlers.hunmorph.protocolbuffers;
+
+option java_multiple_files = true;
+option java_package = "com.github.szgabsz91.morpher.languagehandlers.hunmorph.protocolbuffers";
+option java_outer_classname = "HunmorphLanguageHandlerProtocolBuffers";
+
+message HunmorphLanguageHandlerMessage {
+    map<string, AnnotationTokenizerResultListMessage> annotationTokenizerResultMap = 1;
+    string markovModelClassName = 2;
+    MarkovModelMessage markovModel = 3;
+    map<string, POSCollection> lemmaMap = 4;
+}
+
+message AnnotationTokenizerResultListMessage {
+    repeated AnnotationTokenizerResultMessage annotationTokenizerResults = 1;
+}
+
+message AnnotationTokenizerResultMessage {
+    string expression = 1;
+    string grammaticalForm = 2;
+    string lemma = 3;
+    repeated string affixTypes = 4;
+    int32 frequency = 5;
+}
+
+message SuffixProbabilityMapMessage {
+    map<string, int64> probabilityMap = 1;
+}
+
+message MarkovModelMessage {
+    repeated MarkovModelRouteMessage routes = 1;
+}
+
+message MarkovModelRouteMessage {
+    repeated string affixTypes = 1;
+    int64 relativeFrequency = 2;
+}
+
+message POSCollection {
+    repeated string affixTypes = 1;
+}
+
+message HyphenatorMessage {
+    map<string, string> cache = 3;
+}

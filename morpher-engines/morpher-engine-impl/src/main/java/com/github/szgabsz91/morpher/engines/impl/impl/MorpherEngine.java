@@ -167,12 +167,6 @@
  */
 package com.github.szgabsz91.morpher.engines.impl.impl;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.IAnalyzerAgent;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.AnalyzerAgentResponse;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.AnnotationTokenizerResult;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.MarkovRoute;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
 import com.github.szgabsz91.morpher.core.io.ICustomDeserializer;
 import com.github.szgabsz91.morpher.core.io.ICustomSerializer;
 import com.github.szgabsz91.morpher.core.io.Serializer;
@@ -182,28 +176,33 @@ import com.github.szgabsz91.morpher.core.model.FrequencyAwareWordPair;
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.core.services.ServiceProvider;
 import com.github.szgabsz91.morpher.engines.api.IMorpherEngine;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInputWithAffixTypes;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionOrderedInput;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInputWithAffixTypes;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.engines.api.model.ProbabilisticStep;
 import com.github.szgabsz91.morpher.engines.api.model.Step;
 import com.github.szgabsz91.morpher.engines.impl.converters.MorpherEngineConverter;
-import com.github.szgabsz91.morpher.engines.impl.methodholders.IMorpherMethodHolder;
-import com.github.szgabsz91.morpher.engines.impl.impl.methodholders.LazyMorpherMethodHolder;
 import com.github.szgabsz91.morpher.engines.impl.impl.model.StepCandidate;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.EagerMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.IMorpherMethodHolderFactory;
-import com.github.szgabsz91.morpher.engines.impl.methodholderfactories.LazyMorpherMethodHolderFactory;
 import com.github.szgabsz91.morpher.engines.impl.protocolbuffers.MorpherEngineMessage;
-import com.github.szgabsz91.morpher.methods.api.IMorpherMethod;
-import com.github.szgabsz91.morpher.methods.api.factories.IAbstractMethodFactory;
-import com.github.szgabsz91.morpher.methods.api.model.MethodResponse;
-import com.github.szgabsz91.morpher.methods.api.model.ProbabilisticWord;
-import com.github.szgabsz91.morpher.methods.api.model.TrainingSet;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.EagerTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.ITransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.LazyTransformationEngineHolderFactory;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholders.ITransformationEngineHolder;
+import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.AffixTypeChain;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.AnnotationTokenizerResult;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LanguageHandlerResponse;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
+import com.github.szgabsz91.morpher.transformationengines.api.IBidirectionalTransformationEngine;
+import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
+import com.github.szgabsz91.morpher.transformationengines.api.model.ProbabilisticWord;
+import com.github.szgabsz91.morpher.transformationengines.api.model.TrainingSet;
+import com.github.szgabsz91.morpher.transformationengines.api.model.TransformationEngineResponse;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.slf4j.Logger;
@@ -246,10 +245,10 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
     private static final Logger LOGGER = LoggerFactory.getLogger(MorpherEngine.class);
 
     private final ServiceProvider serviceProvider;
-    private Map<AffixType, IMorpherMethodHolder> methodHolderMap;
-    private IMorpherMethodHolderFactory methodHolderFactory;
-    private IAbstractMethodFactory<?, ?> abstractMethodFactory;
-    private IAnalyzerAgent<?> analyzerAgent;
+    private Map<AffixType, ITransformationEngineHolder> transformationEngineHolderMap;
+    private ITransformationEngineHolderFactory transformationEngineHolderFactory;
+    private IAbstractTransformationEngineFactory<?, ?> abstractTransformationEngineFactory;
+    private ILanguageHandler<?> languageHandler;
     private IProbabilityCalculator probabilityCalculator;
     private Double minimumAggregatedWeightThreshold;
     private boolean dirty;
@@ -257,27 +256,27 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
     /**
      * Constructor that sets the underlying services.
      * @param serviceProvider the {@link ServiceProvider} instance
-     * @param methodHolderMap the map of {@link LazyMorpherMethodHolder} instances that hold {@link IMorpherMethod}s
-     * @param methodHolderFactory the {@link IMorpherMethodHolderFactory} instance
-     * @param abstractMethodFactory the {@link IAbstractMethodFactory} instance
-     * @param analyzerAgent a language dependent {@link IAnalyzerAgent} implementation
+     * @param transformationEngineHolderMap the map of {@link ITransformationEngineHolder} instances
+     * @param transformationEngineHolderFactory the {@link ITransformationEngineHolderFactory} instance
+     * @param abstractTransformationEngineFactory the {@link IAbstractTransformationEngineFactory} instance
+     * @param languageHandler a language dependent {@link ILanguageHandler} implementation
      * @param probabilityCalculator the {@link IProbabilityCalculator} implementation
      * @param minimumAggregatedWeightThreshold the minimum threshold of the aggregated weight
      *                                         of the {@link MorpherEngineResponse}s
      */
     public MorpherEngine(
             final ServiceProvider serviceProvider,
-            final Map<AffixType, IMorpherMethodHolder> methodHolderMap,
-            final IMorpherMethodHolderFactory methodHolderFactory,
-            final IAbstractMethodFactory<?, ?> abstractMethodFactory,
-            final IAnalyzerAgent<?> analyzerAgent,
+            final Map<AffixType, ITransformationEngineHolder> transformationEngineHolderMap,
+            final ITransformationEngineHolderFactory transformationEngineHolderFactory,
+            final IAbstractTransformationEngineFactory<?, ?> abstractTransformationEngineFactory,
+            final ILanguageHandler<?> languageHandler,
             final IProbabilityCalculator probabilityCalculator,
             final Double minimumAggregatedWeightThreshold) {
         this.serviceProvider = serviceProvider;
-        this.methodHolderMap = methodHolderMap;
-        this.methodHolderFactory = methodHolderFactory;
-        this.abstractMethodFactory = abstractMethodFactory;
-        this.analyzerAgent = analyzerAgent;
+        this.transformationEngineHolderMap = transformationEngineHolderMap;
+        this.transformationEngineHolderFactory = transformationEngineHolderFactory;
+        this.abstractTransformationEngineFactory = abstractTransformationEngineFactory;
+        this.languageHandler = languageHandler;
         this.probabilityCalculator = probabilityCalculator;
         this.minimumAggregatedWeightThreshold = minimumAggregatedWeightThreshold;
     }
@@ -285,26 +284,26 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
     /**
      * Constructor that sets the underlying services.
      * @param serviceProvider the {@link ServiceProvider} instance
-     * @param methodHolderFactory the {@link IMorpherMethodHolderFactory} instance
-     * @param abstractMethodFactory the {@link IAbstractMethodFactory} instance
-     * @param analyzerAgent a language dependent {@link IAnalyzerAgent} implementation
+     * @param transformationEngineHolderFactory the {@link ITransformationEngineHolderFactory} instance
+     * @param abstractTransformationEngineFactory the {@link IAbstractTransformationEngineFactory} instance
+     * @param languageHandler a language dependent {@link ILanguageHandler} implementation
      * @param probabilityCalculator the {@link IProbabilityCalculator} implementation
      * @param minimumAggregatedWeightThreshold the minimum threshold of the aggregated weight
      *                                         of the {@link MorpherEngineResponse}s
      */
     public MorpherEngine(
             final ServiceProvider serviceProvider,
-            final IMorpherMethodHolderFactory methodHolderFactory,
-            final IAbstractMethodFactory<?, ?> abstractMethodFactory,
-            final IAnalyzerAgent<?> analyzerAgent,
+            final ITransformationEngineHolderFactory transformationEngineHolderFactory,
+            final IAbstractTransformationEngineFactory<?, ?> abstractTransformationEngineFactory,
+            final ILanguageHandler<?> languageHandler,
             final IProbabilityCalculator probabilityCalculator,
             final Double minimumAggregatedWeightThreshold) {
         this(
                 serviceProvider,
                 new HashMap<>(),
-                methodHolderFactory,
-                abstractMethodFactory,
-                analyzerAgent,
+                transformationEngineHolderFactory,
+                abstractTransformationEngineFactory,
+                languageHandler,
                 probabilityCalculator,
                 minimumAggregatedWeightThreshold
         );
@@ -315,40 +314,40 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
      */
     @Override
     public void close() {
-        this.analyzerAgent.close();
-        this.methodHolderMap.values().forEach(IMorpherMethodHolder::close);
+        this.languageHandler.close();
+        this.transformationEngineHolderMap.values().forEach(ITransformationEngineHolder::close);
     }
 
     /**
-     * Returns the map of {@link IMorpherMethodHolder} instances.
-     * @return the map of {@link IMorpherMethodHolder} instances
+     * Returns the map of {@link ITransformationEngineHolder} instances.
+     * @return the map of {@link ITransformationEngineHolder} instances
      */
-    public Map<AffixType, IMorpherMethodHolder> getMethodHolderMap() {
-        return methodHolderMap;
+    public Map<AffixType, ITransformationEngineHolder> getTransformationEngineHolderMap() {
+        return transformationEngineHolderMap;
     }
 
     /**
-     * Returns the {@link IMorpherMethodHolderFactory} instance.
-     * @return the {@link IMorpherMethodHolderFactory} instance
+     * Returns the {@link ITransformationEngineHolderFactory} instance.
+     * @return the {@link ITransformationEngineHolderFactory} instance
      */
-    public IMorpherMethodHolderFactory getMethodHolderFactory() {
-        return methodHolderFactory;
+    public ITransformationEngineHolderFactory getTransformationEngineHolderFactory() {
+        return transformationEngineHolderFactory;
     }
 
     /**
-     * Returns the {@link IAbstractMethodFactory} instance.
-     * @return the {@link IAbstractMethodFactory} instance
+     * Returns the {@link IAbstractTransformationEngineFactory} instance.
+     * @return the {@link IAbstractTransformationEngineFactory} instance
      */
-    public IAbstractMethodFactory<?, ?> getAbstractMethodFactory() {
-        return abstractMethodFactory;
+    public IAbstractTransformationEngineFactory<?, ?> getAbstractTransformationEngineFactory() {
+        return abstractTransformationEngineFactory;
     }
 
     /**
-     * Returns the {@link IAnalyzerAgent} instance.
-     * @return the {@link IAnalyzerAgent} instance
+     * Returns the {@link ILanguageHandler} instance.
+     * @return the {@link ILanguageHandler} instance
      */
-    public IAnalyzerAgent<?> getAnalyzerAgent() {
-        return analyzerAgent;
+    public ILanguageHandler<?> getLanguageHandler() {
+        return languageHandler;
     }
 
     /**
@@ -373,7 +372,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
      */
     @Override
     public boolean isEager() {
-        return this.methodHolderFactory instanceof EagerMorpherMethodHolderFactory;
+        return this.transformationEngineHolderFactory instanceof EagerTransformationEngineHolderFactory;
     }
 
     /**
@@ -382,26 +381,27 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
      */
     @Override
     public boolean isLazy() {
-        return this.methodHolderFactory instanceof LazyMorpherMethodHolderFactory;
+        return this.transformationEngineHolderFactory instanceof LazyTransformationEngineHolderFactory;
     }
 
     /**
      * Tries to morphologically analyze the words in the given corpus and generate the appropriate word pairs, then has
-     * the new word pairs learnt with the method of the appropriate affix types.
+     * the new word pairs learnt with the transformation engine of the appropriate affix types.
      *
      * @param corpus the corpus containing the new words
      */
     @Override
     public void learn(final Corpus corpus) {
-        final AnalyzerAgentResponse response = this.analyzerAgent.analyze(corpus.getWords());
+        final LanguageHandlerResponse response = this.languageHandler.analyze(corpus.getWords());
         final Map<AffixType, Set<FrequencyAwareWordPair>> wordPairMap = response.getWordPairMap();
         wordPairMap.forEach((affixType, wordPairs) -> {
             final TrainingSet trainingSet = TrainingSet.of(wordPairs);
-            final IMorpherMethodHolder methodHolder = this.getMethodHolder(affixType);
-            final IMorpherMethod<?> method = methodHolder.get();
-            method.learn(trainingSet);
-            methodHolder.save(method);
-            methodHolder.clear();
+            final ITransformationEngineHolder transformationEngineHolder =
+                    this.getTransformationEngineHolder(affixType);
+            final IBidirectionalTransformationEngine<?> transformationEngine = transformationEngineHolder.get();
+            transformationEngine.learn(trainingSet);
+            transformationEngineHolder.save(transformationEngine);
+            transformationEngineHolder.clear();
         });
         if (!wordPairMap.isEmpty()) {
             this.dirty = true;
@@ -423,9 +423,9 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     return Map.entry(lemma, annotationTokenizerResult);
                 })
                 .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toList())));
-        this.analyzerAgent.learnAnnotationTokenizerResults(annotationTokenizerResults);
+        this.languageHandler.learnAnnotationTokenizerResults(annotationTokenizerResults);
 
-        final Set<List<AffixType>> affixTypeOrders = preanalyzedTrainingItems
+        final Set<List<AffixType>> affixTypeChains = preanalyzedTrainingItems
                 .stream()
                 .map(preanalyzedTrainingItem -> {
                     final AnnotationTokenizerResult annotationTokenizerResult =
@@ -433,7 +433,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     return annotationTokenizerResult.getAffixTypes();
                 })
                 .collect(toSet());
-        this.analyzerAgent.learnAffixTypeOrders(affixTypeOrders);
+        this.languageHandler.learnAffixTypeChains(affixTypeChains);
 
         final Map<Word, Set<AffixType>> lemmaMap = preanalyzedTrainingItems
                 .stream()
@@ -445,7 +445,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     return Map.entry(lemma, pos);
                 })
                 .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toSet())));
-        this.analyzerAgent.learnLemmas(LemmaMap.of(lemmaMap));
+        this.languageHandler.learnLemmas(LemmaMap.of(lemmaMap));
 
         final Map<AffixType, Set<FrequencyAwareWordPair>> wordPairMap = preanalyzedTrainingItems
                 .stream()
@@ -460,11 +460,12 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                 .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toSet())));
         wordPairMap.forEach((affixType, wordPairs) -> {
             final TrainingSet trainingSet = TrainingSet.of(wordPairs);
-            final IMorpherMethodHolder methodHolder = this.getMethodHolder(affixType);
-            final IMorpherMethod<?> method = methodHolder.get();
-            method.learn(trainingSet);
-            methodHolder.save(method);
-            methodHolder.clear();
+            final ITransformationEngineHolder transformationEngineHolder =
+                    this.getTransformationEngineHolder(affixType);
+            final IBidirectionalTransformationEngine<?> transformationEngine = transformationEngineHolder.get();
+            transformationEngine.learn(trainingSet);
+            transformationEngineHolder.save(transformationEngine);
+            transformationEngineHolder.clear();
         });
         if (!wordPairMap.isEmpty()) {
             this.dirty = true;
@@ -477,7 +478,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
      */
     @Override
     public void learn(final LemmaMap lemmaMap) {
-        this.analyzerAgent.learnLemmas(lemmaMap);
+        this.languageHandler.learnLemmas(lemmaMap);
     }
 
     /**
@@ -492,10 +493,11 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
         final Word input = inflectionInput.getInput();
         final Set<AffixType> affixTypes = inflectionInput.getAffixTypes();
 
-        Stream<MorpherEngineResponse> morpherEngineResponseStream = this.analyzerAgent.sortAffixTypes(input, affixTypes)
+        @SuppressWarnings("checkstyle:LineLength")
+        Stream<MorpherEngineResponse> morpherEngineResponseStream = this.languageHandler.sortAffixTypes(input, affixTypes)
                 .stream()
-                .filter(markovRoute -> this.filterMarkovRoute(markovRoute, input))
-                .map(markovRoute -> this.inflect(input, markovRoute))
+                .filter(affixTypeChain -> this.filterAffixTypeChain(affixTypeChain, input))
+                .map(affixTypeChain -> this.inflect(input, affixTypeChain))
                 .flatMap(Collection::stream)
                 .distinct();
 
@@ -522,9 +524,9 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
     public List<MorpherEngineResponse> inflect(final InflectionOrderedInput inflectionOrderedInput) {
         final Word input = inflectionOrderedInput.getInput();
         final List<AffixType> affixTypes = inflectionOrderedInput.getAffixTypes();
-        final MarkovRoute markovRoute = this.analyzerAgent.calculateProbabilities(affixTypes);
+        final AffixTypeChain affixTypeChain = this.languageHandler.calculateProbabilities(affixTypes);
 
-        Stream<MorpherEngineResponse> morpherEngineResponseStream = this.inflect(input, markovRoute)
+        Stream<MorpherEngineResponse> morpherEngineResponseStream = this.inflect(input, affixTypeChain)
                 .stream()
                 .distinct();
 
@@ -541,13 +543,13 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
     }
 
     /**
-     * Performs lemmatization using the given inflected word form.
+     * Performs morphological analysis using the given inflected word form.
      *
      * {@inheritDoc}
      */
     @Override
-    public List<MorpherEngineResponse> lemmatize(final LemmatizationInput lemmatizationInput) {
-        final Word inflectedForm = lemmatizationInput.getInput();
+    public List<MorpherEngineResponse> analyze(final AnalysisInput analysisInput) {
+        final Word inflectedForm = analysisInput.getInput();
         final Set<StepCandidate> candidates = new HashSet<>();
         final List<StepCandidate> candidateLeaves = new ArrayList<>();
 
@@ -555,9 +557,9 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
             final ProbabilisticAffixType probabilisticAffixType = stepCandidate.getProbabilisticAffixType();
             final AffixType affixType = probabilisticAffixType.getAffixType();
 
-            if (this.analyzerAgent.isPOS(affixType)) {
+            if (this.languageHandler.isPOS(affixType)) {
                 final Word output = stepCandidate.getParent().getOutput().getWord();
-                final boolean canStop = this.analyzerAgent.getPOSCandidates(output)
+                final boolean canStop = this.languageHandler.getPOSCandidates(output)
                         .stream()
                         .map(ProbabilisticAffixType::getAffixType)
                         .anyMatch(currentAffixType -> currentAffixType.equals(affixType));
@@ -566,8 +568,8 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     final Word word = stepCandidate.getInput();
                     final List<AffixType> affixTypes = createAffixTypes(stepCandidate);
                     final ProbabilisticAffixType endingProbabilisticAffixType =
-                            this.analyzerAgent.getEndingLemmatizationCandidate(affixTypes);
-                    LOGGER.trace("[LEMMATIZATION] [{}] Found PoS: {}", word, probabilisticAffixType);
+                            this.languageHandler.getEndingAnalysisCandidate(affixTypes);
+                    LOGGER.trace("[ANALYSIS] [{}] Found PoS: {}", word, probabilisticAffixType);
                     final StepCandidate endingStepCandidate =
                             new StepCandidate(endingProbabilisticAffixType, word, stepCandidate);
                     candidateLeaves.add(endingStepCandidate);
@@ -579,7 +581,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
         };
 
         // First candidates
-        this.analyzerAgent.getLemmatizationCandidates(Collections.emptyList())
+        this.languageHandler.getAnalysisCandidates(Collections.emptyList())
                 .stream()
                 .map(candidate -> new StepCandidate(candidate, inflectedForm))
                 .forEach(candidateConsumer);
@@ -588,11 +590,11 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
             final StepCandidate candidate = candidates.iterator().next();
             candidates.remove(candidate);
 
-            if (lemmatizationInput instanceof LemmatizationInputWithAffixTypes) {
-                final LemmatizationInputWithAffixTypes lemmatizationInputWithAffixTypes =
-                        (LemmatizationInputWithAffixTypes) lemmatizationInput;
+            if (analysisInput instanceof AnalysisInputWithAffixTypes) {
+                final AnalysisInputWithAffixTypes analysisInputWithAffixTypes =
+                        (AnalysisInputWithAffixTypes) analysisInput;
                 final List<AffixType> affixTypeCandidates = generateAffixTypeCandidates(candidate);
-                if (!endsWith(lemmatizationInputWithAffixTypes.getAffixTypes(), affixTypeCandidates)) {
+                if (!endsWith(analysisInputWithAffixTypes.getAffixTypes(), affixTypeCandidates)) {
                     continue;
                 }
             }
@@ -600,15 +602,16 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
             final Word input = candidate.getInput();
             final ProbabilisticAffixType probabilisticAffixType = candidate.getProbabilisticAffixType();
             final AffixType affixType = probabilisticAffixType.getAffixType();
-            final IMorpherMethodHolder methodHolder = this.getMethodHolder(affixType);
-            final IMorpherMethod<?> method = methodHolder.get();
-            methodHolder.clear();
-            final Optional<MethodResponse> response = method.lemmatize(input);
+            final ITransformationEngineHolder transformationEngineHolder =
+                    this.getTransformationEngineHolder(affixType);
+            final IBidirectionalTransformationEngine<?> transformationEngine = transformationEngineHolder.get();
+            transformationEngineHolder.clear();
+            final Optional<TransformationEngineResponse> response = transformationEngine.transformBack(input);
             if (!response.isPresent()) {
                 continue;
             }
-            final MethodResponse methodResponse = response.get();
-            final List<ProbabilisticWord> probabilisticWords = methodResponse.getResults();
+            final TransformationEngineResponse transformationEngineResponse = response.get();
+            final List<ProbabilisticWord> probabilisticWords = transformationEngineResponse.getResults();
 
             for (final ProbabilisticWord probabilisticWord : probabilisticWords) {
                 final Word newWord = probabilisticWord.getWord();
@@ -619,7 +622,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                         .stream()
                         .map(ProbabilisticStep::getAffixType)
                         .collect(toList());
-                this.analyzerAgent.getLemmatizationCandidates(affixTypes)
+                this.languageHandler.getAnalysisCandidates(affixTypes)
                         .stream()
                         .map(c -> new StepCandidate(c, newWord, newCandidate))
                         .forEach(candidateConsumer);
@@ -628,20 +631,20 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
 
         final List<MorpherEngineResponse> morpherEngineResponses = candidateLeaves
                 .stream()
-                .map(this::createLemmatizationResponse)
-                .filter(lemmatizationResponse -> {
-                    final List<ProbabilisticStep> steps = lemmatizationResponse.getSteps();
+                .map(this::createAnalysisResponse)
+                .filter(analysisResponse -> {
+                    final List<ProbabilisticStep> steps = analysisResponse.getSteps();
                     final List<AffixType> affixTypes = IntStream.range(0, steps.size())
                             .map(i -> steps.size() - i - 1)
                             .mapToObj(steps::get)
                             .map(Step::getAffixType)
                             .collect(toList());
-                    affixTypes.add(0, lemmatizationResponse.getPos().getAffixType());
-                    final boolean isAffixTypeOrderValid = this.analyzerAgent.isAffixTypeOrderValid(affixTypes);
-                    if (!isAffixTypeOrderValid) {
-                        LOGGER.trace("[LEMMATIZATION] Dropping affix type chain {} as it is invalid", affixTypes);
+                    affixTypes.add(0, analysisResponse.getPos().getAffixType());
+                    final boolean isAffixTypeChainValid = this.languageHandler.isAffixTypeChainValid(affixTypes);
+                    if (!isAffixTypeChainValid) {
+                        LOGGER.trace("[ANALYSIS] Dropping affix type chain {} as it is invalid", affixTypes);
                     }
-                    return isAffixTypeOrderValid;
+                    return isAffixTypeChainValid;
                 })
                 .distinct()
                 .collect(toList());
@@ -682,7 +685,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
      */
     @Override
     public Set<AffixType> getSupportedAffixTypes() {
-        return this.analyzerAgent.getSupportedAffixTypes();
+        return this.languageHandler.getSupportedAffixTypes();
     }
 
     /**
@@ -721,9 +724,9 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
         this.close();
         final MorpherEngineConverter morpherEngineConverter = new MorpherEngineConverter(this.serviceProvider);
         final MorpherEngine morpherEngine = morpherEngineConverter.convertBack(message);
-        this.methodHolderMap = morpherEngine.methodHolderMap;
-        this.abstractMethodFactory = morpherEngine.abstractMethodFactory;
-        this.analyzerAgent = morpherEngine.analyzerAgent;
+        this.transformationEngineHolderMap = morpherEngine.transformationEngineHolderMap;
+        this.abstractTransformationEngineFactory = morpherEngine.abstractTransformationEngineFactory;
+        this.languageHandler = morpherEngine.languageHandler;
         this.probabilityCalculator = morpherEngine.probabilityCalculator;
         this.minimumAggregatedWeightThreshold = morpherEngine.getMinimumAggregatedWeightThreshold();
         this.dirty = false;
@@ -745,7 +748,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
     }
 
     /**
-     * Saves the internal state of the engine to the given file.
+     * Saves the state of the engine to the given file.
      * @param file the file to save the state to
      * @throws IOException if the state cannot be saved
      */
@@ -759,7 +762,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
     }
 
     /**
-     * Loads the internal state of the engine from the given file.
+     * Loads the state of the engine from the given file.
      * @param file the file to load the state from
      * @throws IOException if the state cannot be loaded
      */
@@ -771,9 +774,9 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
         final Serializer<MorpherEngine, MorpherEngineMessage> serializer = new Serializer<>(converter, this);
         final MorpherEngine engine = serializer.deserialize(file);
 
-        this.methodHolderMap = engine.methodHolderMap;
-        this.abstractMethodFactory = engine.abstractMethodFactory;
-        this.analyzerAgent = engine.analyzerAgent;
+        this.transformationEngineHolderMap = engine.transformationEngineHolderMap;
+        this.abstractTransformationEngineFactory = engine.abstractTransformationEngineFactory;
+        this.languageHandler = engine.languageHandler;
         this.probabilityCalculator = engine.probabilityCalculator;
         this.dirty = false;
     }
@@ -787,7 +790,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
      */
     @Override
     public boolean serialize(final Path file) {
-        if (!(this.methodHolderFactory instanceof LazyMorpherMethodHolderFactory)) {
+        if (!(this.transformationEngineHolderFactory instanceof LazyTransformationEngineHolderFactory)) {
             return false;
         }
 
@@ -806,18 +809,20 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                 morpherEngineMessage.writeTo(gzipOutputStream);
             }
 
-            // Serialize methods
-            for (final Map.Entry<AffixType, IMorpherMethodHolder> entry : this.methodHolderMap.entrySet()) {
+            // Serialize transformation engines
+            final Set<Map.Entry<AffixType, ITransformationEngineHolder>> transformationEngineHolderEntrySet =
+                    this.transformationEngineHolderMap.entrySet();
+            for (final Map.Entry<AffixType, ITransformationEngineHolder> entry : transformationEngineHolderEntrySet) {
                 final AffixType affixType = entry.getKey();
-                final String methodFilename = affixType.toString()
+                final String transformationEngineFilename = affixType.toString()
                         .replace('<', '(')
                         .replace('>', ')') +
                         ".pb";
-                final Path methodFile = Paths.get(absoluteTempFolderPath, methodFilename);
-                final IMorpherMethodHolder morpherMethodHolder = entry.getValue();
-                final IMorpherMethod<?> morpherMethod = morpherMethodHolder.get();
-                morpherMethodHolder.clear();
-                morpherMethod.saveTo(methodFile);
+                final Path transformationEngineFile = Paths.get(absoluteTempFolderPath, transformationEngineFilename);
+                final ITransformationEngineHolder transformationEngineHolder = entry.getValue();
+                final IBidirectionalTransformationEngine<?> transformationEngine = transformationEngineHolder.get();
+                transformationEngineHolder.clear();
+                transformationEngine.saveTo(transformationEngineFile);
             }
 
             Serializer.zipFolder(tempFolder, file);
@@ -842,7 +847,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
      */
     @Override
     public boolean deserialize(final Path file) {
-        if (!(this.methodHolderFactory instanceof LazyMorpherMethodHolderFactory)) {
+        if (!(this.transformationEngineHolderFactory instanceof LazyTransformationEngineHolderFactory)) {
             return false;
         }
 
@@ -859,40 +864,42 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     new MorpherEngineConverter(this.serviceProvider, true);
             final MorpherEngineMessage morpherEngineMessage = morpherEngineConverter.parse(engineFile);
             final MorpherEngine engine = morpherEngineConverter.convertBack(morpherEngineMessage);
-            this.methodHolderMap = engine.methodHolderMap;
-            this.abstractMethodFactory = engine.abstractMethodFactory;
-            this.analyzerAgent = engine.analyzerAgent;
+            this.transformationEngineHolderMap = engine.transformationEngineHolderMap;
+            this.abstractTransformationEngineFactory = engine.abstractTransformationEngineFactory;
+            this.languageHandler = engine.languageHandler;
             this.probabilityCalculator = engine.probabilityCalculator;
             this.dirty = false;
 
-            // Deserialize methods
-            this.methodHolderMap = Files.list(tempFolder)
+            // Deserialize transformation engines
+            this.transformationEngineHolderMap = Files.list(tempFolder)
                     .filter(Files::isRegularFile)
-                    .filter(methodFile -> !methodFile.getFileName().toString().equals("engine.pb"))
-                    .map(methodFile -> {
-                        final String filename = methodFile.getFileName().toString();
+                    .filter(MorpherEngine::filterTransformationEngineFile)
+                    .map(transformationEngineFile -> {
+                        final String filename = transformationEngineFile.getFileName().toString();
                         final String affixTypeString = filename
                                 .replace('(', '<')
                                 .replace(')', '>')
                                 .substring(0, filename.length() - 3);
                         final AffixType affixType = AffixType.of(affixTypeString);
-                        final Supplier<IMorpherMethod<?>> bidirectionalFactory =
-                                this.abstractMethodFactory.getBidirectionalFactory(affixType);
-                        final IMorpherMethod<?> morpherMethod = bidirectionalFactory.get();
+                        final Supplier<IBidirectionalTransformationEngine<?>> transformationEngineFactory =
+                                this.abstractTransformationEngineFactory.getBidirectionalFactory(affixType);
+                        final IBidirectionalTransformationEngine<?> transformationEngine =
+                                transformationEngineFactory.get();
                         try {
-                            morpherMethod.loadFrom(methodFile);
+                            transformationEngine.loadFrom(transformationEngineFile);
                         }
                         catch (final IOException e) {
                             throw new IllegalStateException(
-                                    "Cannot load Morpher Method state from file " + methodFile,
+                                    "Cannot load transformation engine state from file " + transformationEngineFile,
                                     e
                             );
                         }
-                        final IMorpherMethodHolder methodHolder =
-                                this.methodHolderFactory.create(affixType, this.abstractMethodFactory, morpherMethod);
-                        methodHolder.save(morpherMethod);
-                        methodHolder.clear();
-                        return Map.entry(affixType, methodHolder);
+                        @SuppressWarnings("checkstyle:LineLength")
+                        final ITransformationEngineHolder transformationEngineHolder =
+                                this.transformationEngineHolderFactory.create(affixType, this.abstractTransformationEngineFactory, transformationEngine);
+                        transformationEngineHolder.save(transformationEngine);
+                        transformationEngineHolder.clear();
+                        return Map.entry(affixType, transformationEngineHolder);
                     })
                     .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
@@ -908,21 +915,21 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
         }
     }
 
-    private IMorpherMethodHolder getMethodHolder(final AffixType affixType) {
-        if (this.methodHolderMap.containsKey(affixType)) {
-            return this.methodHolderMap.get(affixType);
+    private ITransformationEngineHolder getTransformationEngineHolder(final AffixType affixType) {
+        if (this.transformationEngineHolderMap.containsKey(affixType)) {
+            return this.transformationEngineHolderMap.get(affixType);
         }
 
-        final IMorpherMethodHolder methodHolder = this.methodHolderFactory.create(
+        final ITransformationEngineHolder transformationEngineHolder = this.transformationEngineHolderFactory.create(
                 affixType,
-                this.abstractMethodFactory,
-                this.abstractMethodFactory.getBidirectionalFactory(affixType).get()
+                this.abstractTransformationEngineFactory,
+                this.abstractTransformationEngineFactory.getBidirectionalFactory(affixType).get()
         );
-        this.methodHolderMap.put(affixType, methodHolder);
-        return methodHolder;
+        this.transformationEngineHolderMap.put(affixType, transformationEngineHolder);
+        return transformationEngineHolder;
     }
 
-    private MorpherEngineResponse createLemmatizationResponse(final StepCandidate candidateLeaf) {
+    private MorpherEngineResponse createAnalysisResponse(final StepCandidate candidateLeaf) {
         final double endingProbability = candidateLeaf.getProbability();
         final StepCandidate posCandidate = candidateLeaf.getParent();
         final ProbabilisticAffixType pos = posCandidate.getProbabilisticAffixType();
@@ -935,7 +942,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                 .reduce(1.0, (x, y) -> x * y);
         final double probability = endingProbability * posProbability * aggregatedStepProbability;
 
-        return MorpherEngineResponse.lemmatizationResponse(
+        return MorpherEngineResponse.analysisResponse(
                 steps.get(0).getInput(),
                 stepCandidate.getOutput().getWord(),
                 pos,
@@ -987,33 +994,34 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
         return affixTypes;
     }
 
-    private boolean filterMarkovRoute(final MarkovRoute markovRoute, final Word input) {
-        return this.analyzerAgent.getPOSCandidates(input)
+    private boolean filterAffixTypeChain(final AffixTypeChain affixTypeChain, final Word input) {
+        return this.languageHandler.getPOSCandidates(input)
                 .stream()
                 .map(ProbabilisticAffixType::getAffixType)
-                .anyMatch(pos -> markovRoute.getAffixTypes().get(0).getAffixType().equals(pos));
+                .anyMatch(pos -> affixTypeChain.getAffixTypes().get(0).getAffixType().equals(pos));
     }
 
     private List<MorpherEngineResponse> inflect(
             final Word input,
-            final MarkovRoute markovRoute) {
-        LOGGER.trace("[INFLECTION] Processing Markov route: {}", markovRoute);
-        final List<ProbabilisticAffixType> probabilisticAffixTypes = markovRoute.getAffixTypes();
+            final AffixTypeChain affixTypeChain) {
+        LOGGER.trace("[INFLECTION] Processing affix type chain: {}", affixTypeChain);
+        final List<ProbabilisticAffixType> probabilisticAffixTypes = affixTypeChain.getAffixTypes();
         final ProbabilisticAffixType pos = probabilisticAffixTypes.remove(0);
         Set<StepCandidate> stepCandidates = new HashSet<>();
         stepCandidates.add(new StepCandidate(pos, input, null, ProbabilisticWord.of(input, 1.0)));
 
         for (final ProbabilisticAffixType probabilisticAffixType : probabilisticAffixTypes) {
             final AffixType affixType = probabilisticAffixType.getAffixType();
-            final IMorpherMethodHolder methodHolder = this.getMethodHolder(affixType);
-            final IMorpherMethod<?> method = methodHolder.get();
-            methodHolder.clear();
+            final ITransformationEngineHolder transformationEngineHolder =
+                    this.getTransformationEngineHolder(affixType);
+            final IBidirectionalTransformationEngine<?> transformationEngine = transformationEngineHolder.get();
+            transformationEngineHolder.clear();
             final Set<StepCandidate> newCandidates = new HashSet<>();
 
             for (final StepCandidate stepCandidate : stepCandidates) {
                 final ProbabilisticWord currentProbabilisticWord = stepCandidate.getOutput();
                 final Word currentWord = currentProbabilisticWord.getWord();
-                final Optional<MethodResponse> response = method.inflect(currentWord);
+                final Optional<TransformationEngineResponse> response = transformationEngine.transform(currentWord);
                 if (!response.isPresent()) {
                     LOGGER.trace("[INFLECTION] Empty response received");
                     continue;
@@ -1059,7 +1067,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                         steps.add(0, probabilisticStep);
                         currentStepCandidate = currentStepCandidate.getParent();
                     }
-                    final double routeProbability = steps
+                    final double affixTypeChainProbability = steps
                             .stream()
                             .mapToDouble(ProbabilisticStep::getAggregatedProbability)
                             .reduce(1.0, (x, y) -> x * y);
@@ -1067,7 +1075,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                             input,
                             output,
                             pos,
-                            pos.getProbability() * routeProbability,
+                            pos.getProbability() * affixTypeChainProbability,
                             steps
                     );
                 })
@@ -1119,6 +1127,10 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                 .collect(joining());
 
         return longerString.endsWith(shorterString);
+    }
+
+    private static boolean filterTransformationEngineFile(final Path transformationEngineFile) {
+        return !transformationEngineFile.getFileName().toString().equals("engine.pb");
     }
 
 }

@@ -167,20 +167,20 @@
  */
 package com.github.szgabsz91.morpher.engines.hunmorph;
 
-import com.github.szgabsz91.morpher.analyzeragents.api.model.LemmaMap;
-import com.github.szgabsz91.morpher.analyzeragents.api.model.ProbabilisticAffixType;
-import com.github.szgabsz91.morpher.analyzeragents.hunmorph.impl.HunmorphAnalyzerAgent;
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Corpus;
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWord;
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.engines.api.IMorpherEngine;
+import com.github.szgabsz91.morpher.engines.api.model.AnalysisInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionInput;
 import com.github.szgabsz91.morpher.engines.api.model.InflectionOrderedInput;
-import com.github.szgabsz91.morpher.engines.api.model.LemmatizationInput;
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
 import com.github.szgabsz91.morpher.engines.api.model.PreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.engines.api.model.ProbabilisticStep;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
+import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
+import com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.HunmorphLanguageHandler;
 import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
 
@@ -200,7 +200,7 @@ import static java.util.stream.Collectors.toList;
  */
 public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3> {
 
-    private final HunmorphAnalyzerAgent analyzerAgent;
+    private final HunmorphLanguageHandler languageHandler;
     private final boolean guess;
 
     /**
@@ -208,7 +208,7 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
      * @param guess flag that indicates if unknown words should be analyzed or not
      */
     public HunmorphMorpherEngine(final boolean guess) {
-        this.analyzerAgent = new HunmorphAnalyzerAgent();
+        this.languageHandler = new HunmorphLanguageHandler();
         this.guess = guess;
     }
 
@@ -217,7 +217,7 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
      */
     @Override
     public void close() {
-        this.analyzerAgent.close();
+        this.languageHandler.close();
     }
 
     /**
@@ -289,18 +289,18 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
     }
 
     /**
-     * Lemmatizes the input using Hunmorph directly.
+     * Analyzes the input using Hunmorph directly.
      *
-     * <p>This implementation cannot provide segmentation, only the affix types, part-of-speech tag and lemma.
+     * <p>This implementation cannot provide segmentation, only the affix types, part of speech tag and lemma.
      * Also, all the probabilities are one.</p>
      *
-     * @param lemmatizationInput the input containing the inflected word form
+     * @param analysisInput the input containing the inflected word form
      * @return the list of {@link MorpherEngineResponse}s
      */
     @Override
-    public List<MorpherEngineResponse> lemmatize(final LemmatizationInput lemmatizationInput) {
-        final Word input = lemmatizationInput.getInput();
-        return this.analyzerAgent.analyzeInternally(FrequencyAwareWord.of(input), this.guess)
+    public List<MorpherEngineResponse> analyze(final AnalysisInput analysisInput) {
+        final Word input = analysisInput.getInput();
+        return this.languageHandler.analyzeInternally(FrequencyAwareWord.of(input), this.guess)
                 .stream()
                 .map(annotationTokenizerResult -> {
                     final List<AffixType> reversedAffixTypes = annotationTokenizerResult.getAffixTypes();
@@ -325,7 +325,7 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
                         );
                         probabilisticSteps.add(probabilisticStep);
                     }
-                    final MorpherEngineResponse response = MorpherEngineResponse.lemmatizationResponse(
+                    final MorpherEngineResponse response = MorpherEngineResponse.analysisResponse(
                             input,
                             lemma,
                             pos,
@@ -344,7 +344,7 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
      */
     @Override
     public Set<AffixType> getSupportedAffixTypes() {
-        return this.analyzerAgent.getSupportedAffixTypes();
+        return this.languageHandler.getSupportedAffixTypes();
     }
 
     /**
