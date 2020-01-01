@@ -1,50 +1,91 @@
-version: 2
-jobs:
-    build:
+version: 2.1
 
+executors:
+    morpher-executor:
+        docker:
+            - image: szgabsz91/jdk-ocamorph-pyphen:13.1.0
         working_directory: ~/morpher
 
-        docker:
-            - image: szgabsz91/jdk-ocamorph-pyphen:13.0.0
-
+jobs:
+    build:
+        executor: morpher-executor
         steps:
-
             - checkout
-
             - run:
                 name: Clean
                 command: ./gradlew clean
-
             - run:
                 name: Assemble
                 command: ./gradlew compileJava compileTestJava assemble
-
             - run:
                 name: Test
                 command: ./gradlew test
-
             - run:
                 name: Check
                 command: ./gradlew check
-
             - run:
                 name: Jacoco test report
                 command: ./gradlew jacocoTestReport
-
             - run:
                 name: Javadoc
                 command: ./gradlew javadoc
-
             - run:
                 name: Install
                 command: ./gradlew install
-
             - run:
                 name: Collect test results
                 command: |
                     mkdir -p ~/morpher/build/test-report
                     find . -type f -name "TEST*.xml" -exec cp {} ~/morpher/build/test-report \;
                 when: always
-
             - store_test_results:
                 path: ~/morpher/build/test-report
+            - persist_to_workspace:
+                  root: .
+                  paths:
+                      - .
+
+    publishSnapshot:
+        executor: morpher-executor
+        steps:
+            - attach_workspace:
+                at: .
+            - run:
+                name: Publish to Artifactory
+                command: echo "Publishing to Artifactory..." && ls -al #./gradlew artifactoryPublish
+
+    publishRelease:
+        executor: morpher-executor
+        steps:
+            - attach_workspace:
+                at: .
+            - run:
+                name: Publish to Bintray
+                command: echo "Publishing to Bintray..." && ls -al morpher-core/build/libs #./gradlew bintrayUpload
+
+workflows:
+    version: 2
+    build-and-publish:
+        jobs:
+            - build:
+                filters:
+                    tags:
+                        only: /.+/
+                    branches:
+                        only: /.+/
+            - publishSnapshot:
+                  filters:
+                      tags:
+                          ignore: /.+/
+                      branches:
+                          only: master
+                  requires:
+                      - build
+            - publishRelease:
+                  filters:
+                      tags:
+                          only: /.+/
+                      branches:
+                          ignore: /.*/
+                  requires:
+                      - build
