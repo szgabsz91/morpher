@@ -1,7 +1,7 @@
 buildscript {
     ext {
         morpherGroupId = 'com.github.szgabsz91'
-        morpherVersion = '1.0.0'
+        morpherVersion = '1.0.1-SNAPSHOT'
 
         bintrayKey = System.getenv('BINTRAY_KEY')
         mavenCentralPassword = System.getenv('MAVEN_CENTRAL_PASSWORD')
