@@ -4,6 +4,7 @@ apply from: "$rootDir/gradle/test.gradle"
 apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
+    displayName = 'Morpher Transformation Engine API'
     moduleName = 'com.github.szgabsz91.morpher.transformationengines.api'
 
     testCoverageLimits = [

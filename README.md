@@ -1,4 +1,4 @@
-# ![Morpher](docs/images/morpher.png "Morpher")
+# [![Morpher](https://raw.githubusercontent.com/szgabsz91/morpher/master/docs/images/morpher.png "Morpher")](https://github.com/szgabsz91/morpher)
 
 [![Build Status](https://img.shields.io/circleci/project/github/szgabsz91/morpher/master.svg)](https://circleci.com/gh/szgabsz91/workflows/morpher)
 [![License](https://img.shields.io/github/license/szgabsz91/morpher.svg)](https://github.com/szgabsz91/morpher/blob/master/LICENSE)
@@ -11,6 +11,13 @@ The main parts of the framework are:
 
 * [Morpher Core](morpher-core)
 * [Morpher Transformation Engines](morpher-transformation-engines)
-* [Morpher Analyzer Agents](morpher-analyzer-agents)
+* [Morpher Language Handlers](morpher-language-handlers)
 * [Morpher Engines](morpher-engines)
 * [Morpher Systems](morpher-systems)
+
+The project is released in [jcenter](https://bintray.com/szgabsz91/maven) and
+[Maven Central](https://search.maven.org/search?q=morpher). To see what the latest artifact versions are, check the
+badges in the subproject README files.
+
+Morpher also has an [API project](https://github.com/szgabsz91/morpher-api) that publishes its main operations using
+REST services, and a [client application](https://github.com/szgabsz91/morpher-client) that consumes these services.

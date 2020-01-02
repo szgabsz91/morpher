@@ -3,6 +3,7 @@ description = 'Morpher System API that contains the base interfaces and classes 
 apply from: "$rootDir/gradle/test.gradle"
 
 ext {
+    displayName = 'Morpher System API'
     moduleName = 'com.github.szgabsz91.morpher.systems.api'
 
     testCoverageLimits = [
@@ -15,6 +16,6 @@ ext {
 
 dependencies {
     compile project(':morpher-core')
-    compile project(':morpher-language-handlers:morpher-language-handler-api')
-    compile project(':morpher-engines:morpher-engine-api')
+    compile project(':morpher-language-handler-api')
+    compile project(':morpher-engine-api')
 }

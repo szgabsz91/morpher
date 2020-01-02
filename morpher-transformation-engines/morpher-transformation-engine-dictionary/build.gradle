@@ -4,6 +4,7 @@ apply from: "$rootDir/gradle/test.gradle"
 apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
+    displayName = 'Morpher Transformation Engine Dictionary'
     moduleName = 'com.github.szgabsz91.morpher.transformationengines.dictionary'
 
     testCoverageLimits = [
@@ -16,7 +17,7 @@ ext {
 
 dependencies {
     compile project(':morpher-core')
-    compile project(':morpher-transformation-engines:morpher-transformation-engine-api')
+    compile project(':morpher-transformation-engine-api')
 
     compile("org.apache.commons:commons-lang3:${commonsLangVersion}")
 }

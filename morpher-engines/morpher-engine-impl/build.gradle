@@ -4,6 +4,7 @@ apply from: "$rootDir/gradle/test.gradle"
 apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
+    displayName = 'Morpher Engine Impl'
     moduleName = 'com.github.szgabsz91.morpher.engines.impl'
     mockingEnabled = true
     testCoverageLimits = [
@@ -16,17 +17,17 @@ ext {
 
 dependencies {
     compile project(':morpher-core')
-    compile project(':morpher-engines:morpher-engine-api')
-    compile project(':morpher-transformation-engines:morpher-transformation-engine-api')
-    compile project(':morpher-language-handlers:morpher-language-handler-api')
+    compile project(':morpher-engine-api')
+    compile project(':morpher-transformation-engine-api')
+    compile project(':morpher-language-handler-api')
 
     compile("org.slf4j:slf4j-api:${slf4jVersion}")
 
     runtime("ch.qos.logback:logback-core:${logbackVersion}")
     runtime("ch.qos.logback:logback-classic:${logbackVersion}")
 
-    testCompile project(':morpher-transformation-engines:morpher-transformation-engine-astra')
-    testCompile project(':morpher-language-handlers:morpher-language-handler-hunmorph')
+    testCompile project(':morpher-transformation-engine-astra')
+    testCompile project(':morpher-language-handler-hunmorph')
 
     testCompile("org.apache.commons:commons-text:${commonsTextVersion}")
 }

@@ -2,19 +2,36 @@ rootProject.name = 'morpher'
 
 include 'morpher-core'
 
-include 'morpher-transformation-engines:morpher-transformation-engine-api'
-include 'morpher-transformation-engines:morpher-transformation-engine-astra'
-include 'morpher-transformation-engines:morpher-transformation-engine-dictionary'
-include 'morpher-transformation-engines:morpher-transformation-engine-fst'
-include 'morpher-transformation-engines:morpher-transformation-engine-lattice'
-include 'morpher-transformation-engines:morpher-transformation-engine-tasr'
+include 'morpher-transformation-engine-api'
+include 'morpher-transformation-engine-astra'
+include 'morpher-transformation-engine-dictionary'
+include 'morpher-transformation-engine-fst'
+include 'morpher-transformation-engine-lattice'
+include 'morpher-transformation-engine-tasr'
 
-include 'morpher-language-handlers:morpher-language-handler-api'
-include 'morpher-language-handlers:morpher-language-handler-hunmorph'
+include 'morpher-language-handler-api'
+include 'morpher-language-handler-hunmorph'
 
-include 'morpher-engines:morpher-engine-api'
-include 'morpher-engines:morpher-engine-impl'
-include 'morpher-engines:morpher-engine-hunmorph'
+include 'morpher-engine-api'
+include 'morpher-engine-impl'
+include 'morpher-engine-hunmorph'
 
-include 'morpher-systems:morpher-system-api'
-include 'morpher-systems:morpher-system-impl'
+include 'morpher-system-api'
+include 'morpher-system-impl'
+
+project(':morpher-transformation-engine-api').projectDir = file('morpher-transformation-engines/morpher-transformation-engine-api')
+project(':morpher-transformation-engine-astra').projectDir = file('morpher-transformation-engines/morpher-transformation-engine-astra')
+project(':morpher-transformation-engine-dictionary').projectDir = file('morpher-transformation-engines/morpher-transformation-engine-dictionary')
+project(':morpher-transformation-engine-fst').projectDir = file('morpher-transformation-engines/morpher-transformation-engine-fst')
+project(':morpher-transformation-engine-lattice').projectDir = file('morpher-transformation-engines/morpher-transformation-engine-lattice')
+project(':morpher-transformation-engine-tasr').projectDir = file('morpher-transformation-engines/morpher-transformation-engine-tasr')
+
+project(':morpher-language-handler-api').projectDir = file('morpher-language-handlers/morpher-language-handler-api')
+project(':morpher-language-handler-hunmorph').projectDir = file('morpher-language-handlers/morpher-language-handler-hunmorph')
+
+project(':morpher-engine-api').projectDir = file('morpher-engines/morpher-engine-api')
+project(':morpher-engine-impl').projectDir = file('morpher-engines/morpher-engine-impl')
+project(':morpher-engine-hunmorph').projectDir = file('morpher-engines/morpher-engine-hunmorph')
+
+project(':morpher-system-api').projectDir = file('morpher-systems/morpher-system-api')
+project(':morpher-system-impl').projectDir = file('morpher-systems/morpher-system-impl')

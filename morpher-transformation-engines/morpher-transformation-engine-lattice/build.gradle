@@ -4,6 +4,7 @@ apply from: "$rootDir/gradle/test.gradle"
 apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
+    displayName = 'Morpher Transformation Engine Lattice'
     moduleName = 'com.github.szgabsz91.morpher.transformationengines.lattice'
     mockingEnabled = true
 
@@ -17,7 +18,7 @@ ext {
 
 dependencies {
     compile project(':morpher-core')
-    compile project(':morpher-transformation-engines:morpher-transformation-engine-api')
+    compile project(':morpher-transformation-engine-api')
 
     compile("org.apache.commons:commons-collections4:${commonsCollectionsVersion}")
     compile("org.slf4j:slf4j-api:${slf4jVersion}")

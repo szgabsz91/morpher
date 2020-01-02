@@ -4,6 +4,7 @@ apply from: "$rootDir/gradle/test.gradle"
 apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
+    displayName = 'Morpher Core'
     moduleName = 'com.github.szgabsz91.morpher.core'
     mockingEnabled = true
 

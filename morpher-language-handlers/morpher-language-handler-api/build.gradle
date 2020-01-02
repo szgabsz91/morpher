@@ -1,8 +1,9 @@
-description = 'Language handler API contains the core interfaces and classes for language handler implementations'
+description = 'Language Handler API contains the core interfaces and classes for language handler implementations'
 
 apply from: "$rootDir/gradle/test.gradle"
 
 ext {
+    displayName = 'Morpher Language Handler API'
     moduleName = 'com.github.szgabsz91.morpher.languagehandlers.api'
 
     testCoverageLimits = [
