@@ -244,11 +244,13 @@ public class HunmorphWordProcessor implements AutoCloseable {
      */
     @Override
     public void close() {
-        try {
-            Files.walkFileTree(temporaryDirectoryPath, new DeleteTemporaryDirectoryFileVisitor());
-        }
-        catch (final IOException e) {
-            LOGGER.error("I/O exception while recursively deleting temporary directory", e);
+        if (Files.isDirectory(temporaryDirectoryPath)) {
+            try {
+                Files.walkFileTree(temporaryDirectoryPath, new DeleteTemporaryDirectoryFileVisitor());
+            }
+            catch (final IOException e) {
+                LOGGER.error("I/O exception while recursively deleting temporary directory", e);
+            }
         }
     }
 
