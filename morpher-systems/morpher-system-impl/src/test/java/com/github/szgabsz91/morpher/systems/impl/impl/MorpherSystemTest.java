@@ -234,8 +234,8 @@ public class MorpherSystemTest {
 
     @Test
     public void testGetSupportedAffixTypesWithExistingLanguage() {
-        Set<AffixType> affixTypes = this.morpherSystem.getSupportedAffixTypes(LANGUAGE_HU);
-        assertThat(affixTypes).hasSize(339);
+        List<AffixType> affixTypes = this.morpherSystem.getSupportedAffixTypes(LANGUAGE_HU);
+        assertThat(affixTypes).hasSize(324);
     }
 
     @Test
@@ -538,7 +538,7 @@ public class MorpherSystemTest {
         }
 
         @Override
-        public Set<AffixType> getSupportedAffixTypes() {
+        public List<AffixType> getSupportedAffixTypes() {
             return null;
         }
 

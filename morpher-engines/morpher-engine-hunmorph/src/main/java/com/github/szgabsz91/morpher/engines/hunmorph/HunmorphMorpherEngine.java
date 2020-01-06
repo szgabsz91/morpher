@@ -187,7 +187,6 @@ import com.google.protobuf.GeneratedMessageV3;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -339,11 +338,11 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
     }
 
     /**
-     * Returns the set of supported {@link AffixType}s.
-     * @return the set of supported {@link AffixType}s
+     * Returns the list of supported {@link AffixType}s.
+     * @return the list of supported {@link AffixType}s
      */
     @Override
-    public Set<AffixType> getSupportedAffixTypes() {
+    public List<AffixType> getSupportedAffixTypes() {
         return this.languageHandler.getSupportedAffixTypes();
     }
 

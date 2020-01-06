@@ -327,9 +327,10 @@ public class MorpherEngineTest {
     public void testGetSupportedAffixTypes() throws IOException {
         this.reload();
 
-        Set<AffixType> supportedAffixTypes = this.engine.getSupportedAffixTypes();
+        Set<AffixType> supportedAffixTypes = new HashSet<>(this.engine.getSupportedAffixTypes());
         Set<AffixType> expected = HunmorphAnnotationTokenizer.KNOWN_TOKENS
                 .stream()
+                .filter(affixType -> !affixType.startsWith("/"))
                 .map(AffixType::of)
                 .collect(toSet());
         assertThat(supportedAffixTypes).isEqualTo(expected);

@@ -25,6 +25,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -441,9 +442,10 @@ public class HunmorphLanguageHandlerTest {
 
     @Test
     public void testGetSupportedAffixTypes() {
-        Set<AffixType> supportedAffixTypes = this.languageHandler.getSupportedAffixTypes();
+        Set<AffixType> supportedAffixTypes = new HashSet<>(this.languageHandler.getSupportedAffixTypes());
         Set<AffixType> expected = HunmorphAnnotationTokenizer.KNOWN_TOKENS
                 .stream()
+                .filter(affixType -> !affixType.startsWith("/"))
                 .map(AffixType::of)
                 .collect(toSet());
         assertThat(supportedAffixTypes).isEqualTo(expected);

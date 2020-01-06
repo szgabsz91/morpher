@@ -118,8 +118,8 @@ public class HunmorphMorpherEngineTest {
 
     @Test
     public void testGetSupportedAffixTypes() {
-        Set<AffixType> affixTypes = this.engine.getSupportedAffixTypes();
-        assertThat(affixTypes).hasSize(339);
+        List<AffixType> affixTypes = this.engine.getSupportedAffixTypes();
+        assertThat(affixTypes).hasSize(324);
     }
 
     @Test

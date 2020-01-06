@@ -180,6 +180,7 @@ import com.github.szgabsz91.morpher.systems.api.model.LanguageAwareAnalysisInput
 import com.github.szgabsz91.morpher.systems.api.model.LanguageAwarePreanalyzedTrainingItems;
 import com.github.szgabsz91.morpher.systems.api.model.MorpherSystemResponse;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -247,11 +248,11 @@ public interface IMorpherSystem extends AutoCloseable, ISavable, ICustomSerializ
     Set<Language> getSupportedLanguages();
 
     /**
-     * Returns the set of supported affix types of the given {@link Language}.
+     * Returns the list of supported affix types of the given {@link Language}.
      * @param language the {@link Language}
-     * @return the set of supported affix types of the given {@link Language}
+     * @return the list of supported affix types of the given {@link Language}
      */
-    Set<AffixType> getSupportedAffixTypes(Language language);
+    List<AffixType> getSupportedAffixTypes(Language language);
 
     /**
      * Returns if this Morpher Sytem is dirty, i.e. it has at least one dirty Morpher Engine.

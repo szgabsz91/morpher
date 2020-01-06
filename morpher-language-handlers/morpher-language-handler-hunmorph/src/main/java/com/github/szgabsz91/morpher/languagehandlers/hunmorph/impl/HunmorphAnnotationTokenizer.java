@@ -172,9 +172,7 @@ import com.github.szgabsz91.morpher.languagehandlers.api.model.AnnotationTokeniz
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
@@ -190,6 +188,8 @@ public class HunmorphAnnotationTokenizer {
      * The list of known tokens.
      */
     public static final List<String> KNOWN_TOKENS;
+
+    private static final List<String> AFFIX_TYPES;
 
     static {
         final List<String> knownTokens = new ArrayList<>(List.of(
@@ -260,6 +260,11 @@ public class HunmorphAnnotationTokenizer {
                 "<PREVERB<ÖSSZÉBB>>", "<PREVERB<ÚJJÁ>>", "<PREVERB<ÚJRA>>", "<PREVERB<ÚTBA>>", "<PREVERB<ŐRIZETLEN>>",
                 "/ímél"
         ));
+        AFFIX_TYPES = knownTokens
+                .stream()
+                .filter(token -> !token.startsWith("/"))
+                .distinct()
+                .collect(toList());
         knownTokens.sort(comparingInt(String::length).reversed());
         KNOWN_TOKENS = Collections.unmodifiableList(knownTokens);
     }
@@ -335,8 +340,8 @@ public class HunmorphAnnotationTokenizer {
         return result;
     }
 
-    public Set<String> getSupportedAffixTypes() {
-        return new HashSet<>(KNOWN_TOKENS);
+    public List<String> getSupportedAffixTypes() {
+        return AFFIX_TYPES;
     }
 
     private static String preprocessExpression(final String expression) {

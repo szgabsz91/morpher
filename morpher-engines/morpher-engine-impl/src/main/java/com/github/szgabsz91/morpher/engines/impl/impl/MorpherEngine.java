@@ -679,12 +679,12 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
     }
 
     /**
-     * Returns the supported affix types.
+     * Returns the list of supported affix types.
      *
      * {@inheritDoc}
      */
     @Override
-    public Set<AffixType> getSupportedAffixTypes() {
+    public List<AffixType> getSupportedAffixTypes() {
         return this.languageHandler.getSupportedAffixTypes();
     }
 
