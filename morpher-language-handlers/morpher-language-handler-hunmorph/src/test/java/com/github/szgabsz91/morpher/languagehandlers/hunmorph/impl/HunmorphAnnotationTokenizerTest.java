@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -77,8 +78,11 @@ public class HunmorphAnnotationTokenizerTest {
 
     @Test
     public void testGetSupportedAffixTypes() {
-        Set<String> supportedAffixTypes = tokenizer.getSupportedAffixTypes();
-        Set<String> expected = new HashSet<>(tokenizer.getSupportedAffixTypes());
+        Set<String> supportedAffixTypes = new HashSet<>(tokenizer.getSupportedAffixTypes());
+        Set<String> expected = HunmorphAnnotationTokenizer.KNOWN_TOKENS
+                .stream()
+                .filter(affixType -> !affixType.startsWith("/"))
+                .collect(toSet());
         assertThat(supportedAffixTypes).isEqualTo(expected);
     }
 

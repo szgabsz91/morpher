@@ -330,12 +330,12 @@ public class MorpherSystem implements IMorpherSystem {
     }
 
     /**
-     * Returns the set of supported affix types of the given {@link Language}.
+     * Returns the list of supported affix types of the given {@link Language}.
      * @param language the {@link Language}
-     * @return the set of supported affix types of the given {@link Language}
+     * @return the list of supported affix types of the given {@link Language}
      */
     @Override
-    public Set<AffixType> getSupportedAffixTypes(final Language language) {
+    public List<AffixType> getSupportedAffixTypes(final Language language) {
         final IMorpherEngine<?> morpherEngine = getMorpherEngine(language);
         return morpherEngine.getSupportedAffixTypes();
     }

@@ -180,7 +180,6 @@ import com.github.szgabsz91.morpher.languagehandlers.api.model.LemmaMap;
 import com.google.protobuf.GeneratedMessageV3;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Main interface of the Morpher engine that can incrementally learn a language's morphology and inflect/analyze words.
@@ -255,10 +254,10 @@ public interface IMorpherEngine<TMessage extends GeneratedMessageV3>
     List<MorpherEngineResponse> analyze(AnalysisInput analysisInput);
 
     /**
-     * Returns the set of supported affix types.
-     * @return the set of supported affix types
+     * Returns the list of supported affix types.
+     * @return the list of supported affix types
      */
-    Set<AffixType> getSupportedAffixTypes();
+    List<AffixType> getSupportedAffixTypes();
 
     /**
      * Returns if this engine is dirty, i.e. it has learnt at least one word since its saving/loading.

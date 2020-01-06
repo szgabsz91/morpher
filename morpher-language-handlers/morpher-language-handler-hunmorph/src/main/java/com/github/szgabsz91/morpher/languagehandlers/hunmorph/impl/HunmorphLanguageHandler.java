@@ -566,16 +566,16 @@ public class HunmorphLanguageHandler implements ILanguageHandler<HunmorphLanguag
     }
 
     /**
-     * Returns the set of supported affix types.
+     * Returns the list of supported affix types.
      *
      * {@inheritDoc}
      */
     @Override
-    public Set<AffixType> getSupportedAffixTypes() {
+    public List<AffixType> getSupportedAffixTypes() {
         return this.hunmorphAnnotationTokenizer.getSupportedAffixTypes()
                 .stream()
                 .map(AffixType::of)
-                .collect(toSet());
+                .collect(toList());
     }
 
     /**

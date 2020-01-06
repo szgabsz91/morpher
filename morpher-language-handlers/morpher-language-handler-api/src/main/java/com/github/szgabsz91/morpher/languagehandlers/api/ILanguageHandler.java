@@ -286,9 +286,9 @@ public interface ILanguageHandler<T extends GeneratedMessageV3> extends AutoClos
     AffixTypeChain calculateProbabilities(List<AffixType> affixTypes);
 
     /**
-     * Returns the set of supported affix types.
-     * @return the set of supported affix types
+     * Returns the list of supported affix types.
+     * @return the list of supported affix types
      */
-    Set<AffixType> getSupportedAffixTypes();
+    List<AffixType> getSupportedAffixTypes();
 
 }
