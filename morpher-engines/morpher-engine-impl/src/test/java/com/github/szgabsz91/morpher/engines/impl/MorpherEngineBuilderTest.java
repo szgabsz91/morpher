@@ -143,23 +143,38 @@ public class MorpherEngineBuilderTest {
 
     @Test
     public void testBuildWithNullTransformationEngineHolderFactory() {
-        MorpherEngineBuilder<ITransformationEngineConfiguration> builder = new MorpherEngineBuilder<>()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
+                .searcherType(SearcherType.PREFIX_TREE)
+                .build();
+        MorpherEngineBuilder<ITransformationEngineConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
+                .transformationEngineHolderFactory(null)
                 .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
-                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER);
-        IllegalStateException exception = assertThrows(IllegalStateException.class, builder::build);
-        assertThat(exception).hasMessage("The transformation engine holder factory must not be null");
+                .transformationEngineConfiguration(configuration)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .probabilityCalculator(new MultiplyProbabilityCalculator());
+
+        try (IMorpherEngine<?> morpherEngine = morpherEngineBuilder.build()) {
+            assertThat(morpherEngine).isNotNull();
+        }
     }
 
     @Test
     public void testBuildWithNullProbabilityCalculator() {
-        MorpherEngineBuilder<ITransformationEngineConfiguration> builder = new MorpherEngineBuilder<>()
+        ASTRATransformationEngineConfiguration configuration = new ASTRATransformationEngineConfiguration.Builder()
+                .searcherType(SearcherType.PREFIX_TREE)
+                .build();
+        MorpherEngineBuilder<ITransformationEngineConfiguration> morpherEngineBuilder = new MorpherEngineBuilder<>()
                 .serviceProvider(serviceProvider)
                 .transformationEngineHolderFactory(new EagerTransformationEngineHolderFactory())
                 .transformationEngineQualifier(IASTRATransformationEngine.QUALIFIER)
-                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER);
-        IllegalStateException exception = assertThrows(IllegalStateException.class, builder::build);
-        assertThat(exception).hasMessage("The probability calculator must not be null");
+                .transformationEngineConfiguration(configuration)
+                .languageHandlerQualifier(IHunmorphLanguageHandler.QUALIFIER)
+                .probabilityCalculator(null);
+
+        try (IMorpherEngine<?> morpherEngine = morpherEngineBuilder.build()) {
+            assertThat(morpherEngine).isNotNull();
+        }
     }
 
     @Test
