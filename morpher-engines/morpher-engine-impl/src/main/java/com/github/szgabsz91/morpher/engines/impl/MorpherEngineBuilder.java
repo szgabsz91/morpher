@@ -172,6 +172,8 @@ import com.github.szgabsz91.morpher.core.utils.Timer;
 import com.github.szgabsz91.morpher.engines.api.IMorpherEngine;
 import com.github.szgabsz91.morpher.engines.impl.impl.MorpherEngine;
 import com.github.szgabsz91.morpher.engines.impl.impl.probability.IProbabilityCalculator;
+import com.github.szgabsz91.morpher.engines.impl.impl.probability.MultiplyProbabilityCalculator;
+import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.EagerTransformationEngineHolderFactory;
 import com.github.szgabsz91.morpher.engines.impl.transformationengineholderfactories.ITransformationEngineHolderFactory;
 import com.github.szgabsz91.morpher.languagehandlers.api.ILanguageHandler;
 import com.github.szgabsz91.morpher.transformationengines.api.factories.IAbstractTransformationEngineFactory;
@@ -202,6 +204,14 @@ public class MorpherEngineBuilder<T extends ITransformationEngineConfiguration> 
     private Path loadFrom;
 
     /**
+     * Constructor that sets the default properties.
+     */
+    public MorpherEngineBuilder() {
+        this.transformationEngineHolderFactory = new EagerTransformationEngineHolderFactory();
+        this.probabilityCalculator = new MultiplyProbabilityCalculator();
+    }
+
+    /**
      * Sets the service provider.
      * @param serviceProvider the service provider
      * @return the builder instance
@@ -212,12 +222,16 @@ public class MorpherEngineBuilder<T extends ITransformationEngineConfiguration> 
     }
 
     /**
-     * Sets the transformation engine holder factory.
+     * Sets the transformation engine holder factory. If the parameter is null, nothing happens.
      * @param transformationEngineHolderFactory the transformation engine holder factory
      * @return the builder instance
      */
     public MorpherEngineBuilder<T> transformationEngineHolderFactory(
             final ITransformationEngineHolderFactory transformationEngineHolderFactory) {
+        if (transformationEngineHolderFactory == null) {
+            return this;
+        }
+
         this.transformationEngineHolderFactory = transformationEngineHolderFactory;
         return this;
     }
@@ -253,11 +267,15 @@ public class MorpherEngineBuilder<T extends ITransformationEngineConfiguration> 
     }
 
     /**
-     * Sets the probability calculator.
+     * Sets the probability calculator. If the parameter is null, nothing happens.
      * @param probabilityCalculator the probability calculator
      * @return the builder instance
      */
     public MorpherEngineBuilder<T> probabilityCalculator(final IProbabilityCalculator probabilityCalculator) {
+        if (probabilityCalculator == null) {
+            return this;
+        }
+
         this.probabilityCalculator = probabilityCalculator;
         return this;
     }
@@ -290,12 +308,6 @@ public class MorpherEngineBuilder<T extends ITransformationEngineConfiguration> 
      * @return the newly built {@link IMorpherEngine} instance
      */
     public IMorpherEngine<?> build() {
-        if (this.transformationEngineHolderFactory == null) {
-            throw new IllegalStateException("The transformation engine holder factory must not be null");
-        }
-        if (this.probabilityCalculator == null) {
-            throw new IllegalStateException("The probability calculator must not be null");
-        }
         @SuppressWarnings("unchecked")
         final IAbstractTransformationEngineFactory<T, ?> abstractTransformationEngineFactory = getInstance(
                 IAbstractTransformationEngineFactory.class,
