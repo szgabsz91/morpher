@@ -49,7 +49,7 @@ public class StartSoundTest {
 
     @Test
     public void testEquals() {
-        assertThat(startSound).isEqualTo(StartSound.get());
+        assertThat(startSound.equals(StartSound.get())).isTrue();
         assertThat(startSound).isNotEqualTo(null);
         assertThat(startSound).isNotEqualTo("string");
         assertThat(startSound).isNotEqualTo(Vowel.create());

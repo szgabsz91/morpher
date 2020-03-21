@@ -275,8 +275,7 @@ public class TASRTree {
      * @param wordPair the word pair
      */
     public void learn(final WordPair wordPair) {
-        generateSuffixRules(wordPair)
-            .forEach(this::insert);
+        generateSuffixRules(wordPair).forEach(this::insert);
     }
 
     /**

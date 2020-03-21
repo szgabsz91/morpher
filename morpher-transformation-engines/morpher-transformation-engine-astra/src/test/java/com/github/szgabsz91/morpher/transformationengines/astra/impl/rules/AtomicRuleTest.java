@@ -97,7 +97,7 @@ public class AtomicRuleTest {
         AtomicRule atomicRule5 = new AtomicRule("prefix1", "changingSubstring1", "replacementString2", "postfix1", 1);
         AtomicRule atomicRule6 = new AtomicRule("prefix1", "changingSubstring1", "replacementString1", "postfix2", 1);
 
-        assertThat(atomicRule1).isEqualTo(atomicRule1);
+        assertThat(atomicRule1.equals(atomicRule1)).isTrue();
         assertThat(atomicRule1).isEqualTo(atomicRule2);
         assertThat(atomicRule1).isNotEqualTo(null);
         assertThat(atomicRule1).isNotEqualTo("string");

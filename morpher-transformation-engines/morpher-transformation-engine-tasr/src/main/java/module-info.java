@@ -5,7 +5,7 @@ module com.github.szgabsz91.morpher.transformationengines.tasr {
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
     requires org.slf4j;
-    requires protobuf.java;
+    requires com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.transformationengines.tasr;
     exports com.github.szgabsz91.morpher.transformationengines.tasr.config;

@@ -30,7 +30,7 @@ public class CorpusTest {
         Corpus corpus2 = Corpus.of(Collections.singleton(FrequencyAwareWord.of("word2")));
         Corpus corpus3 = Corpus.of(Collections.singleton(FrequencyAwareWord.of("word")));
 
-        assertThat(corpus1).isEqualTo(corpus1);
+        assertThat(corpus1.equals(corpus1)).isTrue();
         assertThat(corpus1).isNotEqualTo(null);
         assertThat(corpus1).isNotEqualTo("string");
         assertThat(corpus1).isNotEqualTo(corpus2);

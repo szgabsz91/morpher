@@ -142,7 +142,7 @@ public class ReplacementTest {
                 characterRepository
         );
 
-        assertThat(replacement1).isEqualTo(replacement1);
+        assertThat(replacement1.equals(replacement1)).isTrue();
         assertThat(replacement1).isNotEqualTo(null);
         assertThat(replacement1).isNotEqualTo("string");
         assertThat(replacement1).isNotEqualTo(replacement2);

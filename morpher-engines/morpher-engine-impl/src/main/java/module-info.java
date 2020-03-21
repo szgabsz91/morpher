@@ -7,7 +7,7 @@ module com.github.szgabsz91.morpher.engines.impl {
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
     requires org.slf4j;
-    requires protobuf.java;
+    requires com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.engines.impl;
     exports com.github.szgabsz91.morpher.engines.impl.transformationengineholders;

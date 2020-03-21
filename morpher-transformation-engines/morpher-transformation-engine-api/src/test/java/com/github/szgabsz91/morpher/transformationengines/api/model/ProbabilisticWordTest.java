@@ -45,7 +45,7 @@ public class ProbabilisticWordTest {
         ProbabilisticWord probabilisticWord3 = ProbabilisticWord.of(Word.of("word"), 0.6);
         ProbabilisticWord probabilisticWord4 = ProbabilisticWord.of(Word.of("word"), 0.5);
 
-        assertThat(probabilisticWord1).isEqualTo(probabilisticWord1);
+        assertThat(probabilisticWord1.equals(probabilisticWord1)).isTrue();
         assertThat(probabilisticWord1).isNotEqualTo(null);
         assertThat(probabilisticWord1).isNotEqualTo("string");
         assertThat(probabilisticWord1).isNotEqualTo(probabilisticWord2);

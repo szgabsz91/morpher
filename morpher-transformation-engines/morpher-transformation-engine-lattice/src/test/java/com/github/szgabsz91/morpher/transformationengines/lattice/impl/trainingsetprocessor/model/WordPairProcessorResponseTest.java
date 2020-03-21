@@ -104,7 +104,7 @@ public class WordPairProcessorResponseTest {
         WordPairProcessorResponse wordPairProcessorResponse6 = new WordPairProcessorResponse(tree, leaves2, rules);
         WordPairProcessorResponse wordPairProcessorResponse7 = new WordPairProcessorResponse(tree, leaves, rules2);
 
-        assertThat(wordPairProcessorResponse1).isEqualTo(wordPairProcessorResponse2);
+        assertThat(wordPairProcessorResponse1.equals(wordPairProcessorResponse1)).isTrue();
         assertThat(wordPairProcessorResponse1).isEqualTo(wordPairProcessorResponse1);
         assertThat(wordPairProcessorResponse1).isNotEqualTo(null);
         assertThat(wordPairProcessorResponse1).isNotEqualTo("string");

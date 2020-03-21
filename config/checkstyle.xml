@@ -194,20 +194,11 @@
             <property name="format" value="^T([A-Z][a-z0-9]*)?$" />
         </module>
         <module name="JavadocMethod">
-            <property name="minLineCount" value="2" />
             <property name="allowedAnnotations" value="Override" />
-            <property name="validateThrows" value="true" />
+            <property name="validateThrows" value="false" />
             <property name="scope" value="protected" />
-            <property name="allowUndeclaredRTE" value="false" />
-            <property name="allowThrowsTagsForSubclasses" value="true" />
             <property name="allowMissingParamTags" value="false" />
-            <property name="allowMissingThrowsTags" value="false" />
             <property name="allowMissingReturnTag" value="true" />
-            <property name="allowMissingJavadoc" value="false" />
-            <property name="allowMissingPropertyJavadoc" value="false" />
-            <property name="logLoadErrors" value="true" />
-            <property name="suppressLoadErrors" value="false" />
-            <property name="ignoreMethodNamesRegex" value="" />
             <property name="tokens" value="METHOD_DEF,CTOR_DEF,ANNOTATION_FIELD_DEF" />
         </module>
         <module name="JavadocParagraph">

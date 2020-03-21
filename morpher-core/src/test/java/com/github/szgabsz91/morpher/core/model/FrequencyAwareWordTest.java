@@ -49,7 +49,7 @@ public class FrequencyAwareWordTest {
         FrequencyAwareWord frequencyAwareWord3 = FrequencyAwareWord.of(Word.of("word1"), 3);
         FrequencyAwareWord frequencyAwareWord4 = FrequencyAwareWord.of(Word.of("word1"), 2);
 
-        assertThat(frequencyAwareWord1).isEqualTo(frequencyAwareWord1);
+        assertThat(frequencyAwareWord1.equals(frequencyAwareWord1)).isTrue();
         assertThat(frequencyAwareWord1).isNotEqualTo(null);
         assertThat(frequencyAwareWord1).isNotEqualTo("string");
         assertThat(frequencyAwareWord1).isNotEqualTo(frequencyAwareWord2);

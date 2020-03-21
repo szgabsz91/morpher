@@ -6,7 +6,7 @@ module com.github.szgabsz91.morpher.transformationengines.fst {
 
     requires lucene.core;
     requires org.slf4j;
-    requires protobuf.java;
+    requires com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.transformationengines.fst;
     exports com.github.szgabsz91.morpher.transformationengines.fst.config;

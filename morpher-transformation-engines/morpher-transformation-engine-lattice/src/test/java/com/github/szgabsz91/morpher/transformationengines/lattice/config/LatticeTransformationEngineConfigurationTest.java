@@ -104,7 +104,7 @@ public class LatticeTransformationEngineConfigurationTest {
         LatticeTransformationEngineConfiguration configuration6 = createConfiguration(LatticeBuilderType.MINIMAL, WordConverterType.IDENTITY, CostCalculatorType.DEFAULT, CharacterRepositoryType.SIMPLE, 10);
         LatticeTransformationEngineConfiguration configuration7 = createConfiguration(LatticeBuilderType.MINIMAL, WordConverterType.IDENTITY, CostCalculatorType.DEFAULT, CharacterRepositoryType.SIMPLE, 5);
         
-        assertThat(configuration1).isEqualTo(configuration1);
+        assertThat(configuration1.equals(configuration1)).isTrue();
         assertThat(configuration1).isNotEqualTo(null);
         assertThat(configuration1).isNotEqualTo("string");
         assertThat(configuration1).isNotEqualTo(configuration2);

@@ -25,7 +25,7 @@ public class HunmorphResultTest {
         HunmorphResult hunmorphResult3 = new HunmorphResult("grammatical1", List.of("output"));
         HunmorphResult hunmorphResult4 = new HunmorphResult("grammatical1", Collections.emptyList());
 
-        assertThat(hunmorphResult1).isEqualTo(hunmorphResult1);
+        assertThat(hunmorphResult1.equals(hunmorphResult1)).isTrue();
         assertThat(hunmorphResult1).isNotEqualTo(null);
         assertThat(hunmorphResult1).isNotEqualTo("string");
         assertThat(hunmorphResult1).isNotEqualTo(hunmorphResult2);

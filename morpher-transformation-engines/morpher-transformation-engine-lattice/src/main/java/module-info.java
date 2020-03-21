@@ -6,7 +6,7 @@ module com.github.szgabsz91.morpher.transformationengines.lattice {
 
     requires org.apache.commons.collections4;
     requires org.slf4j;
-    requires protobuf.java;
+    requires com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.transformationengines.lattice;
     exports com.github.szgabsz91.morpher.transformationengines.lattice.config;

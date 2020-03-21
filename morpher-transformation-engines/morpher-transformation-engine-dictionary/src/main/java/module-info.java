@@ -5,7 +5,7 @@ module com.github.szgabsz91.morpher.transformationengines.dictionary {
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
     requires org.apache.commons.lang3;
-    requires protobuf.java;
+    requires com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.transformationengines.dictionary;
     exports com.github.szgabsz91.morpher.transformationengines.dictionary.config;

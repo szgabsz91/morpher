@@ -29,7 +29,7 @@ public class StepTest {
         Step step4 = new Step(Word.of("input"), Word.of("output"), AffixType.of("AFF2"));
         Step step5 = new Step(Word.of("input"), Word.of("output"), AffixType.of("AFF"));
 
-        assertThat(step1).isEqualTo(step1);
+        assertThat(step1.equals(step1)).isTrue();
         assertThat(step1).isNotEqualTo(null);
         assertThat(step1).isNotEqualTo("string");
         assertThat(step1).isNotEqualTo(step2);

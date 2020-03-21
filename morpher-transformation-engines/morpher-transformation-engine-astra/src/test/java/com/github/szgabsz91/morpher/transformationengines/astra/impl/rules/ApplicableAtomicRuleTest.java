@@ -52,7 +52,7 @@ public class ApplicableAtomicRuleTest {
         ApplicableAtomicRule applicableAtomicRule4 = new ApplicableAtomicRule(atomicRuleComponentAccessor, new AtomicRule("a", "b", "c", "d", 1), 0.8, 1, 100);
         ApplicableAtomicRule applicableAtomicRule5 = new ApplicableAtomicRule(atomicRuleComponentAccessor, new AtomicRule("a", "b", "c", "d", 1), 0.9, 1, 2);
 
-        assertThat(applicableAtomicRule1).isEqualTo(applicableAtomicRule1);
+        assertThat(applicableAtomicRule1.equals(applicableAtomicRule1)).isTrue();
         assertThat(applicableAtomicRule1).isEqualTo(applicableAtomicRule5);
         assertThat(applicableAtomicRule1).isNotEqualTo(null);
         assertThat(applicableAtomicRule1).isNotEqualTo("string");

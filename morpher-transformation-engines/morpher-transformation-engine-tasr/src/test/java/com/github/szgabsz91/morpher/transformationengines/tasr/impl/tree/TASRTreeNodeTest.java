@@ -179,6 +179,8 @@ public class TASRTreeNodeTest {
         TASRTreeNode node1 = new TASRTreeNode(1, 'a', null);
         TASRTreeNode node2 = new TASRTreeNode(2, 'a', null);
         TASRTreeNode node3 = new TASRTreeNode(1, 'a', null);
+
+        assertThat(node1.equals(node1)).isTrue();
         assertThat(node1).isNotEqualTo(null);
         assertThat(node1).isNotEqualTo("string");
         assertThat(node1).isNotEqualTo(node2);

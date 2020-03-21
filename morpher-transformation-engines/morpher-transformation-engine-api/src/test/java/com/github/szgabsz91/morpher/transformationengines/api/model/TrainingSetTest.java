@@ -91,7 +91,7 @@ public class TrainingSetTest {
         TrainingSet trainingSet1 = TrainingSet.of(Set.of(FrequencyAwareWordPair.of("a", "b")));
         TrainingSet trainingSet2 = TrainingSet.of(Set.of(FrequencyAwareWordPair.of("a", "c")));
 
-        assertThat(trainingSet1).isEqualTo(trainingSet1);
+        assertThat(trainingSet1.equals(trainingSet1)).isTrue();
         assertThat(trainingSet1).isNotEqualTo(null);
         assertThat(trainingSet1).isNotEqualTo("string");
         assertThat(trainingSet1).isNotEqualTo(trainingSet2);

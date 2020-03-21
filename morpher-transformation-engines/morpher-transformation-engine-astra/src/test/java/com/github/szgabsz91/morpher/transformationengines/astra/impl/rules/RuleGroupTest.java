@@ -113,7 +113,7 @@ public class RuleGroupTest {
         RuleGroup ruleGroup3 = createRuleGroup("abd", RuleGroup::straight, new AtomicRule("a", "b", "c", "d", 1), new AtomicRule("ab", "", "c", "d", 1));
         RuleGroup ruleGroup4 = createRuleGroup("ebd", RuleGroup::straight, new AtomicRule("e", "b", "c", "d", 1));
 
-        assertThat(ruleGroup1).isEqualTo(ruleGroup1);
+        assertThat(ruleGroup1.equals(ruleGroup1)).isTrue();
         assertThat(ruleGroup1).isEqualTo(ruleGroup2);
         assertThat(ruleGroup1).isNotEqualTo(null);
         assertThat(ruleGroup1).isNotEqualTo("string");
