@@ -189,14 +189,10 @@ public class CostCalculatorTypeConverter
      */
     @Override
     public CostCalculatorTypeMessage convert(final CostCalculatorType costCalculatorType) {
-        switch (costCalculatorType) {
-            case ATTRIBUTE_BASED:
-                return CostCalculatorTypeMessage.ATTRIBUTE_BASED;
-
-            case DEFAULT:
-            default:
-                return CostCalculatorTypeMessage.DEFAULT;
-        }
+        return switch (costCalculatorType) {
+            case ATTRIBUTE_BASED -> CostCalculatorTypeMessage.ATTRIBUTE_BASED;
+            default -> CostCalculatorTypeMessage.DEFAULT;
+        };
     }
 
     /**
@@ -220,14 +216,10 @@ public class CostCalculatorTypeConverter
      */
     @Override
     public CostCalculatorType convertBack(final CostCalculatorTypeMessage costCalculatorTypeMessage) {
-        switch (costCalculatorTypeMessage) {
-            case ATTRIBUTE_BASED:
-                return CostCalculatorType.ATTRIBUTE_BASED;
-
-            case DEFAULT:
-            default:
-                return CostCalculatorType.DEFAULT;
-        }
+        return switch (costCalculatorTypeMessage) {
+            case ATTRIBUTE_BASED -> CostCalculatorType.ATTRIBUTE_BASED;
+            default -> CostCalculatorType.DEFAULT;
+        };
     }
 
     /**
@@ -237,14 +229,10 @@ public class CostCalculatorTypeConverter
      */
     @Override
     public ICostCalculator toImplementation(final CostCalculatorTypeMessage costCalculatorTypeMessage) {
-        switch (costCalculatorTypeMessage) {
-            case ATTRIBUTE_BASED:
-                return new AttributeBasedCostCalculator();
-
-            case DEFAULT:
-            default:
-                return new DefaultCostCalculator();
-        }
+        return switch (costCalculatorTypeMessage) {
+            case ATTRIBUTE_BASED -> new AttributeBasedCostCalculator();
+            default -> new DefaultCostCalculator();
+        };
     }
 
 }

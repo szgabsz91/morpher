@@ -284,148 +284,55 @@ public final class HungarianSimpleCharacterRepository implements ICharacterRepos
     }
 
     private ICharacter createCharacter(final String letter) {
-        switch (letter) {
-            case LETTER_A:
-                return Character.create(Letter.A);
-
-            case LETTER_A_:
-                return Character.create(Letter.A_);
-
-            case LETTER_B:
-                return Character.create(Letter.B);
-
-            case LETTER_C:
-                return Character.create(Letter.C);
-
-            case LETTER_CS:
-                return Character.create(Letter.CS);
-
-            case LETTER_D:
-                return Character.create(Letter.D);
-
-            case LETTER_DZ:
-                return Character.create(Letter.DZ);
-
-            case LETTER_DZS:
-                return Character.create(Letter.DZS);
-
-            case LETTER_E:
-                return Character.create(Letter.E);
-
-            case LETTER_E_:
-                return Character.create(Letter.E_);
-
-            case LETTER_F:
-                return Character.create(Letter.F);
-
-            case LETTER_G:
-                return Character.create(Letter.G);
-
-            case LETTER_GY:
-                return Character.create(Letter.GY);
-
-            case LETTER_H:
-                return Character.create(Letter.H);
-
-            case LETTER_I:
-                return Character.create(Letter.I);
-
-            case LETTER_I_:
-                return Character.create(Letter.I_);
-
-            case LETTER_J:
-                return Character.create(Letter.J);
-
-            case LETTER_K:
-                return Character.create(Letter.K);
-
-            case LETTER_L:
-                return Character.create(Letter.L);
-
-            case LETTER_LY:
-                return Character.create(Letter.LY);
-
-            case LETTER_M:
-                return Character.create(Letter.M);
-
-            case LETTER_N:
-                return Character.create(Letter.N);
-
-            case LETTER_NY:
-                return Character.create(Letter.NY);
-
-            case LETTER_O:
-                return Character.create(Letter.O);
-
-            case LETTER_O_:
-                return Character.create(Letter.O_);
-
-            case LETTER_O__:
-                return Character.create(Letter.O__);
-
-            case LETTER_O___:
-                return Character.create(Letter.O___);
-
-            case LETTER_P:
-                return Character.create(Letter.P);
-
-            case LETTER_Q:
-                return Character.create(Letter.Q);
-
-            case LETTER_R:
-                return Character.create(Letter.R);
-
-            case LETTER_S:
-                return Character.create(Letter.S);
-
-            case LETTER_SZ:
-                return Character.create(Letter.SZ);
-
-            case LETTER_T:
-                return Character.create(Letter.T);
-
-            case LETTER_TY:
-                return Character.create(Letter.TY);
-
-            case LETTER_U:
-                return Character.create(Letter.U);
-
-            case LETTER_U_:
-                return Character.create(Letter.U_);
-
-            case LETTER_U__:
-                return Character.create(Letter.U__);
-
-            case LETTER_U___:
-                return Character.create(Letter.U___);
-
-            case LETTER_V:
-                return Character.create(Letter.V);
-
-            case LETTER_W:
-                return Character.create(Letter.W);
-
-            case LETTER_X:
-                return Character.create(Letter.X);
-
-            case LETTER_Y:
-                return Character.create(Letter.Y);
-
-            case LETTER_Z:
-                return Character.create(Letter.Z);
-
-            case LETTER_ZS:
-                return Character.create(Letter.ZS);
-
-            case LETTER_START:
-                return Character.create(Letter.START_SYMBOL);
-
-            case LETTER_END:
-                return Character.create(Letter.END_SYMBOL);
-
-            default:
-                throw new IllegalArgumentException("Letter " + letter + " is not recognized!");
-        }
+        return switch (letter) {
+            case LETTER_A -> Character.create(Letter.A);
+            case LETTER_A_ -> Character.create(Letter.A_);
+            case LETTER_B -> Character.create(Letter.B);
+            case LETTER_C -> Character.create(Letter.C);
+            case LETTER_CS -> Character.create(Letter.CS);
+            case LETTER_D -> Character.create(Letter.D);
+            case LETTER_DZ -> Character.create(Letter.DZ);
+            case LETTER_DZS -> Character.create(Letter.DZS);
+            case LETTER_E -> Character.create(Letter.E);
+            case LETTER_E_ -> Character.create(Letter.E_);
+            case LETTER_F -> Character.create(Letter.F);
+            case LETTER_G -> Character.create(Letter.G);
+            case LETTER_GY -> Character.create(Letter.GY);
+            case LETTER_H -> Character.create(Letter.H);
+            case LETTER_I -> Character.create(Letter.I);
+            case LETTER_I_ -> Character.create(Letter.I_);
+            case LETTER_J -> Character.create(Letter.J);
+            case LETTER_K -> Character.create(Letter.K);
+            case LETTER_L -> Character.create(Letter.L);
+            case LETTER_LY -> Character.create(Letter.LY);
+            case LETTER_M -> Character.create(Letter.M);
+            case LETTER_N -> Character.create(Letter.N);
+            case LETTER_NY -> Character.create(Letter.NY);
+            case LETTER_O -> Character.create(Letter.O);
+            case LETTER_O_ -> Character.create(Letter.O_);
+            case LETTER_O__ -> Character.create(Letter.O__);
+            case LETTER_O___ -> Character.create(Letter.O___);
+            case LETTER_P -> Character.create(Letter.P);
+            case LETTER_Q -> Character.create(Letter.Q);
+            case LETTER_R -> Character.create(Letter.R);
+            case LETTER_S -> Character.create(Letter.S);
+            case LETTER_SZ -> Character.create(Letter.SZ);
+            case LETTER_T -> Character.create(Letter.T);
+            case LETTER_TY -> Character.create(Letter.TY);
+            case LETTER_U -> Character.create(Letter.U);
+            case LETTER_U_ -> Character.create(Letter.U_);
+            case LETTER_U__ -> Character.create(Letter.U__);
+            case LETTER_U___ -> Character.create(Letter.U___);
+            case LETTER_V -> Character.create(Letter.V);
+            case LETTER_W -> Character.create(Letter.W);
+            case LETTER_X -> Character.create(Letter.X);
+            case LETTER_Y -> Character.create(Letter.Y);
+            case LETTER_Z -> Character.create(Letter.Z);
+            case LETTER_ZS -> Character.create(Letter.ZS);
+            case LETTER_START -> Character.create(Letter.START_SYMBOL);
+            case LETTER_END -> Character.create(Letter.END_SYMBOL);
+            default -> throw new IllegalArgumentException("Letter " + letter + " is not recognized!");
+        };
     }
 
     /**

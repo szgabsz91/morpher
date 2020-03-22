@@ -261,17 +261,11 @@ public final class ComponentFactory {
         final IAtomicRuleFitnessCalculator atomicRuleFitnessCalculator =
                 createAtomicRuleFitnessCalculator(atomicRuleFitnessCalculatorType, exponentialFactor);
 
-        switch (searcherType) {
-            case SEQUENTIAL:
-                return new SequentialSearcher(atomicRuleFitnessCalculator, unidirectional);
-
-            case PARALLEL:
-                return new ParallelSearcher(atomicRuleFitnessCalculator, unidirectional);
-
-            case PREFIX_TREE:
-            default:
-                return new PrefixTreeSearcher(atomicRuleFitnessCalculator, unidirectional);
-        }
+        return switch (searcherType) {
+            case SEQUENTIAL -> new SequentialSearcher(atomicRuleFitnessCalculator, unidirectional);
+            case PARALLEL -> new ParallelSearcher(atomicRuleFitnessCalculator, unidirectional);
+            default -> new PrefixTreeSearcher(atomicRuleFitnessCalculator, unidirectional);
+        };
     }
 
     private static IAtomicRuleFitnessCalculator createAtomicRuleFitnessCalculator(
@@ -281,31 +275,25 @@ public final class ComponentFactory {
         final ICharacterRepository characterRepository = HungarianSimpleCharacterRepository.get();
         final int averageSimilarityExponent = 2;
 
-        switch (atomicRuleFitnessCalculatorType) {
-            case SMOOTH_LOCAL:
-                return new LocalSmoothAtomicRuleFitnessCalculator(
-                        wordConverter,
-                        characterRepository,
-                        averageSimilarityExponent,
-                        exponentialFactor
-                );
-
-            case SMOOTH_GLOBAL:
-                return new GlobalSmoothAtomicRuleFitnessCalculator(
-                        wordConverter,
-                        characterRepository,
-                        averageSimilarityExponent,
-                        exponentialFactor
-                );
-
-            case DEFAULT:
-            default:
-                return new DefaultAtomicRuleFitnessCalculator(
-                        wordConverter,
-                        characterRepository,
-                        averageSimilarityExponent
-                );
-        }
+        return switch (atomicRuleFitnessCalculatorType) {
+            case SMOOTH_LOCAL -> new LocalSmoothAtomicRuleFitnessCalculator(
+                    wordConverter,
+                    characterRepository,
+                    averageSimilarityExponent,
+                    exponentialFactor
+            );
+            case SMOOTH_GLOBAL -> new GlobalSmoothAtomicRuleFitnessCalculator(
+                    wordConverter,
+                    characterRepository,
+                    averageSimilarityExponent,
+                    exponentialFactor
+            );
+            default -> new DefaultAtomicRuleFitnessCalculator(
+                    wordConverter,
+                    characterRepository,
+                    averageSimilarityExponent
+            );
+        };
     }
 
 }

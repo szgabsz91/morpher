@@ -241,54 +241,34 @@ public final class ComponentFactory {
         final ICharacterRepository characterRepository = createCharacterRepository(characterRepositoryType);
         final IWordConverter wordConverter = createWordConverter(wordConverterType);
 
-        switch (latticeBuilderType) {
-            case COMPLETE:
-                return new CompleteLatticeBuilder(characterRepository, wordConverter);
-
-            case CONSISTENT:
-                return new ConsistentLatticeBuilder(characterRepository, wordConverter);
-
-            case MAXIMAL_CONSISTENT:
-                return new MaximalConsistentLatticeBuilder(characterRepository, wordConverter);
-
-            case MINIMAL:
-            default:
-                return new MinimalLatticeBuilder(characterRepository, wordConverter);
-        }
+        return switch (latticeBuilderType) {
+            case COMPLETE -> new CompleteLatticeBuilder(characterRepository, wordConverter);
+            case CONSISTENT -> new ConsistentLatticeBuilder(characterRepository, wordConverter);
+            case MAXIMAL_CONSISTENT -> new MaximalConsistentLatticeBuilder(characterRepository, wordConverter);
+            default -> new MinimalLatticeBuilder(characterRepository, wordConverter);
+        };
     }
 
     static IWordConverter createWordConverter(final WordConverterType wordConverterType) {
-        switch (wordConverterType) {
-            case DOUBLE_CONSONANT:
-                return new DoubleConsonantWordConverter();
-
-            case IDENTITY:
-            default:
-                return new IdentityWordConverter();
-        }
+        return switch (wordConverterType) {
+            case DOUBLE_CONSONANT -> new DoubleConsonantWordConverter();
+            default -> new IdentityWordConverter();
+        };
     }
 
     static ICostCalculator createCostCalculator(final CostCalculatorType costCalculatorType) {
-        switch (costCalculatorType) {
-            case ATTRIBUTE_BASED:
-                return new AttributeBasedCostCalculator();
-
-            case DEFAULT:
-            default:
-                return new DefaultCostCalculator();
-        }
+        return switch (costCalculatorType) {
+            case ATTRIBUTE_BASED -> new AttributeBasedCostCalculator();
+            default -> new DefaultCostCalculator();
+        };
     }
 
     static ICharacterRepository createCharacterRepository(
             final CharacterRepositoryType characterRepositoryType) {
-        switch (characterRepositoryType) {
-            case ATTRIBUTED:
-                return HungarianAttributedCharacterRepository.get();
-
-            case SIMPLE:
-            default:
-                return HungarianSimpleCharacterRepository.get();
-        }
+        return switch (characterRepositoryType) {
+            case ATTRIBUTED -> HungarianAttributedCharacterRepository.get();
+            default -> HungarianSimpleCharacterRepository.get();
+        };
     }
 
 }

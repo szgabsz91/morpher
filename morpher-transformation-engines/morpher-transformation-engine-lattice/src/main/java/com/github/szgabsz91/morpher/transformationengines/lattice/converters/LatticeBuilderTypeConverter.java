@@ -192,20 +192,12 @@ public class LatticeBuilderTypeConverter implements IImplementationAwareEnumConv
      */
     @Override
     public LatticeBuilderTypeMessage convert(final LatticeBuilderType latticeBuilderType) {
-        switch (latticeBuilderType) {
-            case COMPLETE:
-                return LatticeBuilderTypeMessage.COMPLETE;
-
-            case CONSISTENT:
-                return LatticeBuilderTypeMessage.CONSISTENT;
-
-            case MAXIMAL_CONSISTENT:
-                return LatticeBuilderTypeMessage.MAXIMAL_CONSISTENT;
-
-            case MINIMAL:
-            default:
-                return LatticeBuilderTypeMessage.MINIMAL;
-        }
+        return switch (latticeBuilderType) {
+            case COMPLETE -> LatticeBuilderTypeMessage.COMPLETE;
+            case CONSISTENT -> LatticeBuilderTypeMessage.CONSISTENT;
+            case MAXIMAL_CONSISTENT -> LatticeBuilderTypeMessage.MAXIMAL_CONSISTENT;
+            default -> LatticeBuilderTypeMessage.MINIMAL;
+        };
     }
 
     /**
@@ -237,20 +229,12 @@ public class LatticeBuilderTypeConverter implements IImplementationAwareEnumConv
      */
     @Override
     public LatticeBuilderType convertBack(final LatticeBuilderTypeMessage latticeBuilderTypeMessage) {
-        switch (latticeBuilderTypeMessage) {
-            case COMPLETE:
-                return LatticeBuilderType.COMPLETE;
-
-            case CONSISTENT:
-                return LatticeBuilderType.CONSISTENT;
-
-            case MAXIMAL_CONSISTENT:
-                return LatticeBuilderType.MAXIMAL_CONSISTENT;
-
-            case MINIMAL:
-            default:
-                return LatticeBuilderType.MINIMAL;
-        }
+        return switch (latticeBuilderTypeMessage) {
+            case COMPLETE -> LatticeBuilderType.COMPLETE;
+            case CONSISTENT -> LatticeBuilderType.CONSISTENT;
+            case MAXIMAL_CONSISTENT -> LatticeBuilderType.MAXIMAL_CONSISTENT;
+            default -> LatticeBuilderType.MINIMAL;
+        };
     }
 
     /**

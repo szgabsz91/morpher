@@ -187,17 +187,11 @@ public class AtomicRuleFitnessCalculatorTypeConverter
      */
     public AtomicRuleFitnessCalculatorTypeMessage convert(
             final AtomicRuleFitnessCalculatorType atomicRuleFitnessCalculatorType) {
-        switch (atomicRuleFitnessCalculatorType) {
-            case DEFAULT:
-                return AtomicRuleFitnessCalculatorTypeMessage.DEFAULT;
-
-            case SMOOTH_LOCAL:
-                return AtomicRuleFitnessCalculatorTypeMessage.SMOOTH_LOCAL;
-
-            case SMOOTH_GLOBAL:
-            default:
-                return AtomicRuleFitnessCalculatorTypeMessage.SMOOTH_GLOBAL;
-        }
+        return switch (atomicRuleFitnessCalculatorType) {
+            case DEFAULT -> AtomicRuleFitnessCalculatorTypeMessage.DEFAULT;
+            case SMOOTH_LOCAL -> AtomicRuleFitnessCalculatorTypeMessage.SMOOTH_LOCAL;
+            default -> AtomicRuleFitnessCalculatorTypeMessage.SMOOTH_GLOBAL;
+        };
     }
 
     /**
@@ -208,17 +202,11 @@ public class AtomicRuleFitnessCalculatorTypeConverter
     @Override
     public AtomicRuleFitnessCalculatorType convertBack(
             final AtomicRuleFitnessCalculatorTypeMessage atomicRuleFitnessCalculatorTypeMessage) {
-        switch (atomicRuleFitnessCalculatorTypeMessage) {
-            case DEFAULT:
-                return AtomicRuleFitnessCalculatorType.DEFAULT;
-
-            case SMOOTH_LOCAL:
-                return AtomicRuleFitnessCalculatorType.SMOOTH_LOCAL;
-
-            case SMOOTH_GLOBAL:
-            default:
-                return AtomicRuleFitnessCalculatorType.SMOOTH_GLOBAL;
-        }
+        return switch (atomicRuleFitnessCalculatorTypeMessage) {
+            case DEFAULT -> AtomicRuleFitnessCalculatorType.DEFAULT;
+            case SMOOTH_LOCAL -> AtomicRuleFitnessCalculatorType.SMOOTH_LOCAL;
+            default -> AtomicRuleFitnessCalculatorType.SMOOTH_GLOBAL;
+        };
     }
 
 }
