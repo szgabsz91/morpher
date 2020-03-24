@@ -38,7 +38,7 @@ public class PreanalyzedTrainingItemsTest {
         PreanalyzedTrainingItems preanalyzedTrainingItems2 = PreanalyzedTrainingItems.of(Set.of(createPreanalyzedTrainingItem("expression2")));
         PreanalyzedTrainingItems preanalyzedTrainingItems3 = PreanalyzedTrainingItems.of(Set.of(createPreanalyzedTrainingItem("expression1")));
 
-        assertThat(preanalyzedTrainingItems1).isEqualTo(preanalyzedTrainingItems1);
+        assertThat(preanalyzedTrainingItems1.equals(preanalyzedTrainingItems1)).isTrue();
         assertThat(preanalyzedTrainingItems1).isNotEqualTo(null);
         assertThat(preanalyzedTrainingItems1).isNotEqualTo("string");
         assertThat(preanalyzedTrainingItems1).isNotEqualTo(preanalyzedTrainingItems2);

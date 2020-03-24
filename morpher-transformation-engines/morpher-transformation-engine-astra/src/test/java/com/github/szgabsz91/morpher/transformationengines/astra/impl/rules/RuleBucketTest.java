@@ -43,7 +43,7 @@ public class RuleBucketTest {
         RuleBucket ruleBucket2 = new RuleBucket(new ApplicableAtomicRule(null, new AtomicRule("a", "b", "c", "d", 1), 1.0, 1, 2));
         RuleBucket ruleBucket3 = new RuleBucket(new ApplicableAtomicRule(null, new AtomicRule("a", "b", "c", "e", 1), 1.0, 1, 2));
 
-        assertThat(ruleBucket1).isEqualTo(ruleBucket1);
+        assertThat(ruleBucket1.equals(ruleBucket1)).isTrue();
         assertThat(ruleBucket1).isEqualTo(ruleBucket2);
         assertThat(ruleBucket1).isNotEqualTo(null);
         assertThat(ruleBucket1).isNotEqualTo("string");

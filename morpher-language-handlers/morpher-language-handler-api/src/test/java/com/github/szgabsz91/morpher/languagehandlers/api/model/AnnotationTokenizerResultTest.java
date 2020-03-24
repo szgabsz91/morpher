@@ -88,7 +88,7 @@ public class AnnotationTokenizerResultTest {
         AnnotationTokenizerResult result6 = new AnnotationTokenizerResult("expression", "grammatical", "lemma", 2);
         AnnotationTokenizerResult result7 = new AnnotationTokenizerResult("expression", "grammatical", "lemma", 1);
 
-        assertThat(result1).isEqualTo(result1);
+        assertThat(result1.equals(result1)).isTrue();
         assertThat(result1).isNotEqualTo(null);
         assertThat(result1).isNotEqualTo("string");
         assertThat(result1).isNotEqualTo(result2);

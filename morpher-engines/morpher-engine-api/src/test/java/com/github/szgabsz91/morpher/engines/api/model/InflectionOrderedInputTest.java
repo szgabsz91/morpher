@@ -26,7 +26,7 @@ public class InflectionOrderedInputTest {
         InflectionOrderedInput inflectionOrderedInput3 = new InflectionOrderedInput(Word.of("input"), List.of(AffixType.of("AFF2")));
         InflectionOrderedInput inflectionOrderedInput4 = new InflectionOrderedInput(Word.of("input"), List.of(AffixType.of("AFF")));
 
-        assertThat(inflectionOrderedInput1).isEqualTo(inflectionOrderedInput1);
+        assertThat(inflectionOrderedInput1.equals(inflectionOrderedInput1)).isTrue();
         assertThat(inflectionOrderedInput1).isNotEqualTo(null);
         assertThat(inflectionOrderedInput1).isNotEqualTo("string");
         assertThat(inflectionOrderedInput1).isNotEqualTo(inflectionOrderedInput2);

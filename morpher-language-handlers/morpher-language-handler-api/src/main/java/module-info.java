@@ -3,7 +3,7 @@ module com.github.szgabsz91.morpher.languagehandlers.api {
 
     requires transitive com.github.szgabsz91.morpher.core;
 
-    requires protobuf.java;
+    requires com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.languagehandlers.api;
     exports com.github.szgabsz91.morpher.languagehandlers.api.model;

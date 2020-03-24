@@ -26,7 +26,7 @@ public class PreanalyzedTrainingItemTest {
         PreanalyzedTrainingItem preanalyzedTrainingItem3 = new PreanalyzedTrainingItem(new AnnotationTokenizerResult("expression", "grammatical", "lemma", 1), FrequencyAwareWordPair.of("word2", "word"));
         PreanalyzedTrainingItem preanalyzedTrainingItem4 = new PreanalyzedTrainingItem(new AnnotationTokenizerResult("expression", "grammatical", "lemma", 1), FrequencyAwareWordPair.of("word", "word"));
 
-        assertThat(preanalyzedTrainingItem1).isEqualTo(preanalyzedTrainingItem1);
+        assertThat(preanalyzedTrainingItem1.equals(preanalyzedTrainingItem1)).isTrue();
         assertThat(preanalyzedTrainingItem1).isNotEqualTo(null);
         assertThat(preanalyzedTrainingItem1).isNotEqualTo("string");
         assertThat(preanalyzedTrainingItem1).isNotEqualTo(preanalyzedTrainingItem2);

@@ -26,7 +26,7 @@ public class LanguageAwareCorpusTest {
         LanguageAwareCorpus languageAwareCorpus3 = new LanguageAwareCorpus(Language.of("code1"), Corpus.of(Word.of("word2")));
         LanguageAwareCorpus languageAwareCorpus4 = new LanguageAwareCorpus(Language.of("code1"), Corpus.of(Word.of("word1")));
 
-        assertThat(languageAwareCorpus1).isEqualTo(languageAwareCorpus1);
+        assertThat(languageAwareCorpus1.equals(languageAwareCorpus1)).isTrue();
         assertThat(languageAwareCorpus1).isNotEqualTo(null);
         assertThat(languageAwareCorpus1).isNotEqualTo("string");
         assertThat(languageAwareCorpus1).isNotEqualTo(languageAwareCorpus2);

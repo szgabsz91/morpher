@@ -137,7 +137,7 @@ public class ASTRATransformationEngineConfigurationTest {
         ASTRATransformationEngineConfiguration configuration12 = createConfiguration(SearcherType.PARALLEL, 0.5, 1, 4, 5, 60, null, null, AtomicRuleFitnessCalculatorType.DEFAULT, 2.0, 3.0);
         ASTRATransformationEngineConfiguration configuration13 = createConfiguration(SearcherType.PARALLEL, 0.5, 1, 4, 5, 6, null, null, AtomicRuleFitnessCalculatorType.DEFAULT, 2.0, 3.0);
 
-        assertThat(configuration1).isEqualTo(configuration1);
+        assertThat(configuration1.equals(configuration1)).isTrue();
         assertThat(configuration1).isNotEqualTo(null);
         assertThat(configuration1).isNotEqualTo("string");
         assertThat(configuration1).isNotEqualTo(configuration2);

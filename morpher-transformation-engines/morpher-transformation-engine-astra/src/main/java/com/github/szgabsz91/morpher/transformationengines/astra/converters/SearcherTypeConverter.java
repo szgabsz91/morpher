@@ -185,17 +185,11 @@ public class SearcherTypeConverter implements IEnumConverter<SearcherType, Searc
      * @return the {@link SearcherTypeMessage} instance
      */
     public SearcherTypeMessage convert(final SearcherType searcherType) {
-        switch (searcherType) {
-            case SEQUENTIAL:
-                return SearcherTypeMessage.SEQUENTIAL;
-
-            case PARALLEL:
-                return SearcherTypeMessage.PARALLEL;
-
-            case PREFIX_TREE:
-            default:
-                return SearcherTypeMessage.PREFIX_TREE;
-        }
+        return switch (searcherType) {
+            case SEQUENTIAL -> SearcherTypeMessage.SEQUENTIAL;
+            case PARALLEL -> SearcherTypeMessage.PARALLEL;
+            default -> SearcherTypeMessage.PREFIX_TREE;
+        };
     }
 
     /**
@@ -205,17 +199,11 @@ public class SearcherTypeConverter implements IEnumConverter<SearcherType, Searc
      */
     @Override
     public SearcherType convertBack(final SearcherTypeMessage searcherTypeMessage) {
-        switch (searcherTypeMessage) {
-            case SEQUENTIAL:
-                return SearcherType.SEQUENTIAL;
-
-            case PARALLEL:
-                return SearcherType.PARALLEL;
-
-            case PREFIX_TREE:
-            default:
-                return SearcherType.PREFIX_TREE;
-        }
+        return switch (searcherTypeMessage) {
+            case SEQUENTIAL -> SearcherType.SEQUENTIAL;
+            case PARALLEL -> SearcherType.PARALLEL;
+            default -> SearcherType.PREFIX_TREE;
+        };
     }
 
 }

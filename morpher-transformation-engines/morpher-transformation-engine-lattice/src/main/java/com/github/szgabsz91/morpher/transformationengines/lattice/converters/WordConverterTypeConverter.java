@@ -189,14 +189,10 @@ public class WordConverterTypeConverter
      */
     @Override
     public WordConverterTypeMessage convert(final WordConverterType wordConverterType) {
-        switch (wordConverterType) {
-            case DOUBLE_CONSONANT:
-                return WordConverterTypeMessage.DOUBLE_CONSONANT;
-
-            case IDENTITY:
-            default:
-                return WordConverterTypeMessage.IDENTITY;
-        }
+        return switch (wordConverterType) {
+            case DOUBLE_CONSONANT -> WordConverterTypeMessage.DOUBLE_CONSONANT;
+            default -> WordConverterTypeMessage.IDENTITY;
+        };
     }
 
     /**
@@ -220,14 +216,10 @@ public class WordConverterTypeConverter
      */
     @Override
     public WordConverterType convertBack(final WordConverterTypeMessage wordConverterTypeMessage) {
-        switch (wordConverterTypeMessage) {
-            case DOUBLE_CONSONANT:
-                return WordConverterType.DOUBLE_CONSONANT;
-
-            case IDENTITY:
-            default:
-                return WordConverterType.IDENTITY;
-        }
+        return switch (wordConverterTypeMessage) {
+            case DOUBLE_CONSONANT -> WordConverterType.DOUBLE_CONSONANT;
+            default -> WordConverterType.IDENTITY;
+        };
     }
 
     /**
@@ -237,14 +229,10 @@ public class WordConverterTypeConverter
      */
     @Override
     public IWordConverter toImplementation(final WordConverterTypeMessage wordConverterTypeMessage) {
-        switch (wordConverterTypeMessage) {
-            case DOUBLE_CONSONANT:
-                return new DoubleConsonantWordConverter();
-
-            case IDENTITY:
-            default:
-                return new IdentityWordConverter();
-        }
+        return switch (wordConverterTypeMessage) {
+            case DOUBLE_CONSONANT -> new DoubleConsonantWordConverter();
+            default -> new IdentityWordConverter();
+        };
     }
 
 }

@@ -2,7 +2,7 @@
 module com.github.szgabsz91.morpher.core {
 
     requires org.slf4j;
-    requires transitive protobuf.java;
+    requires transitive com.google.protobuf;
     requires zip4j;
 
     exports com.github.szgabsz91.morpher.core.io;

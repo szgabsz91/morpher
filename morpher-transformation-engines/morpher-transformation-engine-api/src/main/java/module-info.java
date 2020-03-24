@@ -4,7 +4,7 @@ module com.github.szgabsz91.morpher.transformationengines.api {
     requires transitive com.github.szgabsz91.morpher.core;
 
     requires combinatoricslib3;
-    requires protobuf.java;
+    requires com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.transformationengines.api;
     exports com.github.szgabsz91.morpher.transformationengines.api.factories;

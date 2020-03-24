@@ -21,7 +21,7 @@ public class LanguageTest {
         Language language2 = Language.of("code2");
         Language language3 = Language.of("code1");
 
-        assertThat(language1).isEqualTo(language1);
+        assertThat(language1.equals(language1)).isTrue();
         assertThat(language1).isNotEqualTo(null);
         assertThat(language1).isNotEqualTo("string");
         assertThat(language1).isNotEqualTo(language2);

@@ -25,7 +25,7 @@ public class FitnessAwareWordTest {
         FitnessAwareWord fitnessAwareWord3 = FitnessAwareWord.of(Word.of("word"), 0.6);
         FitnessAwareWord fitnessAwareWord4 = FitnessAwareWord.of(Word.of("word"), 0.5);
 
-        assertThat(fitnessAwareWord1).isEqualTo(fitnessAwareWord1);
+        assertThat(fitnessAwareWord1.equals(fitnessAwareWord1)).isTrue();
         assertThat(fitnessAwareWord1).isNotEqualTo(null);
         assertThat(fitnessAwareWord1).isNotEqualTo("string");
         assertThat(fitnessAwareWord1).isNotEqualTo(fitnessAwareWord2);

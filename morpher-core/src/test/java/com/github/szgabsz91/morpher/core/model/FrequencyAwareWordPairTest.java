@@ -89,7 +89,8 @@ public class FrequencyAwareWordPairTest {
         FrequencyAwareWordPair frequencyAwareWordPair2 = FrequencyAwareWordPair.of(WordPair.of("left2", "right2"), 2);
         FrequencyAwareWordPair frequencyAwareWordPair3 = FrequencyAwareWordPair.of(WordPair.of("left1", "right1"), 3);
         FrequencyAwareWordPair frequencyAwareWordPair4 = FrequencyAwareWordPair.of(WordPair.of("left1", "right1"), 2);
-        assertThat(frequencyAwareWordPair1).isEqualTo(frequencyAwareWordPair1);
+
+        assertThat(frequencyAwareWordPair1.equals(frequencyAwareWordPair1)).isTrue();
         assertThat(frequencyAwareWordPair1).isNotEqualTo(null);
         assertThat(frequencyAwareWordPair1).isNotEqualTo("string");
         assertThat(frequencyAwareWordPair1).isNotEqualTo(frequencyAwareWordPair2);

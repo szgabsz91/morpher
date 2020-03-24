@@ -21,7 +21,7 @@ public class AnalysisInputTest {
         AnalysisInput analysisInput1 = AnalysisInput.of(Word.of("input"));
         AnalysisInput analysisInput2 = AnalysisInput.of(Word.of("input2"));
 
-        assertThat(analysisInput1).isEqualTo(analysisInput1);
+        assertThat(analysisInput1.equals(analysisInput1)).isTrue();
         assertThat(analysisInput1).isNotEqualTo(null);
         assertThat(analysisInput1).isNotEqualTo("string");
         assertThat(analysisInput1).isNotEqualTo(analysisInput2);

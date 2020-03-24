@@ -655,7 +655,7 @@ public class FullMarkovModelTest {
             FullMarkovModel.Node node5 = new FullMarkovModel.Node(AffixType.of("AFF"), 1L, null);
             FullMarkovModel.Node node6 = new FullMarkovModel.Node(AffixType.of("AFF"), 1L, FullMarkovModel.Node.start());
 
-            assertThat(node1).isEqualTo(node1);
+            assertThat(node1.equals(node1)).isTrue();
             assertThat(node1).isNotEqualTo(null);
             assertThat(node1).isNotEqualTo("string");
             assertThat(node1).isNotEqualTo(node2);

@@ -50,7 +50,7 @@ public class VowelTest {
         Vowel vowel2 = Vowel.create(Length.LONG);
         Vowel vowel3 = Vowel.create(Length.SHORT);
 
-        assertThat(vowel1).isEqualTo(vowel1);
+        assertThat(vowel1.equals(vowel1)).isTrue();
         assertThat(vowel1).isNotEqualTo(null);
         assertThat(vowel1).isNotEqualTo("string");
         assertThat(vowel2).isNotEqualTo(vowel3);

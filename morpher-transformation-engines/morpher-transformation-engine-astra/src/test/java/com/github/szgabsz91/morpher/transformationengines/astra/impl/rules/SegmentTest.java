@@ -115,7 +115,7 @@ public class SegmentTest {
         Segment segment5 = new Segment(1, 2, "a", "c");
         Segment segment6 = new Segment(1, 2, "a", "b");
 
-        assertThat(segment1).isEqualTo(segment1);
+        assertThat(segment1.equals(segment1)).isTrue();
         assertThat(segment1).isEqualTo(segment6);
         assertThat(segment1).isNotEqualTo(null);
         assertThat(segment1).isNotEqualTo("string");

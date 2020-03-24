@@ -19,7 +19,7 @@ public class AffixTypeTest {
         AffixType affixType2 = AffixType.of("AFF2");
         AffixType affixType3 = AffixType.of("AFF");
 
-        assertThat(affixType1).isEqualTo(affixType1);
+        assertThat(affixType1.equals(affixType1)).isTrue();
         assertThat(affixType1).isNotEqualTo(null);
         assertThat(affixType1).isNotEqualTo("string");
         assertThat(affixType1).isNotEqualTo(affixType2);

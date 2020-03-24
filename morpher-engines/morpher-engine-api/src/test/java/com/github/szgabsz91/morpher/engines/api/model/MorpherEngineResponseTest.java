@@ -101,7 +101,7 @@ public class MorpherEngineResponseTest {
         MorpherEngineResponse response7 = MorpherEngineResponse.inflectionResponse(Word.of("input"), Word.of("output"), ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5), 0.5, Collections.singletonList(null));
         MorpherEngineResponse response8 = MorpherEngineResponse.inflectionResponse(Word.of("input"), Word.of("output"), ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5), 0.5, Collections.emptyList());
 
-        assertThat(response1).isEqualTo(response1);
+        assertThat(response1.equals(response1)).isTrue();
         assertThat(response1).isNotEqualTo(null);
         assertThat(response1).isNotEqualTo("string");
         assertThat(response1).isNotEqualTo(response2);

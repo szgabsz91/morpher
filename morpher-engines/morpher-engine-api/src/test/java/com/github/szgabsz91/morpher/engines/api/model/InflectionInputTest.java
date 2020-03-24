@@ -26,7 +26,7 @@ public class InflectionInputTest {
         InflectionInput inflectionInput3 = new InflectionInput(Word.of("input"), Set.of(AffixType.of("AFF2")));
         InflectionInput inflectionInput4 = new InflectionInput(Word.of("input"), Set.of(AffixType.of("AFF")));
 
-        assertThat(inflectionInput1).isEqualTo(inflectionInput1);
+        assertThat(inflectionInput1.equals(inflectionInput1)).isTrue();
         assertThat(inflectionInput1).isNotEqualTo(null);
         assertThat(inflectionInput1).isNotEqualTo("string");
         assertThat(inflectionInput1).isNotEqualTo(inflectionInput2);

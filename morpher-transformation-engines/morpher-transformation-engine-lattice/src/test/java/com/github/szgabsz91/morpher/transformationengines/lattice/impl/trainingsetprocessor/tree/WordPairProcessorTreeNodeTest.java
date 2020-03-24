@@ -148,7 +148,7 @@ public class WordPairProcessorTreeNodeTest {
         WordPairProcessorTreeNode node8 = new WordPairProcessorTreeNode(0, 1, null, 2, 3, null);
         WordPairProcessorTreeNode node9 = new WordPairProcessorTreeNode(0, 1, new Addition(Set.of(), characterRepository), 2, 3, null);
 
-        assertThat(node1).isEqualTo(node1);
+        assertThat(node1.equals(node1)).isTrue();
         assertThat(node1).isNotEqualTo(null);
         assertThat(node1).isNotEqualTo("string");
         assertThat(node1).isNotEqualTo(node2);

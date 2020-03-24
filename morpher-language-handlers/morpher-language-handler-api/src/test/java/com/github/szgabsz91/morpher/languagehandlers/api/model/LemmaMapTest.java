@@ -34,7 +34,7 @@ public class LemmaMapTest {
         LemmaMap lemmaMap3 = LemmaMap.of(Map.of(Word.of("lemma1"), Set.of(AffixType.of("AFF"))));
         LemmaMap lemmaMap4 = LemmaMap.of(Map.of(Word.of("lemma1"), Set.of()));
 
-        assertThat(lemmaMap1).isEqualTo(lemmaMap1);
+        assertThat(lemmaMap1.equals(lemmaMap1)).isTrue();
         assertThat(lemmaMap1).isNotEqualTo(null);
         assertThat(lemmaMap1).isNotEqualTo("string");
         assertThat(lemmaMap1).isNotEqualTo(lemmaMap2);

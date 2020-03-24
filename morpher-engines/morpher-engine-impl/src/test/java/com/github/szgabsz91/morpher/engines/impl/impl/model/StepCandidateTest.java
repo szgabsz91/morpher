@@ -134,7 +134,7 @@ public class StepCandidateTest {
         StepCandidate stepCandidate11 = new StepCandidate(ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5), Word.of("input"), new StepCandidate(ProbabilisticAffixType.of(AffixType.of("CAS"), 0.5), Word.of("in")));
         stepCandidate11.setOutput(ProbabilisticWord.of(Word.of("output"), 0.5));
 
-        assertThat(stepCandidate1).isEqualTo(stepCandidate1);
+        assertThat(stepCandidate1.equals(stepCandidate1)).isTrue();
         assertThat(stepCandidate1).isNotEqualTo(null);
         assertThat(stepCandidate1).isNotEqualTo("string");
         assertThat(stepCandidate1).isNotEqualTo(stepCandidate2);

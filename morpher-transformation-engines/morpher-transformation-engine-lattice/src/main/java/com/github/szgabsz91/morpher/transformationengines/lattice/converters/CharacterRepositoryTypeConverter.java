@@ -192,14 +192,10 @@ public class CharacterRepositoryTypeConverter implements IImplementationAwareEnu
      */
     @Override
     public CharacterRepositoryTypeMessage convert(final CharacterRepositoryType characterRepositoryType) {
-        switch (characterRepositoryType) {
-            case ATTRIBUTED:
-                return CharacterRepositoryTypeMessage.ATTRIBUTED;
-
-            case SIMPLE:
-            default:
-                return CharacterRepositoryTypeMessage.SIMPLE;
-        }
+        return switch (characterRepositoryType) {
+            case ATTRIBUTED -> CharacterRepositoryTypeMessage.ATTRIBUTED;
+            default -> CharacterRepositoryTypeMessage.SIMPLE;
+        };
     }
 
     /**
@@ -223,14 +219,10 @@ public class CharacterRepositoryTypeConverter implements IImplementationAwareEnu
      */
     @Override
     public CharacterRepositoryType convertBack(final CharacterRepositoryTypeMessage characterRepositoryTypeMessage) {
-        switch (characterRepositoryTypeMessage) {
-            case ATTRIBUTED:
-                return CharacterRepositoryType.ATTRIBUTED;
-
-            case SIMPLE:
-            default:
-                return CharacterRepositoryType.SIMPLE;
-        }
+        return switch (characterRepositoryTypeMessage) {
+            case ATTRIBUTED -> CharacterRepositoryType.ATTRIBUTED;
+            default -> CharacterRepositoryType.SIMPLE;
+        };
     }
 
     /**

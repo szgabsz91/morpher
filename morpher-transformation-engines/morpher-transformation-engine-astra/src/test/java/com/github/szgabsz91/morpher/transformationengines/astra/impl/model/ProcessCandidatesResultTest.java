@@ -27,7 +27,7 @@ public class ProcessCandidatesResultTest {
         ProcessCandidatesResult result3 = new ProcessCandidatesResult(FitnessAwareWord.of(Word.of("word2"), 1.0), List.of());
         ProcessCandidatesResult result4 = new ProcessCandidatesResult(FitnessAwareWord.of(Word.of("word"), 1.0), List.of(new AtomicRuleCandidate(null, null, 1.0)));
 
-        assertThat(result1).isEqualTo(result1);
+        assertThat(result1.equals(result1)).isTrue();
         assertThat(result1).isEqualTo(result2);
         assertThat(result1).isNotEqualTo(null);
         assertThat(result1).isNotEqualTo("string");

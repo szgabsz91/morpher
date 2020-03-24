@@ -47,7 +47,7 @@ public class ProbabilisticAffixTypeTest {
         ProbabilisticAffixType probabilisticAffixType3 = ProbabilisticAffixType.of(AffixType.of("AFF"), 0.75);
         ProbabilisticAffixType probabilisticAffixType4 = ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5);
 
-        assertThat(probabilisticAffixType1).isEqualTo(probabilisticAffixType1);
+        assertThat(probabilisticAffixType1.equals(probabilisticAffixType1)).isTrue();
         assertThat(probabilisticAffixType1).isNotEqualTo(null);
         assertThat(probabilisticAffixType1).isNotEqualTo("string");
         assertThat(probabilisticAffixType1).isNotEqualTo(probabilisticAffixType2);

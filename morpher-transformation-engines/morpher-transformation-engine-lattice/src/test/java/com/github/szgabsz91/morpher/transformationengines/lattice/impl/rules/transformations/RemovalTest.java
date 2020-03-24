@@ -166,7 +166,8 @@ public class RemovalTest {
     public void testEquals(ICharacterRepository characterRepository) {
         Removal removal1 = new Removal(Set.of(Length.SHORT), characterRepository);
         Removal removal2 = new Removal(Set.of(Length.SHORT), characterRepository);
-        assertThat(removal1).isEqualTo(removal1);
+
+        assertThat(removal1.equals(removal1)).isTrue();
         assertThat(removal1).isNotEqualTo(null);
         assertThat(removal1).isNotEqualTo("string");
         assertThat(removal1).isEqualTo(removal2);

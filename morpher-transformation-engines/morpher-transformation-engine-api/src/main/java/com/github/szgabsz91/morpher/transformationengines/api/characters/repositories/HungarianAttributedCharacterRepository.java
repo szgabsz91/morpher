@@ -309,187 +309,94 @@ public final class HungarianAttributedCharacterRepository implements ICharacterR
     }
 
     private ISound createSound(final String letter) {
-        switch (letter) {
-            case LETTER_A:
-                return Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.SEMI_OPEN, LipShape.ROUNDED,
-                        Length.SHORT);
-
-            case LETTER_A_:
-                return Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.SEMI_OPEN, LipShape.ROUNDED,
-                        Length.LONG);
-
-            case LETTER_B:
-                return Consonant.create(SoundProductionPlace.BILABIAL, Voice.VOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_C:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.UNVOICED,
-                        SoundProductionWay.LATERAL_FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_CS:
-                return Consonant.create(SoundProductionPlace.DENTAL_POSTALVEOLAR, Voice.UNVOICED,
-                        SoundProductionWay.LATERAL_FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_D:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_DZ:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED,
-                        SoundProductionWay.LATERAL_FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_DZS:
-                return Consonant.create(SoundProductionPlace.DENTAL_POSTALVEOLAR, Voice.VOICED,
-                        SoundProductionWay.LATERAL_FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_E:
-                return Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.SEMI_OPEN,
-                        LipShape.UNROUNDED, Length.SHORT);
-
-            case LETTER_E_:
-                return Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.SEMI_OPEN,
-                        LipShape.UNROUNDED, Length.LONG);
-
-            case LETTER_F:
-                return Consonant.create(SoundProductionPlace.LABIO_DENTAL, Voice.UNVOICED, SoundProductionWay.FRICATIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_G:
-                return Consonant.create(SoundProductionPlace.VELAR, Voice.VOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_GY:
-                return Consonant.create(SoundProductionPlace.PALATAL, Voice.VOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_H:
-                return Consonant.create(SoundProductionPlace.GLOTTAL, Voice.UNVOICED, SoundProductionWay.FRICATIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_I:
-                return Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.CLOSE, LipShape.UNROUNDED,
-                        Length.SHORT);
-
-            case LETTER_I_:
-                return Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.CLOSE, LipShape.UNROUNDED,
-                        Length.LONG);
-
-            case LETTER_J:
-                return Consonant.create(SoundProductionPlace.PALATAL, Voice.VOICED, SoundProductionWay.FRICATIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_K:
-                return Consonant.create(SoundProductionPlace.VELAR, Voice.UNVOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_L:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED,
-                        SoundProductionWay.LATERAL_APPROXIMATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_LY:
-                return Consonant.create(Discriminator.LY);
-
-            case LETTER_M:
-                return Consonant.create(SoundProductionPlace.BILABIAL, Voice.VOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.NASAL, Discriminator.NORMAL);
-
-            case LETTER_N:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.NASAL, Discriminator.NORMAL);
-
-            case LETTER_NY:
-                return Consonant.create(SoundProductionPlace.PALATAL, Voice.VOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.NASAL, Discriminator.NORMAL);
-
-            case LETTER_O:
-                return Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.MIDDLE, LipShape.ROUNDED,
-                        Length.SHORT);
-
-            case LETTER_O_:
-                return Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.MIDDLE, LipShape.ROUNDED,
-                        Length.LONG);
-
-            case LETTER_O__:
-                return Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.MIDDLE, LipShape.ROUNDED,
-                        Length.SHORT);
-
-            case LETTER_O___:
-                return Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.MIDDLE, LipShape.ROUNDED,
-                        Length.LONG);
-
-            case LETTER_P:
-                return Consonant.create(SoundProductionPlace.BILABIAL, Voice.UNVOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_Q:
-                return Consonant.create(Discriminator.Q);
-
-            case LETTER_R:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED, SoundProductionWay.TRILL,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_S:
-                return Consonant.create(SoundProductionPlace.DENTAL_POSTALVEOLAR, Voice.UNVOICED,
-                        SoundProductionWay.FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_SZ:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.UNVOICED,
-                        SoundProductionWay.FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_T:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.UNVOICED,
-                        SoundProductionWay.PLOSIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_TY:
-                return Consonant.create(SoundProductionPlace.PALATAL, Voice.UNVOICED, SoundProductionWay.PLOSIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_U:
-                return Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.CLOSE, LipShape.ROUNDED,
-                        Length.SHORT);
-
-            case LETTER_U_:
-                return Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.CLOSE, LipShape.ROUNDED,
-                        Length.LONG);
-
-            case LETTER_U__:
-                return Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.CLOSE, LipShape.ROUNDED,
-                        Length.SHORT);
-
-            case LETTER_U___:
-                return Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.CLOSE, LipShape.ROUNDED,
-                        Length.LONG);
-
-            case LETTER_V:
-                return Consonant.create(SoundProductionPlace.LABIO_DENTAL, Voice.VOICED, SoundProductionWay.FRICATIVE,
-                        UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_W:
-                return Consonant.create(Discriminator.W);
-
-            case LETTER_X:
-                return Consonant.create(Discriminator.X);
-
-            case LETTER_Y:
-                return Consonant.create(Discriminator.Y);
-
-            case LETTER_Z:
-                return Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED,
-                        SoundProductionWay.FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_ZS:
-                return Consonant.create(SoundProductionPlace.DENTAL_POSTALVEOLAR, Voice.VOICED,
-                        SoundProductionWay.FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
-
-            case LETTER_START:
-                return StartSound.get();
-
-            case LETTER_END:
-                return EndSound.get();
-
-            default:
-                throw new IllegalArgumentException("Letter " + letter + " is not recognized!");
-        }
+        return switch (letter) {
+            case LETTER_A -> Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.SEMI_OPEN, LipShape.ROUNDED,
+                    Length.SHORT);
+            case LETTER_A_ -> Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.SEMI_OPEN, LipShape.ROUNDED,
+                    Length.LONG);
+            case LETTER_B -> Consonant.create(SoundProductionPlace.BILABIAL, Voice.VOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_C -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.UNVOICED,
+                    SoundProductionWay.LATERAL_FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_CS -> Consonant.create(SoundProductionPlace.DENTAL_POSTALVEOLAR, Voice.UNVOICED,
+                    SoundProductionWay.LATERAL_FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_D -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_DZ -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED,
+                    SoundProductionWay.LATERAL_FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_DZS -> Consonant.create(SoundProductionPlace.DENTAL_POSTALVEOLAR, Voice.VOICED,
+                    SoundProductionWay.LATERAL_FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_E -> Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.SEMI_OPEN,
+                    LipShape.UNROUNDED, Length.SHORT);
+            case LETTER_E_ -> Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.SEMI_OPEN,
+                    LipShape.UNROUNDED, Length.LONG);
+            case LETTER_F -> Consonant.create(SoundProductionPlace.LABIO_DENTAL, Voice.UNVOICED, SoundProductionWay.FRICATIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_G -> Consonant.create(SoundProductionPlace.VELAR, Voice.VOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_GY -> Consonant.create(SoundProductionPlace.PALATAL, Voice.VOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_H -> Consonant.create(SoundProductionPlace.GLOTTAL, Voice.UNVOICED, SoundProductionWay.FRICATIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_I -> Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.CLOSE, LipShape.UNROUNDED,
+                    Length.SHORT);
+            case LETTER_I_ -> Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.CLOSE, LipShape.UNROUNDED,
+                    Length.LONG);
+            case LETTER_J -> Consonant.create(SoundProductionPlace.PALATAL, Voice.VOICED, SoundProductionWay.FRICATIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_K -> Consonant.create(SoundProductionPlace.VELAR, Voice.UNVOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_L -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED,
+                    SoundProductionWay.LATERAL_APPROXIMATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_LY -> Consonant.create(Discriminator.LY);
+            case LETTER_M -> Consonant.create(SoundProductionPlace.BILABIAL, Voice.VOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.NASAL, Discriminator.NORMAL);
+            case LETTER_N -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.NASAL, Discriminator.NORMAL);
+            case LETTER_NY -> Consonant.create(SoundProductionPlace.PALATAL, Voice.VOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.NASAL, Discriminator.NORMAL);
+            case LETTER_O -> Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.MIDDLE, LipShape.ROUNDED,
+                    Length.SHORT);
+            case LETTER_O_ -> Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.MIDDLE, LipShape.ROUNDED,
+                    Length.LONG);
+            case LETTER_O__ -> Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.MIDDLE, LipShape.ROUNDED,
+                    Length.SHORT);
+            case LETTER_O___ -> Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.MIDDLE, LipShape.ROUNDED,
+                    Length.LONG);
+            case LETTER_P -> Consonant.create(SoundProductionPlace.BILABIAL, Voice.UNVOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_Q -> Consonant.create(Discriminator.Q);
+            case LETTER_R -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED, SoundProductionWay.TRILL,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_S -> Consonant.create(SoundProductionPlace.DENTAL_POSTALVEOLAR, Voice.UNVOICED,
+                    SoundProductionWay.FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_SZ -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.UNVOICED,
+                    SoundProductionWay.FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_T -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.UNVOICED,
+                    SoundProductionWay.PLOSIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_TY -> Consonant.create(SoundProductionPlace.PALATAL, Voice.UNVOICED, SoundProductionWay.PLOSIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_U -> Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.CLOSE, LipShape.ROUNDED,
+                    Length.SHORT);
+            case LETTER_U_ -> Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.CLOSE, LipShape.ROUNDED,
+                    Length.LONG);
+            case LETTER_U__ -> Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.CLOSE, LipShape.ROUNDED,
+                    Length.SHORT);
+            case LETTER_U___ -> Vowel.create(HorizontalTonguePosition.FRONT, VerticalTonguePosition.CLOSE, LipShape.ROUNDED,
+                    Length.LONG);
+            case LETTER_V -> Consonant.create(SoundProductionPlace.LABIO_DENTAL, Voice.VOICED, SoundProductionWay.FRICATIVE,
+                    UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_W -> Consonant.create(Discriminator.W);
+            case LETTER_X -> Consonant.create(Discriminator.X);
+            case LETTER_Y -> Consonant.create(Discriminator.Y);
+            case LETTER_Z -> Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR, Voice.VOICED,
+                    SoundProductionWay.FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_ZS -> Consonant.create(SoundProductionPlace.DENTAL_POSTALVEOLAR, Voice.VOICED,
+                    SoundProductionWay.FRICATIVE, UvulaPosition.ORAL, Discriminator.NORMAL);
+            case LETTER_START -> StartSound.get();
+            case LETTER_END -> EndSound.get();
+            default -> throw new IllegalArgumentException("Letter " + letter + " is not recognized!");
+        };
     }
 
     /**

@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import pyphen
+import functools
 import sys
 
-input = unicode(sys.argv[1], 'UTF-8')
+input = sys.argv[1]
 
 dic = pyphen.Pyphen(lang = 'hu_HU')
 
@@ -19,5 +20,5 @@ for index, position in enumerate(sortedPrefixLengths[:-1]):
     substring = input[startPosition : endPosition]
     substrings.append(substring)
 
-result = reduce(lambda result, substring: result + '|' + substring, substrings)
-print "Result: {0}".format(result.encode('UTF-8'))
+result = functools.reduce(lambda result, substring: result + '|' + substring, substrings)
+print("Result: {0}".format(result))

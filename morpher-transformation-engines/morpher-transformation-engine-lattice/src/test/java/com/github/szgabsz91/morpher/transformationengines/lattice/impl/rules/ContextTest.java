@@ -216,7 +216,7 @@ public class ContextTest {
                 null
         );
 
-        assertThat(context1).isEqualTo(context1);
+        assertThat(context1.equals(context1)).isTrue();
         assertThat(context1).isNotEqualTo(null);
         assertThat(context1).isNotEqualTo("string");
         assertThat(context1).isNotEqualTo(context2);

@@ -54,7 +54,7 @@ public class AtomicRuleCandidateTest {
         AtomicRuleCandidate atomicRuleCandidate3 = new AtomicRuleCandidate(atomicRuleComponentAccessor, new AtomicRule("a", "b", "c", "d", 1), 2.0);
         AtomicRuleCandidate atomicRuleCandidate4 = new AtomicRuleCandidate(atomicRuleComponentAccessor, new AtomicRule("a", "b", "c", "d", 1), 1.0);
 
-        assertThat(atomicRuleCandidate1).isEqualTo(atomicRuleCandidate1);
+        assertThat(atomicRuleCandidate1.equals(atomicRuleCandidate1)).isTrue();
         assertThat(atomicRuleCandidate1).isEqualTo(atomicRuleCandidate4);
         assertThat(atomicRuleCandidate1).isNotEqualTo(null);
         assertThat(atomicRuleCandidate1).isNotEqualTo("string");
