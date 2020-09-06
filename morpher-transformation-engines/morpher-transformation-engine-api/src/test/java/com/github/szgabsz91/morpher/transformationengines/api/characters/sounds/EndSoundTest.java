@@ -50,7 +50,7 @@ public class EndSoundTest {
     @Test
     public void testEquals() {
         assertThat(endSound.equals(EndSound.get())).isTrue();
-        assertThat(endSound).isNotEqualTo(null);
+        assertThat(endSound.equals(null)).isFalse();
         assertThat(endSound).isNotEqualTo("string");
         assertThat(endSound).isNotEqualTo(Vowel.create());
     }

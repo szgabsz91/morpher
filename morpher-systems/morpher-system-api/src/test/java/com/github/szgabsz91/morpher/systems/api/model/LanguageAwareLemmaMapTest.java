@@ -29,7 +29,7 @@ public class LanguageAwareLemmaMapTest {
         LanguageAwareLemmaMap languageAwareLemmaMap4 = new LanguageAwareLemmaMap(Language.of("code1"), LemmaMap.of(Map.of(Word.of("lemma"), Set.of())));
 
         assertThat(languageAwareLemmaMap1.equals(languageAwareLemmaMap1)).isTrue();
-        assertThat(languageAwareLemmaMap1).isNotEqualTo(null);
+        assertThat(languageAwareLemmaMap1.equals(null)).isFalse();
         assertThat(languageAwareLemmaMap1).isNotEqualTo("string");
         assertThat(languageAwareLemmaMap1).isNotEqualTo(languageAwareLemmaMap2);
         assertThat(languageAwareLemmaMap1).isNotEqualTo(languageAwareLemmaMap3);

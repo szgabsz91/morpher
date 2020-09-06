@@ -54,7 +54,7 @@ public class ApplicableAtomicRuleTest {
 
         assertThat(applicableAtomicRule1.equals(applicableAtomicRule1)).isTrue();
         assertThat(applicableAtomicRule1).isEqualTo(applicableAtomicRule5);
-        assertThat(applicableAtomicRule1).isNotEqualTo(null);
+        assertThat(applicableAtomicRule1.equals(null)).isFalse();
         assertThat(applicableAtomicRule1).isNotEqualTo("string");
         assertThat(applicableAtomicRule1).isNotEqualTo(applicableAtomicRule2);
         assertThat(applicableAtomicRule1).isNotEqualTo(applicableAtomicRule3);

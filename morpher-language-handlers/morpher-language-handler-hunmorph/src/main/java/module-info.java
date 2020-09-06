@@ -6,7 +6,7 @@ module com.github.szgabsz91.morpher.languagehandlers.hunmorph {
 
     requires org.apache.commons.lang3;
     requires org.slf4j;
-    requires com.google.protobuf;
+    requires transitive com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.languagehandlers.hunmorph;
     exports com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl to com.github.szgabsz91.morpher.engines.hunmorph;

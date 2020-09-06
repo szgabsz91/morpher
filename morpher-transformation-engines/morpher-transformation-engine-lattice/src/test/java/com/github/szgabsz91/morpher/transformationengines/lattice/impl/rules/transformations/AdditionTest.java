@@ -72,7 +72,7 @@ public class AdditionTest {
         Addition addition2 = new Addition(Set.of(Length.SHORT), characterRepository);
 
         assertThat(addition1.equals(addition1)).isTrue();
-        assertThat(addition1).isNotEqualTo(null);
+        assertThat(addition1.equals(null)).isFalse();
         assertThat(addition1).isNotEqualTo("string");
         assertThat(addition1).isEqualTo(addition2);
     }

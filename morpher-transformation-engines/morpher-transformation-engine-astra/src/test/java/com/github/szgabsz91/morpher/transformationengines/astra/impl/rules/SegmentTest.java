@@ -117,7 +117,7 @@ public class SegmentTest {
 
         assertThat(segment1.equals(segment1)).isTrue();
         assertThat(segment1).isEqualTo(segment6);
-        assertThat(segment1).isNotEqualTo(null);
+        assertThat(segment1.equals(null)).isFalse();
         assertThat(segment1).isNotEqualTo("string");
         assertThat(segment1).isNotEqualTo(segment2);
         assertThat(segment1).isNotEqualTo(segment3);

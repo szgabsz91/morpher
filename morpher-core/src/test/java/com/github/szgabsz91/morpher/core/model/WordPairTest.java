@@ -42,7 +42,7 @@ public class WordPairTest {
         WordPair wordPair4 = WordPair.of("left", "right");
 
         assertThat(wordPair1.equals(wordPair1)).isTrue();
-        assertThat(wordPair1).isNotEqualTo(null);
+        assertThat(wordPair1.equals(null)).isFalse();
         assertThat(wordPair1).isNotEqualTo("string");
         assertThat(wordPair1).isNotEqualTo(wordPair2);
         assertThat(wordPair1).isNotEqualTo(wordPair3);

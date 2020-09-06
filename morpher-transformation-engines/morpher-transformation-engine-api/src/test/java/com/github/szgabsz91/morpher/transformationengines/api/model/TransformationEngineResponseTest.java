@@ -39,7 +39,7 @@ public class TransformationEngineResponseTest {
         TransformationEngineResponse transformationEngineResponse3 = TransformationEngineResponse.of(List.of(ProbabilisticWord.of(Word.of("word"), 0.5)));
 
         assertThat(transformationEngineResponse1.equals(transformationEngineResponse1)).isTrue();
-        assertThat(transformationEngineResponse1).isNotEqualTo(null);
+        assertThat(transformationEngineResponse1.equals(null)).isFalse();
         assertThat(transformationEngineResponse1).isNotEqualTo("string");
         assertThat(transformationEngineResponse1).isNotEqualTo(transformationEngineResponse2);
         assertThat(transformationEngineResponse1).isEqualTo(transformationEngineResponse3);

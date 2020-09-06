@@ -38,7 +38,7 @@ public class AttributeDeltaTest {
         AttributeDelta<Length> attributeDelta1 = new AttributeDelta<>(Length.class, Length.LONG, Length.SHORT);
 
         assertThat(attributeDelta1.equals(attributeDelta1)).isTrue();
-        assertThat(attributeDelta1).isNotEqualTo(null);
+        assertThat(attributeDelta1.equals(null)).isFalse();
         assertThat(attributeDelta1).isNotEqualTo(new Context(null, null, null, null, null));
         assertThat(attributeDelta1).isNotEqualTo(new AttributeDelta<>(LipShape.class, LipShape.ROUNDED, LipShape.UNROUNDED));
         assertThat(attributeDelta1).isNotEqualTo(new AttributeDelta<>(Length.class, Length.SHORT, Length.SHORT));

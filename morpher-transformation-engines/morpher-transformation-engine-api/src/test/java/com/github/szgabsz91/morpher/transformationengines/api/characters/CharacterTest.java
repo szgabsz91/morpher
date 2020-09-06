@@ -81,7 +81,7 @@ public class CharacterTest {
         Character character3 = Character.create(Letter.B);
 
         assertThat(character1.equals(character1)).isTrue();
-        assertThat(character1).isEqualTo(character2);
+        assertThat(character1.equals(null)).isFalse();
         assertThat(character1).isNotEqualTo(null);
         assertThat(character1).isNotEqualTo("string");
         assertThat(character1).isNotEqualTo(character3);

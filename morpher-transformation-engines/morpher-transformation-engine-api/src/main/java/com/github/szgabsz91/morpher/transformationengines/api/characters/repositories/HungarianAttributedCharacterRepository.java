@@ -308,6 +308,7 @@ public final class HungarianAttributedCharacterRepository implements ICharacterR
         return soundCache.get(letter);
     }
 
+    @SuppressWarnings("checkstyle:LineLength")
     private ISound createSound(final String letter) {
         return switch (letter) {
             case LETTER_A -> Vowel.create(HorizontalTonguePosition.BACK, VerticalTonguePosition.SEMI_OPEN, LipShape.ROUNDED,

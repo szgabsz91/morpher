@@ -22,7 +22,7 @@ public class LanguageTest {
         Language language3 = Language.of("code1");
 
         assertThat(language1.equals(language1)).isTrue();
-        assertThat(language1).isNotEqualTo(null);
+        assertThat(language1.equals(null)).isFalse();
         assertThat(language1).isNotEqualTo("string");
         assertThat(language1).isNotEqualTo(language2);
         assertThat(language1).isEqualTo(language3);

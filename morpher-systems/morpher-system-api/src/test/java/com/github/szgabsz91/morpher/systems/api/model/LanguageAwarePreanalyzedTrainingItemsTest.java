@@ -31,7 +31,7 @@ public class LanguageAwarePreanalyzedTrainingItemsTest {
         LanguageAwarePreanalyzedTrainingItems languageAwarePreanalyzedTrainingItems4 = new LanguageAwarePreanalyzedTrainingItems(Language.of("code1"), PreanalyzedTrainingItems.of(Set.of(createPreanalyzedTrainingItem("expression1"))));
 
         assertThat(languageAwarePreanalyzedTrainingItems1.equals(languageAwarePreanalyzedTrainingItems1)).isTrue();
-        assertThat(languageAwarePreanalyzedTrainingItems1).isNotEqualTo(null);
+        assertThat(languageAwarePreanalyzedTrainingItems1.equals(null)).isFalse();
         assertThat(languageAwarePreanalyzedTrainingItems1).isNotEqualTo("string");
         assertThat(languageAwarePreanalyzedTrainingItems1).isNotEqualTo(languageAwarePreanalyzedTrainingItems2);
         assertThat(languageAwarePreanalyzedTrainingItems1).isNotEqualTo(languageAwarePreanalyzedTrainingItems3);

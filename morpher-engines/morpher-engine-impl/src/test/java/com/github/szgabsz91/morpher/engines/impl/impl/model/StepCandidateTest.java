@@ -135,7 +135,7 @@ public class StepCandidateTest {
         stepCandidate11.setOutput(ProbabilisticWord.of(Word.of("output"), 0.5));
 
         assertThat(stepCandidate1.equals(stepCandidate1)).isTrue();
-        assertThat(stepCandidate1).isNotEqualTo(null);
+        assertThat(stepCandidate1.equals(null)).isFalse();
         assertThat(stepCandidate1).isNotEqualTo("string");
         assertThat(stepCandidate1).isNotEqualTo(stepCandidate2);
         assertThat(stepCandidate1).isNotEqualTo(stepCandidate3);

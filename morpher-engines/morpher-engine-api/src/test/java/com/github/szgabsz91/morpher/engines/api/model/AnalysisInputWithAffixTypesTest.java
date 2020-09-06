@@ -27,7 +27,7 @@ public class AnalysisInputWithAffixTypesTest {
         AnalysisInputWithAffixTypes analysisInputWithAffixTypes3 = AnalysisInputWithAffixTypes.of(Word.of("input"), List.of(AffixType.of("<PLUR>")));
 
         assertThat(analysisInputWithAffixTypes1.equals(analysisInputWithAffixTypes1)).isTrue();
-        assertThat(analysisInputWithAffixTypes1).isNotEqualTo(null);
+        assertThat(analysisInputWithAffixTypes1.equals(null)).isFalse();
         assertThat(analysisInputWithAffixTypes1).isNotEqualTo("string");
         assertThat(analysisInputWithAffixTypes1).isNotEqualTo(analysisInputWithAffixTypes2);
         assertThat(analysisInputWithAffixTypes1).isNotEqualTo(analysisInputWithAffixTypes3);

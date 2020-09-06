@@ -115,7 +115,7 @@ public class RuleGroupTest {
 
         assertThat(ruleGroup1.equals(ruleGroup1)).isTrue();
         assertThat(ruleGroup1).isEqualTo(ruleGroup2);
-        assertThat(ruleGroup1).isNotEqualTo(null);
+        assertThat(ruleGroup1.equals(null)).isFalse();
         assertThat(ruleGroup1).isNotEqualTo("string");
         assertThat(ruleGroup1).isNotEqualTo(ruleGroup3);
         assertThat(ruleGroup1).isNotEqualTo(ruleGroup4);

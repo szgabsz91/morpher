@@ -45,7 +45,7 @@ public class RuleBucketTest {
 
         assertThat(ruleBucket1.equals(ruleBucket1)).isTrue();
         assertThat(ruleBucket1).isEqualTo(ruleBucket2);
-        assertThat(ruleBucket1).isNotEqualTo(null);
+        assertThat(ruleBucket1.equals(null)).isFalse();
         assertThat(ruleBucket1).isNotEqualTo("string");
         assertThat(ruleBucket1).isNotEqualTo(ruleBucket3);
     }

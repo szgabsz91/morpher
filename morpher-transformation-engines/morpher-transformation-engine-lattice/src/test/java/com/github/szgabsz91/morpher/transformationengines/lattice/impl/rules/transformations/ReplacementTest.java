@@ -143,7 +143,7 @@ public class ReplacementTest {
         );
 
         assertThat(replacement1.equals(replacement1)).isTrue();
-        assertThat(replacement1).isNotEqualTo(null);
+        assertThat(replacement1.equals(null)).isFalse();
         assertThat(replacement1).isNotEqualTo("string");
         assertThat(replacement1).isNotEqualTo(replacement2);
     }

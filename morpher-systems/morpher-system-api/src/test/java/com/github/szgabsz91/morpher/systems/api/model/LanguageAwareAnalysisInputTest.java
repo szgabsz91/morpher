@@ -27,7 +27,7 @@ public class LanguageAwareAnalysisInputTest {
         LanguageAwareAnalysisInput languageAwareAnalysisInput4 = new LanguageAwareAnalysisInput(Language.of("code1"), AnalysisInput.of(Word.of("input1")));
 
         assertThat(languageAwareAnalysisInput1.equals(languageAwareAnalysisInput1)).isTrue();
-        assertThat(languageAwareAnalysisInput1).isNotEqualTo(null);
+        assertThat(languageAwareAnalysisInput1.equals(null)).isFalse();
         assertThat(languageAwareAnalysisInput1).isNotEqualTo("string");
         assertThat(languageAwareAnalysisInput1).isNotEqualTo(languageAwareAnalysisInput2);
         assertThat(languageAwareAnalysisInput1).isNotEqualTo(languageAwareAnalysisInput3);

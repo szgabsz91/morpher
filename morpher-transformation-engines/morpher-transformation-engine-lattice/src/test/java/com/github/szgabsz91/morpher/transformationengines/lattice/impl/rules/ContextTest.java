@@ -217,7 +217,7 @@ public class ContextTest {
         );
 
         assertThat(context1.equals(context1)).isTrue();
-        assertThat(context1).isNotEqualTo(null);
+        assertThat(context1.equals(null)).isFalse();
         assertThat(context1).isNotEqualTo("string");
         assertThat(context1).isNotEqualTo(context2);
         context2.getPrefix().add(context1.getPrefix().get(0));
