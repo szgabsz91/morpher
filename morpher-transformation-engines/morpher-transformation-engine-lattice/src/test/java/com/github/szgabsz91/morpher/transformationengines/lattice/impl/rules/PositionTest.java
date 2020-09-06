@@ -35,7 +35,7 @@ public class PositionTest {
         Position position2 = Position.of(5);
 
         assertThat(position1.equals(position1)).isTrue();
-        assertThat(position1).isNotEqualTo(null);
+        assertThat(position1.equals(null)).isFalse();
         assertThat(position1).isNotEqualTo("string");
         assertThat(position1).isNotEqualTo(position2);
     }

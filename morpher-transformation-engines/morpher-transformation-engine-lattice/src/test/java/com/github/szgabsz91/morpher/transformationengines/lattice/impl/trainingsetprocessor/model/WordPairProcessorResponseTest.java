@@ -97,22 +97,21 @@ public class WordPairProcessorResponseTest {
         List<Rule> rules2 = List.of(mock(Rule.class));
 
         WordPairProcessorResponse wordPairProcessorResponse1 = new WordPairProcessorResponse(tree, leaves, rules);
-        WordPairProcessorResponse wordPairProcessorResponse2 = new WordPairProcessorResponse(tree, leaves, rules);
-        WordPairProcessorResponse wordPairProcessorResponse3 = new WordPairProcessorResponse(null, leaves, rules);
-        WordPairProcessorResponse wordPairProcessorResponse4 = new WordPairProcessorResponse(tree, null, rules);
-        WordPairProcessorResponse wordPairProcessorResponse5 = new WordPairProcessorResponse(tree2, leaves, rules);
-        WordPairProcessorResponse wordPairProcessorResponse6 = new WordPairProcessorResponse(tree, leaves2, rules);
-        WordPairProcessorResponse wordPairProcessorResponse7 = new WordPairProcessorResponse(tree, leaves, rules2);
+        WordPairProcessorResponse wordPairProcessorResponse2 = new WordPairProcessorResponse(null, leaves, rules);
+        WordPairProcessorResponse wordPairProcessorResponse3 = new WordPairProcessorResponse(tree, null, rules);
+        WordPairProcessorResponse wordPairProcessorResponse4 = new WordPairProcessorResponse(tree2, leaves, rules);
+        WordPairProcessorResponse wordPairProcessorResponse5 = new WordPairProcessorResponse(tree, leaves2, rules);
+        WordPairProcessorResponse wordPairProcessorResponse6 = new WordPairProcessorResponse(tree, leaves, rules2);
 
         assertThat(wordPairProcessorResponse1.equals(wordPairProcessorResponse1)).isTrue();
         assertThat(wordPairProcessorResponse1).isEqualTo(wordPairProcessorResponse1);
-        assertThat(wordPairProcessorResponse1).isNotEqualTo(null);
+        assertThat(wordPairProcessorResponse1.equals(null)).isFalse();
         assertThat(wordPairProcessorResponse1).isNotEqualTo("string");
+        assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse2);
         assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse3);
         assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse4);
         assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse5);
         assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse6);
-        assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse7);
     }
 
     @ParameterizedTest

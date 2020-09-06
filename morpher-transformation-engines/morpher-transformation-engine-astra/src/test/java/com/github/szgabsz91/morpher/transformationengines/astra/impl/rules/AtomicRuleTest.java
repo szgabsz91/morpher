@@ -99,7 +99,7 @@ public class AtomicRuleTest {
 
         assertThat(atomicRule1.equals(atomicRule1)).isTrue();
         assertThat(atomicRule1).isEqualTo(atomicRule2);
-        assertThat(atomicRule1).isNotEqualTo(null);
+        assertThat(atomicRule1.equals(null)).isFalse();
         assertThat(atomicRule1).isNotEqualTo("string");
         assertThat(atomicRule1).isNotEqualTo(atomicRule3);
         assertThat(atomicRule1).isNotEqualTo(atomicRule4);

@@ -435,7 +435,7 @@ public class NodeTest {
         Node node2 = new Node(rule2);
 
         assertThat(node1.equals(node1)).isTrue();
-        assertThat(node1).isNotEqualTo(null);
+        assertThat(node1.equals(null)).isFalse();
         assertThat(node1).isNotEqualTo("string");
         assertThat(node1).isNotEqualTo(node2);
         assertThat(new Node(null)).isEqualTo(new Node(null));

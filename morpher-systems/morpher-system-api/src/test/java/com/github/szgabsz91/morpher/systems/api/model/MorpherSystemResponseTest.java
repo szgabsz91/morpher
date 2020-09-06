@@ -30,7 +30,7 @@ public class MorpherSystemResponseTest {
         MorpherSystemResponse morpherSystemResponse4 = new MorpherSystemResponse(Language.of("code1"), List.of(createMorpherEngineResponse()));
 
         assertThat(morpherSystemResponse1.equals(morpherSystemResponse1)).isTrue();
-        assertThat(morpherSystemResponse1).isNotEqualTo(null);
+        assertThat(morpherSystemResponse1.equals(null)).isFalse();
         assertThat(morpherSystemResponse1).isNotEqualTo("string");
         assertThat(morpherSystemResponse1).isNotEqualTo(morpherSystemResponse2);
         assertThat(morpherSystemResponse1).isNotEqualTo(morpherSystemResponse3);

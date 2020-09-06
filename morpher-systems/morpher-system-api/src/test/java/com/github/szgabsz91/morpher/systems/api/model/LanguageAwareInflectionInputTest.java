@@ -29,7 +29,7 @@ public class LanguageAwareInflectionInputTest {
         LanguageAwareInflectionInput languageAwareInflectionInput4 = new LanguageAwareInflectionInput(Language.of("code1"), new InflectionInput(Word.of("input1"), Set.of()));
 
         assertThat(languageAwareInflectionInput1.equals(languageAwareInflectionInput1)).isTrue();
-        assertThat(languageAwareInflectionInput1).isNotEqualTo(null);
+        assertThat(languageAwareInflectionInput1.equals(null)).isFalse();
         assertThat(languageAwareInflectionInput1).isNotEqualTo("string");
         assertThat(languageAwareInflectionInput1).isNotEqualTo(languageAwareInflectionInput2);
         assertThat(languageAwareInflectionInput1).isNotEqualTo(languageAwareInflectionInput3);

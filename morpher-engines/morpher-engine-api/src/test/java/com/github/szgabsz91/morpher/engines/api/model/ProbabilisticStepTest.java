@@ -39,7 +39,7 @@ public class ProbabilisticStepTest {
         ProbabilisticStep step8 = new ProbabilisticStep(Word.of("input"), Word.of("output"), AffixType.of("AFF"), 0.5, 0.6, 0.7);
 
         assertThat(step1.equals(step1)).isTrue();
-        assertThat(step1).isNotEqualTo(null);
+        assertThat(step1.equals(null)).isFalse();
         assertThat(step1).isNotEqualTo("string");
         assertThat(step1).isNotEqualTo(step2);
         assertThat(step1).isNotEqualTo(step3);

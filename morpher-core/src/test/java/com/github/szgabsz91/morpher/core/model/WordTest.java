@@ -105,7 +105,7 @@ public class WordTest {
         Word word1 = Word.of("word1");
         Word word2 = Word.of("word2");
         assertThat(word1).isEqualTo(word1);
-        assertThat(word1).isNotEqualTo(null);
+        assertThat(word1.equals(null)).isFalse();
         assertThat(word1).isNotEqualTo("string");
         assertThat(word1).isNotEqualTo(word2);
     }

@@ -56,7 +56,7 @@ public class AtomicRuleCandidateTest {
 
         assertThat(atomicRuleCandidate1.equals(atomicRuleCandidate1)).isTrue();
         assertThat(atomicRuleCandidate1).isEqualTo(atomicRuleCandidate4);
-        assertThat(atomicRuleCandidate1).isNotEqualTo(null);
+        assertThat(atomicRuleCandidate1.equals(null)).isFalse();
         assertThat(atomicRuleCandidate1).isNotEqualTo("string");
         assertThat(atomicRuleCandidate1).isNotEqualTo(atomicRuleCandidate2);
         assertThat(atomicRuleCandidate1).isNotEqualTo(atomicRuleCandidate3);

@@ -55,7 +55,7 @@ public class AffixTypeChainTest {
         AffixTypeChain affixTypeChain4 = AffixTypeChain.of(List.of(ProbabilisticAffixType.of(AffixType.of("AFF"), 0.5)), 0.5);
 
         assertThat(affixTypeChain1.equals(affixTypeChain1)).isTrue();
-        assertThat(affixTypeChain1).isNotEqualTo(null);
+        assertThat(affixTypeChain1.equals(null)).isFalse();
         assertThat(affixTypeChain1).isNotEqualTo("string");
         assertThat(affixTypeChain1).isNotEqualTo(affixTypeChain2);
         assertThat(affixTypeChain1).isNotEqualTo(affixTypeChain3);

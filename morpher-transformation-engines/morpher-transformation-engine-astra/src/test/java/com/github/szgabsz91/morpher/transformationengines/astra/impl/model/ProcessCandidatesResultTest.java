@@ -29,7 +29,7 @@ public class ProcessCandidatesResultTest {
 
         assertThat(result1.equals(result1)).isTrue();
         assertThat(result1).isEqualTo(result2);
-        assertThat(result1).isNotEqualTo(null);
+        assertThat(result1.equals(null)).isFalse();
         assertThat(result1).isNotEqualTo("string");
         assertThat(result1).isNotEqualTo(result3);
         assertThat(result1).isNotEqualTo(result4);

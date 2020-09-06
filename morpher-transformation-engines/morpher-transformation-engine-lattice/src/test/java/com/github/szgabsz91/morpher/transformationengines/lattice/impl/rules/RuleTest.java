@@ -713,7 +713,7 @@ public class RuleTest {
         );
 
         assertThat(rule1.equals(rule1)).isTrue();
-        assertThat(rule1).isNotEqualTo(null);
+        assertThat(rule1.equals(null)).isFalse();
         assertThat(rule1).isNotEqualTo("string");
         assertThat(rule1).isNotEqualTo(rule2);
         assertThat(rule1).isNotEqualTo(rule3);

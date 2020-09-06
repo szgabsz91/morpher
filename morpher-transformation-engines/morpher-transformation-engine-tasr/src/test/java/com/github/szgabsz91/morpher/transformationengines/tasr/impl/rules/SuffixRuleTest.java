@@ -48,7 +48,7 @@ public class SuffixRuleTest {
         SuffixRule suffixRule3 = new SuffixRule("left1", "right2");
 
         assertThat(suffixRule1.equals(suffixRule1)).isTrue();
-        assertThat(suffixRule1).isNotEqualTo(null);
+        assertThat(suffixRule1.equals(null)).isFalse();
         assertThat(suffixRule1).isNotEqualTo("string");
         assertThat(suffixRule1).isNotEqualTo(suffixRule2);
         assertThat(suffixRule1).isNotEqualTo(suffixRule3);

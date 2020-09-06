@@ -1,5 +1,5 @@
 apply plugin: 'com.github.spotbugs'
-//apply plugin: 'checkstyle'
+apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 
 spotbugs {
@@ -9,29 +9,30 @@ spotbugs {
 }
 spotbugsTest.enabled = false
 
-//checkstyle {
-//    toolVersion = checkstyleVersion
-//}
-//tasks.withType(Checkstyle) {
-//    configFile = new File("$rootDir/config/checkstyle.xml")
-//    configProperties = [
-//        rootDir: rootDir
-//    ]
-//    exclude '**/module-info.java'
-//    reports {
-//        html.enabled true
-//    }
-//}
-//checkstyleTest.enabled = false
-//afterEvaluate {
-//    def checkstyleEnabled = project.hasProperty('checkstyleEnabled') ? project.checkstyleEnabled : true
-//
-//    if (!checkstyleEnabled) {
-//        checkstyleMain.enabled = false
-//    }
-//}
+checkstyle {
+    toolVersion = checkstyleVersion
+}
+tasks.withType(Checkstyle) {
+    configFile = new File("$rootDir/config/checkstyle.xml")
+    configProperties = [
+        rootDir: rootDir
+    ]
+    exclude '**/module-info.java'
+    reports {
+        html.enabled true
+    }
+}
+checkstyleTest.enabled = false
+afterEvaluate {
+    def checkstyleEnabled = project.hasProperty('checkstyleEnabled') ? project.checkstyleEnabled : true
+
+    if (!checkstyleEnabled) {
+        checkstyleMain.enabled = false
+    }
+}
 
 pmd {
     toolVersion = pmdVersion
     rulePriority = 2
+    ruleSets = [new File("$rootDir/config/pmd.xml")]
 }

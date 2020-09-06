@@ -52,7 +52,7 @@ public class ConsonantTest {
         Consonant consonant3 = Consonant.create(SoundProductionPlace.DENTAL_ALVEOLAR);
 
         assertThat(consonant1.equals(consonant1)).isTrue();
-        assertThat(consonant1).isNotEqualTo(null);
+        assertThat(consonant1.equals(null)).isFalse();
         assertThat(consonant1).isNotEqualTo("string");
         assertThat(consonant2).isNotEqualTo(consonant3);
     }
