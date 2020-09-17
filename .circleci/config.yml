@@ -3,7 +3,7 @@ version: 2.1
 executors:
     morpher-executor:
         docker:
-            - image: szgabsz91/jdk-ocamorph-pyphen:14.0.0
+            - image: szgabsz91/jdk-ocamorph-pyphen:15.0.0
         working_directory: ~/morpher
 
 jobs:
