@@ -39,7 +39,7 @@ afterEvaluate {
 
     tasks.withType(Javadoc) {
         source = sourceSets.main.allJava + file('build/generated/source/proto/main/java')
-        options.addStringOption('-module-path', classpath.asPath.toString())
+        options.modulePath([file(classpath.asPath)])
         build.dependsOn it
     }
 }
