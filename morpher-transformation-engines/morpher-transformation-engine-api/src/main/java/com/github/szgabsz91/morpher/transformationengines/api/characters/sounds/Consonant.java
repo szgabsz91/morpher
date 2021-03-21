@@ -269,8 +269,7 @@ public final class Consonant implements ISound {
      */
     @Override
     public boolean equals(final Object other) {
-        if (other instanceof Consonant) {
-            final Consonant otherConsonant = (Consonant) other;
+        if (other instanceof Consonant otherConsonant) {
             return otherConsonant.attributes.equals(this.attributes);
         }
 

@@ -240,27 +240,22 @@ public class LatticeBuilderConverter implements IConverter<ILatticeBuilder, Latt
                 .setLatticeBuilderType(latticeBuilderTypeMessage)
                 .setLattice(latticeMessage);
 
-        if (latticeBuilder instanceof CompleteLatticeBuilder) {
-            final CompleteLatticeBuilder completeLatticeBuilder = (CompleteLatticeBuilder) latticeBuilder;
+        if (latticeBuilder instanceof CompleteLatticeBuilder completeLatticeBuilder) {
             builder = builder
                     .setSkipFrequencyCalculation(completeLatticeBuilder.isSkipFrequencyCalculation())
                     .setSkipDominantRuleSelection(completeLatticeBuilder.isSkipDominantRuleSelection());
         }
-        else if (latticeBuilder instanceof ConsistentLatticeBuilder) {
-            final ConsistentLatticeBuilder consistentLatticeBuilder = (ConsistentLatticeBuilder) latticeBuilder;
+        else if (latticeBuilder instanceof ConsistentLatticeBuilder consistentLatticeBuilder) {
             builder = builder
                     .setSkipFrequencyCalculation(consistentLatticeBuilder.isSkipFrequencyCalculation());
         }
-        else if (latticeBuilder instanceof MaximalConsistentLatticeBuilder) {
-            final MaximalConsistentLatticeBuilder maximalConsistentLatticeBuilder =
-                    (MaximalConsistentLatticeBuilder) latticeBuilder;
+        else if (latticeBuilder instanceof MaximalConsistentLatticeBuilder maximalConsistentLatticeBuilder) {
             final LatticeBuilderMessage internalLatticeBuilderMessage =
                     this.convert(maximalConsistentLatticeBuilder.getConsistentLatticeBuilder());
             builder = builder
                     .setInternalLatticeBuilder1(internalLatticeBuilderMessage);
         }
-        else if (latticeBuilder instanceof MinimalLatticeBuilder) {
-            final MinimalLatticeBuilder minimalLatticeBuilder = (MinimalLatticeBuilder) latticeBuilder;
+        else if (latticeBuilder instanceof MinimalLatticeBuilder minimalLatticeBuilder) {
             builder = builder
                     .setInternalLatticeBuilder1(this.convert(minimalLatticeBuilder.getConsistentLatticeBuilder()))
                     .setInternalLatticeBuilder2(this.convert(minimalLatticeBuilder.getCompleteLatticeBuilder()));

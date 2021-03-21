@@ -202,18 +202,15 @@ public class AttributeBasedCostCalculator implements ICostCalculator {
      */
     @Override
     public int calculateCost(final ITransformation transformation) {
-        if (transformation instanceof Addition) {
-            final Addition addition = (Addition) transformation;
+        if (transformation instanceof Addition addition) {
             return addition.getAttributes().size();
         }
 
-        if (transformation instanceof Removal) {
-            final Removal removal = (Removal) transformation;
+        if (transformation instanceof Removal removal) {
             return removal.getAttributes().size();
         }
 
-        if (transformation instanceof Replacement) {
-            final Replacement replacement = (Replacement) transformation;
+        if (transformation instanceof Replacement replacement) {
             final boolean isFromVowel = replacement.getAttributeDeltas()
                     .stream()
                     .map(AttributeDelta::getFrom)

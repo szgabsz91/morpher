@@ -195,12 +195,8 @@ public class DefaultCostCalculator implements ICostCalculator {
      */
     @Override
     public int calculateCost(final ITransformation transformation) {
-        if (transformation instanceof Replacement) {
-            final Replacement replacement = (Replacement) transformation;
-
-            if (replacement.isInconsistent()) {
-                return 0;
-            }
+        if (transformation instanceof Replacement replacement && replacement.isInconsistent()) {
+            return 0;
         }
 
         return 1;

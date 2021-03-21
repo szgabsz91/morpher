@@ -222,8 +222,7 @@ public final class SubsetCalculator {
             return character1.getAttributes().iterator().next().equals(character2.getAttributes().iterator().next());
         }
 
-        if (character1 instanceof Vowel) {
-            final Vowel vowel1 = (Vowel) character1;
+        if (character1 instanceof Vowel vowel1) {
             final Vowel vowel2 = (Vowel) character2;
             @SuppressWarnings("unchecked")
             final Collection<? extends IVowelAttribute> vowelAttributes1 =
@@ -234,8 +233,7 @@ public final class SubsetCalculator {
             return isSubsetAttributes(vowelAttributes1, vowelAttributes2, vowel1, vowel2);
         }
 
-        if (character1 instanceof Consonant) {
-            final Consonant consonant1 = (Consonant) character1;
+        if (character1 instanceof Consonant consonant1) {
             final Consonant consonant2 = (Consonant) character2;
             @SuppressWarnings("unchecked")
             final Collection<? extends IConsonantAttribute> consonantAttributes1 =
@@ -328,16 +326,16 @@ public final class SubsetCalculator {
             return false;
         }
 
-        if (transformation1 instanceof Addition) {
-            return isSubsetOf((Addition) transformation1, (Addition) transformation2);
+        if (transformation1 instanceof Addition addition1) {
+            return isSubsetOf(addition1, (Addition) transformation2);
         }
 
-        if (transformation1 instanceof Removal) {
-            return isSubsetOf((Removal) transformation1, (Removal) transformation2);
+        if (transformation1 instanceof Removal removal1) {
+            return isSubsetOf(removal1, (Removal) transformation2);
         }
 
-        if (transformation1 instanceof Replacement) {
-            return isSubsetOf((Replacement) transformation1, (Replacement) transformation2);
+        if (transformation1 instanceof Replacement replacement1) {
+            return isSubsetOf(replacement1, (Replacement) transformation2);
         }
 
         throw new IllegalArgumentException(

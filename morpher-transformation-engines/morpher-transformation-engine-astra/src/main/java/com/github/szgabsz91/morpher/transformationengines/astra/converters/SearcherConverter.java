@@ -317,9 +317,8 @@ public class SearcherConverter implements IConverter<ISearcher, SearcherMessage>
 
     private static double getFitnessFunctionExponentialFactor(
             final IAtomicRuleFitnessCalculator atomicRuleFitnessCalculator) {
-        if (atomicRuleFitnessCalculator instanceof AbstractSmoothAtomicRuleFitnessCalculator) {
-            final AbstractSmoothAtomicRuleFitnessCalculator smoothAtomicRuleFitnessCalculator =
-                    (AbstractSmoothAtomicRuleFitnessCalculator) atomicRuleFitnessCalculator;
+        if (atomicRuleFitnessCalculator instanceof AbstractSmoothAtomicRuleFitnessCalculator
+                smoothAtomicRuleFitnessCalculator) {
             return smoothAtomicRuleFitnessCalculator.getExponentialFactor();
         }
 

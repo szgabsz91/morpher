@@ -216,8 +216,7 @@ public class Serializer<TSource, TTarget extends GeneratedMessageV3> {
      * @throws IOException in case of an I/O error
      */
     public void serialize(final TSource object, final Path file) throws IOException {
-        if (object instanceof ICustomSerializer) {
-            final ICustomSerializer serializableObject = (ICustomSerializer) object;
+        if (object instanceof ICustomSerializer serializableObject) {
             final Timer timer = new Timer(true);
             final boolean customSerializationResult = serializableObject.serialize(file);
             timer.stop();
@@ -242,8 +241,7 @@ public class Serializer<TSource, TTarget extends GeneratedMessageV3> {
      * @throws IOException in case of an I/O error
      */
     public TSource deserialize(final Path file) throws IOException {
-        if (this.source instanceof ICustomDeserializer) {
-            final ICustomDeserializer deserializableObject = (ICustomDeserializer) this.source;
+        if (this.source instanceof ICustomDeserializer deserializableObject) {
             final Timer timer = new Timer(true);
             final boolean customDeserializationResult = deserializableObject.deserialize(file);
             timer.stop();
@@ -252,8 +250,7 @@ public class Serializer<TSource, TTarget extends GeneratedMessageV3> {
             }
         }
 
-        if (!this.converter.isConvertBackSupported() && this.source instanceof ISavable) {
-            final ISavable savableObject = (ISavable) this.source;
+        if (!this.converter.isConvertBackSupported() && this.source instanceof ISavable savableObject) {
             final Timer timer = new Timer(true);
             savableObject.loadFrom(file);
             timer.stop();

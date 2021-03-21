@@ -8,8 +8,8 @@ ext {
     moduleName = 'com.github.szgabsz91.morpher.systems.impl'
     mockingEnabled = true
     testCoverageLimits = [
-        instruction: 96.62,
-        line: 96.71,
+        instruction: 96.64,
+        line: 96.67,
         branch: 87.50,
         class: 100.0
     ]
