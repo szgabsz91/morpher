@@ -78,7 +78,7 @@ publishing {
                 def root = asNode()
                 root.appendNode('description', project.description)
                 root.appendNode('name', project.name)
-                root.children().last() + project.pomInformation
+                //root.children().last() + project.pomInformation
             }
         }
     }

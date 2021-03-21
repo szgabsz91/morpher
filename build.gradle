@@ -17,6 +17,7 @@ buildscript {
         pmdVersion = '6.32.0'
         protobufGradlePluginVersion = '0.8.14'
         protocVersion = '3.15.6'
+        publishPluginVersion = '1.0.0'
         spotbugsVersion = '4.2.2'
         spotbugsGradlePluginVersion = '4.7.0'
 
@@ -55,6 +56,7 @@ buildscript {
         // - https://github.com/GoogleContainerTools/jib/issues/591
         classpath "com.google.guava:guava:${guavaVersion}"
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${gradleBintrayPluginVersion}"
+        classpath "io.github.gradle-nexus:publish-plugin:${publishPluginVersion}"
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:${buildInfoExtractorGradleVersion}"
     }
 }
