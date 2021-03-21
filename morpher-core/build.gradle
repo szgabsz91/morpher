@@ -17,9 +17,9 @@ ext {
 }
 
 dependencies {
-    compile("org.slf4j:slf4j-api:${slf4jVersion}")
-    compile("net.lingala.zip4j:zip4j:${zip4jVersion}")
+    implementation("org.slf4j:slf4j-api:${slf4jVersion}")
+    implementation("net.lingala.zip4j:zip4j:${zip4jVersion}")
     
-    runtime("ch.qos.logback:logback-core:${logbackVersion}")
-    runtime("ch.qos.logback:logback-classic:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-core:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-classic:${logbackVersion}")
 }

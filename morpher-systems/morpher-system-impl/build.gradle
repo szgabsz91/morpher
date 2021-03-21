@@ -16,18 +16,18 @@ ext {
 }
 
 dependencies {
-    compile project(':morpher-system-api')
-    compile project(':morpher-engine-api')
+    api project(':morpher-system-api')
+    api project(':morpher-engine-api')
 
-    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+    implementation("org.slf4j:slf4j-api:${slf4jVersion}")
 
-    runtime("ch.qos.logback:logback-core:${logbackVersion}")
-    runtime("ch.qos.logback:logback-classic:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-core:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-classic:${logbackVersion}")
 
-    testCompile project(':morpher-transformation-engine-astra')
-    testCompile project(':morpher-language-handler-hunmorph')
-    testCompile project(':morpher-engine-impl')
-    testCompile project(':morpher-engine-hunmorph')
-    testCompile("com.google.code.gson:gson:${gsonVersion}")
-    testCompile("org.apache.velocity:velocity-engine-core:${velocityVersion}")
+    testImplementation project(':morpher-transformation-engine-astra')
+    testImplementation project(':morpher-language-handler-hunmorph')
+    testImplementation project(':morpher-engine-impl')
+    testImplementation project(':morpher-engine-hunmorph')
+    testImplementation("com.google.code.gson:gson:${gsonVersion}")
+    testImplementation("org.apache.velocity:velocity-engine-core:${velocityVersion}")
 }

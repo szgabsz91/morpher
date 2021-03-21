@@ -17,14 +17,14 @@ ext {
 }
 
 dependencies {
-    compile project(':morpher-core')
-    compile project(':morpher-transformation-engine-api')
+    api project(':morpher-core')
+    api project(':morpher-transformation-engine-api')
 
-    compile("org.apache.commons:commons-collections4:${commonsCollectionsVersion}")
-    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+    implementation("org.apache.commons:commons-collections4:${commonsCollectionsVersion}")
+    implementation("org.slf4j:slf4j-api:${slf4jVersion}")
 
-    runtime("ch.qos.logback:logback-core:${logbackVersion}")
-    runtime("ch.qos.logback:logback-classic:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-core:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-classic:${logbackVersion}")
 
-    testCompile("org.apache.commons:commons-text:${commonsTextVersion}")
+    testImplementation("org.apache.commons:commons-text:${commonsTextVersion}")
 }

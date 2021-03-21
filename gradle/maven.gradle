@@ -1,4 +1,4 @@
-apply plugin: 'maven'
+//apply plugin: 'maven'
 
 project.ext.projectUrl = 'https://github.com/szgabsz91/morpher'
 
@@ -37,10 +37,10 @@ project.ext.pomInformation = {
     }
 }
 
-install {
+/*install {
     repositories.mavenInstaller {
         pom.project project.ext.pomInformation
     }
 }
 
-build.dependsOn install
+build.dependsOn install*/

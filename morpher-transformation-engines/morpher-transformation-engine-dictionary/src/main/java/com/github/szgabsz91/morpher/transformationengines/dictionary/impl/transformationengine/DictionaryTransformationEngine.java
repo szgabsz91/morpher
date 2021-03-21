@@ -328,7 +328,7 @@ public class DictionaryTransformationEngine
      * Loads the state from the given message.
      * @param message the message
      * @throws InvalidProtocolBufferException if the provided message is not an
-     * {@link DictionaryTransformationEngineMessage}
+     *                                        {@link DictionaryTransformationEngineMessage}
      */
     @Override
     public void fromMessage(final Any message) throws InvalidProtocolBufferException {

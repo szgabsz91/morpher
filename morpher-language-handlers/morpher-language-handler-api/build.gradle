@@ -1,6 +1,7 @@
 description = 'Language Handler API contains the core interfaces and classes for language handler implementations'
 
 apply from: "$rootDir/gradle/test.gradle"
+apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
     displayName = 'Morpher Language Handler API'
@@ -15,7 +16,5 @@ ext {
 }
 
 dependencies {
-    compile project(':morpher-core')
-
-    compile("com.google.protobuf:protobuf-java:${protobufVersion}")
+    api project(':morpher-core')
 }

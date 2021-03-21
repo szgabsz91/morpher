@@ -4,7 +4,6 @@ module com.github.szgabsz91.morpher.transformationengines.dictionary {
     requires transitive com.github.szgabsz91.morpher.core;
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
-    requires org.apache.commons.lang3;
     requires com.google.protobuf;
 
     exports com.github.szgabsz91.morpher.transformationengines.dictionary;

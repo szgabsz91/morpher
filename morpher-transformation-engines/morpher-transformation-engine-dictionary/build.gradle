@@ -16,8 +16,6 @@ ext {
 }
 
 dependencies {
-    compile project(':morpher-core')
-    compile project(':morpher-transformation-engine-api')
-
-    compile("org.apache.commons:commons-lang3:${commonsLangVersion}")
+    api project(':morpher-core')
+    api project(':morpher-transformation-engine-api')
 }
