@@ -1,0 +1,6 @@
+apply plugin: 'signing'
+
+signing {
+    useInMemoryPgpKeys(project.signingKeyId, project.signingKey, project.signingPassword)
+    sign configurations.archives
+}

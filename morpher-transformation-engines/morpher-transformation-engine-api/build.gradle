@@ -16,7 +16,7 @@ ext {
 }
 
 dependencies {
-    compile project(':morpher-core')
+    api project(':morpher-core')
     
-    compile("com.github.dpaukov:combinatoricslib3:${combinatoricslibVersion}")
+    implementation("com.github.dpaukov:combinatoricslib3:${combinatoricslibVersion}")
 }

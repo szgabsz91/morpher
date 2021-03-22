@@ -1,0 +1,12 @@
+apply plugin: 'io.github.gradle-nexus.publish-plugin'
+
+group = morpherGroupId
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            username = project.mavenCentralUsername
+            password = project.mavenCentralPassword
+        }
+    }
+}

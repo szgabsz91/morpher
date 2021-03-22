@@ -13,5 +13,5 @@ idea {
 }
 
 dependencies {
-    compile("com.google.protobuf:protobuf-java:${protobufVersion}")
+    api("com.google.protobuf:protobuf-java:${protobufVersion}")
 }

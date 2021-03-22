@@ -9,25 +9,24 @@ ext {
     mockingEnabled = true
     testCoverageLimits = [
         instruction: 98.31,
-        line: 98.64,
+        line: 98.63,
         branch: 94.62,
         class: 100.0
     ]
 }
 
 dependencies {
-    compile project(':morpher-core')
-    compile project(':morpher-transformation-engine-api')
+    api project(':morpher-core')
+    api project(':morpher-transformation-engine-api')
 
-    compile("org.apache.commons:commons-lang3:${commonsLangVersion}")
-    compile("org.apache.commons:commons-collections4:${commonsCollectionsVersion}")
-    compile("com.github.dpaukov:combinatoricslib3:${combinatoricslibVersion}")
-    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+    implementation("org.apache.commons:commons-lang3:${commonsLangVersion}")
+    implementation("org.apache.commons:commons-collections4:${commonsCollectionsVersion}")
+    implementation("com.github.dpaukov:combinatoricslib3:${combinatoricslibVersion}")
+    implementation("org.slf4j:slf4j-api:${slf4jVersion}")
 
-    runtime("ch.qos.logback:logback-core:${logbackVersion}")
-    runtime("ch.qos.logback:logback-classic:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-core:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-classic:${logbackVersion}")
 
-    testCompile project(':morpher-language-handler-api')
-    testCompile project(':morpher-language-handler-hunmorph')
-    testCompile("com.github.dpaukov:combinatoricslib3:${combinatoricslibVersion}")
+    testImplementation project(':morpher-language-handler-api')
+    testImplementation project(':morpher-language-handler-hunmorph')
 }

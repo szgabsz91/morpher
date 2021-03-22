@@ -269,8 +269,7 @@ public final class Vowel implements ISound {
      */
     @Override
     public boolean equals(final Object other) {
-        if (other instanceof Vowel) {
-            final Vowel otherVowel = (Vowel) other;
+        if (other instanceof Vowel otherVowel) {
             return otherVowel.attributes.equals(this.attributes);
         }
 

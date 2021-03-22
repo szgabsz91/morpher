@@ -1,46 +1,48 @@
 buildscript {
     ext {
         morpherGroupId = 'com.github.szgabsz91'
-        morpherVersion = '1.3.1-SNAPSHOT'
+        morpherVersion = '1.4.0-SNAPSHOT'
 
-        bintrayKey = System.getenv('BINTRAY_KEY')
+        signingKeyId = System.getenv('SIGNING_KEY_ID')
+        signingKey = new String(System.getenv('SIGNING_KEY').decodeBase64())
+        signingPassword = System.getenv('SIGNING_PASSWORD')
+        mavenCentralUsername = System.getenv('MAVEN_CENTRAL_USERNAME')
         mavenCentralPassword = System.getenv('MAVEN_CENTRAL_PASSWORD')
-        buildNumber = System.getenv('CIRCLE_BUILD_NUM')
 
-        javaVersion = '15'
+        javaVersion = '16'
 
-        buildInfoExtractorGradleVersion = 'latest.release'
-        checkstyleVersion = '8.36.1'
-        gradleBintrayPluginVersion = '1.8.5'
-        guavaVersion = '29.0-jre'
+        checkstyleVersion = '8.41'
+        guavaVersion = '30.1.1-jre'
         jacocoVersion = '0.8.6'
-        pmdVersion = '6.27.0'
-        protobufGradlePluginVersion = '0.8.13'
-        protocVersion = '3.13.0'
-        spotbugsVersion = '4.1.2'
-        spotbugsGradlePluginVersion = '4.5.0'
+        nexusPublishPlugin = '1.0.0'
+        pmdVersion = '6.32.0'
+        protobufGradlePluginVersion = '0.8.14'
+        protocVersion = '3.15.6'
+        publishPluginVersion = '1.0.0'
+        spotbugsVersion = '4.2.2'
+        spotbugsGradlePluginVersion = '4.7.0'
 
         combinatoricslibVersion = '3.3.0'
         commonsCollectionsVersion = '4.4'
-        commonsLangVersion = '3.11'
+        commonsLangVersion = '3.12.0'
         commonsTextVersion = '1.9'
         gsonVersion = '2.8.6'
         logbackVersion = '1.2.3'
-        luceneCoreVersion = '8.6.2'
-        protobufVersion = '3.13.0'
+        luceneCoreVersion = '8.8.1'
+        protobufVersion = '3.15.6'
         slf4jVersion = '1.7.30'
-        velocityVersion = '2.2'
+        velocityVersion = '2.3'
         zip4jVersion = '1.3.3'
 
-        assertjVersion = '3.17.2'
-        junitJupiterVersion = '5.7.0'
-        junitPlatformVersion = '1.7.0'
-        mockitoVersion = '3.5.10'
+        assertjVersion = '3.19.0'
+        junitJupiterVersion = '5.7.1'
+        junitPlatformVersion = '1.7.1'
+        mockitoVersion = '3.8.0'
     }
 
     repositories {
+        mavenLocal()
         mavenCentral()
-        jcenter()
 
         maven {
             url 'https://plugins.gradle.org/m2'
@@ -54,9 +56,12 @@ buildscript {
         // - https://github.com/spotbugs/spotbugs-gradle-plugin/issues/120
         // - https://github.com/GoogleContainerTools/jib/issues/591
         classpath "com.google.guava:guava:${guavaVersion}"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${gradleBintrayPluginVersion}"
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:${buildInfoExtractorGradleVersion}"
+        classpath "io.github.gradle-nexus:publish-plugin:${publishPluginVersion}"
     }
+}
+
+gradle.rootProject {
+    apply from: "$rootDir/gradle/nexus.gradle"
 }
 
 subprojects {
@@ -67,12 +72,10 @@ subprojects {
     apply from: "$rootDir/gradle/static-code-analysis.gradle"
     apply from: "$rootDir/gradle/maven.gradle"
     apply from: "$rootDir/gradle/ide.gradle"
-    apply from: "$rootDir/gradle/bintray.gradle"
+    apply from: "$rootDir/gradle/signing.gradle"
 
     repositories {
         mavenLocal()
-        jcenter()
+        mavenCentral()
     }
 }
-
-bintrayPublish.enabled = false

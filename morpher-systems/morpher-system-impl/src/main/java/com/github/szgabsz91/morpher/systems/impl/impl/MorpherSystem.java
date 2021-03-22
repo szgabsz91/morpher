@@ -411,10 +411,9 @@ public class MorpherSystem implements IMorpherSystem {
                 final Language language = entry.getKey();
                 final IMorpherEngine<?> morpherEngine = entry.getValue();
 
-                if (morpherEngine instanceof ICustomSerializer) {
+                if (morpherEngine instanceof ICustomSerializer serializableMorpherEngine) {
                     final Path morpherEngineTempFile =
                             Paths.get(tempFolder.toAbsolutePath().toString(), language.toString() + ".engine");
-                    final ICustomSerializer serializableMorpherEngine = (ICustomSerializer) morpherEngine;
                     final boolean morpherEngineSerializationResult =
                             serializableMorpherEngine.serialize(morpherEngineTempFile);
                     if (!morpherEngineSerializationResult) {
@@ -475,8 +474,7 @@ public class MorpherSystem implements IMorpherSystem {
                 final String languageString = engineFilenameString.substring(0, engineFilenameString.length() - 7);
                 final Language language = Language.of(languageString);
                 final IMorpherEngine<?> morpherEngine = this.getMorpherEngine(language);
-                if (morpherEngine instanceof ICustomDeserializer) {
-                    final ICustomDeserializer deserializableMorpherEngine = (ICustomDeserializer) morpherEngine;
+                if (morpherEngine instanceof ICustomDeserializer deserializableMorpherEngine) {
                     final boolean deserializationResult = deserializableMorpherEngine.deserialize(engineFile);
                     if (!deserializationResult) {
                         return false;

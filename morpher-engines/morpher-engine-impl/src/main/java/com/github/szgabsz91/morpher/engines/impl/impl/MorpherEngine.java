@@ -590,9 +590,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
             final StepCandidate candidate = candidates.iterator().next();
             candidates.remove(candidate);
 
-            if (analysisInput instanceof AnalysisInputWithAffixTypes) {
-                final AnalysisInputWithAffixTypes analysisInputWithAffixTypes =
-                        (AnalysisInputWithAffixTypes) analysisInput;
+            if (analysisInput instanceof AnalysisInputWithAffixTypes analysisInputWithAffixTypes) {
                 final List<AffixType> affixTypeCandidates = generateAffixTypeCandidates(candidate);
                 if (!endsWith(analysisInputWithAffixTypes.getAffixTypes(), affixTypeCandidates)) {
                     continue;

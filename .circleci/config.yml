@@ -3,7 +3,7 @@ version: 2.1
 executors:
     morpher-executor:
         docker:
-            - image: szgabsz91/jdk-ocamorph-pyphen:15.0.0
+            - image: szgabsz91/jdk-ocamorph-pyphen:16.0.0
         working_directory: ~/morpher
 
 jobs:
@@ -30,9 +30,6 @@ jobs:
                 name: Javadoc
                 command: ./gradlew javadoc
             - run:
-                name: Install
-                command: ./gradlew install
-            - run:
                 name: Collect test results
                 command: |
                     mkdir -p ~/morpher/build/test-report
@@ -45,23 +42,14 @@ jobs:
                   paths:
                       - .
 
-    publish-snapshot:
-        executor: morpher-executor
-        steps:
-            - attach_workspace:
-                at: .
-            - run:
-                name: Publish to Artifactory
-                command: ./gradlew artifactoryPublish
-
     publish-release:
         executor: morpher-executor
         steps:
             - attach_workspace:
                 at: .
             - run:
-                name: Publish to Bintray
-                command: ./gradlew bintrayUpload
+                name: Publish to Maven Central
+                command: ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
 
 workflows:
     version: 2
@@ -73,14 +61,6 @@ workflows:
                         only: /.+/
                     branches:
                         only: /.+/
-            - publish-snapshot:
-                  filters:
-                      tags:
-                          ignore: /.+/
-                      branches:
-                          only: master
-                  requires:
-                      - build
             - publish-release:
                   filters:
                       tags:

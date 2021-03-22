@@ -1,18 +1,18 @@
 apply plugin: 'jacoco'
 
 dependencies {
-    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
-    testCompile("org.junit.jupiter:junit-jupiter-params:${junitJupiterVersion}")
-    testCompile("org.junit.platform:junit-platform-runner:${junitPlatformVersion}")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${junitJupiterVersion}")
+    testImplementation("org.junit.platform:junit-platform-runner:${junitPlatformVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
 
-    testCompile("org.assertj:assertj-core:${assertjVersion}")
+    testImplementation("org.assertj:assertj-core:${assertjVersion}")
 }
 
 afterEvaluate {
     if (project.hasProperty('mockingEnabled') && project.mockingEnabled == true) {
         dependencies {
-            testCompile("org.mockito:mockito-core:${mockitoVersion}")
+            testImplementation("org.mockito:mockito-core:${mockitoVersion}")
         }
     }
 }

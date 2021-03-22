@@ -1,6 +1,7 @@
 description = 'Morpher System API that contains the base interfaces and classes for Morpher System implementations'
 
 apply from: "$rootDir/gradle/test.gradle"
+apply from: "$rootDir/gradle/protobuf.gradle"
 
 ext {
     displayName = 'Morpher System API'
@@ -15,7 +16,7 @@ ext {
 }
 
 dependencies {
-    compile project(':morpher-core')
-    compile project(':morpher-language-handler-api')
-    compile project(':morpher-engine-api')
+    api project(':morpher-core')
+    api project(':morpher-language-handler-api')
+    api project(':morpher-engine-api')
 }

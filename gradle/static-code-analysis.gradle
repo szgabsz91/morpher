@@ -33,6 +33,6 @@ afterEvaluate {
 
 pmd {
     toolVersion = pmdVersion
-    rulePriority = 2
+    rulesMinimumPriority = 2
     ruleSets = [new File("$rootDir/config/pmd.xml")]
 }

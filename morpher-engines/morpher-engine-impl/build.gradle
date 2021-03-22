@@ -9,25 +9,24 @@ ext {
     mockingEnabled = true
     testCoverageLimits = [
         instruction: 97.35,
-        line: 97.78,
+        line: 97.77,
         branch: 93.08,
         class: 100.0
     ]
 }
 
 dependencies {
-    compile project(':morpher-core')
-    compile project(':morpher-engine-api')
-    compile project(':morpher-transformation-engine-api')
-    compile project(':morpher-language-handler-api')
+    api project(':morpher-core')
+    api project(':morpher-engine-api')
+    api project(':morpher-transformation-engine-api')
 
-    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+    implementation project(':morpher-language-handler-api')
+    implementation("org.slf4j:slf4j-api:${slf4jVersion}")
 
-    runtime("ch.qos.logback:logback-core:${logbackVersion}")
-    runtime("ch.qos.logback:logback-classic:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-core:${logbackVersion}")
+    runtimeOnly("ch.qos.logback:logback-classic:${logbackVersion}")
 
-    testCompile project(':morpher-transformation-engine-astra')
-    testCompile project(':morpher-language-handler-hunmorph')
-
-    testCompile("org.apache.commons:commons-text:${commonsTextVersion}")
+    testImplementation project(':morpher-transformation-engine-astra')
+    testImplementation project(':morpher-language-handler-hunmorph')
+    testImplementation("org.apache.commons:commons-text:${commonsTextVersion}")
 }

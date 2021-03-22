@@ -228,8 +228,7 @@ public final class IntersectionCalculator {
             return character1;
         }
 
-        if (character1 instanceof Vowel) {
-            final Vowel vowel1 = (Vowel) character1;
+        if (character1 instanceof Vowel vowel1) {
             final Vowel vowel2 = (Vowel) character2;
             @SuppressWarnings("unchecked")
             final Collection<? extends IVowelAttribute> attributes1 =
@@ -242,8 +241,7 @@ public final class IntersectionCalculator {
             return Vowel.create(commonAttributes);
         }
 
-        if (character1 instanceof Consonant) {
-            final Consonant consonant1 = (Consonant) character1;
+        if (character1 instanceof Consonant consonant1) {
             final Consonant consonant2 = (Consonant) character2;
             @SuppressWarnings("unchecked")
             final Collection<? extends IConsonantAttribute> attributes1 =
@@ -357,16 +355,16 @@ public final class IntersectionCalculator {
             throw new IntersectionException("The two transformations have different types");
         }
 
-        if (transformation1 instanceof Addition) {
-            return intersect((Addition) transformation1, (Addition) transformation2);
+        if (transformation1 instanceof Addition addition1) {
+            return intersect(addition1, (Addition) transformation2);
         }
 
-        if (transformation1 instanceof Removal) {
-            return intersect((Removal) transformation1, (Removal) transformation2);
+        if (transformation1 instanceof Removal removal1) {
+            return intersect(removal1, (Removal) transformation2);
         }
 
-        if (transformation1 instanceof Replacement) {
-            return intersect((Replacement) transformation1, (Replacement) transformation2, characterRepository);
+        if (transformation1 instanceof Replacement replacement1) {
+            return intersect(replacement1, (Replacement) transformation2, characterRepository);
         }
 
         throw new IllegalArgumentException(

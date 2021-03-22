@@ -16,8 +16,9 @@ ext {
 }
 
 dependencies {
-    compile project(':morpher-core')
-    compile project(':morpher-engine-api')
-    compile project(':morpher-language-handler-api')
-    compile project(':morpher-language-handler-hunmorph')
+    api project(':morpher-core')
+    api project(':morpher-engine-api')
+    api project(':morpher-language-handler-api')
+
+    implementation project(':morpher-language-handler-hunmorph')
 }

@@ -213,24 +213,21 @@ public class TransformationConverter implements IConverter<ITransformation, Tran
     public TransformationMessage convert(final ITransformation transformation) {
         final TransformationMessage.Builder builder = TransformationMessage.newBuilder();
 
-        if (transformation instanceof Addition) {
-            final Addition addition = (Addition) transformation;
+        if (transformation instanceof Addition addition) {
             builder.setType(Addition.class.getName());
             addition.getAttributes()
                     .stream()
                     .map(attribute -> attribute.getClass().getName() + "." + attribute.toString())
                     .forEach(builder::addChange);
         }
-        else if (transformation instanceof Removal) {
-            final Removal removal = (Removal) transformation;
+        else if (transformation instanceof Removal removal) {
             builder.setType(Removal.class.getName());
             removal.getAttributes()
                     .stream()
                     .map(attribute -> attribute.getClass().getName() + "." + attribute.toString())
                     .forEach(builder::addChange);
         }
-        else if (transformation instanceof Replacement) {
-            final Replacement replacement = (Replacement) transformation;
+        else if (transformation instanceof Replacement replacement) {
             builder.setType(Replacement.class.getName());
             replacement.getAttributeDeltas()
                     .stream()
