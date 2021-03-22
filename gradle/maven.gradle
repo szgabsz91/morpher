@@ -1,49 +1,78 @@
 apply plugin: 'maven-publish'
 
-project.ext.projectUrl = 'https://github.com/szgabsz91/morpher'
+afterEvaluate {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) { publication ->
+                from components.java
+                artifact sourcesJar
+                artifact javadocJar
+                pom {
+                    name = "${project.name}-${project.version}"
+                    description = "${project.ext.displayName} ${project.version}"
+                    inceptionYear = '2016'
+                    url = 'https://github.com/szgabsz91/morpher'
+                    organization {
+                        name = 'szgabsz91'
+                    }
+                    licenses {
+                        license {
+                            name = 'Creative Commons GNU LGPL, Version 3.0'
+                            url = 'http://www.gnu.org/licenses/lgpl-3.0.html'
+                            distribution = 'repo'
+                        }
+                    }
+                    issueManagement {
+                        system = 'Github'
+                        url = 'https://github.com/szgabsz91/morpher/issues'
+                    }
+                    ciManagement {
+                        system = 'CircleCI'
+                        url = 'https://circleci.com/gh/szgabsz91/morpher'
+                    }
+                    scm {
+                        connection = 'scm:git:git@github.com:szgabsz91/morpher.git'
+                        developerConnection = 'scm:git:git@github.com:szgabsz91/morpher.git'
+                        url = 'https://github.com/szgabsz91/morpher'
+                        tag = 'HEAD'
+                    }
+                    developers {
+                        developer {
+                            id = 'szgabsz91'
+                            name = 'Gabor Szabo'
+                            email = 'szgabsz91@gmail.com'
+                        }
+                    }
+                }
 
-project.ext.pomInformation = {
-    inceptionYear = '2016'
-    url = project.ext.projectUrl
-    organization {
-        name = 'szgabsz91'
-    }
-    licenses {
-        license {
-            name = 'Creative Commons GNU LGPL, Version 3.0'
-            url = 'http://www.gnu.org/licenses/lgpl-3.0.html'
-            distribution = 'repo'
+                signArchives.signatures.each { signature ->
+                    artifact(signature) {
+                        extension signature.type
+                    }
+                }
+
+                artifact(file("$buildDir/publications/$publication.name/pom-default.xml.asc")) {
+                    extension 'pom.asc'
+                    builtBy signArchives
+                }
+
+                artifact(file("$buildDir/publications/$publication.name/module.json.asc")) {
+                    extension 'module.asc'
+                    builtBy signArchives
+                }
+            }
         }
     }
-    issueManagement {
-        system = 'Github'
-        url = 'https://github.com/szgabsz91/morpher/issues'
+
+    tasks.withType(GenerateMavenPom) {
+        signArchives.dependsOn it
+        signArchives.sign it.outputs.files.singleFile
     }
-    ciManagement {
-        system = 'CircleCI'
-        url = 'https://circleci.com/gh/szgabsz91/morpher'
+
+    tasks.withType(GenerateModuleMetadata) {
+        signArchives.dependsOn it
+        signArchives.sign it.outputs.files.singleFile
     }
-    scm {
-        connection = 'scm:git:git@github.com:szgabsz91/morpher.git'
-        developerConnection = 'scm:git:git@github.com:szgabsz91/morpher.git'
-        url = 'https://github.com/szgabsz91/morpher'
-        tag = 'HEAD'
-    }
-    developers {
-        developer {
-            id = 'szgabsz91'
-            name = 'Gabor Szabo'
-            email = 'szgabsz91@gmail.com'
-        }
-    }
+
+    build.dependsOn publishToMavenLocal
 }
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            pom project.ext.pomInformation
-        }
-    }
-}
-
-build.dependsOn publishToMavenLocal

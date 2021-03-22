@@ -15,9 +15,8 @@ The main parts of the framework are:
 * [Morpher Engines](morpher-engines)
 * [Morpher Systems](morpher-systems)
 
-The project is released in [jcenter](https://bintray.com/szgabsz91/maven) and
-[Maven Central](https://search.maven.org/search?q=morpher). To see what the latest artifact versions are, check the
-badges in the subproject README files.
+The project is published to [Maven Central](https://search.maven.org/search?q=morpher).
+To see what the latest artifact versions are, check the badges in the subproject README files.
 
 Morpher also has an [API project](https://github.com/szgabsz91/morpher-api) that publishes its main operations using
 REST services, and a [client application](https://github.com/szgabsz91/morpher-client) that consumes these services.

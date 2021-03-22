@@ -42,23 +42,14 @@ jobs:
                   paths:
                       - .
 
-    publish-snapshot:
-        executor: morpher-executor
-        steps:
-            - attach_workspace:
-                at: .
-            - run:
-                name: Publish to Artifactory
-                command: ./gradlew artifactoryPublish
-
     publish-release:
         executor: morpher-executor
         steps:
             - attach_workspace:
                 at: .
             - run:
-                name: Publish to Bintray
-                command: ./gradlew bintrayUpload
+                name: Publish to Maven Central
+                command: ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
 
 workflows:
     version: 2
@@ -70,14 +61,6 @@ workflows:
                         only: /.+/
                     branches:
                         only: /.+/
-            - publish-snapshot:
-                  filters:
-                      tags:
-                          ignore: /.+/
-                      branches:
-                          only: master
-                  requires:
-                      - build
             - publish-release:
                   filters:
                       tags:
