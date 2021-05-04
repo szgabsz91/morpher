@@ -131,7 +131,7 @@ public abstract class AbstractRadialTreeExporter implements IGraphExporter {
         routes
                 .stream()
                 .flatMap(route -> {
-                    return IntStream.range(1, route.size())
+                    return IntStream.range(1, route.size() + 1)
                             .mapToObj(toIndex -> route.subList(0, toIndex));
                 })
                 .distinct()
