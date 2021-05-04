@@ -15,10 +15,10 @@ public class FullRadialTreeExporter extends AbstractRadialTreeExporter {
     @Override
     protected Map<String, Object> getVelocityParameters() {
         return Map.of(
-                PARAMETER_WIDTH, 760,
-                PARAMETER_HEIGHT, 830,
-                PARAMETER_TRANSLATE_X, 380,
-                PARAMETER_TRANSLATE_Y, 430,
+                PARAMETER_WIDTH, 790,
+                PARAMETER_HEIGHT, 880,
+                PARAMETER_TRANSLATE_X, 400,
+                PARAMETER_TRANSLATE_Y, 440,
                 PARAMETER_TEXT_NEEDED, false
         );
     }
