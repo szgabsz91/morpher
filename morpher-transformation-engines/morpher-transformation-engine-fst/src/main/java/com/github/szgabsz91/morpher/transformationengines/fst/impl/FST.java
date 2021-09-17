@@ -173,8 +173,8 @@ import com.github.szgabsz91.morpher.transformationengines.api.model.Transformati
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.IntsRef;
 import org.apache.lucene.util.IntsRefBuilder;
-import org.apache.lucene.util.fst.Builder;
 import org.apache.lucene.util.fst.ByteSequenceOutputs;
+import org.apache.lucene.util.fst.FSTCompiler;
 import org.apache.lucene.util.fst.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -210,7 +210,7 @@ public class FST {
     private final List<WordPair> wordPairs;
     private final ByteSequenceOutputs outputs;
     private final IntsRefBuilder intsRefBuilder;
-    private Builder<BytesRef> fstBuilder;
+    private FSTCompiler<BytesRef> fstCompiler;
     private org.apache.lucene.util.fst.FST<BytesRef> fst;
     private boolean dirty;
 
@@ -221,7 +221,7 @@ public class FST {
         this.wordPairs = new UniqueSortedList<>(comparing(WordPair::getLeftWord));
         this.outputs = ByteSequenceOutputs.getSingleton();
         this.intsRefBuilder = new IntsRefBuilder();
-        this.fstBuilder = new Builder<>(org.apache.lucene.util.fst.FST.INPUT_TYPE.BYTE1, outputs);
+        this.fstCompiler = new FSTCompiler<>(org.apache.lucene.util.fst.FST.INPUT_TYPE.BYTE1, outputs);
         this.fst = null;
         this.dirty = true;
     }
@@ -313,7 +313,7 @@ public class FST {
     }
 
     private void learn() {
-        this.fstBuilder = new Builder<>(org.apache.lucene.util.fst.FST.INPUT_TYPE.BYTE1, outputs);
+        this.fstCompiler = new FSTCompiler<>(org.apache.lucene.util.fst.FST.INPUT_TYPE.BYTE1, outputs);
         this.fst = null;
         this.dirty = true;
 
@@ -324,7 +324,7 @@ public class FST {
                         this.intsRefBuilder
                 );
                 final BytesRef bytesRef = new BytesRef(wordPair.getRightWord().toString());
-                this.fstBuilder.add(intsRef, bytesRef);
+                this.fstCompiler.add(intsRef, bytesRef);
             }
             catch (final IOException e) {
                 throw new IllegalStateException("Cannot build FST", e);
@@ -341,8 +341,8 @@ public class FST {
         }
 
         try {
-            this.fst = this.fstBuilder.finish();
-            this.fstBuilder = null;
+            this.fst = this.fstCompiler.compile();
+            this.fstCompiler = null;
             this.dirty = false;
         }
         catch (final IOException e) {

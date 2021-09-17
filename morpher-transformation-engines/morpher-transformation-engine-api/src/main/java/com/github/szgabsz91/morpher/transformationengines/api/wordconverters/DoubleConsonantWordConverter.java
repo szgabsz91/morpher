@@ -237,10 +237,13 @@ public class DoubleConsonantWordConverter implements IWordConverter {
                 .chars()
                 .mapToObj(charCode -> Character.toString((char) charCode))
                 .map(letter -> {
+                    String resultingLetter = letter;
+
                     for (final String[] convertableConsonant : CONVERTABLE_CONSONANTS) {
-                        letter = letter.replace(convertableConsonant[1], convertableConsonant[0]);
+                        resultingLetter = resultingLetter.replace(convertableConsonant[1], convertableConsonant[0]);
                     }
-                    return letter;
+
+                    return resultingLetter;
                 })
                 .map(characterRepository::getCharacter)
                 .collect(toList());

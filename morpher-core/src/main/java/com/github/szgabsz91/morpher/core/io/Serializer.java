@@ -169,10 +169,11 @@ package com.github.szgabsz91.morpher.core.io;
 
 import com.github.szgabsz91.morpher.core.utils.Timer;
 import com.google.protobuf.GeneratedMessageV3;
-import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.util.Zip4jConstants;
+import net.lingala.zip4j.model.enums.CompressionLevel;
+import net.lingala.zip4j.model.enums.CompressionMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -282,8 +283,8 @@ public class Serializer<TSource, TTarget extends GeneratedMessageV3> {
 
             final ZipFile zipFile = new ZipFile(destination.toAbsolutePath().toString());
             final ZipParameters parameters = new ZipParameters();
-            parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
-            parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_ULTRA);
+            parameters.setCompressionMethod(CompressionMethod.DEFLATE);
+            parameters.setCompressionLevel(CompressionLevel.ULTRA);
             Files.list(folder)
                     .filter(Files::isRegularFile)
                     .forEach(file -> {
@@ -295,7 +296,7 @@ public class Serializer<TSource, TTarget extends GeneratedMessageV3> {
                         }
                     });
         }
-        catch (final ZipException | IOException e) {
+        catch (final IOException e) {
             throw new IllegalStateException("Cannot zip " + folder + " to " + destination, e);
         }
     }
