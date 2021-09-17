@@ -4,7 +4,7 @@ module com.github.szgabsz91.morpher.transformationengines.fst {
     requires transitive com.github.szgabsz91.morpher.core;
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
-    requires lucene.core;
+    requires org.apache.lucene.core;
     requires org.slf4j;
     requires com.google.protobuf;
 
