@@ -168,85 +168,19 @@
 package com.github.szgabsz91.morpher.transformationengines.astra.impl.model;
 
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.AtomicRuleCandidate;
+import lombok.Data;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Model class that holds the {@link FitnessAwareWord} and the used {@link AtomicRuleCandidate}s.
  *
  * @author szgabsz91
  */
+@Data
 public class ProcessCandidatesResult {
 
     private final FitnessAwareWord fitnessAwareWord;
     private final List<AtomicRuleCandidate> atomicRuleCandidates;
-
-    /**
-     * Constructor that sets the {@link FitnessAwareWord} and the {@link AtomicRuleCandidate}s.
-     * @param fitnessAwareWord the {@link FitnessAwareWord}
-     * @param atomicRuleCandidates the {@link AtomicRuleCandidate}s
-     */
-    public ProcessCandidatesResult(
-            final FitnessAwareWord fitnessAwareWord,
-            final List<AtomicRuleCandidate> atomicRuleCandidates) {
-        this.fitnessAwareWord = fitnessAwareWord;
-        this.atomicRuleCandidates = atomicRuleCandidates;
-    }
-
-    /**
-     * Returns the {@link FitnessAwareWord}.
-     * @return the {@link FitnessAwareWord}
-     */
-    public FitnessAwareWord getFitnessAwareWord() {
-        return fitnessAwareWord;
-    }
-
-    /**
-     * Returns the {@link AtomicRuleCandidate}s.
-     * @return the {@link AtomicRuleCandidate}s
-     */
-    public List<AtomicRuleCandidate> getAtomicRuleCandidates() {
-        return atomicRuleCandidates;
-    }
-
-    /**
-     * Returns if this object equals the given other object or not.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final ProcessCandidatesResult that = (ProcessCandidatesResult) other;
-        return Objects.equals(fitnessAwareWord, that.fitnessAwareWord) &&
-                Objects.equals(atomicRuleCandidates, that.atomicRuleCandidates);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(fitnessAwareWord, atomicRuleCandidates);
-    }
-
-    /**
-     * Returns the string representation of this object.
-     * @return the string representation of this object
-     */
-    @Override
-    public String toString() {
-        return "ProcessCandidatesResult[" +
-                "fitnessAwareWord=" + fitnessAwareWord +
-                ", atomicRuleCandidates=" + atomicRuleCandidates + ']';
-    }
 
 }

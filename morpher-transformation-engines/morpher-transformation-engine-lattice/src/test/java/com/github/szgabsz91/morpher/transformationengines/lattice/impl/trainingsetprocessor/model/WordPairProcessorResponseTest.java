@@ -88,48 +88,6 @@ public class WordPairProcessorResponseTest {
 
     @ParameterizedTest
     @MethodSource("parameters")
-    public void testEquals(ICharacterRepository characterRepository) {
-        WordPairProcessorTree tree = mock(WordPairProcessorTree.class);
-        WordPairProcessorTree tree2 = mock(WordPairProcessorTree.class);
-        List<WordPairProcessorTreeNode> leaves = List.of(mock(WordPairProcessorTreeNode.class));
-        List<WordPairProcessorTreeNode> leaves2 = List.of(mock(WordPairProcessorTreeNode.class));
-        List<Rule> rules = List.of(mock(Rule.class));
-        List<Rule> rules2 = List.of(mock(Rule.class));
-
-        WordPairProcessorResponse wordPairProcessorResponse1 = new WordPairProcessorResponse(tree, leaves, rules);
-        WordPairProcessorResponse wordPairProcessorResponse2 = new WordPairProcessorResponse(null, leaves, rules);
-        WordPairProcessorResponse wordPairProcessorResponse3 = new WordPairProcessorResponse(tree, null, rules);
-        WordPairProcessorResponse wordPairProcessorResponse4 = new WordPairProcessorResponse(tree2, leaves, rules);
-        WordPairProcessorResponse wordPairProcessorResponse5 = new WordPairProcessorResponse(tree, leaves2, rules);
-        WordPairProcessorResponse wordPairProcessorResponse6 = new WordPairProcessorResponse(tree, leaves, rules2);
-
-        assertThat(wordPairProcessorResponse1.equals(wordPairProcessorResponse1)).isTrue();
-        assertThat(wordPairProcessorResponse1).isEqualTo(wordPairProcessorResponse1);
-        assertThat(wordPairProcessorResponse1.equals(null)).isFalse();
-        assertThat(wordPairProcessorResponse1).isNotEqualTo("string");
-        assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse2);
-        assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse3);
-        assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse4);
-        assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse5);
-        assertThat(wordPairProcessorResponse1).isNotEqualTo(wordPairProcessorResponse6);
-    }
-
-    @ParameterizedTest
-    @MethodSource("parameters")
-    public void testHashCode(ICharacterRepository characterRepository) {
-        WordPairProcessorTree tree = mock(WordPairProcessorTree.class);
-        List<WordPairProcessorTreeNode> leaves = List.of(mock(WordPairProcessorTreeNode.class));
-        List<Rule> rules = List.of(mock(Rule.class));
-        WordPairProcessorResponse wordPairProcessorResponse = new WordPairProcessorResponse(tree, leaves, rules);
-
-        int expected = 31 * tree.hashCode() + leaves.hashCode();
-        expected = 31 * expected + rules.hashCode();
-
-        assertThat(wordPairProcessorResponse.hashCode()).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("parameters")
     public void testToString(ICharacterRepository characterRepository) {
         WordPairProcessorTree tree = mock(WordPairProcessorTree.class);
         List<WordPairProcessorTreeNode> leaves = List.of(mock(WordPairProcessorTreeNode.class));

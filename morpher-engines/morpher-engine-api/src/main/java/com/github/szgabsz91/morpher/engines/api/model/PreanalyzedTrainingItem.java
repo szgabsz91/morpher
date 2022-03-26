@@ -170,86 +170,17 @@ package com.github.szgabsz91.morpher.engines.api.model;
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWordPair;
 import com.github.szgabsz91.morpher.core.model.WordPair;
 import com.github.szgabsz91.morpher.languagehandlers.api.model.AnnotationTokenizerResult;
-
-import java.util.Objects;
+import lombok.Data;
 
 /**
  * Model class that contains a preanalyzed training item's {@link AnnotationTokenizerResult} and {@link WordPair}.
  *
  * @author szgabsz91
  */
+@Data
 public class PreanalyzedTrainingItem {
 
     private final AnnotationTokenizerResult annotationTokenizerResult;
     private final FrequencyAwareWordPair wordPair;
-
-    /**
-     * Constructor that sets the {@link AnnotationTokenizerResult} and the {@link FrequencyAwareWordPair}.
-     * @param annotationTokenizerResult the {@link AnnotationTokenizerResult}
-     * @param wordPair the {@link FrequencyAwareWordPair}
-     */
-    public PreanalyzedTrainingItem(
-            final AnnotationTokenizerResult annotationTokenizerResult,
-            final FrequencyAwareWordPair wordPair) {
-        this.annotationTokenizerResult = annotationTokenizerResult;
-        this.wordPair = wordPair;
-    }
-
-    /**
-     * Returns the {@link AnnotationTokenizerResult}.
-     * @return the {@link AnnotationTokenizerResult}
-     */
-    public AnnotationTokenizerResult getAnnotationTokenizerResult() {
-        return annotationTokenizerResult;
-    }
-
-    /**
-     * Returns the {@link FrequencyAwareWordPair}.
-     * @return the {@link FrequencyAwareWordPair}
-     */
-    public FrequencyAwareWordPair getWordPair() {
-        return wordPair;
-    }
-
-    /**
-     * Returns if this item equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final PreanalyzedTrainingItem that = (PreanalyzedTrainingItem) other;
-        return Objects.equals(annotationTokenizerResult, that.annotationTokenizerResult) &&
-                Objects.equals(wordPair, that.wordPair);
-    }
-
-    /**
-     * Returns the hash code of this item.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(annotationTokenizerResult, wordPair);
-    }
-
-    /**
-     * Returns the string representation of this item.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "PreanalyzedTrainingItem[" +
-                "annotationTokenizerResult=" + annotationTokenizerResult +
-                ", wordPair=" + wordPair +
-                ']';
-    }
 
 }

@@ -179,6 +179,9 @@ import com.github.szgabsz91.morpher.transformationengines.tasr.converters.TASRTr
 import com.github.szgabsz91.morpher.transformationengines.tasr.protocolbuffers.TASRTransformationEngineConfigurationMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -189,6 +192,9 @@ import java.util.function.Supplier;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
+@Getter
+@Setter
 @Qualifier(ITASRTransformationEngine.QUALIFIER)
 public class TASRAbstractTransformationEngineFactory implements IAbstractTransformationEngineFactory<
         TASRTransformationEngineConfiguration,
@@ -201,32 +207,6 @@ public class TASRAbstractTransformationEngineFactory implements IAbstractTransfo
      */
     public TASRAbstractTransformationEngineFactory() {
 
-    }
-
-    /**
-     * Constructor that sets the {@link TASRTransformationEngineConfiguration}.
-     * @param configuration the {@link TASRTransformationEngineConfiguration}
-     */
-    public TASRAbstractTransformationEngineFactory(final TASRTransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    /**
-     * Returns the {@link TASRTransformationEngineConfiguration} that holds the parameters.
-     * @return the {@link TASRTransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public TASRTransformationEngineConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    /**
-     * Sets the {@link TASRTransformationEngineConfiguration} that holds the parameters.
-     * @param configuration the {@link TASRTransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public void setConfiguration(final TASRTransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
     }
 
     /**

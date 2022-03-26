@@ -178,6 +178,7 @@ import com.github.szgabsz91.morpher.transformationengines.dictionary.converters.
 import com.github.szgabsz91.morpher.transformationengines.dictionary.protocolbuffers.DictionaryTransformationEngineMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -193,6 +194,7 @@ import static java.util.stream.Collectors.toMap;
  *
  * @author szgabsz91
  */
+@Getter
 public class DictionaryTransformationEngine
         implements IBidirectionalTransformationEngine<DictionaryTransformationEngineMessage> {
 
@@ -210,31 +212,6 @@ public class DictionaryTransformationEngine
         this.affixType = affixType;
         this.forwardsDictionary = new HashMap<>();
         this.backwardsDictionary = new HashMap<>();
-    }
-
-    /**
-     * Returns the {@link AffixType} that this transformation engine relates to.
-     * @return the {@link AffixType} that this transformation engine relates to
-     */
-    @Override
-    public AffixType getAffixType() {
-        return affixType;
-    }
-
-    /**
-     * Returns the underlying map of word pairs for forwards transformation.
-     * @return the underlying map of word pairs for forwards transformation
-     */
-    public Map<Word, Word> getForwardsDictionary() {
-        return forwardsDictionary;
-    }
-
-    /**
-     * Returns the underlying map of word pairs for backwards transformation.
-     * @return the underlying map of word pairs for backwards transformation
-     */
-    public Map<Word, Word> getBackwardsDictionary() {
-        return backwardsDictionary;
     }
 
     /**

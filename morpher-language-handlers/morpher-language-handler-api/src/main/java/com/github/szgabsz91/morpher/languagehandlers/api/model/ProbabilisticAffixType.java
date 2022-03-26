@@ -168,26 +168,21 @@
 package com.github.szgabsz91.morpher.languagehandlers.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Model class that contains an {@link AffixType} and its probability.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProbabilisticAffixType implements Comparable<ProbabilisticAffixType> {
 
     private final AffixType affixType;
-    private double probability;
-
-    /**
-     * Constructor that sets the affix type and probability.
-     * @param affixType the affix type
-     * @param probability the probability
-     */
-    private ProbabilisticAffixType(final AffixType affixType, final double probability) {
-        this.affixType = affixType;
-        this.probability = probability;
-    }
+    private final double probability;
 
     /**
      * Static factory method to create a new {@link ProbabilisticAffixType} object.
@@ -200,22 +195,6 @@ public final class ProbabilisticAffixType implements Comparable<ProbabilisticAff
     }
 
     /**
-     * Returns the affix type.
-     * @return the affix type
-     */
-    public AffixType getAffixType() {
-        return affixType;
-    }
-
-    /**
-     * Returns the probability.
-     * @return the probability
-     */
-    public double getProbability() {
-        return probability;
-    }
-
-    /**
      * Compares the objects by their probabilities.
      * @param other the other object
      * @return -1 if the given object has higher probability, 0 is they are equal, +1 otherwise
@@ -223,48 +202,6 @@ public final class ProbabilisticAffixType implements Comparable<ProbabilisticAff
     @Override
     public int compareTo(final ProbabilisticAffixType other) {
         return Double.compare(other.probability, this.probability);
-    }
-
-    /**
-     * Returns if this object equals the other given object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final ProbabilisticAffixType that = (ProbabilisticAffixType) other;
-        return Double.compare(that.probability, probability) == 0 &&
-                affixType.equals(that.affixType);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result;
-        result = affixType.hashCode();
-        final long temp = Double.doubleToLongBits(probability);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "ProbabilisticAffixType[affixType=" + affixType + ", probability=" + probability + ']';
     }
 
 }

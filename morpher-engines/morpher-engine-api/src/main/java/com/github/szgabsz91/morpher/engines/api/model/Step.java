@@ -169,93 +169,18 @@ package com.github.szgabsz91.morpher.engines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
-
-import java.util.Objects;
+import lombok.Data;
 
 /**
  * Model class for inflection/analysis steps.
  *
  * @author szgabsz91
  */
+@Data
 public class Step {
 
     private final Word input;
     private final Word output;
     private final AffixType affixType;
-
-    /**
-     * Constructor that sets the input and output of the step, as well as the affix type.
-     * @param input the input word
-     * @param output the output word
-     * @param affixType the affix type
-     */
-    public Step(final Word input, final Word output, final AffixType affixType) {
-        this.input = input;
-        this.output = output;
-        this.affixType = affixType;
-    }
-
-    /**
-     * Returns the input word.
-     * @return the input word
-     */
-    public Word getInput() {
-        return input;
-    }
-
-    /**
-     * Returns the output word.
-     * @return the output word
-     */
-    public Word getOutput() {
-        return output;
-    }
-
-    /**
-     * Returns the affix type.
-     * @return the affix type
-     */
-    public AffixType getAffixType() {
-        return affixType;
-    }
-
-    /**
-     * Returns if this step equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final Step step = (Step) other;
-        return input.equals(step.input) &&
-                output.equals(step.output) &&
-                affixType.equals(step.affixType);
-    }
-
-    /**
-     * Returns the hash code of this step.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(input, output, affixType);
-    }
-
-    /**
-     * Returns the string representation of this step.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "Step[input=" + input + ", output=" + output + ", affixType=" + affixType + ']';
-    }
 
 }

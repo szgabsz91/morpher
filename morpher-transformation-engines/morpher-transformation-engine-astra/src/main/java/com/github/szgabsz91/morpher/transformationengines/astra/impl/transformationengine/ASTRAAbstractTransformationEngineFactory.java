@@ -179,6 +179,9 @@ import com.github.szgabsz91.morpher.transformationengines.astra.converters.ASTRA
 import com.github.szgabsz91.morpher.transformationengines.astra.protocolbuffers.ASTRATransformationEngineConfigurationMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -189,6 +192,9 @@ import java.util.function.Supplier;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
+@Getter
+@Setter
 @Qualifier(IASTRATransformationEngine.QUALIFIER)
 public class ASTRAAbstractTransformationEngineFactory implements IAbstractTransformationEngineFactory<
         ASTRATransformationEngineConfiguration,
@@ -201,32 +207,6 @@ public class ASTRAAbstractTransformationEngineFactory implements IAbstractTransf
      */
     public ASTRAAbstractTransformationEngineFactory() {
 
-    }
-
-    /**
-     * Constructor that sets the {@link ASTRATransformationEngineConfiguration}.
-     * @param configuration the {@link ASTRATransformationEngineConfiguration}
-     */
-    public ASTRAAbstractTransformationEngineFactory(final ASTRATransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    /**
-     * Returns the {@link ASTRATransformationEngineConfiguration} that holds the parameters.
-     * @return the {@link ASTRATransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public ASTRATransformationEngineConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    /**
-     * Sets the {@link ASTRATransformationEngineConfiguration} that holds the parameters.
-     * @param configuration the {@link ASTRATransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public void setConfiguration(final ASTRATransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
     }
 
     /**

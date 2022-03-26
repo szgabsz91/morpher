@@ -169,6 +169,10 @@ package com.github.szgabsz91.morpher.transformationengines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWordPair;
 import com.github.szgabsz91.morpher.core.model.WordPair;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -179,17 +183,12 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@EqualsAndHashCode
 public final class TrainingSet {
 
     private final Set<FrequencyAwareWordPair> wordPairs;
-
-    /**
-     * Constructor that sets the set of frequency aware word pairs.
-     * @param wordPairs the set of frequency aware word pairs
-     */
-    private TrainingSet(final Set<FrequencyAwareWordPair> wordPairs) {
-        this.wordPairs = wordPairs;
-    }
 
     /**
      * Static factory method to create a {@link TrainingSet} containing a set of frequency aware word pairs.
@@ -219,14 +218,6 @@ public final class TrainingSet {
     }
 
     /**
-     * Returns the set of frequency aware word pairs.
-     * @return the set of frequency aware word pairs
-     */
-    public Set<FrequencyAwareWordPair> getWordPairs() {
-        return wordPairs;
-    }
-
-    /**
      * Adds the given frequency word pair to the training set.
      * @param wordPair the new frequency aware word pair
      */
@@ -240,33 +231,6 @@ public final class TrainingSet {
      */
     public void addWordPairs(final Collection<FrequencyAwareWordPair> wordPairs) {
         this.wordPairs.addAll(wordPairs);
-    }
-
-    /**
-     * Returns if this training set equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final TrainingSet that = (TrainingSet) other;
-        return wordPairs.equals(that.wordPairs);
-    }
-
-    /**
-     * Returns the hash code of this training set.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return wordPairs.hashCode();
     }
 
     /**

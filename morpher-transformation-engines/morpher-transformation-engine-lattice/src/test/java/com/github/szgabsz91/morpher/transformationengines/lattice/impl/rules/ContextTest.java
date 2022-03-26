@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -140,120 +139,6 @@ public class ContextTest {
                 Position.of(1)
         );
         assertThat(context.isIdentity()).isFalse();
-    }
-
-    @ParameterizedTest
-    @MethodSource("parameters")
-    public void testEquals(ICharacterRepository characterRepository) {
-        Context context1 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                Position.of(1)
-        );
-        Context context2 = new Context(
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                Position.of(1),
-                Position.of(2)
-        );
-        Context context3 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                Position.of(2)
-        );
-        Context context4 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                Position.of(1)
-        );
-        Context context5 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                null,
-                Position.of(1)
-        );
-        Context context6 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                null
-        );
-        Context context7 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                null
-        );
-        Context context8 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                Position.of(2)
-        );
-        Context context9 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                Position.of(1)
-        );
-        Context context10 = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                null
-        );
-
-        assertThat(context1.equals(context1)).isTrue();
-        assertThat(context1.equals(null)).isFalse();
-        assertThat(context1).isNotEqualTo("string");
-        assertThat(context1).isNotEqualTo(context2);
-        context2.getPrefix().add(context1.getPrefix().get(0));
-        assertThat(context1).isNotEqualTo(context2);
-        context2.getCore().add(context1.getCore().get(0));
-        assertThat(context1).isNotEqualTo(context2);
-        context2.getPostfix().add(context1.getPostfix().get(0));
-        assertThat(context1).isNotEqualTo(context2);
-        assertThat(context1).isNotEqualTo(context3);
-        assertThat(context1).isEqualTo(context4);
-        assertThat(context5).isNotEqualTo(context1);
-        assertThat(context6).isNotEqualTo(context2);
-        assertThat(context6).isEqualTo(context7);
-        assertThat(context1).isNotEqualTo(context8);
-        assertThat(context1).isEqualTo(context9);
-        assertThat(context1).isNotEqualTo(context10);
-        assertThat(context10).isNotEqualTo(context1);
-    }
-
-    @ParameterizedTest
-    @MethodSource("parameters")
-    public void testHashCode(ICharacterRepository characterRepository) {
-        Context context = new Context(
-                List.of(characterRepository.getCharacter("a")),
-                List.of(characterRepository.getCharacter("b")),
-                List.of(characterRepository.getCharacter("c")),
-                Position.identity(),
-                Position.of(1)
-        );
-
-        int expected = 31 * context.getPrefix().hashCode() + context.getCore().hashCode();
-        expected = 31 * expected + context.getPostfix().hashCode();
-        expected = 31 * expected + context.getFrontPosition().hashCode();
-        expected = 31 * expected + context.getBackPosition().hashCode();
-
-        assertThat(context.hashCode()).isEqualTo(expected);
     }
 
     @ParameterizedTest

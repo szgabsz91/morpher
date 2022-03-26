@@ -170,6 +170,7 @@ package com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.tr
 import com.github.szgabsz91.morpher.transformationengines.api.characters.ICharacter;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.IAttribute;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.repositories.ICharacterRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Set;
@@ -179,20 +180,11 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
 public class Addition implements ITransformation {
 
     private final Set<? extends IAttribute> attributes;
     private final ICharacterRepository characterRepository;
-
-    /**
-     * Constructor that sets the attributes to add.
-     * @param attributes the attributes to add
-     * @param characterRepository the {@link ICharacterRepository} instance
-     */
-    public Addition(final Set<? extends IAttribute> attributes, final ICharacterRepository characterRepository) {
-        this.attributes = attributes;
-        this.characterRepository = characterRepository;
-    }
 
     /**
      * Returns the attributes to add.

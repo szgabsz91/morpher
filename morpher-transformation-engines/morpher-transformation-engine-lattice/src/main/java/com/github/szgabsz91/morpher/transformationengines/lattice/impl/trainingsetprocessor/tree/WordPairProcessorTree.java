@@ -175,6 +175,8 @@ import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.tra
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.Removal;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.Replacement;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.costcalculator.ICostCalculator;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -188,6 +190,8 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
+@EqualsAndHashCode
 public class WordPairProcessorTree {
 
     private final WordPairProcessorTreeNode root;
@@ -195,29 +199,6 @@ public class WordPairProcessorTree {
     private final List<ICharacter> rightWordCharacters;
     private final ICharacterRepository characterRepository;
     private final ICostCalculator costCalculator;
-
-    /**
-     * Constructor that sets the root node, the word pair, {@link ICharacterRepository} and {@link ICostCalculator}
-     * objects.
-     *
-     * @param root the root node
-     * @param leftWordCharacters the list of characters in the left word
-     * @param rightWordCharacters the list of characters in the right word
-     * @param characterRepository the {@link ICharacterRepository} object
-     * @param costCalculator the {@link ICostCalculator} object
-     */
-    public WordPairProcessorTree(
-            final WordPairProcessorTreeNode root,
-            final List<ICharacter> leftWordCharacters,
-            final List<ICharacter> rightWordCharacters,
-            final ICharacterRepository characterRepository,
-            final ICostCalculator costCalculator) {
-        this.root = root;
-        this.leftWordCharacters = leftWordCharacters;
-        this.rightWordCharacters = rightWordCharacters;
-        this.characterRepository = characterRepository;
-        this.costCalculator = costCalculator;
-    }
 
     /**
      * Returns the root node of the tree.
@@ -347,38 +328,6 @@ public class WordPairProcessorTree {
                 level,
                 parent
         );
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final WordPairProcessorTree that = (WordPairProcessorTree) other;
-        return root.equals(that.root) &&
-                leftWordCharacters.equals(that.leftWordCharacters) &&
-                rightWordCharacters.equals(that.rightWordCharacters);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = root.hashCode();
-        result = 31 * result + leftWordCharacters.hashCode();
-        result = 31 * result + rightWordCharacters.hashCode();
-        return result;
     }
 
     /**

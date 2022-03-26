@@ -168,10 +168,11 @@
 package com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.tree;
 
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.ITransformation;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -179,6 +180,8 @@ import java.util.function.Consumer;
  *
  * @author szgabsz91
  */
+@Getter
+@EqualsAndHashCode
 public class WordPairProcessorTreeNode implements Comparable<WordPairProcessorTreeNode> {
 
     private final int currentIndexInStartWord;
@@ -220,62 +223,6 @@ public class WordPairProcessorTreeNode implements Comparable<WordPairProcessorTr
      */
     public WordPairProcessorTreeNode() {
         this(0, 0, null, 0, 0, null);
-    }
-
-    /**
-     * Returns the current index in the start word.
-     * @return the current index in the start word
-     */
-    public int getCurrentIndexInStartWord() {
-        return currentIndexInStartWord;
-    }
-
-    /**
-     * Returns the current index in the end word.
-     * @return the current index in the end word
-     */
-    public int getCurrentIndexInEndWord() {
-        return currentIndexInEndWord;
-    }
-
-    /**
-     * Returns the transformation.
-     * @return the transformation
-     */
-    public ITransformation getTransformation() {
-        return transformation;
-    }
-
-    /**
-     * Returns the score on the path so far.
-     * @return the score on the path so far
-     */
-    public int getScoreSoFar() {
-        return scoreSoFar;
-    }
-
-    /**
-     * Returns the level of the node.
-     * @return the level of the node
-     */
-    public int getLevel() {
-        return level;
-    }
-
-    /**
-     * Returns the parent node.
-     * @return the parent node
-     */
-    public WordPairProcessorTreeNode getParent() {
-        return parent;
-    }
-
-    /**
-     * Returns the children of the node.
-     * @return the children of the node
-     */
-    public List<WordPairProcessorTreeNode> getChildren() {
-        return children;
     }
 
     /**
@@ -349,42 +296,6 @@ public class WordPairProcessorTreeNode implements Comparable<WordPairProcessorTr
         }
 
         return Integer.compare(other.level, level);
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final WordPairProcessorTreeNode that = (WordPairProcessorTreeNode) other;
-        return currentIndexInStartWord == that.currentIndexInStartWord &&
-                currentIndexInEndWord == that.currentIndexInEndWord &&
-                scoreSoFar == that.scoreSoFar &&
-                level == that.level &&
-                Objects.equals(transformation, that.transformation);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = currentIndexInStartWord;
-        result = 31 * result + currentIndexInEndWord;
-        result = 31 * result + (transformation != null ? transformation.hashCode() : 0);
-        result = 31 * result + scoreSoFar;
-        result = 31 * result + level;
-        return result;
     }
 
     /**

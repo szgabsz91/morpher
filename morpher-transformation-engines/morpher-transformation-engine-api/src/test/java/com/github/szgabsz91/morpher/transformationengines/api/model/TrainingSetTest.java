@@ -87,24 +87,6 @@ public class TrainingSetTest {
     }
 
     @Test
-    public void testEquals() {
-        TrainingSet trainingSet1 = TrainingSet.of(Set.of(FrequencyAwareWordPair.of("a", "b")));
-        TrainingSet trainingSet2 = TrainingSet.of(Set.of(FrequencyAwareWordPair.of("a", "c")));
-
-        assertThat(trainingSet1.equals(trainingSet1)).isTrue();
-        assertThat(trainingSet1.equals(null)).isFalse();
-        assertThat(trainingSet1).isNotEqualTo("string");
-        assertThat(trainingSet1).isNotEqualTo(trainingSet2);
-    }
-
-    @Test
-    public void testHashCode() {
-        Set<FrequencyAwareWordPair> wordPairs = Set.of(FrequencyAwareWordPair.of("a", "b"), FrequencyAwareWordPair.of("c", "d"));
-        TrainingSet trainingSet = TrainingSet.of(wordPairs);
-        assertThat(trainingSet.hashCode()).isEqualTo(wordPairs.hashCode());
-    }
-
-    @Test
     public void testToString() {
         FrequencyAwareWordPair wordPair1 = FrequencyAwareWordPair.of("a", "b");
         FrequencyAwareWordPair wordPair2 = FrequencyAwareWordPair.of("c", "d");

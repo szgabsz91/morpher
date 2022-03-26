@@ -167,20 +167,22 @@
  */
 package com.github.szgabsz91.morpher.systems.api.model;
 
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Model class that represents a language.
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@EqualsAndHashCode
 public final class Language {
 
     private final String languageCode;
-
-    private Language(final String languageCode) {
-        this.languageCode = languageCode;
-    }
 
     /**
      * Creates a new {@link Language} with the given language code.
@@ -189,41 +191,6 @@ public final class Language {
      */
     public static Language of(final String languageCode) {
         return new Language(languageCode);
-    }
-
-    /**
-     * Returns the language code of this language.
-     * @return the language code of this language
-     */
-    public String getLanguageCode() {
-        return languageCode;
-    }
-
-    /**
-     * Returns if this language is equal to the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final Language language = (Language) other;
-        return Objects.equals(languageCode, language.languageCode);
-    }
-
-    /**
-     * Returns the hash code of this language.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(languageCode);
     }
 
     /**

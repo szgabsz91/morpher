@@ -119,11 +119,4 @@ public class AtomicRuleTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    @Test
-    public void testToString() {
-        AtomicRule atomicRule = new AtomicRule("prefix", "changingSubstring", "replacementString", "postfix", 1);
-        atomicRule.merge(new AtomicRule("prefix", "changingSubstring", "replacementString", "postfix", 3));
-        assertThat(atomicRule).hasToString("AtomicRule[prefix, changingSubstring, replacementString, postfix, 2, 4]");
-    }
-
 }

@@ -6,6 +6,7 @@ module com.github.szgabsz91.morpher.systems.impl {
     requires com.github.szgabsz91.morpher.languagehandlers.api;
     requires transitive com.github.szgabsz91.morpher.systems.api;
 
+    requires lombok;
     requires org.slf4j;
     requires com.google.protobuf;
 

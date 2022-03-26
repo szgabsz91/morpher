@@ -5,6 +5,7 @@ module com.github.szgabsz91.morpher.transformationengines.astra {
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
     requires combinatoricslib3;
+    requires lombok;
     requires org.apache.commons.collections4;
     requires org.apache.commons.lang3;
     requires org.slf4j;

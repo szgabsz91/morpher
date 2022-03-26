@@ -19,33 +19,4 @@ public class InflectionOrderedInputTest {
         assertThat(inflectionOrderedInput.getAffixTypes()).isEqualTo(affixTypes);
     }
 
-    @Test
-    public void testEquals() {
-        InflectionOrderedInput inflectionOrderedInput1 = new InflectionOrderedInput(Word.of("input"), List.of(AffixType.of("AFF")));
-        InflectionOrderedInput inflectionOrderedInput2 = new InflectionOrderedInput(Word.of("input2"), List.of(AffixType.of("AFF")));
-        InflectionOrderedInput inflectionOrderedInput3 = new InflectionOrderedInput(Word.of("input"), List.of(AffixType.of("AFF2")));
-        InflectionOrderedInput inflectionOrderedInput4 = new InflectionOrderedInput(Word.of("input"), List.of(AffixType.of("AFF")));
-
-        assertThat(inflectionOrderedInput1.equals(inflectionOrderedInput1)).isTrue();
-        assertThat(inflectionOrderedInput1.equals(null)).isFalse();
-        assertThat(inflectionOrderedInput1).isNotEqualTo("string");
-        assertThat(inflectionOrderedInput1).isNotEqualTo(inflectionOrderedInput2);
-        assertThat(inflectionOrderedInput1).isNotEqualTo(inflectionOrderedInput3);
-        assertThat(inflectionOrderedInput1).isEqualTo(inflectionOrderedInput4);
-    }
-
-    @Test
-    public void testHashCode() {
-        InflectionOrderedInput inflectionOrderedInput = new InflectionOrderedInput(Word.of("input"), List.of(AffixType.of("AFF")));
-        int result = inflectionOrderedInput.hashCode();
-        int expected = 31 * inflectionOrderedInput.getInput().hashCode() + inflectionOrderedInput.getAffixTypes().hashCode();
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    public void testToString() {
-        InflectionOrderedInput inflectionOrderedInput = new InflectionOrderedInput(Word.of("input"), List.of(AffixType.of("AFF")));
-        assertThat(inflectionOrderedInput).hasToString("InflectionOrderedInput[input=" + inflectionOrderedInput.getInput() + ", affixTypes=" + inflectionOrderedInput.getAffixTypes() + ']');
-    }
-
 }

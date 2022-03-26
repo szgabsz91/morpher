@@ -167,6 +167,8 @@
  */
 package com.github.szgabsz91.morpher.core.services;
 
+import lombok.RequiredArgsConstructor;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ServiceLoader;
 
@@ -178,17 +180,10 @@ import java.util.ServiceLoader;
  * @author szgabsz91
  * @param <T> the concrete type of the service to provide
  */
+@RequiredArgsConstructor
 public class ClassBasedServiceProvider<T> implements ServiceLoader.Provider<T> {
 
     private final Class<T> clazz;
-
-    /**
-     * Constructor that sets the target class.
-     * @param clazz the target class
-     */
-    public ClassBasedServiceProvider(final Class<T> clazz) {
-        this.clazz = clazz;
-    }
 
     /**
      * Returns the type of the service.

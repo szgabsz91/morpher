@@ -180,6 +180,7 @@ import com.github.szgabsz91.morpher.transformationengines.tasr.impl.tree.TASRTre
 import com.github.szgabsz91.morpher.transformationengines.tasr.protocolbuffers.TASRTransformationEngineMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -193,6 +194,7 @@ import static java.util.stream.Collectors.toSet;
  *
  * @author szgabsz91
  */
+@Getter
 public class TASRTransformationEngine implements IBidirectionalTransformationEngine<TASRTransformationEngineMessage> {
 
     private boolean unidirectional;
@@ -220,46 +222,11 @@ public class TASRTransformationEngine implements IBidirectionalTransformationEng
     }
 
     /**
-     * Returns if the transformation engine is unidirectional, meaning that it can only transform words forwards and
-     * not backwards.
-     *
-     * @return true if the transformation engine is unidirectional, false otherwise
-     */
-    public boolean isUnidirectional() {
-        return unidirectional;
-    }
-
-    /**
-     * Returns the {@link AffixType} that this transformation engine relates to.
-     * @return the {@link AffixType} that this transformation engine relates to
-     */
-    @Override
-    public AffixType getAffixType() {
-        return affixType;
-    }
-
-    /**
-     * Returns the {@link TASRTree} used for forwards transformation.
-     * @return the {@link TASRTree} used for forwards transformation
-     */
-    public TASRTree getForwardsTree() {
-        return forwardsTree;
-    }
-
-    /**
      * Sets the {@link TASRTree} used for forwards transformation.
      * @param forwardsTree the {@link TASRTree} used for forwards transformation
      */
     public void setForwardsTree(final TASRTree forwardsTree) {
         this.forwardsTree = forwardsTree;
-    }
-
-    /**
-     * Returns the {@link TASRTree} used for backwards transformation.
-     * @return the {@link TASRTree} used for backwards transformation
-     */
-    public TASRTree getBackwardsTree() {
-        return backwardsTree;
     }
 
     /**

@@ -168,25 +168,20 @@
 package com.github.szgabsz91.morpher.engines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.Word;
-
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Model class for the morphological analysis input that contains the input word.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class AnalysisInput {
 
     private final Word input;
-
-    /**
-     * Constructor that sets the input word.
-     * @param input the input word
-     */
-    protected AnalysisInput(final Word input) {
-        this.input = input;
-    }
 
     /**
      * Creates a new {@link AnalysisInput} with the given word.
@@ -195,51 +190,6 @@ public class AnalysisInput {
      */
     public static AnalysisInput of(final Word input) {
         return new AnalysisInput(input);
-    }
-
-    /**
-     * Returns the input word.
-     * @return the input word
-     */
-    public Word getInput() {
-        return input;
-    }
-
-    /**
-     * Returns if this analysis input equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final AnalysisInput that = (AnalysisInput) other;
-        return Objects.equals(input, that.input);
-    }
-
-    /**
-     * Returns the hash code of this analysis input.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(input);
-    }
-
-    /**
-     * Returns the string representation of this analysis input.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "AnalysisInput[input=" + input + ']';
     }
 
 }

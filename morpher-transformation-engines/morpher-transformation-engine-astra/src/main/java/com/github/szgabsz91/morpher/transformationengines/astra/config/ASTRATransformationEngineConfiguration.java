@@ -168,8 +168,9 @@
 package com.github.szgabsz91.morpher.transformationengines.astra.config;
 
 import com.github.szgabsz91.morpher.transformationengines.api.factories.ITransformationEngineConfiguration;
-
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Configuration class for the
@@ -177,6 +178,8 @@ import java.util.Objects;
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ASTRATransformationEngineConfiguration implements ITransformationEngineConfiguration {
 
     private final SearcherType searcherType;
@@ -190,193 +193,6 @@ public final class ASTRATransformationEngineConfiguration implements ITransforma
     private final AtomicRuleFitnessCalculatorType atomicRuleFitnessCalculatorType;
     private final double exponentialFactor;
     private final Double maximumResponseProbabilityDifferenceThreshold;
-
-    private ASTRATransformationEngineConfiguration(
-            final SearcherType searcherType,
-            final double fitnessThreshold,
-            final int maximumNumberOfResponses,
-            final Integer minimumSupportThreshold,
-            final Integer minimumWordFrequencyThreshold,
-            final Integer minimumAggregatedSupportThreshold,
-            final Integer minimumContextLength,
-            final Integer maximumNumberOfGeneratedAtomicRules,
-            final AtomicRuleFitnessCalculatorType atomicRuleFitnessCalculatorType,
-            final double exponentialFactor,
-            final Double maximumResponseProbabilityDifferenceThreshold) {
-        this.searcherType = searcherType;
-        this.fitnessThreshold = fitnessThreshold;
-        this.maximumNumberOfResponses = maximumNumberOfResponses;
-        this.minimumSupportThreshold = minimumSupportThreshold;
-        this.minimumWordFrequencyThreshold = minimumWordFrequencyThreshold;
-        this.minimumAggregatedSupportThreshold = minimumAggregatedSupportThreshold;
-        this.minimumContextLength = minimumContextLength;
-        this.maximumNumberOfGeneratedAtomicRules = maximumNumberOfGeneratedAtomicRules;
-        this.atomicRuleFitnessCalculatorType = atomicRuleFitnessCalculatorType;
-        this.exponentialFactor = exponentialFactor;
-        this.maximumResponseProbabilityDifferenceThreshold = maximumResponseProbabilityDifferenceThreshold;
-    }
-
-    /**
-     * Returns the type of searcher to use.
-     * @return the type of searcher to use
-     */
-    public SearcherType getSearcherType() {
-        return searcherType;
-    }
-
-    /**
-     * Returns the fitness threshold.
-     * @return the fitness threshold
-     */
-    public double getFitnessThreshold() {
-        return fitnessThreshold;
-    }
-
-    /**
-     * Returns the maximum number of responses.
-     * @return the maximum number of responses
-     */
-    public int getMaximumNumberOfResponses() {
-        return maximumNumberOfResponses;
-    }
-
-    /**
-     * Returns the minimum support threshold.
-     * @return the minimum support threshold
-     */
-    public Integer getMinimumSupportThreshold() {
-        return minimumSupportThreshold;
-    }
-
-    /**
-     * Returns the minimum word frequency threshold.
-     * @return the minimum word frequency threshold
-     */
-    public Integer getMinimumWordFrequencyThreshold() {
-        return minimumWordFrequencyThreshold;
-    }
-
-    /**
-     * Returns the minimum aggregated word frequency.
-     * @return the minimum aggregated word frequency
-     */
-    public Integer getMinimumAggregatedSupportThreshold() {
-        return minimumAggregatedSupportThreshold;
-    }
-
-    /**
-     * Returns the minimum context length.
-     * @return the minimum context length
-     */
-    public Integer getMinimumContextLength() {
-        return minimumContextLength;
-    }
-
-    /**
-     * Returns the maximum number of generated atomic rules.
-     * @return the maximum number of generated atomic rules
-     */
-    public Integer getMaximumNumberOfGeneratedAtomicRules() {
-        return maximumNumberOfGeneratedAtomicRules;
-    }
-
-    /**
-     * Returns the {@link AtomicRuleFitnessCalculatorType}.
-     * @return the {@link AtomicRuleFitnessCalculatorType}
-     */
-    public AtomicRuleFitnessCalculatorType getAtomicRuleFitnessCalculatorType() {
-        return atomicRuleFitnessCalculatorType;
-    }
-
-    /**
-     * Returns the exponential factor.
-     * @return the exponential factor
-     */
-    public double getExponentialFactor() {
-        return exponentialFactor;
-    }
-
-    /**
-     * Returns the maximum response probability difference threshold.
-     * @return the maximum response probability difference threshold
-     */
-    public Double getMaximumResponseProbabilityDifferenceThreshold() {
-        return maximumResponseProbabilityDifferenceThreshold;
-    }
-
-    /**
-     * Returns if this configuration object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final ASTRATransformationEngineConfiguration that = (ASTRATransformationEngineConfiguration) other;
-        @SuppressWarnings("checkstyle:LineLength")
-        final boolean result = Double.compare(that.fitnessThreshold, fitnessThreshold) == 0 &&
-                maximumNumberOfResponses == that.maximumNumberOfResponses &&
-                searcherType == that.searcherType &&
-                Objects.equals(minimumSupportThreshold, that.minimumSupportThreshold) &&
-                Objects.equals(minimumWordFrequencyThreshold, that.minimumWordFrequencyThreshold) &&
-                Objects.equals(minimumAggregatedSupportThreshold, that.minimumAggregatedSupportThreshold) &&
-                Objects.equals(minimumContextLength, that.minimumContextLength) &&
-                Objects.equals(maximumNumberOfGeneratedAtomicRules, that.maximumNumberOfGeneratedAtomicRules) &&
-                atomicRuleFitnessCalculatorType == that.atomicRuleFitnessCalculatorType &&
-                Double.compare(that.exponentialFactor, exponentialFactor) == 0 &&
-                Objects.equals(maximumResponseProbabilityDifferenceThreshold, that.maximumResponseProbabilityDifferenceThreshold);
-        return result;
-    }
-
-    /**
-     * Returns the hash code of this configuration object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                searcherType,
-                fitnessThreshold,
-                maximumNumberOfResponses,
-                minimumSupportThreshold,
-                minimumWordFrequencyThreshold,
-                minimumAggregatedSupportThreshold,
-                minimumContextLength,
-                maximumNumberOfGeneratedAtomicRules,
-                atomicRuleFitnessCalculatorType,
-                exponentialFactor,
-                maximumResponseProbabilityDifferenceThreshold
-        );
-    }
-
-    /**
-     * Returns the string representation of this configuration object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    @SuppressWarnings("checkstyle:MultipleStringLiterals")
-    public String toString() {
-        return "ASTRATransformationEngineConfiguration[" +
-                "searcherType=" + searcherType + ", " +
-                "fitnessThreshold=" + fitnessThreshold + ", " +
-                "maximumNumberOfResponses=" + maximumNumberOfResponses + ", " +
-                "minimumSupportThreshold=" + minimumSupportThreshold + ", " +
-                "minimumWordFrequencyThreshold=" + minimumWordFrequencyThreshold + ", " +
-                "minimumAggregatedSupportThreshold=" + minimumAggregatedSupportThreshold + ", " +
-                "minimumContextLength=" + minimumContextLength + ", " +
-                "maximumNumberOfGeneratedAtomicRules=" + maximumNumberOfGeneratedAtomicRules + ", " +
-                "atomicRuleFitnessCalculatorType=" + atomicRuleFitnessCalculatorType + ", " +
-                "exponentialFactor=" + exponentialFactor + ", " +
-                "maximumResponseProbabilityDifferenceThreshold=" + maximumResponseProbabilityDifferenceThreshold +
-                ']';
-    }
 
     /**
      * Builder class for {@link ASTRATransformationEngineConfiguration}.

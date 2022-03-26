@@ -167,26 +167,22 @@
  */
 package com.github.szgabsz91.morpher.core.model;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 /**
  * Model class for word pairs, containing two words: the left word is the base for training, the right word is the
  * inflected form.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class WordPair {
 
     private final Word leftWord;
     private final Word rightWord;
-
-    /**
-     * Constructor that sets both the left and right words.
-     * @param leftWord the left word
-     * @param rightWord the right word
-     */
-    private WordPair(final Word leftWord, final Word rightWord) {
-        this.leftWord = leftWord;
-        this.rightWord = rightWord;
-    }
 
     /**
      * Static factory method to create a new {@link WordPair} from two strings.
@@ -209,67 +205,11 @@ public final class WordPair {
     }
 
     /**
-     * Returns the left word.
-     * @return the left word
-     */
-    public Word getLeftWord() {
-        return leftWord;
-    }
-
-    /**
-     * Returns the right word.
-     * @return the right word
-     */
-    public Word getRightWord() {
-        return rightWord;
-    }
-
-    /**
      * Returns the inverse of the word pair, swapping the left and right parts.
      * @return the inverse of the word pair
      */
     public WordPair inverse() {
         return WordPair.of(rightWord, leftWord);
-    }
-
-    /**
-     * Returns if this word pair equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final WordPair wordPair = (WordPair) o;
-        return leftWord.equals(wordPair.leftWord) && rightWord.equals(wordPair.rightWord);
-    }
-
-    /**
-     * Returns the hash code of this word pair.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = leftWord.hashCode();
-        result = 31 * result + rightWord.hashCode();
-        return result;
-    }
-
-    /**
-     * Returns the string representation of the word pair, i.e. <code>[x, y]</code> where x is the left word and y is
-     * the right word.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "[" + leftWord + ", " + rightWord + "]";
     }
 
 }

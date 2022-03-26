@@ -169,9 +169,11 @@ package com.github.szgabsz91.morpher.engines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Model class for the analysis input that contains the input word, as well as the list of expected affix types for
@@ -183,6 +185,9 @@ import java.util.Objects;
  *
  * @author szgabsz91
  */
+@Getter
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public final class AnalysisInputWithAffixTypes extends AnalysisInput {
 
     private final List<AffixType> affixTypes;
@@ -200,54 +205,6 @@ public final class AnalysisInputWithAffixTypes extends AnalysisInput {
      */
     public static AnalysisInputWithAffixTypes of(final Word input, final List<AffixType> affixTypes) {
         return new AnalysisInputWithAffixTypes(input, affixTypes);
-    }
-
-    /**
-     * Returns the list of expected affix types.
-     * @return the list of expected affix types
-     */
-    public List<AffixType> getAffixTypes() {
-        return affixTypes;
-    }
-
-    /**
-     * Returns if this analysis input equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        if (!super.equals(other)) {
-            return false;
-        }
-        final AnalysisInputWithAffixTypes that = (AnalysisInputWithAffixTypes) other;
-        return affixTypes.equals(that.affixTypes);
-    }
-
-    /**
-     * Returns the hash code of this analysis input.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), affixTypes);
-    }
-
-    /**
-     * Returns the string representation of this analysis input.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "AnalysisInputWithAffixTypes[input=" + getInput() + ", affixTypes=" + affixTypes + ']';
     }
 
 }

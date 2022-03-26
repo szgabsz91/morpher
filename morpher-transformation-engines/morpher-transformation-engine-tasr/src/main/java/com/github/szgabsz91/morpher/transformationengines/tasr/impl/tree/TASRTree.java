@@ -171,6 +171,8 @@ import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.core.model.WordPair;
 import com.github.szgabsz91.morpher.transformationengines.api.model.TransformationEngineResponse;
 import com.github.szgabsz91.morpher.transformationengines.tasr.impl.rules.SuffixRule;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,44 +190,14 @@ import static java.util.Comparator.comparingInt;
  *
  * @author szgabsz91
  */
+@Getter
+@Setter
 public class TASRTree {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TASRTree.class);
 
     private int lastNodeId = -1;
     private TASRTreeNode root;
-
-    /**
-     * Returns the last node identifier.
-     * @return the last node identifier
-     */
-    int getLastNodeId() {
-        return lastNodeId;
-    }
-
-    /**
-     * Sets the last node identifier.
-     * @param lastNodeId the last node identifier
-     */
-    public void setLastNodeId(final int lastNodeId) {
-        this.lastNodeId = lastNodeId;
-    }
-
-    /**
-     * Returns the root tree node.
-     * @return the root tree node
-     */
-    public TASRTreeNode getRoot() {
-        return root;
-    }
-
-    /**
-     * Sets the root of the tree.
-     * @param root the root of the tree
-     */
-    public void setRoot(final TASRTreeNode root) {
-        this.root = root;
-    }
 
     /**
      * Returns the set of all the nodes in the tree.

@@ -174,6 +174,8 @@ import com.github.szgabsz91.morpher.languagehandlers.hunmorph.converters.FullMar
 import com.github.szgabsz91.morpher.languagehandlers.hunmorph.protocolbuffers.MarkovModelMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -727,6 +729,8 @@ public class FullMarkovModel implements IMarkovModel {
      *
      * @author szgabsz91
      */
+    @Getter
+    @ToString
     public static class Node implements Comparable<Node> {
 
         private final AffixType affixType;
@@ -779,22 +783,6 @@ public class FullMarkovModel implements IMarkovModel {
         }
 
         /**
-         * Returns the affix type.
-         * @return the affix type
-         */
-        public AffixType getAffixType() {
-            return affixType;
-        }
-
-        /**
-         * Returns the relative frequency.
-         * @return the relative frequency
-         */
-        public long getRelativeFrequency() {
-            return relativeFrequency;
-        }
-
-        /**
          * Increments the relative frequency by 1.
          */
         public void incrementRelativeFrequency() {
@@ -815,14 +803,6 @@ public class FullMarkovModel implements IMarkovModel {
          */
         public Optional<Node> getParent() {
             return Optional.ofNullable(parent);
-        }
-
-        /**
-         * Returns the map of child nodes.
-         * @return the map of child nodes
-         */
-        public Map<AffixType, Node> getChildren() {
-            return children;
         }
 
         /**
@@ -874,20 +854,6 @@ public class FullMarkovModel implements IMarkovModel {
             result = 31 * result + (int) (relativeFrequency ^ (relativeFrequency >>> 32));
             result = 31 * result + (parent != null ? parent.hashCode() : 0);
             return result;
-        }
-
-        /**
-         * Returns the string representation of this node.
-         *
-         * {@inheritDoc}
-         */
-        @Override
-        public String toString() {
-            return "Node[" +
-                    "affixType=" + affixType +
-                    ", relativeFrequency=" + relativeFrequency +
-                    ", parent=" + parent +
-                    ']';
         }
 
     }

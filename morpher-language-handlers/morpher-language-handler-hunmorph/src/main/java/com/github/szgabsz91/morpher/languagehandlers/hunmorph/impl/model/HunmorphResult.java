@@ -167,6 +167,8 @@
  */
 package com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl.model;
 
+import lombok.Data;
+
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -176,6 +178,7 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@Data
 public class HunmorphResult {
 
     private final String grammaticalForm;
@@ -189,62 +192,6 @@ public class HunmorphResult {
     public HunmorphResult(final String grammaticalForm, final List<String> outputLines) {
         this.grammaticalForm = grammaticalForm;
         this.outputLines = new LinkedHashSet<>(outputLines);
-    }
-
-    /**
-     * Returns the grammatical form.
-     * @return the grammatical form
-     */
-    public String getGrammaticalForm() {
-        return grammaticalForm;
-    }
-
-    /**
-     * Returns the output lines.
-     * @return the output lines
-     */
-    public Set<String> getOutputLines() {
-        return outputLines;
-    }
-
-    /**
-     * Returns if this result equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final HunmorphResult that = (HunmorphResult) other;
-        return grammaticalForm.equals(that.grammaticalForm) &&
-                outputLines.equals(that.outputLines);
-    }
-
-    /**
-     * Returns the hash code of this result.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = grammaticalForm.hashCode();
-        result = 31 * result + outputLines.hashCode();
-        return result;
-    }
-
-    /**
-     * Returns the string representation of this result.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "HunmorphResult[grammaticalForm=" + grammaticalForm + ", outputLines=" + outputLines + ']';
     }
 
 }

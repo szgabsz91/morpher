@@ -179,6 +179,9 @@ import com.github.szgabsz91.morpher.transformationengines.fst.converters.FSTTran
 import com.github.szgabsz91.morpher.transformationengines.fst.protocolbuffers.FSTTransformationEngineConfigurationMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -189,6 +192,9 @@ import java.util.function.Supplier;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
+@Getter
+@Setter
 @Qualifier(IFSTTransformationEngine.QUALIFIER)
 public class FSTAbstractTransformationEngineFactory implements IAbstractTransformationEngineFactory<
         FSTTransformationEngineConfiguration,
@@ -201,32 +207,6 @@ public class FSTAbstractTransformationEngineFactory implements IAbstractTransfor
      */
     public FSTAbstractTransformationEngineFactory() {
 
-    }
-
-    /**
-     * Constructor that sets the {@link FSTTransformationEngineConfiguration}.
-     * @param configuration the {@link FSTTransformationEngineConfiguration}
-     */
-    public FSTAbstractTransformationEngineFactory(final FSTTransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    /**
-     * Returns the {@link FSTTransformationEngineConfiguration} that holds the parameters.
-     * @return the {@link FSTTransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public FSTTransformationEngineConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    /**
-     * Sets the {@link FSTTransformationEngineConfiguration} that holds the parameters.
-     * @param configuration the {@link FSTTransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public void setConfiguration(final FSTTransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
     }
 
     /**

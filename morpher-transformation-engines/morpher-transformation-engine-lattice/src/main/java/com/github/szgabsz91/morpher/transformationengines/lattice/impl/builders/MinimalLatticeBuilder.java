@@ -173,6 +173,7 @@ import com.github.szgabsz91.morpher.transformationengines.api.wordconverters.IWo
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.Lattice;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.Node;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.Rule;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -186,6 +187,7 @@ import static java.util.stream.Collectors.toSet;
  *
  * @author szgabsz91
  */
+@Getter
 public class MinimalLatticeBuilder extends AbstractLatticeBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MinimalLatticeBuilder.class);
@@ -259,22 +261,6 @@ public class MinimalLatticeBuilder extends AbstractLatticeBuilder {
         if (lattice != null) {
             this.lattice = lattice;
         }
-    }
-
-    /**
-     * Returns the underlying consistent lattice builder.
-     * @return the underlying consistent lattice builder
-     */
-    public ConsistentLatticeBuilder getConsistentLatticeBuilder() {
-        return consistentLatticeBuilder;
-    }
-
-    /**
-     * Returns the underlying complete lattice builder.
-     * @return the underlying complete lattice builder
-     */
-    public CompleteLatticeBuilder getCompleteLatticeBuilder() {
-        return completeLatticeBuilder;
     }
 
     /**

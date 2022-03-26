@@ -147,6 +147,12 @@ public class HunmorphLanguageHandlerFunctionalTest {
 
     private void assertResult(Map<AffixType, Set<FrequencyAwareWordPair>> wordPairMap) {
         assertThat(wordPairMap).containsExactly(
+                entry(AffixType.of("<POSS>"), Set.of(
+                        FrequencyAwareWordPair.of("alom", "alma")
+                )),
+                entry(AffixType.of("<PLUR><POSS>"), Set.of(
+                        FrequencyAwareWordPair.of("alma", "almái")
+                )),
                 entry(AffixType.of("<PLUR>"), Set.of(
                         FrequencyAwareWordPair.of("alma", "almák")
                 )),
@@ -160,12 +166,6 @@ public class HunmorphLanguageHandlerFunctionalTest {
                 )),
                 entry(AffixType.of("<PLUR><POSS<2><PLUR>>"), Set.of(
                         FrequencyAwareWordPair.of("alma", "almáitok")
-                )),
-                entry(AffixType.of("<POSS>"), Set.of(
-                        FrequencyAwareWordPair.of("alom", "alma")
-                )),
-                entry(AffixType.of("<PLUR><POSS>"), Set.of(
-                        FrequencyAwareWordPair.of("alma", "almái")
                 ))
         );
     }

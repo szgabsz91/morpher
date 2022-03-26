@@ -168,16 +168,21 @@
 package com.github.szgabsz91.morpher.languagehandlers.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Model class that contains all data about the annotation tokenization of a word.
  *
  * @author szgabsz91
  */
+@Getter
+@EqualsAndHashCode
+@ToString
 public class AnnotationTokenizerResult implements Comparable<AnnotationTokenizerResult> {
 
     private final String expression;
@@ -206,51 +211,11 @@ public class AnnotationTokenizerResult implements Comparable<AnnotationTokenizer
     }
 
     /**
-     * Returns the expression.
-     * @return the expression
-     */
-    public String getExpression() {
-        return expression;
-    }
-
-    /**
-     * Returns the grammatical form.
-     * @return the grammatical form
-     */
-    public String getGrammaticalForm() {
-        return grammaticalForm;
-    }
-
-    /**
-     * Returns the lemma.
-     * @return the lemma
-     */
-    public String getLemma() {
-        return lemma;
-    }
-
-    /**
-     * Returns the affix types.
-     * @return the affix types.
-     */
-    public List<AffixType> getAffixTypes() {
-        return affixTypes;
-    }
-
-    /**
      * Adds a new affix type.
      * @param affixType the new affix type
      */
     public void addAffixType(final AffixType affixType) {
         this.affixTypes.add(affixType);
-    }
-
-    /**
-     * Returns the frequency.
-     * @return the frequency
-     */
-    public int getFrequency() {
-        return frequency;
     }
 
     /**
@@ -274,50 +239,6 @@ public class AnnotationTokenizerResult implements Comparable<AnnotationTokenizer
     @Override
     public int compareTo(final AnnotationTokenizerResult other) {
         return Integer.compare(other.getAffixTypes().size(), this.getAffixTypes().size());
-    }
-
-    /**
-     * Returns if this result equals the other given object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final AnnotationTokenizerResult that = (AnnotationTokenizerResult) other;
-        return expression.equals(that.expression) &&
-                grammaticalForm.equals(that.grammaticalForm) &&
-                lemma.equals(that.lemma) &&
-                affixTypes.equals(that.affixTypes) &&
-                frequency == that.frequency;
-    }
-
-    /**
-     * Returns the hash code of this result.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(expression, grammaticalForm, lemma, affixTypes, frequency);
-    }
-
-    /**
-     * Returns the string representation of this result.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return String.format(
-                "AnnotationTokenizerResult[%s, %s, %s, %s, %d]",
-                expression, grammaticalForm, lemma, affixTypes, frequency
-        );
     }
 
 }

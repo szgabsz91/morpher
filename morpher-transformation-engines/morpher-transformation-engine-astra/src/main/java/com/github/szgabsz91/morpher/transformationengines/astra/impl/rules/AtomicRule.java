@@ -168,6 +168,8 @@
 package com.github.szgabsz91.morpher.transformationengines.astra.impl.rules;
 
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.Letter;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -179,13 +181,15 @@ import static java.util.stream.Collectors.joining;
  *
  * @author szgabsz91
  */
+@Getter
+@ToString
 public class AtomicRule {
 
     private final String prefix;
     private final String changingSubstring;
     private final String replacementString;
     private final String postfix;
-    private final String _context;
+    private final String context;
     private int support;
     private int wordFrequency;
 
@@ -209,7 +213,7 @@ public class AtomicRule {
         this.changingSubstring = changingSubstring;
         this.replacementString = replacementString;
         this.postfix = postfix;
-        this._context = prefix + changingSubstring + postfix;
+        this.context = prefix + changingSubstring + postfix;
         this.support = support;
         this.wordFrequency = wordFrequency;
     }
@@ -229,62 +233,6 @@ public class AtomicRule {
             final String postfix,
             final int wordFrequency) {
         this(prefix, changingSubstring, replacementString, postfix, 1, wordFrequency);
-    }
-
-    /**
-     * Returns the prefix of this atomic rule.
-     * @return the prefix of this atomic rule
-     */
-    public String getPrefix() {
-        return prefix;
-    }
-
-    /**
-     * Returns the changing substring of this atomic rule.
-     * @return the changing substring of this atomic rule
-     */
-    public String getChangingSubstring() {
-        return changingSubstring;
-    }
-
-    /**
-     * Returns the replacement string of this atomic rule.
-     * @return the replacement string of this atomic rule
-     */
-    public String getReplacementString() {
-        return replacementString;
-    }
-
-    /**
-     * Returns the postfix of this atomic rule.
-     * @return the postfix of this atomic rule
-     */
-    public String getPostfix() {
-        return postfix;
-    }
-
-    /**
-     * Returns the context of this atomic rule.
-     * @return the context of this atomic rule
-     */
-    public String getContext() {
-        return _context;
-    }
-
-    /**
-     * Returns the support value of the atomic rule, i.e. how many training word pairs match it.
-     * @return the support value of the atomic rule, i.e. how many training word pairs match it
-     */
-    public int getSupport() {
-        return support;
-    }
-
-    /**
-     * Returns the word frequency.
-     * @return the word frequency
-     */
-    public int getWordFrequency() {
-        return wordFrequency;
     }
 
     /**
@@ -381,23 +329,6 @@ public class AtomicRule {
         result = 31 * result + replacementString.hashCode();
         result = 31 * result + postfix.hashCode();
         return result;
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "AtomicRule[" +
-                prefix + ", " +
-                changingSubstring + ", " +
-                replacementString + ", " +
-                postfix + ", " +
-                support + ", " +
-                wordFrequency +
-                "]";
     }
 
     private static String reverse(final String string) {

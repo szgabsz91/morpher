@@ -169,6 +169,11 @@ package com.github.szgabsz91.morpher.engines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -180,6 +185,10 @@ import java.util.List;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@Setter
+@ToString
 public final class MorpherEngineResponse implements Comparable<MorpherEngineResponse> {
 
     private final Mode mode;
@@ -190,32 +199,6 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
     private final List<ProbabilisticStep> steps;
     private double normalizedAffixTypeChainProbability;
     private double aggregatedWeight;
-
-    /**
-     * Constructor that sets the mode, the input and output words, the part of speech tag of the lemma and its
-     * affix type chain probability and the list of steps.
-     *
-     * @param mode the mode (inflection or analysis)
-     * @param input the input word
-     * @param output the output word
-     * @param pos the part of speech tag of the lemma and its probability
-     * @param affixTypeChainProbability the probability of the affix type chain in the response
-     * @param steps the list of steps
-     */
-    private MorpherEngineResponse(
-            final Mode mode,
-            final Word input,
-            final Word output,
-            final ProbabilisticAffixType pos,
-            final double affixTypeChainProbability,
-            final List<ProbabilisticStep> steps) {
-        this.mode = mode;
-        this.input = input;
-        this.output = output;
-        this.pos = pos;
-        this.affixTypeChainProbability = affixTypeChainProbability;
-        this.steps = steps;
-    }
 
     /**
      * Returns a new inflection response with the given properties.
@@ -251,86 +234,6 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
             final double affixTypeChainProbability,
             final List<ProbabilisticStep> steps) {
         return new MorpherEngineResponse(Mode.ANALYSIS, input, output, pos, affixTypeChainProbability, steps);
-    }
-
-    /**
-     * Returns the mode, either inflection or analysis.
-     * @return the mode, either inflection or analysis
-     */
-    public Mode getMode() {
-        return mode;
-    }
-
-    /**
-     * Returns the input word.
-     * @return the input word
-     */
-    public Word getInput() {
-        return input;
-    }
-
-    /**
-     * Returns the output word.
-     * @return the output word
-     */
-    public Word getOutput() {
-        return output;
-    }
-
-    /**
-     * Returns the part of speech tag of the lemma and its probability.
-     * @return the part of speech tag of the lemma and its probability
-     */
-    public ProbabilisticAffixType getPos() {
-        return pos;
-    }
-
-    /**
-     * Returns the probability of the affix type chain in the response.
-     * @return the probability of the affix type chain in the response
-     */
-    public double getAffixTypeChainProbability() {
-        return affixTypeChainProbability;
-    }
-
-    /**
-     * Returns the list of steps.
-     * @return the list of steps
-     */
-    public List<ProbabilisticStep> getSteps() {
-        return steps;
-    }
-
-    /**
-     * Returns the normalized affix type chain probability.
-     * @return the normalized affix type chain probability
-     */
-    public double getNormalizedAffixTypeChainProbability() {
-        return normalizedAffixTypeChainProbability;
-    }
-
-    /**
-     * Sets the normalized affix type chain probability.
-     * @param normalizedAffixTypeChainProbability the normalized affix type chain probability
-     */
-    public void setNormalizedAffixTypeChainProbability(final double normalizedAffixTypeChainProbability) {
-        this.normalizedAffixTypeChainProbability = normalizedAffixTypeChainProbability;
-    }
-
-    /**
-     * Returns the aggregated weight of the response.
-     * @return the aggregated weight of the response
-     */
-    public double getAggregatedWeight() {
-        return aggregatedWeight;
-    }
-
-    /**
-     * Sets the aggregated weight of the response.
-     * @param aggregatedWeight the aggregated weight of the response
-     */
-    public void setAggregatedWeight(final double aggregatedWeight) {
-        this.aggregatedWeight = aggregatedWeight;
     }
 
     /**
@@ -382,25 +285,6 @@ public final class MorpherEngineResponse implements Comparable<MorpherEngineResp
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + steps.hashCode();
         return result;
-    }
-
-    /**
-     * Returns the string representation of this response.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "MorpherEngineResponse[" +
-                "mode=" + mode +
-                ", input=" + input +
-                ", output=" + output +
-                ", pos=" + pos +
-                ", affixTypeChainProbability=" + affixTypeChainProbability +
-                ", steps=" + steps +
-                ", normalizedAffixTypeChainProbability=" + normalizedAffixTypeChainProbability +
-                ", aggregatedWeight=" + aggregatedWeight +
-                ']';
     }
 
 }

@@ -5,6 +5,7 @@ module com.github.szgabsz91.morpher.transformationengines.dictionary {
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
     requires com.google.protobuf;
+    requires lombok;
 
     exports com.github.szgabsz91.morpher.transformationengines.dictionary;
     exports com.github.szgabsz91.morpher.transformationengines.dictionary.config;

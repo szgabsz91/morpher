@@ -168,12 +168,22 @@
 package com.github.szgabsz91.morpher.transformationengines.astra.impl.rules;
 
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.componentaccessors.IAtomicRuleComponentAccessor;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Wrapper class for an {@link AtomicRule}, left index, right index) triplet.
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class ApplicableAtomicRule {
 
     private final IAtomicRuleComponentAccessor atomicRuleComponentAccessor;
@@ -181,126 +191,5 @@ public class ApplicableAtomicRule {
     private final double fitness;
     private int leftIndex;
     private int rightIndex;
-
-    /**
-     * Constructor that sets the {@link IAtomicRuleComponentAccessor} and {@link AtomicRule} instances, the fitness,
-     * as well as the left and right indices.
-     *
-     * @param atomicRuleComponentAccessor the {@link IAtomicRuleComponentAccessor} instance
-     * @param atomicRule the {@link AtomicRule} instance
-     * @param fitness the fitness
-     * @param leftIndex the left index
-     * @param rightIndex the right index
-     */
-    public ApplicableAtomicRule(
-            final IAtomicRuleComponentAccessor atomicRuleComponentAccessor,
-            final AtomicRule atomicRule,
-            final double fitness,
-            final int leftIndex,
-            final int rightIndex) {
-        this.atomicRuleComponentAccessor = atomicRuleComponentAccessor;
-        this.atomicRule = atomicRule;
-        this.fitness = fitness;
-        this.leftIndex = leftIndex;
-        this.rightIndex = rightIndex;
-    }
-
-    /**
-     * Returns the {@link IAtomicRuleComponentAccessor} instance.
-     * @return the {@link IAtomicRuleComponentAccessor} instance
-     */
-    public IAtomicRuleComponentAccessor getAtomicRuleComponentAccessor() {
-        return atomicRuleComponentAccessor;
-    }
-
-    /**
-     * Returns the {@link AtomicRule} instance.
-     * @return the {@link AtomicRule} instance
-     */
-    public AtomicRule getAtomicRule() {
-        return atomicRule;
-    }
-
-    /**
-     * Returns the fitness.
-     * @return the fitness
-     */
-    public double getFitness() {
-        return fitness;
-    }
-
-    /**
-     * Returns the left index.
-     * @return the left index
-     */
-    public int getLeftIndex() {
-        return leftIndex;
-    }
-
-    /**
-     * Sets the left index.
-     * @param leftIndex the left index
-     */
-    public void setLeftIndex(final int leftIndex) {
-        this.leftIndex = leftIndex;
-    }
-
-    /**
-     * Returns the right index.
-     * @return the right index
-     */
-    public int getRightIndex() {
-        return rightIndex;
-    }
-
-    /**
-     * Sets the right index.
-     * @param rightIndex the right index
-     */
-    public void setRightIndex(final int rightIndex) {
-        this.rightIndex = rightIndex;
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final ApplicableAtomicRule that = (ApplicableAtomicRule) other;
-        return leftIndex == that.leftIndex &&
-                rightIndex == that.rightIndex &&
-                atomicRule.equals(that.atomicRule);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = atomicRule.hashCode();
-        result = 31 * result + leftIndex;
-        result = 31 * result + rightIndex;
-        return result;
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "ApplicableAtomicRule[" + leftIndex + ", " + rightIndex + ", " + atomicRule + " (" + fitness + ")]";
-    }
 
 }

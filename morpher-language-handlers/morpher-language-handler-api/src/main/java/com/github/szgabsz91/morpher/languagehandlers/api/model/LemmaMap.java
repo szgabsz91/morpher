@@ -169,9 +169,12 @@ package com.github.szgabsz91.morpher.languagehandlers.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -179,13 +182,12 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode
+@ToString
 public final class LemmaMap {
 
     private final Map<Word, Set<AffixType>> lemmaMap;
-
-    private LemmaMap(final Map<Word, Set<AffixType>> lemmaMap) {
-        this.lemmaMap = lemmaMap;
-    }
 
     /**
      * Creates a new {@link LemmaMap} instance.
@@ -202,43 +204,6 @@ public final class LemmaMap {
      */
     public Set<Map.Entry<Word, Set<AffixType>>> entrySet() {
         return lemmaMap.entrySet();
-    }
-
-    /**
-     * Returns if this object is equal to the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final LemmaMap lemmaMap1 = (LemmaMap) other;
-        return Objects.equals(lemmaMap, lemmaMap1.lemmaMap);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(lemmaMap);
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "LemmaMap[" + lemmaMap + ']';
     }
 
 }

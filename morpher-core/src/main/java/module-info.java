@@ -1,6 +1,7 @@
 @SuppressWarnings("module")
 module com.github.szgabsz91.morpher.core {
 
+    requires lombok;
     requires org.slf4j;
     requires transitive com.google.protobuf;
     requires zip4j;

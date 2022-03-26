@@ -171,6 +171,7 @@ import com.github.szgabsz91.morpher.transformationengines.api.characters.reposit
 import com.github.szgabsz91.morpher.transformationengines.api.wordconverters.IWordConverter;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.AtomicRule;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.RuleGroup;
+import lombok.Getter;
 
 import java.util.Collection;
 
@@ -179,6 +180,7 @@ import java.util.Collection;
  *
  * @author szgabsz91
  */
+@Getter
 public abstract class AbstractSmoothAtomicRuleFitnessCalculator extends DefaultAtomicRuleFitnessCalculator {
 
     private final double exponentialFactor;
@@ -202,14 +204,6 @@ public abstract class AbstractSmoothAtomicRuleFitnessCalculator extends DefaultA
         if (this.exponentialFactor <= 0.0) {
             throw new IllegalArgumentException("The exponentialFactor property must be positive");
         }
-    }
-
-    /**
-     * Returns the exponential factor.
-     * @return the exponential factor
-     */
-    public double getExponentialFactor() {
-        return exponentialFactor;
     }
 
     /**

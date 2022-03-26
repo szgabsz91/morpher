@@ -174,6 +174,7 @@ import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.Nod
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.UnitNode;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.ZeroNode;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.Rule;
+import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -183,6 +184,7 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@Getter
 public abstract class AbstractLatticeBuilder implements ILatticeBuilder {
 
     /**
@@ -232,31 +234,6 @@ public abstract class AbstractLatticeBuilder implements ILatticeBuilder {
                 characterRepository,
                 wordConverter
         );
-    }
-
-    /**
-     * Returns the managed {@link Lattice} instance.
-     * @return the managed {@link Lattice} instance
-     */
-    @Override
-    public Lattice getLattice() {
-        return lattice;
-    }
-
-    /**
-     * Returns the underlying {@link ICharacterRepository} instance.
-     * @return the underlying {@link ICharacterRepository} instance
-     */
-    public ICharacterRepository getCharacterRepository() {
-        return characterRepository;
-    }
-
-    /**
-     * Returns the underlying {@link IWordConverter} instance.
-     * @return the underlying {@link IWordConverter} instance
-     */
-    public IWordConverter getWordConverter() {
-        return wordConverter;
     }
 
     /**

@@ -179,6 +179,9 @@ import com.github.szgabsz91.morpher.transformationengines.lattice.converters.Lat
 import com.github.szgabsz91.morpher.transformationengines.lattice.protocolbuffers.LatticeTransformationEngineConfigurationMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -189,6 +192,9 @@ import java.util.function.Supplier;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
+@Getter
+@Setter
 @Qualifier(ILatticeTransformationEngine.QUALIFIER)
 public class LatticeAbstractTransformationEngineFactory implements IAbstractTransformationEngineFactory<
         LatticeTransformationEngineConfiguration,
@@ -201,32 +207,6 @@ public class LatticeAbstractTransformationEngineFactory implements IAbstractTran
      */
     public LatticeAbstractTransformationEngineFactory() {
 
-    }
-
-    /**
-     * Constructor that sets the {@link LatticeTransformationEngineConfiguration}.
-     * @param configuration the {@link LatticeTransformationEngineConfiguration}
-     */
-    public LatticeAbstractTransformationEngineFactory(final LatticeTransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    /**
-     * Returns the {@link LatticeTransformationEngineConfiguration} that holds the parameters.
-     * @return the {@link LatticeTransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public LatticeTransformationEngineConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    /**
-     * Sets the {@link LatticeTransformationEngineConfiguration} that holds the parameters.
-     * @param configuration the {@link LatticeTransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public void setConfiguration(final LatticeTransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
     }
 
     /**

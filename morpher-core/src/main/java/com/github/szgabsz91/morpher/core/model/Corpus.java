@@ -167,8 +167,11 @@
  */
 package com.github.szgabsz91.morpher.core.model;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -176,13 +179,11 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Corpus {
 
     private final Set<FrequencyAwareWord> words;
-
-    private Corpus(final Set<FrequencyAwareWord> words) {
-        this.words = words;
-    }
 
     /**
      * Returns a new {@link Corpus} containing the given {@link FrequencyAwareWord}s.
@@ -200,51 +201,6 @@ public final class Corpus {
      */
     public static Corpus of(final Word word) {
         return new Corpus(Collections.singleton(FrequencyAwareWord.of(word)));
-    }
-
-    /**
-     * Returns the set of {@link FrequencyAwareWord}s.
-     * @return the set of {@link FrequencyAwareWord}s
-     */
-    public Set<FrequencyAwareWord> getWords() {
-        return words;
-    }
-
-    /**
-     * Returns if this corpus equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final Corpus corpus = (Corpus) other;
-        return Objects.equals(words, corpus.words);
-    }
-
-    /**
-     * Returns the hash code of this corpus.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(words);
-    }
-
-    /**
-     * Returns the string representation of this corpus.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "Corpus[words=" + words + ']';
     }
 
 }

@@ -5,6 +5,7 @@ module com.github.szgabsz91.morpher.transformationengines.api {
 
     requires combinatoricslib3;
     requires com.google.protobuf;
+    requires lombok;
 
     exports com.github.szgabsz91.morpher.transformationengines.api;
     exports com.github.szgabsz91.morpher.transformationengines.api.factories;

@@ -167,6 +167,11 @@
  */
 package com.github.szgabsz91.morpher.transformationengines.astra.impl.rules;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 /**
  * Class that represents a changing (variant) or non-changing (invariant) part in a word pair.
  *
@@ -175,6 +180,10 @@ package com.github.szgabsz91.morpher.transformationengines.astra.impl.rules;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Segment implements Comparable<Segment> {
 
     private final int leftWordIndex;
@@ -182,72 +191,6 @@ public class Segment implements Comparable<Segment> {
     private final String leftWordSubstring;
     private final String rightWordSubstring;
     private Double fitness;
-
-    /**
-     * Constructor that sets all the fields except for the fitness.
-     * @param leftWordIndex the index in the left word
-     * @param rightWordIndex the index in the right word
-     * @param leftWordSubstring the substring in the left word
-     * @param rightWordSubstring the substring in the right word
-     */
-    public Segment(
-            final int leftWordIndex,
-            final int rightWordIndex,
-            final String leftWordSubstring,
-            final String rightWordSubstring) {
-        this.leftWordIndex = leftWordIndex;
-        this.rightWordIndex = rightWordIndex;
-        this.leftWordSubstring = leftWordSubstring;
-        this.rightWordSubstring = rightWordSubstring;
-    }
-
-    /**
-     * Returns the index in the left word.
-     * @return the index in the left word
-     */
-    public int getLeftWordIndex() {
-        return leftWordIndex;
-    }
-
-    /**
-     * Returns the index in the right word.
-     * @return the index in the right word
-     */
-    public int getRightWordIndex() {
-        return rightWordIndex;
-    }
-
-    /**
-     * Returns the substring of the left word.
-     * @return the substring of the left word
-     */
-    public String getLeftWordSubstring() {
-        return leftWordSubstring;
-    }
-
-    /**
-     * Returns the substring of the right word.
-     * @return the substring of the right word
-     */
-    public String getRightWordSubstring() {
-        return rightWordSubstring;
-    }
-
-    /**
-     * Returns the fitness of the segment.
-     * @return the fitness of the segment
-     */
-    public Double getFitness() {
-        return fitness;
-    }
-
-    /**
-     * Sets the fitness of the segment.
-     * @param fitness the fitness of the segment
-     */
-    public void setFitness(final Double fitness) {
-        this.fitness = fitness;
-    }
 
     /**
      * Returns if this {@link Segment} is invariant, meaning that the left and right substrings are equal.
@@ -277,40 +220,6 @@ public class Segment implements Comparable<Segment> {
         }
 
         return Double.compare(other.fitness, fitness);
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final Segment segment = (Segment) other;
-        return leftWordIndex == segment.leftWordIndex &&
-                rightWordIndex == segment.rightWordIndex &&
-                leftWordSubstring.equals(segment.leftWordSubstring) &&
-                rightWordSubstring.equals(segment.rightWordSubstring);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = leftWordIndex;
-        result = 31 * result + rightWordIndex;
-        result = 31 * result + leftWordSubstring.hashCode();
-        result = 31 * result + rightWordSubstring.hashCode();
-        return result;
     }
 
     /**

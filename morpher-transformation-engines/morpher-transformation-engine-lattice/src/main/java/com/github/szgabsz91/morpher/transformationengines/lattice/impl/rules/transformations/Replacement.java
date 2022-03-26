@@ -170,6 +170,7 @@ package com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.tr
 import com.github.szgabsz91.morpher.transformationengines.api.characters.ICharacter;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.IAttribute;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.repositories.ICharacterRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,24 +189,13 @@ import static java.util.stream.Collectors.toSet;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
 public class Replacement implements ITransformation {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Replacement.class);
 
     private final Set<AttributeDelta<? super IAttribute>> attributeDeltas;
     private final ICharacterRepository characterRepository;
-
-    /**
-     * Constructor that sets the attribute deltas.
-     * @param attributeDeltas the attribute deltas
-     * @param characterRepository the {@link ICharacterRepository} instance
-     */
-    public Replacement(
-            final Set<AttributeDelta<? super IAttribute>> attributeDeltas,
-            final ICharacterRepository characterRepository) {
-        this.attributeDeltas = attributeDeltas;
-        this.characterRepository = characterRepository;
-    }
 
     /**
      * Constructor that computes and sets the attribute deltas so that this replacement transforms the given

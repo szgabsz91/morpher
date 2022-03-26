@@ -168,23 +168,21 @@
 package com.github.szgabsz91.morpher.transformationengines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.Word;
-
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Model class containing a {@link Word} and its probability.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProbabilisticWord implements Comparable<ProbabilisticWord> {
 
     private final Word word;
     private final double probability;
-
-    private ProbabilisticWord(final Word word, final double probability) {
-        this.word = word;
-        this.probability = probability;
-    }
 
     /**
      * Creates a new {@link ProbabilisticWord} object.
@@ -197,22 +195,6 @@ public final class ProbabilisticWord implements Comparable<ProbabilisticWord> {
     }
 
     /**
-     * Returns the {@link Word}.
-     * @return the {@link Word}
-     */
-    public Word getWord() {
-        return word;
-    }
-
-    /**
-     * Returns the probability.
-     * @return the probability
-     */
-    public double getProbability() {
-        return probability;
-    }
-
-    /**
      * Sorts the {@link ProbabilisticWord}s according to their probabilities, in descending order.
      * @param other the other {@link ProbabilisticWord}
      * @return negative number, 0 or positive number
@@ -220,44 +202,6 @@ public final class ProbabilisticWord implements Comparable<ProbabilisticWord> {
     @Override
     public int compareTo(final ProbabilisticWord other) {
         return Double.compare(other.probability, this.probability);
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final ProbabilisticWord that = (ProbabilisticWord) other;
-        return Double.compare(that.probability, probability) == 0 &&
-                Objects.equals(word, that.word);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(word, probability);
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "ProbabilisticWord[word=" + word + ", probability=" + probability + ']';
     }
 
 }

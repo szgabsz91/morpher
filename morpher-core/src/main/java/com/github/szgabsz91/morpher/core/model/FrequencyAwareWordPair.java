@@ -167,22 +167,21 @@
  */
 package com.github.szgabsz91.morpher.core.model;
 
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Model class that contains a {@link WordPair} and its frequency.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FrequencyAwareWordPair {
 
     private final WordPair wordPair;
     private final int frequency;
-
-    private FrequencyAwareWordPair(final WordPair wordPair, final int frequency) {
-        this.wordPair = wordPair;
-        this.frequency = frequency;
-    }
 
     /**
      * Creates a new {@link FrequencyAwareWordPair} using the given {@link WordPair} and frequency.
@@ -246,14 +245,6 @@ public final class FrequencyAwareWordPair {
     }
 
     /**
-     * Returns the {@link WordPair}.
-     * @return the {@link WordPair}
-     */
-    public WordPair getWordPair() {
-        return wordPair;
-    }
-
-    /**
      * Returns the left side of the {@link WordPair}.
      * @return the left side of the {@link WordPair}
      */
@@ -270,57 +261,11 @@ public final class FrequencyAwareWordPair {
     }
 
     /**
-     * Returns the frequency.
-     * @return the frequency
-     */
-    public int getFrequency() {
-        return frequency;
-    }
-
-    /**
      * Inverts the {@link WordPair}.
      * @return the inverted {@link WordPair} with the same frequency
      */
     public FrequencyAwareWordPair inverse() {
         return new FrequencyAwareWordPair(wordPair.inverse(), frequency);
-    }
-
-    /**
-     * Returns if this {@link FrequencyAwareWordPair} is equal to the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final FrequencyAwareWordPair that = (FrequencyAwareWordPair) other;
-        return frequency == that.frequency &&
-                wordPair.equals(that.wordPair);
-    }
-
-    /**
-     * Returns the hash code of this {@link FrequencyAwareWordPair}.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(wordPair, frequency);
-    }
-
-    /**
-     * Returns the string representiation of this {@link FrequencyAwareWordPair}.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "FrequencyAwareWordPair[" + wordPair + ", " + frequency + ']';
     }
 
 }

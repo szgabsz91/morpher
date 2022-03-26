@@ -191,6 +191,8 @@ import com.github.szgabsz91.morpher.systems.api.model.MorpherSystemResponse;
 import com.github.szgabsz91.morpher.systems.impl.converters.MorpherSystemConverter;
 import com.github.szgabsz91.morpher.systems.impl.protocolbuffers.MorpherSystemMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -207,25 +209,11 @@ import static java.util.stream.Collectors.toList;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
+@Getter
 public class MorpherSystem implements IMorpherSystem {
 
     private final Map<Language, IMorpherEngine<?>> morpherEngineMap;
-
-    /**
-     * Constructor that sets the map of {@link IMorpherEngine}s.
-     * @param morpherEngineMap the map of {@link IMorpherEngine}s
-     */
-    public MorpherSystem(final Map<Language, IMorpherEngine<?>> morpherEngineMap) {
-        this.morpherEngineMap = morpherEngineMap;
-    }
-
-    /**
-     * Returns the map of {@link IMorpherEngine}s.
-     * @return the map of {@link IMorpherEngine}s
-     */
-    public Map<Language, IMorpherEngine<?>> getMorpherEngineMap() {
-        return morpherEngineMap;
-    }
 
     /**
      * Closes the underlying Morpher Engines.

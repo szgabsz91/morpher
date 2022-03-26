@@ -167,18 +167,22 @@
  */
 package com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 /**
  * Position class that holds the index of the context in the word.
  *
  * @author szgabsz91
  */
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@EqualsAndHashCode
 public final class Position {
 
     private final int index;
-
-    private Position(final int index) {
-        this.index = index;
-    }
 
     /**
      * Creates a new position from the given int index.
@@ -198,46 +202,11 @@ public final class Position {
     }
 
     /**
-     * Returns the index.
-     * @return the index
-     */
-    public int getIndex() {
-        return index;
-    }
-
-    /**
      * Returns if the position is identity or not.
      * @return true if the position is identity, false otherwise
      */
     public boolean isIdentity() {
         return index == 0;
-    }
-
-    /**
-     * Returns if this position equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final Position position = (Position) other;
-        return index == position.index;
-    }
-
-    /**
-     * Returns the hash code of the position.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return index;
     }
 
     /**

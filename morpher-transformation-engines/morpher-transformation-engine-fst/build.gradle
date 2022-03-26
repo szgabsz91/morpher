@@ -9,7 +9,7 @@ ext {
 
     testCoverageLimits = [
         instruction: 95.79,
-        line: 95.85,
+        line: 95.76,
         branch: 100.0,
         class: 100.0
     ]

@@ -131,21 +131,4 @@ public class MorpherEngineResponseTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    @Test
-    public void testToString() {
-        MorpherEngineResponse response = MorpherEngineResponse.inflectionResponse(Word.of("input"), Word.of("output"), ProbabilisticAffixType.of(AffixType.of("POS"), 0.6), 0.5, Collections.singletonList(null));
-        response.setAggregatedWeight(10.0);
-        assertThat(response).hasToString("MorpherEngineResponse[" +
-                "mode=" + response.getMode() +
-                ", input=" + response.getInput() +
-                ", output=" + response.getOutput() +
-                ", pos=" + response.getPos() +
-                ", affixTypeChainProbability=" + response.getAffixTypeChainProbability() +
-                ", steps=" + response.getSteps() +
-                ", normalizedAffixTypeChainProbability=" + response.getNormalizedAffixTypeChainProbability() +
-                ", aggregatedWeight=" + response.getAggregatedWeight() +
-                ']'
-        );
-    }
-
 }

@@ -167,18 +167,22 @@
  */
 package com.github.szgabsz91.morpher.core.model;
 
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
 /**
  * Model class that represents an affix type.
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode
+@ToString
 public final class AffixType {
 
     private final String tag;
-
-    private AffixType(final String tag) {
-        this.tag = tag;
-    }
 
     /**
      * Wraps the given tag in an affix type.
@@ -187,33 +191,6 @@ public final class AffixType {
      */
     public static AffixType of(final String tag) {
         return new AffixType(tag);
-    }
-
-    /**
-     * Returns if this affix type equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final AffixType affixType = (AffixType) other;
-        return tag.equals(affixType.tag);
-    }
-
-    /**
-     * Returns the hash code of this affix type.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return tag.hashCode();
     }
 
     /**

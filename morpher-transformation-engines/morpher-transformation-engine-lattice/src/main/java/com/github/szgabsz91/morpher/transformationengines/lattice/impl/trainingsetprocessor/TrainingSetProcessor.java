@@ -171,6 +171,8 @@ import com.github.szgabsz91.morpher.core.model.WordPair;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.Rule;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.ITransformation;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.model.WordPairProcessorResponse;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -186,22 +188,12 @@ import static java.util.stream.Collectors.toSet;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
+@Getter
 public class TrainingSetProcessor implements ITrainingSetProcessor {
 
     private final IWordPairProcessor wordPairProcessor;
     private final Map<List<ITransformation>, Long> frequencyMap;
-
-    /**
-     * Constructor that sets the {@link IWordPairProcessor} object and the frequency map.
-     * @param wordPairProcessor the {@link IWordPairProcessor} object
-     * @param frequencyMap the frequency map
-     */
-    public TrainingSetProcessor(
-            final IWordPairProcessor wordPairProcessor,
-            final Map<List<ITransformation>, Long> frequencyMap) {
-        this.wordPairProcessor = wordPairProcessor;
-        this.frequencyMap = frequencyMap;
-    }
 
     /**
      * Constructor that sets the {@link IWordPairProcessor} object.
@@ -209,22 +201,6 @@ public class TrainingSetProcessor implements ITrainingSetProcessor {
      */
     public TrainingSetProcessor(final IWordPairProcessor wordPairProcessor) {
         this(wordPairProcessor, new HashMap<>());
-    }
-
-    /**
-     * Returns the underlying {@link IWordPairProcessor} instance.
-     * @return the underlying {@link IWordPairProcessor} instance
-     */
-    public IWordPairProcessor getWordPairProcessor() {
-        return wordPairProcessor;
-    }
-
-    /**
-     * Returns the frequency map.
-     * @return the frequency map
-     */
-    public Map<List<ITransformation>, Long> getFrequencyMap() {
-        return frequencyMap;
     }
 
     /**

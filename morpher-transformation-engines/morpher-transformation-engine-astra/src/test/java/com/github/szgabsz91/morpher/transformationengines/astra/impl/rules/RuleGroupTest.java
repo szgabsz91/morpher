@@ -107,30 +107,6 @@ public class RuleGroupTest {
     }
 
     @Test
-    public void testEquals() {
-        RuleGroup ruleGroup1 = createRuleGroup("abd", RuleGroup::straight, new AtomicRule("a", "b", "c", "d", 1));
-        RuleGroup ruleGroup2 = createRuleGroup("abd", RuleGroup::straight, new AtomicRule("a", "b", "c", "d", 1));
-        RuleGroup ruleGroup3 = createRuleGroup("abd", RuleGroup::straight, new AtomicRule("a", "b", "c", "d", 1), new AtomicRule("ab", "", "c", "d", 1));
-        RuleGroup ruleGroup4 = createRuleGroup("ebd", RuleGroup::straight, new AtomicRule("e", "b", "c", "d", 1));
-
-        assertThat(ruleGroup1.equals(ruleGroup1)).isTrue();
-        assertThat(ruleGroup1).isEqualTo(ruleGroup2);
-        assertThat(ruleGroup1.equals(null)).isFalse();
-        assertThat(ruleGroup1).isNotEqualTo("string");
-        assertThat(ruleGroup1).isNotEqualTo(ruleGroup3);
-        assertThat(ruleGroup1).isNotEqualTo(ruleGroup4);
-    }
-
-    @Test
-    public void testHashCode() {
-        RuleGroup ruleGroup = createRuleGroup("abd", RuleGroup::straight, new AtomicRule("a", "b", "c", "d", 1));
-        int result = ruleGroup.hashCode();
-        int expected = ruleGroup.getContext().hashCode();
-        expected = 31 * expected + ruleGroup.getAtomicRules().hashCode();
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
     public void testToStringWithStraightRuleGroup() {
         RuleGroup ruleGroup = createRuleGroup("abd", RuleGroup::straight, new AtomicRule("a", "b", "c", "d", 1));
         assertThat(ruleGroup)

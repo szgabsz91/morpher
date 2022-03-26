@@ -168,9 +168,9 @@
 package com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules;
 
 import com.github.szgabsz91.morpher.transformationengines.api.characters.ICharacter;
+import lombok.Data;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Context class for rules.
@@ -189,6 +189,7 @@ import java.util.Objects;
  *
  * @author szgabsz91
  */
+@Data
 public class Context {
 
     private final List<ICharacter> prefix;
@@ -196,27 +197,6 @@ public class Context {
     private final List<ICharacter> postfix;
     private final Position frontPosition;
     private final Position backPosition;
-
-    /**
-     * Constructor that sets the prefix, core, postfix, front position and back position.
-     * @param prefix the prefix
-     * @param core the core
-     * @param postfix the postfix
-     * @param frontPosition the front position
-     * @param backPosition the back position
-     */
-    public Context(
-            final List<ICharacter> prefix,
-            final List<ICharacter> core,
-            final List<ICharacter> postfix,
-            final Position frontPosition,
-            final Position backPosition) {
-        this.prefix = prefix;
-        this.core = core;
-        this.postfix = postfix;
-        this.frontPosition = frontPosition;
-        this.backPosition = backPosition;
-    }
 
     /**
      * Returns a new identity context that contains no characters and has two identity positions.
@@ -233,46 +213,6 @@ public class Context {
     }
 
     /**
-     * Returns the prefix.
-     * @return the prefix
-     */
-    public List<ICharacter> getPrefix() {
-        return prefix;
-    }
-
-    /**
-     * Returns the core.
-     * @return the core
-     */
-    public List<ICharacter> getCore() {
-        return core;
-    }
-
-    /**
-     * Returns the postfix.
-     * @return the postfix
-     */
-    public List<ICharacter> getPostfix() {
-        return postfix;
-    }
-
-    /**
-     * Returns the front position.
-     * @return the front position
-     */
-    public Position getFrontPosition() {
-        return frontPosition;
-    }
-
-    /**
-     * Returns the back position.
-     * @return the back position
-     */
-    public Position getBackPosition() {
-        return backPosition;
-    }
-
-    /**
      * Returns if the context is identity or not.
      * @return true if the context is identity, false otherwise
      */
@@ -280,42 +220,6 @@ public class Context {
         return prefix.isEmpty() && core.isEmpty() && postfix.isEmpty() &&
                 frontPosition != null && frontPosition.isIdentity() &&
                 backPosition != null && backPosition.isIdentity();
-    }
-
-    /**
-     * Returns if this context equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final Context context = (Context) other;
-        return prefix.equals(context.prefix) &&
-                core.equals(context.core) &&
-                postfix.equals(context.postfix) &&
-                Objects.equals(frontPosition, context.frontPosition) &&
-                Objects.equals(backPosition, context.backPosition);
-    }
-
-    /**
-     * Returns the hash code of the context.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = prefix.hashCode();
-        result = 31 * result + core.hashCode();
-        result = 31 * result + postfix.hashCode();
-        result = 31 * result + (frontPosition != null ? frontPosition.hashCode() : 0);
-        result = 31 * result + (backPosition != null ? backPosition.hashCode() : 0);
-        return result;
     }
 
     /**

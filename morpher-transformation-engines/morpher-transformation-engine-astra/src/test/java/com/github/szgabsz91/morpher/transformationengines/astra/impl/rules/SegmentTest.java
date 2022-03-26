@@ -107,37 +107,6 @@ public class SegmentTest {
     }
 
     @Test
-    public void testEquals() {
-        Segment segment1 = new Segment(1, 2, "a", "b");
-        Segment segment2 = new Segment(3, 2, "a", "b");
-        Segment segment3 = new Segment(1, 3, "a", "b");
-        Segment segment4 = new Segment(1, 2, "c", "b");
-        Segment segment5 = new Segment(1, 2, "a", "c");
-        Segment segment6 = new Segment(1, 2, "a", "b");
-
-        assertThat(segment1.equals(segment1)).isTrue();
-        assertThat(segment1).isEqualTo(segment6);
-        assertThat(segment1.equals(null)).isFalse();
-        assertThat(segment1).isNotEqualTo("string");
-        assertThat(segment1).isNotEqualTo(segment2);
-        assertThat(segment1).isNotEqualTo(segment3);
-        assertThat(segment1).isNotEqualTo(segment4);
-        assertThat(segment1).isNotEqualTo(segment5);
-    }
-
-    @Test
-    public void testHashCode() {
-        Segment segment = new Segment(1, 2, "a", "b");
-        int result = segment.hashCode();
-
-        int expected = 31 * segment.getLeftWordIndex() + segment.getRightWordIndex();
-        expected = 31 * expected + segment.getLeftWordSubstring().hashCode();
-        expected = 31 * expected + segment.getRightWordSubstring().hashCode();
-
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
     public void testToStringWithNullFitness() {
         Segment segment = new Segment(1, 2, "a", "b");
         assertThat(segment).hasToString("[1, 2, a, b, null]");

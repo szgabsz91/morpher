@@ -168,85 +168,19 @@
 package com.github.szgabsz91.morpher.systems.api.model;
 
 import com.github.szgabsz91.morpher.engines.api.model.MorpherEngineResponse;
+import lombok.Data;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Model class that contains the {@link Language} and the list of {@link MorpherEngineResponse}s.
  *
  * @author szgabsz91
  */
+@Data
 public class MorpherSystemResponse {
 
     private final Language language;
     private final List<MorpherEngineResponse> morpherEngineResponses;
-
-    /**
-     * Constructor that sets the {@link Language} and the list of {@link MorpherEngineResponse}s.
-     * @param language the {@link Language}
-     * @param morpherEngineResponses the list of {@link MorpherEngineResponse}s
-     */
-    public MorpherSystemResponse(final Language language, final List<MorpherEngineResponse> morpherEngineResponses) {
-        this.language = language;
-        this.morpherEngineResponses = morpherEngineResponses;
-    }
-
-    /**
-     * Returns the {@link Language}.
-     * @return the {@link Language}
-     */
-    public Language getLanguage() {
-        return language;
-    }
-
-    /**
-     * Returns the list of {@link MorpherEngineResponse}s.
-     * @return the list of {@link MorpherEngineResponse}s
-     */
-    public List<MorpherEngineResponse> getMorpherEngineResponses() {
-        return morpherEngineResponses;
-    }
-
-    /**
-     * Returns if this response is equal to the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final MorpherSystemResponse that = (MorpherSystemResponse) other;
-        return Objects.equals(language, that.language) &&
-                Objects.equals(morpherEngineResponses, that.morpherEngineResponses);
-    }
-
-    /**
-     * Returns the hash code of this response.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(language, morpherEngineResponses);
-    }
-
-    /**
-     * Returns the string representation of this response.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "MorpherSystemResponse[" +
-                "language=" + language +
-                ", morpherEngineResponses=" + morpherEngineResponses +
-                ']';
-    }
 
 }

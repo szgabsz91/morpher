@@ -170,6 +170,7 @@ package com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.tr
 import com.github.szgabsz91.morpher.transformationengines.api.characters.ICharacter;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.IAttribute;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.repositories.ICharacterRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
 import java.util.List;
@@ -180,20 +181,11 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
 public class Removal implements ITransformation {
 
     private final Set<? extends IAttribute> attributes;
     private final ICharacterRepository characterRepository;
-
-    /**
-     * Constructor that sets the attributes to remove.
-     * @param attributes the attributes to remove
-     * @param characterRepository the {@link ICharacterRepository} instance
-     */
-    public Removal(final Set<? extends IAttribute> attributes, final ICharacterRepository characterRepository) {
-        this.attributes = attributes;
-        this.characterRepository = characterRepository;
-    }
 
     /**
      * Returns the attributes to remove.
