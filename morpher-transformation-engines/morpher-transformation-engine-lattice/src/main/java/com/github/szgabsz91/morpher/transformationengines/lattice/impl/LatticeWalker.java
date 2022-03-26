@@ -171,12 +171,16 @@ import com.github.szgabsz91.morpher.transformationengines.api.characters.statist
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.Node;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.Rule;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.setoperations.SubsetCalculator;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -200,17 +204,10 @@ import static java.util.Comparator.naturalOrder;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
 public class LatticeWalker {
 
     private final Lattice lattice;
-
-    /**
-     * Constructor that sets the lattice which will be traversed.
-     * @param lattice the lattice
-     */
-    public LatticeWalker(final Lattice lattice) {
-        this.lattice = lattice;
-    }
 
     /**
      * Traverses the lattice from top to bottom and finds the first node that matches the given predicate.
@@ -616,45 +613,18 @@ public class LatticeWalker {
      * Wrapper class for a {@link Node} and its matching factor.
      * @author szgabsz91
      */
+    @Data
+    @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter(AccessLevel.PRIVATE)
+    @EqualsAndHashCode
     private static final class PartiallyMatchingNode implements Comparable<PartiallyMatchingNode> {
 
         private final Node node;
         private final Integer matchingFactor;
 
-        private PartiallyMatchingNode(final Node node, final Integer matchingFactor) {
-            this.node = node;
-            this.matchingFactor = matchingFactor;
-        }
-
-        private Node getNode() {
-            return node;
-        }
-
-        private Integer getMatchingFactor() {
-            return matchingFactor;
-        }
-
         @Override
         public int compareTo(final PartiallyMatchingNode other) {
             return Integer.compare(matchingFactor, other.matchingFactor);
-        }
-
-        @Override
-        public boolean equals(final Object other) {
-            if (this == other) {
-                return true;
-            }
-            if (other == null || getClass() != other.getClass()) {
-                return false;
-            }
-            final PartiallyMatchingNode that = (PartiallyMatchingNode) other;
-            return Objects.equals(node, that.node) &&
-                    Objects.equals(matchingFactor, that.matchingFactor);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(node, matchingFactor);
         }
 
     }

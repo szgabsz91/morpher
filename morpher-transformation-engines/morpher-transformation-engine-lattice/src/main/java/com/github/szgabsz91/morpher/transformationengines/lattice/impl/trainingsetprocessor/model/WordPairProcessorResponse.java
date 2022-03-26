@@ -171,6 +171,9 @@ import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.Rul
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.ITransformation;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.tree.WordPairProcessorTree;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.tree.WordPairProcessorTreeNode;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
@@ -182,51 +185,14 @@ import java.util.Map;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class WordPairProcessorResponse {
 
     private final WordPairProcessorTree tree;
     private final List<WordPairProcessorTreeNode> leaves;
     private final List<Rule> rules;
-
-    /**
-     * Constructor that sets the resulting tree, its leaves and the generated rules.
-     *
-     * @param tree the resulting {@link WordPairProcessorTree}
-     * @param leaves the leaves of the resulting {@link WordPairProcessorTree}
-     * @param rules the generated rules
-     */
-    public WordPairProcessorResponse(
-            final WordPairProcessorTree tree,
-            final List<WordPairProcessorTreeNode> leaves,
-            final List<Rule> rules) {
-        this.tree = tree;
-        this.leaves = leaves;
-        this.rules = rules;
-    }
-
-    /**
-     * Returns the resulting {@link WordPairProcessorTree}.
-     * @return the resulting {@link WordPairProcessorTree}
-     */
-    public WordPairProcessorTree getTree() {
-        return tree;
-    }
-
-    /**
-     * Returns the leaves of the resulting {@link WordPairProcessorTree}.
-     * @return the leaves of the resulting {@link WordPairProcessorTree}
-     */
-    public List<WordPairProcessorTreeNode> getLeaves() {
-        return leaves;
-    }
-
-    /**
-     * Returns the generated rules.
-     * @return the generated rules
-     */
-    public List<Rule> getRules() {
-        return rules;
-    }
 
     /**
      * Returns the best matching rule according to the given frequency map.
@@ -254,36 +220,6 @@ public class WordPairProcessorResponse {
         }
 
         return chosenRule;
-    }
-
-    /**
-     * Returns if this object equals the given object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final WordPairProcessorResponse that = (WordPairProcessorResponse) other;
-        return tree.equals(that.tree) && leaves.equals(that.leaves) && rules.equals(that.rules);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = tree.hashCode();
-        result = 31 * result + leaves.hashCode();
-        result = 31 * result + rules.hashCode();
-        return result;
     }
 
     /**

@@ -169,6 +169,8 @@ package com.github.szgabsz91.morpher.transformationengines.api.characters.sounds
 
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.IAttribute;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.sounds.attributes.consonant.IConsonantAttribute;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -179,13 +181,10 @@ import java.util.Map;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Consonant implements ISound {
 
     private final Map<Class<? extends IConsonantAttribute>, IConsonantAttribute> attributes;
-
-    private Consonant(final Map<Class<? extends IConsonantAttribute>, IConsonantAttribute> attributes) {
-        this.attributes = attributes;
-    }
 
     /**
      * Creates a new consonant from the given attributes.

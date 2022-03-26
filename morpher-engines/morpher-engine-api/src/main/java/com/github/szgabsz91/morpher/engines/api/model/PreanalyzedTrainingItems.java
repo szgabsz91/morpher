@@ -167,7 +167,10 @@
  */
 package com.github.szgabsz91.morpher.engines.api.model;
 
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -176,13 +179,11 @@ import java.util.stream.Stream;
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PreanalyzedTrainingItems {
 
     private final Set<PreanalyzedTrainingItem> preanalyzedTrainingItems;
-
-    private PreanalyzedTrainingItems(final Set<PreanalyzedTrainingItem> preanalyzedTrainingItems) {
-        this.preanalyzedTrainingItems = preanalyzedTrainingItems;
-    }
 
     /**
      * Creates a new {@link PreanalyzedTrainingItems} instance.
@@ -199,43 +200,6 @@ public final class PreanalyzedTrainingItems {
      */
     public Stream<PreanalyzedTrainingItem> stream() {
         return preanalyzedTrainingItems.stream();
-    }
-
-    /**
-     * Returns if this object is equal to the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final PreanalyzedTrainingItems that = (PreanalyzedTrainingItems) other;
-        return Objects.equals(preanalyzedTrainingItems, that.preanalyzedTrainingItems);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(preanalyzedTrainingItems);
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "PreanalyzedTrainingItems[" + preanalyzedTrainingItems + ']';
     }
 
 }

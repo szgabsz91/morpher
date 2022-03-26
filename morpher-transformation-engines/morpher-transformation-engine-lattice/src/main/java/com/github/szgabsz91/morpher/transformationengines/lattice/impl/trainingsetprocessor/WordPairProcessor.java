@@ -179,6 +179,9 @@ import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainings
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.model.WordPairProcessorResponse;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.tree.WordPairProcessorTree;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.tree.WordPairProcessorTreeNode;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -192,6 +195,8 @@ import static java.util.stream.Collectors.toList;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public final class WordPairProcessor implements IWordPairProcessor {
 
     private final ICharacterRepository characterRepository;
@@ -199,59 +204,6 @@ public final class WordPairProcessor implements IWordPairProcessor {
     private final ICostCalculator costCalculator;
     private final int pathLevelsToProcess;
     private final int maximalContextSize;
-
-    private WordPairProcessor(
-            final ICharacterRepository characterRepository,
-            final IWordConverter wordConverter,
-            final ICostCalculator costCalculator,
-            final int pathLevelsToProcess,
-            final int maximalContextSize) {
-        this.characterRepository = characterRepository;
-        this.wordConverter = wordConverter;
-        this.costCalculator = costCalculator;
-        this.pathLevelsToProcess = pathLevelsToProcess;
-        this.maximalContextSize = maximalContextSize;
-    }
-
-    /**
-     * Returns the underlying {@link ICharacterRepository}.
-     * @return the underlying {@link ICharacterRepository}
-     */
-    public ICharacterRepository getCharacterRepository() {
-        return characterRepository;
-    }
-
-    /**
-     * Returns the underlying {@link IWordConverter}.
-     * @return the underlying {@link IWordConverter}
-     */
-    public IWordConverter getWordConverter() {
-        return wordConverter;
-    }
-
-    /**
-     * Returns the underlying {@link ICostCalculator}.
-     * @return the underlying {@link ICostCalculator}
-     */
-    public ICostCalculator getCostCalculator() {
-        return costCalculator;
-    }
-
-    /**
-     * Returns the path levels to process.
-     * @return the path levels to process
-     */
-    int getPathLevelsToProcess() {
-        return pathLevelsToProcess;
-    }
-
-    /**
-     * Returns the maximal context size.
-     * @return the maximal context size
-     */
-    public int getMaximalContextSize() {
-        return maximalContextSize;
-    }
 
     /**
      * Returns the resulting {@link WordPairProcessorResponse} object after processing the given {@link WordPair}.

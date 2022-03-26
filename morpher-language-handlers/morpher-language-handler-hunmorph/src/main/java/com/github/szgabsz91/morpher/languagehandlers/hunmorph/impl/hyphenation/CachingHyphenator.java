@@ -171,6 +171,8 @@ import com.github.szgabsz91.morpher.languagehandlers.hunmorph.protocolbuffers.Hy
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.AccessLevel;
+import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -184,6 +186,7 @@ import static java.util.stream.Collectors.toMap;
  *
  * @author szgabsz91
  */
+@Getter(AccessLevel.PACKAGE)
 public class CachingHyphenator implements IHyphenator {
 
     private final Map<Word, String[]> cache;
@@ -207,22 +210,6 @@ public class CachingHyphenator implements IHyphenator {
     @Override
     public void close() {
         this.internalHyphenator.close();
-    }
-
-    /**
-     * Returns the internal {@link IHyphenator} instance.
-     * @return the internal {@link IHyphenator} instance
-     */
-    PyphenHyphenator getInternalHyphenator() {
-        return internalHyphenator;
-    }
-
-    /**
-     * Returns the cache.
-     * @return the cache
-     */
-    Map<Word, String[]> getCache() {
-        return cache;
     }
 
     /**

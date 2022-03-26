@@ -36,12 +36,12 @@ public class FullMarkovModelConverterTest {
         MarkovModelMessage message = this.converter.convert(markovModel);
         assertThat(message.getRoutesList()).containsExactly(
                 MarkovModelRouteMessage.newBuilder()
-                        .addAllAffixTypes(List.of("AFF1", "AFF2"))
-                        .setRelativeFrequency(2L)
-                        .build(),
-                MarkovModelRouteMessage.newBuilder()
                         .addAllAffixTypes(List.of("AFF3", "AFF4"))
                         .setRelativeFrequency(3L)
+                        .build(),
+                MarkovModelRouteMessage.newBuilder()
+                        .addAllAffixTypes(List.of("AFF1", "AFF2"))
+                        .setRelativeFrequency(2L)
                         .build()
         );
 
@@ -58,8 +58,8 @@ public class FullMarkovModelConverterTest {
                 })
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
         assertThat(routes).containsExactly(
-                Map.entry(List.of(AffixType.of("AFF1"), AffixType.of("AFF2")), 2L),
-                Map.entry(List.of(AffixType.of("AFF3"), AffixType.of("AFF4")), 3L)
+                Map.entry(List.of(AffixType.of("AFF3"), AffixType.of("AFF4")), 3L),
+                Map.entry(List.of(AffixType.of("AFF1"), AffixType.of("AFF2")), 2L)
         );
 
         Path file = Files.createTempFile("agent", "markovModel");

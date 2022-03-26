@@ -6,6 +6,7 @@ module com.github.szgabsz91.morpher.engines.impl {
     requires transitive com.github.szgabsz91.morpher.engines.api;
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
+    requires lombok;
     requires org.slf4j;
     requires com.google.protobuf;
 

@@ -168,6 +168,7 @@
 package com.github.szgabsz91.morpher.transformationengines.tasr.impl.tree;
 
 import com.github.szgabsz91.morpher.transformationengines.tasr.impl.rules.SuffixRule;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -187,6 +188,7 @@ import static java.util.Comparator.comparingInt;
  *
  * @author szgabsz91
  */
+@Getter
 public class TASRTreeNode {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TASRTreeNode.class);
@@ -227,30 +229,6 @@ public class TASRTreeNode {
     }
 
     /**
-     * Returns the unique identifier of the tree node.
-     * @return the unique identifier of the tree node
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Returns the first character of the suffix rules in this tree node.
-     * @return the first character of the suffix rules in this tree node
-     */
-    public char getFirstCharacter() {
-        return firstCharacter;
-    }
-
-    /**
-     * Returns the set of stored suffix rules.
-     * @return the set of stored suffix rules
-     */
-    public Set<SuffixRule> getSuffixRules() {
-        return suffixRules;
-    }
-
-    /**
      * Returns the optional winning suffix rule stored in the tree node, with the highest frequency.
      * @return the winning suffix rule of the tree node inside an optional
      */
@@ -285,14 +263,6 @@ public class TASRTreeNode {
                 .filter(suffixRule::equals)
                 .findFirst()
                 .ifPresentOrElse(SuffixRule::incrementFrequency, () -> this.suffixRules.add(suffixRule));
-    }
-
-    /**
-     * Returns the parent node.
-     * @return the parent node
-     */
-    public TASRTreeNode getParent() {
-        return parent;
     }
 
     /**

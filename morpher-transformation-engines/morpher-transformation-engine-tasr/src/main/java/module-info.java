@@ -4,6 +4,7 @@ module com.github.szgabsz91.morpher.transformationengines.tasr {
     requires com.github.szgabsz91.morpher.core;
     requires transitive com.github.szgabsz91.morpher.transformationengines.api;
 
+    requires lombok;
     requires org.slf4j;
     requires com.google.protobuf;
 

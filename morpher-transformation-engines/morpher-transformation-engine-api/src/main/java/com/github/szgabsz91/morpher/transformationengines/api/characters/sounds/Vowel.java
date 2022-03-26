@@ -169,6 +169,8 @@ package com.github.szgabsz91.morpher.transformationengines.api.characters.sounds
 
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.IAttribute;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.sounds.attributes.vowel.IVowelAttribute;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -179,13 +181,10 @@ import java.util.Map;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Vowel implements ISound {
 
     private final Map<Class<? extends IVowelAttribute>, IVowelAttribute> attributes;
-
-    private Vowel(final Map<Class<? extends IVowelAttribute>, IVowelAttribute> attributes) {
-        this.attributes = attributes;
-    }
 
     /**
      * Creates a new vowel from the given attributes.

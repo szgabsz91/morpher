@@ -175,6 +175,7 @@ import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.Nod
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.UnitNode;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.ZeroNode;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.Rule;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,6 +190,7 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@Getter
 public class MaximalConsistentLatticeBuilder extends AbstractLatticeBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MaximalConsistentLatticeBuilder.class);
@@ -245,14 +247,6 @@ public class MaximalConsistentLatticeBuilder extends AbstractLatticeBuilder {
         if (lattice != null) {
             this.lattice = lattice;
         }
-    }
-
-    /**
-     * Returns the underlying consistent lattice builder.
-     * @return the underlying consistent lattice builder
-     */
-    public ConsistentLatticeBuilder getConsistentLatticeBuilder() {
-        return consistentLatticeBuilder;
     }
 
     /**

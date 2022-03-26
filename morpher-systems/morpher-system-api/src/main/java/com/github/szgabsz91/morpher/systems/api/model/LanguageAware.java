@@ -167,7 +167,9 @@
  */
 package com.github.szgabsz91.morpher.systems.api.model;
 
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Model class that represents an arbitrary object that is related to a {@link Language}.
@@ -175,73 +177,11 @@ import java.util.Objects;
  * @author szgabsz91
  * @param <T> the type of the underlying object
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class LanguageAware<T> {
 
     private final Language language;
     private final T content;
-
-    /**
-     * Constructor that sets the {@link Language} and the underlying content.
-     * @param language the {@link Language}
-     * @param content the underlying content
-     */
-    protected LanguageAware(final Language language, final T content) {
-        this.language = language;
-        this.content = content;
-    }
-
-    /**
-     * Returns the {@link Language}.
-     * @return the {@link Language}
-     */
-    public Language getLanguage() {
-        return language;
-    }
-
-    /**
-     * Returns the underlying content.
-     * @return the underlying content
-     */
-    public T getContent() {
-        return content;
-    }
-
-    /**
-     * Returns if this object is equal to the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final LanguageAware<?> that = (LanguageAware<?>) other;
-        return Objects.equals(language, that.language) &&
-                Objects.equals(content, that.content);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(language, content);
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "LanguageAware[language=" + language + ", content=" + content + ']';
-    }
 
 }

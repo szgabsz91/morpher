@@ -168,22 +168,22 @@
 package com.github.szgabsz91.morpher.transformationengines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.Word;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Model class that contains a list of {@link ProbabilisticWord}s.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TransformationEngineResponse {
 
     private final List<ProbabilisticWord> results;
-
-    private TransformationEngineResponse(final List<ProbabilisticWord> results) {
-        this.results = results;
-    }
 
     /**
      * Creates a new {@link TransformationEngineResponse} with the given list of {@link ProbabilisticWord}s.
@@ -215,51 +215,6 @@ public final class TransformationEngineResponse {
      */
     public static TransformationEngineResponse singleton(final Word word, final double probability) {
         return new TransformationEngineResponse(List.of(ProbabilisticWord.of(word, probability)));
-    }
-
-    /**
-     * Returns the list of {@link ProbabilisticWord}s.
-     * @return the list of {@link ProbabilisticWord}s
-     */
-    public List<ProbabilisticWord> getResults() {
-        return results;
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final TransformationEngineResponse that = (TransformationEngineResponse) other;
-        return Objects.equals(results, that.results);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(results);
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TransformationEngineResponse[results=" + results + ']';
     }
 
 }

@@ -169,6 +169,7 @@ package com.github.szgabsz91.morpher.engines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
+import lombok.Data;
 
 import java.util.Set;
 
@@ -177,75 +178,10 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@Data
 public class InflectionInput {
 
     private final Word input;
     private final Set<AffixType> affixTypes;
-
-    /**
-     * Constructor that sets the input word and the set of affix types.
-     * @param input the input word
-     * @param affixTypes the set of affix types
-     */
-    public InflectionInput(final Word input, final Set<AffixType> affixTypes) {
-        this.input = input;
-        this.affixTypes = affixTypes;
-    }
-
-    /**
-     * Returns the input word.
-     * @return the input word
-     */
-    public Word getInput() {
-        return input;
-    }
-
-    /**
-     * Returns the set of affix types.
-     * @return the set of affix types
-     */
-    public Set<AffixType> getAffixTypes() {
-        return affixTypes;
-    }
-
-    /**
-     * Returns if this input object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final InflectionInput that = (InflectionInput) other;
-        return input.equals(that.input) &&
-                affixTypes.equals(that.affixTypes);
-    }
-
-    /**
-     * Returns the hash code of this input object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = input.hashCode();
-        result = 31 * result + affixTypes.hashCode();
-        return result;
-    }
-
-    /**
-     * Returns the string representation of this input object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "InflectionInput[input=" + input + ", affixTypes=" + affixTypes + ']';
-    }
 
 }

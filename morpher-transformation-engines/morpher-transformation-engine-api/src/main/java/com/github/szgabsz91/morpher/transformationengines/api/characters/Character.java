@@ -169,6 +169,7 @@ package com.github.szgabsz91.morpher.transformationengines.api.characters;
 
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.IAttribute;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.Letter;
+import lombok.EqualsAndHashCode;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -179,12 +180,13 @@ import java.util.List;
  *
  * @author szgabsz91
  */
+@EqualsAndHashCode
 public final class Character implements ICharacter {
 
     private final List<IAttribute> attributes;
 
     private Character(final Letter letter) {
-        this.attributes = Collections.unmodifiableList(Collections.singletonList(letter));
+        this.attributes = Collections.singletonList(letter);
     }
 
     /**
@@ -246,35 +248,6 @@ public final class Character implements ICharacter {
     @Override
     public boolean isEnd() {
         return attributes.get(0).equals(Letter.END_SYMBOL);
-    }
-
-    /**
-     * Returns if this character equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-
-        final Character character = (Character) other;
-
-        return attributes.equals(character.attributes);
-    }
-
-    /**
-     * Returns the hash code of this character.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return attributes.hashCode();
     }
 
     /**

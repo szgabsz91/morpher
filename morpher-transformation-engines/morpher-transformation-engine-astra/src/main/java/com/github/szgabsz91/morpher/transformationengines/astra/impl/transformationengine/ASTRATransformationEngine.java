@@ -180,6 +180,8 @@ import com.github.szgabsz91.morpher.transformationengines.astra.impl.factories.C
 import com.github.szgabsz91.morpher.transformationengines.astra.protocolbuffers.ASTRATransformationEngineMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -190,6 +192,8 @@ import java.util.Optional;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
+@Getter
 public class ASTRATransformationEngine implements IBidirectionalTransformationEngine<ASTRATransformationEngineMessage> {
 
     private IASTRA astra;
@@ -228,22 +232,6 @@ public class ASTRATransformationEngine implements IBidirectionalTransformationEn
                         configuration.getMaximumResponseProbabilityDifferenceThreshold()
                 )
         );
-    }
-
-    /**
-     * Constructor that sets the underlying {@link IASTRA} structure.
-     * @param astra the underlying {@link IASTRA} structure
-     */
-    public ASTRATransformationEngine(final IASTRA astra) {
-        this.astra = astra;
-    }
-
-    /**
-     * Returns the {@link IASTRA} instance.
-     * @return the {@link IASTRA} instance
-     */
-    public IASTRA getAstra() {
-        return astra;
     }
 
     /**

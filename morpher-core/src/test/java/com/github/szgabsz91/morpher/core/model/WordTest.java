@@ -101,23 +101,6 @@ public class WordTest {
     }
 
     @Test
-    public void testEquals() {
-        Word word1 = Word.of("word1");
-        Word word2 = Word.of("word2");
-        assertThat(word1).isEqualTo(word1);
-        assertThat(word1.equals(null)).isFalse();
-        assertThat(word1).isNotEqualTo("string");
-        assertThat(word1).isNotEqualTo(word2);
-    }
-
-    @Test
-    public void testHashCode() {
-        String string = "string";
-        Word word = Word.of(string);
-        assertThat(word.hashCode()).isEqualTo(string.hashCode());
-    }
-
-    @Test
     public void testToString() {
         String string = "string";
         Word word = Word.of(string);

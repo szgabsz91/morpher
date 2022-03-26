@@ -8,9 +8,9 @@ ext {
     moduleName = 'com.github.szgabsz91.morpher.languagehandlers.api'
 
     testCoverageLimits = [
-        instruction: 100.0,
-        line: 100.0,
-        branch: 100.0,
+        instruction: 26.42,
+        line: 83.72,
+        branch: 2.13,
         class: 100.0
     ]
 }

@@ -168,6 +168,7 @@
 package com.github.szgabsz91.morpher.transformationengines.lattice.config;
 
 import com.github.szgabsz91.morpher.transformationengines.api.factories.ITransformationEngineConfiguration;
+import lombok.Data;
 
 /**
  * Configuration class for the
@@ -175,6 +176,7 @@ import com.github.szgabsz91.morpher.transformationengines.api.factories.ITransfo
  *
  * @author szgabsz91
  */
+@Data
 public final class LatticeTransformationEngineConfiguration implements ITransformationEngineConfiguration {
 
     private final LatticeBuilderType latticeBuilderType;
@@ -182,110 +184,6 @@ public final class LatticeTransformationEngineConfiguration implements ITransfor
     private final CostCalculatorType costCalculatorType;
     private final CharacterRepositoryType characterRepositoryType;
     private final int maximalContextSize;
-
-    private LatticeTransformationEngineConfiguration(
-            final LatticeBuilderType latticeBuilderType,
-            final WordConverterType wordConverterType,
-            final CostCalculatorType costCalculatorType,
-            final CharacterRepositoryType characterRepositoryType,
-            final int maximalContextSize) {
-        this.latticeBuilderType = latticeBuilderType;
-        this.wordConverterType = wordConverterType;
-        this.costCalculatorType = costCalculatorType;
-        this.characterRepositoryType = characterRepositoryType;
-        this.maximalContextSize = maximalContextSize;
-    }
-
-    /**
-     * Returns the type of lattice builder to use.
-     * @return the type of lattice builder to use
-     */
-    public LatticeBuilderType getLatticeBuilderType() {
-        return latticeBuilderType;
-    }
-
-    /**
-     * Returns the type of word converter to use.
-     * @return the type of word converter to use
-     */
-    public WordConverterType getWordConverterType() {
-        return wordConverterType;
-    }
-
-    /**
-     * Returns the type of cost calculator to use.
-     * @return the type of cost calculator to use
-     */
-    public CostCalculatorType getCostCalculatorType() {
-        return costCalculatorType;
-    }
-
-    /**
-     * Returns the type of character repository to use.
-     * @return the type of character repository to use
-     */
-    public CharacterRepositoryType getCharacterRepositoryType() {
-        return characterRepositoryType;
-    }
-
-    /**
-     * Returns the maximal context size.
-     * @return the maximal context size
-     */
-    public int getMaximalContextSize() {
-        return maximalContextSize;
-    }
-
-    /**
-     * Returns if this configuration object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final LatticeTransformationEngineConfiguration that = (LatticeTransformationEngineConfiguration) other;
-        return maximalContextSize == that.maximalContextSize &&
-                latticeBuilderType == that.latticeBuilderType &&
-                wordConverterType == that.wordConverterType &&
-                costCalculatorType == that.costCalculatorType &&
-                characterRepositoryType == that.characterRepositoryType;
-    }
-
-    /**
-     * Returns the hash code of this configuration object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = latticeBuilderType.hashCode();
-        result = 31 * result + wordConverterType.hashCode();
-        result = 31 * result + costCalculatorType.hashCode();
-        result = 31 * result + characterRepositoryType.hashCode();
-        result = 31 * result + maximalContextSize;
-        return result;
-    }
-
-    /**
-     * Returns the string representation of this configuration object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "LatticeTransformationEngineConfiguration[" +
-                "latticeBuilderType=" + latticeBuilderType +
-                ", wordConverterType=" + wordConverterType +
-                ", costCalculatorType=" + costCalculatorType +
-                ", characterRepositoryType=" + characterRepositoryType +
-                ", maximalContextSize=" + maximalContextSize + "]";
-    }
 
     /**
      * Builder class for {@link LatticeTransformationEngineConfiguration}.

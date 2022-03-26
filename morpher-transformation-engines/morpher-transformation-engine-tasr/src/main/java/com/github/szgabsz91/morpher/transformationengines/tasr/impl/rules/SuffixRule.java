@@ -167,6 +167,9 @@
  */
 package com.github.szgabsz91.morpher.transformationengines.tasr.impl.rules;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * Rule implementation class that represents a suffix rule in the form of <i>LeftHandSuffix --&gt; RightHandSuffix</i>.
  *
@@ -178,24 +181,13 @@ package com.github.szgabsz91.morpher.transformationengines.tasr.impl.rules;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
+@Getter
 public class SuffixRule {
 
     private final String leftHandSuffix;
     private final String rightHandSuffix;
     private int frequency;
-
-    /**
-     * Constructor that sets the left-hand suffix, the right-hand suffix and the frequency.
-     *
-     * @param leftHandSuffix  the left-hand suffix
-     * @param rightHandSuffix the right-hand suffix
-     * @param frequency the frequency
-     */
-    public SuffixRule(final String leftHandSuffix, final String rightHandSuffix, final int frequency) {
-        this.leftHandSuffix = leftHandSuffix;
-        this.rightHandSuffix = rightHandSuffix;
-        this.frequency = frequency;
-    }
 
     /**
      * Constructor that sets the left-hand suffix and the right-hand suffix.
@@ -207,35 +199,6 @@ public class SuffixRule {
      */
     public SuffixRule(final String leftHandSuffix, final String rightHandSuffix) {
         this(leftHandSuffix, rightHandSuffix, 1);
-    }
-
-    /**
-     * Returns the left-hand suffix.
-     * @return the left-hand suffix
-     */
-    public String getLeftHandSuffix() {
-        return leftHandSuffix;
-    }
-
-    /**
-     * Returns the right-hand suffix.
-     * @return the right-hand suffix
-     */
-    public String getRightHandSuffix() {
-        return rightHandSuffix;
-    }
-
-    /**
-     * Returns the frequency of the suffix rule.
-     *
-     * <p>The frequency of the suffix rule <i>LeftHandSuffix --&gt; RightHandSuffix</i> is the number of word pairs
-     * <i>LeftWord - RightWord</i> where <i>LeftWord = s + LeftHandSuffix</i> and
-     * <i>RightWord = s + RightHandSuffix</i>.
-     *
-     * @return the frequency of the suffix rule
-     */
-    public int getFrequency() {
-        return frequency;
     }
 
     /**

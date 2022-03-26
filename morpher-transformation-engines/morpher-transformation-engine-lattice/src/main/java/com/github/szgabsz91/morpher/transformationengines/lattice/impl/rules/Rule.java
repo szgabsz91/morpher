@@ -173,6 +173,10 @@ import com.github.szgabsz91.morpher.transformationengines.api.characters.reposit
 import com.github.szgabsz91.morpher.transformationengines.api.wordconverters.IWordConverter;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.ITransformation;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.setoperations.SubsetCalculator;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
@@ -184,30 +188,13 @@ import java.util.Objects;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
 public class Rule {
 
     private final Context context;
     private List<ITransformation> transformations;
     private final ICharacterRepository characterRepository;
     private final IWordConverter wordConverter;
-
-    /**
-     * Constructor that sets the context and the list of transformations.
-     * @param context the context
-     * @param transformations the list of transformations
-     * @param characterRepository the {@link ICharacterRepository} instance
-     * @param wordConverter the {@link IWordConverter} instance
-     */
-    public Rule(
-            final Context context,
-            final List<ITransformation> transformations,
-            final ICharacterRepository characterRepository,
-            final IWordConverter wordConverter) {
-        this.context = context;
-        this.transformations = transformations;
-        this.characterRepository = characterRepository;
-        this.wordConverter = wordConverter;
-    }
 
     /**
      * Returns a new identity rule that has an identity context and empty transformation list.
@@ -596,6 +583,8 @@ public class Rule {
      *
      * @author szgabsz91
      */
+    @Getter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.PRIVATE)
     private static final class ContextIndexWrapper {
 
         private final List<ICharacter> contextCharacters;
@@ -622,18 +611,6 @@ public class Rule {
             if (this.index != null && this.index < 0) {
                 this.index = 0;
             }
-        }
-
-        private List<ICharacter> getContextCharacters() {
-            return contextCharacters;
-        }
-
-        private Integer getIndex() {
-            return index;
-        }
-
-        private void setIndex(final int index) {
-            this.index = index;
         }
 
     }

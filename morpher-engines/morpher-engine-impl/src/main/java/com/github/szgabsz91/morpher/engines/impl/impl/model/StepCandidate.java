@@ -171,8 +171,10 @@ import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
 import com.github.szgabsz91.morpher.languagehandlers.api.model.ProbabilisticAffixType;
 import com.github.szgabsz91.morpher.transformationengines.api.model.ProbabilisticWord;
-
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Model class that represents a step candidate.
@@ -185,6 +187,10 @@ import java.util.Objects;
  *
  * @author szgabsz91
  */
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class StepCandidate {
 
     private final ProbabilisticAffixType probabilisticAffixType;
@@ -269,14 +275,6 @@ public class StepCandidate {
     }
 
     /**
-     * Returns the object containing the affix type and its probability.
-     * @return the object containing the affix type and its probability
-     */
-    public ProbabilisticAffixType getProbabilisticAffixType() {
-        return probabilisticAffixType;
-    }
-
-    /**
      * Returns the underlying affix type.
      * @return the underlying affix type
      */
@@ -290,102 +288,6 @@ public class StepCandidate {
      */
     public double getProbability() {
         return this.probabilisticAffixType.getProbability();
-    }
-
-    /**
-     * Returns the input word.
-     * @return the input word
-     */
-    public Word getInput() {
-        return input;
-    }
-
-    /**
-     * Returns the level of this candidate that is the level of the previous (parent) candidate plus one.
-     * @return the level of this candidate
-     */
-    public int getLevel() {
-        return level;
-    }
-
-    /**
-     * Returns the parent (previous) candidate.
-     * @return the parent (previous) candidate
-     */
-    public StepCandidate getParent() {
-        return parent;
-    }
-
-    /**
-     * Returns the output word with its local probability.
-     *
-     * <p>This property is only non-null if the candidate has already been processed.</p>
-     *
-     * @return the output word.
-     */
-    public ProbabilisticWord getOutput() {
-        return output;
-    }
-
-    /**
-     * Sets the output word with its local probability.
-     * @param output the output word with its local probability
-     */
-    public void setOutput(final ProbabilisticWord output) {
-        this.output = output;
-    }
-
-    /**
-     * Returns if this candidate equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final StepCandidate that = (StepCandidate) other;
-        return level == that.level &&
-                probabilisticAffixType.equals(that.probabilisticAffixType) &&
-                input.equals(that.input) &&
-                (Objects.equals(parent, that.parent)) &&
-                (Objects.equals(output, that.output));
-    }
-
-    /**
-     * Returns the hash code of this candidate.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result;
-        result = probabilisticAffixType.hashCode();
-        result = 31 * result + input.hashCode();
-        result = 31 * result + level;
-        result = 31 * result + (parent != null ? parent.hashCode() : 0);
-        result = 31 * result + (output != null ? output.hashCode() : 0);
-        return result;
-    }
-
-    /**
-     * Returns the string representation of this candidate.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "StepCandidate[" +
-                "probabilisticAffixType=" + probabilisticAffixType +
-                ", input=" + input +
-                ", level=" + level +
-                ", parent=" + parent +
-                ", output=" + output +
-                ']';
     }
 
 }

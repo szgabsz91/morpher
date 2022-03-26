@@ -169,6 +169,7 @@ package com.github.szgabsz91.morpher.engines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
+import lombok.Data;
 
 import java.util.List;
 
@@ -177,75 +178,10 @@ import java.util.List;
  *
  * @author szgabsz91
  */
+@Data
 public class InflectionOrderedInput {
 
     private final Word input;
     private final List<AffixType> affixTypes;
-
-    /**
-     * Constructor that sets the input word and the list of affix types.
-     * @param input the input word
-     * @param affixTypes the list of affix types
-     */
-    public InflectionOrderedInput(final Word input, final List<AffixType> affixTypes) {
-        this.input = input;
-        this.affixTypes = affixTypes;
-    }
-
-    /**
-     * Returns the input word.
-     * @return the input word
-     */
-    public Word getInput() {
-        return input;
-    }
-
-    /**
-     * Returns the list of affix types.
-     * @return the list of affix types
-     */
-    public List<AffixType> getAffixTypes() {
-        return affixTypes;
-    }
-
-    /**
-     * Returns if this input object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final InflectionOrderedInput that = (InflectionOrderedInput) other;
-        return input.equals(that.input) &&
-                affixTypes.equals(that.affixTypes);
-    }
-
-    /**
-     * Returns the hash code of this input object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = input.hashCode();
-        result = 31 * result + affixTypes.hashCode();
-        return result;
-    }
-
-    /**
-     * Returns the string representation of this input object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "InflectionOrderedInput[input=" + input + ", affixTypes=" + affixTypes + ']';
-    }
 
 }

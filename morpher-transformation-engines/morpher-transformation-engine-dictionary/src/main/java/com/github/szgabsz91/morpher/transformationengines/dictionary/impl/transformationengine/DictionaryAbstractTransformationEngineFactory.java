@@ -179,6 +179,9 @@ import com.github.szgabsz91.morpher.transformationengines.dictionary.converters.
 import com.github.szgabsz91.morpher.transformationengines.dictionary.protocolbuffers.DictionaryTransformationEngineConfigurationMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -189,6 +192,9 @@ import java.util.function.Supplier;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
+@Getter
+@Setter
 @Qualifier(IDictionaryTransformationEngine.QUALIFIER)
 public class DictionaryAbstractTransformationEngineFactory implements IAbstractTransformationEngineFactory<
         DictionaryTransformationEngineConfiguration,
@@ -201,33 +207,6 @@ public class DictionaryAbstractTransformationEngineFactory implements IAbstractT
      */
     public DictionaryAbstractTransformationEngineFactory() {
 
-    }
-
-    /**
-     * Constructor that sets the {@link DictionaryTransformationEngineConfiguration}.
-     * @param configuration the {@link DictionaryTransformationEngineConfiguration}
-     */
-    public DictionaryAbstractTransformationEngineFactory(
-            final DictionaryTransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    /**
-     * Returns the {@link DictionaryTransformationEngineConfiguration} that holds the parameters.
-     * @return the {@link DictionaryTransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public DictionaryTransformationEngineConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    /**
-     * Sets the {@link DictionaryTransformationEngineConfiguration} that holds the parameters.
-     * @param configuration the {@link DictionaryTransformationEngineConfiguration} that holds the parameters
-     */
-    @Override
-    public void setConfiguration(final DictionaryTransformationEngineConfiguration configuration) {
-        this.configuration = configuration;
     }
 
     /**

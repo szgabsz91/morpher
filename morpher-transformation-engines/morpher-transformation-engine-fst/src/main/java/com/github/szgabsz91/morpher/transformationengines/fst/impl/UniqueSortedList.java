@@ -167,6 +167,8 @@
  */
 package com.github.szgabsz91.morpher.transformationengines.fst.impl;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -180,19 +182,12 @@ import java.util.List;
  * @author szgabsz91
  * @param <T> the type of items in the list
  */
+@RequiredArgsConstructor
 public class UniqueSortedList<T> extends ArrayList<T> {
 
     private static final long serialVersionUID = -6735256122005238100L;
 
     private final Comparator<? super T> comparator;
-
-    /**
-     * Constructor that sets the comparator.
-     * @param comparator the comparator
-     */
-    public UniqueSortedList(final Comparator<? super T> comparator) {
-        this.comparator = comparator;
-    }
 
     /**
      * Searches for the two neighbors of the given element and inserts it into the appropriate position.

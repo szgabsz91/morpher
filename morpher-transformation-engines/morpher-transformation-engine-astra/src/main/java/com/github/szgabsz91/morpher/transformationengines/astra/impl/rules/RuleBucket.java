@@ -167,14 +167,20 @@
  */
 package com.github.szgabsz91.morpher.transformationengines.astra.impl.rules;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents an {@link AtomicRule} collection that overlap with each other.
  * @author szgabsz91
  */
+@Getter
+@EqualsAndHashCode
+@ToString
 public class RuleBucket {
 
     private final List<ApplicableAtomicRule> applicableAtomicRules;
@@ -193,14 +199,6 @@ public class RuleBucket {
     public RuleBucket(final ApplicableAtomicRule applicableAtomicRule) {
         this();
         this.applicableAtomicRules.add(applicableAtomicRule);
-    }
-
-    /**
-     * Returns the list of {@link ApplicableAtomicRule}s.
-     * @return the list of {@link ApplicableAtomicRule}s
-     */
-    public List<ApplicableAtomicRule> getApplicableAtomicRules() {
-        return applicableAtomicRules;
     }
 
     /**
@@ -232,43 +230,6 @@ public class RuleBucket {
                         applicableAtomicRule.getLeftIndex() == newApplicableAtomicRule.getLeftIndex() &&
                                 applicableAtomicRule.getRightIndex() < applicableAtomicRule.getLeftIndex() &&
                                 newApplicableAtomicRule.getRightIndex() < newApplicableAtomicRule.getLeftIndex();
-    }
-
-    /**
-     * Returns if this bucket equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final RuleBucket that = (RuleBucket) other;
-        return applicableAtomicRules.equals(that.applicableAtomicRules);
-    }
-
-    /**
-     * Returns the hash code of this bucket.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(applicableAtomicRules);
-    }
-
-    /**
-     * Returns the string representation of this bucket.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "RuleBucket[" + applicableAtomicRules + ']';
     }
 
 }

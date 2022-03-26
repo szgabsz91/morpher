@@ -19,33 +19,4 @@ public class InflectionInputTest {
         assertThat(inflectionInput.getAffixTypes()).isEqualTo(affixTypes);
     }
 
-    @Test
-    public void testEquals() {
-        InflectionInput inflectionInput1 = new InflectionInput(Word.of("input"), Set.of(AffixType.of("AFF")));
-        InflectionInput inflectionInput2 = new InflectionInput(Word.of("input2"), Set.of(AffixType.of("AFF")));
-        InflectionInput inflectionInput3 = new InflectionInput(Word.of("input"), Set.of(AffixType.of("AFF2")));
-        InflectionInput inflectionInput4 = new InflectionInput(Word.of("input"), Set.of(AffixType.of("AFF")));
-
-        assertThat(inflectionInput1.equals(inflectionInput1)).isTrue();
-        assertThat(inflectionInput1.equals(null)).isFalse();
-        assertThat(inflectionInput1).isNotEqualTo("string");
-        assertThat(inflectionInput1).isNotEqualTo(inflectionInput2);
-        assertThat(inflectionInput1).isNotEqualTo(inflectionInput3);
-        assertThat(inflectionInput1).isEqualTo(inflectionInput4);
-    }
-
-    @Test
-    public void testHashCode() {
-        InflectionInput inflectionInput = new InflectionInput(Word.of("input"), Set.of(AffixType.of("AFF")));
-        int result = inflectionInput.hashCode();
-        int expected = 31 * inflectionInput.getInput().hashCode() + inflectionInput.getAffixTypes().hashCode();
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    public void testToString() {
-        InflectionInput inflectionInput = new InflectionInput(Word.of("input"), Set.of(AffixType.of("AFF")));
-        assertThat(inflectionInput).hasToString("InflectionInput[input=" + inflectionInput.getInput() + ", affixTypes=" + inflectionInput.getAffixTypes() + ']');
-    }
-
 }

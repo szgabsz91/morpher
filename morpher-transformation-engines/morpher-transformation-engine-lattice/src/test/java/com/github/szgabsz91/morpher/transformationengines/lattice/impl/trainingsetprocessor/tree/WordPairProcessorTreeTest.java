@@ -5,8 +5,6 @@ import com.github.szgabsz91.morpher.transformationengines.api.characters.ICharac
 import com.github.szgabsz91.morpher.transformationengines.api.characters.repositories.HungarianAttributedCharacterRepository;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.repositories.HungarianSimpleCharacterRepository;
 import com.github.szgabsz91.morpher.transformationengines.api.characters.repositories.ICharacterRepository;
-import com.github.szgabsz91.morpher.transformationengines.api.characters.sounds.Consonant;
-import com.github.szgabsz91.morpher.transformationengines.api.characters.sounds.Vowel;
 import com.github.szgabsz91.morpher.transformationengines.api.wordconverters.DoubleConsonantWordConverter;
 import com.github.szgabsz91.morpher.transformationengines.api.wordconverters.IWordConverter;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainingsetprocessor.costcalculator.AttributeBasedCostCalculator;
@@ -67,40 +65,6 @@ public class WordPairProcessorTreeTest {
         WordPairProcessorTree tree = new WordPairProcessorTree(root, leftWordCharacters, rightWordCharacters, characterRepository, costCalculator);
         List<WordPairProcessorTreeNode> leaves = tree.build(5);
         assertThat(leaves).hasSize(14);
-    }
-
-    @ParameterizedTest
-    @MethodSource("parameters")
-    public void testEquals(ICharacterRepository characterRepository, IWordConverter wordConverter) {
-        List<ICharacter> v = List.of(Vowel.create());
-        List<ICharacter> c = List.of(Consonant.create());
-        WordPairProcessorTree tree1 = new WordPairProcessorTree(new WordPairProcessorTreeNode(), v, v, null, null);
-        WordPairProcessorTree tree2 = new WordPairProcessorTree(null, v, v, null, null);
-        WordPairProcessorTree tree3 = new WordPairProcessorTree(new WordPairProcessorTreeNode(), c, v, null, null);
-        WordPairProcessorTree tree4 = new WordPairProcessorTree(new WordPairProcessorTreeNode(), v, c, null, null);
-        WordPairProcessorTree tree5 = new WordPairProcessorTree(new WordPairProcessorTreeNode(), v, v, null, null);
-
-        assertThat(tree1.equals(tree1)).isTrue();
-        assertThat(tree1.equals(null)).isFalse();
-        assertThat(tree1).isNotEqualTo("string");
-        assertThat(tree1).isNotEqualTo(tree2);
-        assertThat(tree1).isNotEqualTo(tree3);
-        assertThat(tree1).isNotEqualTo(tree4);
-        assertThat(tree1).isEqualTo(tree5);
-    }
-
-    @ParameterizedTest
-    @MethodSource("parameters")
-    public void testHashCode(ICharacterRepository characterRepository, IWordConverter wordConverter) {
-        WordPairProcessorTreeNode root = new WordPairProcessorTreeNode();
-        List<ICharacter> v = List.of(Vowel.create());
-        List<ICharacter> c = List.of(Consonant.create());
-        WordPairProcessorTree tree = new WordPairProcessorTree(root, v, c, null, null);
-
-        int expected = 31 * root.hashCode() + v.hashCode();
-        expected = 31 * expected + c.hashCode();
-
-        assertThat(tree.hashCode()).isEqualTo(expected);
     }
 
     @ParameterizedTest

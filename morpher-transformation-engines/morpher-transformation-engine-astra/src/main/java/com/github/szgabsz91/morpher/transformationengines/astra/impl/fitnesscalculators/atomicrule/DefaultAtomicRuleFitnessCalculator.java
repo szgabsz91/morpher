@@ -172,6 +172,7 @@ import com.github.szgabsz91.morpher.transformationengines.api.characters.reposit
 import com.github.szgabsz91.morpher.transformationengines.api.wordconverters.IWordConverter;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.AtomicRule;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.RuleGroup;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
 
@@ -183,26 +184,12 @@ import java.util.Collection;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor
 public class DefaultAtomicRuleFitnessCalculator implements IAtomicRuleFitnessCalculator {
 
     private final IWordConverter wordConverter;
     private final ICharacterRepository characterRepository;
     private final int averageSimilarityExponent;
-
-    /**
-     * Constructor that sets all the fields.
-     * @param wordConverter the {@link IWordConverter} instance
-     * @param characterRepository the {@link ICharacterRepository} instance
-     * @param averageSimilarityExponent the average similarity exponent
-     */
-    public DefaultAtomicRuleFitnessCalculator(
-            final IWordConverter wordConverter,
-            final ICharacterRepository characterRepository,
-            final int averageSimilarityExponent) {
-        this.wordConverter = wordConverter;
-        this.characterRepository = characterRepository;
-        this.averageSimilarityExponent = averageSimilarityExponent;
-    }
 
     /**
      * Returns the resulting fitness value.

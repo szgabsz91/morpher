@@ -167,22 +167,21 @@
  */
 package com.github.szgabsz91.morpher.core.model;
 
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Model class that contains a {@link Word} and its frequency.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FrequencyAwareWord {
 
     private final Word word;
     private final int frequency;
-
-    private FrequencyAwareWord(final Word word, final int frequency) {
-        this.word = word;
-        this.frequency = frequency;
-    }
 
     /**
      * Creates a new {@link FrequencyAwareWord} using the given {@link Word} and frequency.
@@ -220,60 +219,6 @@ public final class FrequencyAwareWord {
      */
     public static FrequencyAwareWord of(final String word) {
         return new FrequencyAwareWord(Word.of(word), 1);
-    }
-
-    /**
-     * Returns the {@link Word}.
-     * @return the {@link Word}
-     */
-    public Word getWord() {
-        return word;
-    }
-
-    /**
-     * Returns the frequency.
-     * @return the frequency
-     */
-    public int getFrequency() {
-        return frequency;
-    }
-
-    /**
-     * Returns if this {@link FrequencyAwareWord} is equal to the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final FrequencyAwareWord that = (FrequencyAwareWord) other;
-        return frequency == that.frequency &&
-                word.equals(that.word);
-    }
-
-    /**
-     * Returns the hash code of this {@link FrequencyAwareWord}.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(word, frequency);
-    }
-
-    /**
-     * Returns the string representation of this {@link FrequencyAwareWord}.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "FrequencyAwareWord[" + word + ", " + frequency + ']';
     }
 
 }

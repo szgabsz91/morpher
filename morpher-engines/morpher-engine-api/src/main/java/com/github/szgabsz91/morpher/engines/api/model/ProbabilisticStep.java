@@ -169,14 +169,18 @@ package com.github.szgabsz91.morpher.engines.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.Word;
-
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Model class for inflection/analysis steps with probability.
  *
  * @author szgabsz91
  */
+@Getter
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class ProbabilisticStep extends Step {
 
     private final double affixTypeProbability;
@@ -205,79 +209,6 @@ public class ProbabilisticStep extends Step {
         this.affixTypeProbability = affixTypeProbability;
         this.outputWordProbability = outputWordProbability;
         this.aggregatedProbability = aggregatedProbability;
-    }
-
-    /**
-     * Returns the probability of the affix type in the affix type chain.
-     * @return the probability of the affix type in the affix type chain
-     */
-    public double getAffixTypeProbability() {
-        return affixTypeProbability;
-    }
-
-    /**
-     * Returns the probability of the output word produced by the affix type.
-     * @return the probability of the output word produced by the affix type
-     */
-    public double getOutputWordProbability() {
-        return outputWordProbability;
-    }
-
-    /**
-     * Returns the aggregated probability of this step in the response.
-     * @return the aggregated probability of this step in the response
-     */
-    public double getAggregatedProbability() {
-        return aggregatedProbability;
-    }
-
-    /**
-     * Returns if this step equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        if (!super.equals(other)) {
-            return false;
-        }
-        final ProbabilisticStep that = (ProbabilisticStep) other;
-        return Double.compare(that.affixTypeProbability, affixTypeProbability) == 0 &&
-                Double.compare(that.outputWordProbability, outputWordProbability) == 0 &&
-                Double.compare(that.aggregatedProbability, aggregatedProbability) == 0;
-    }
-
-    /**
-     * Returns the hash code of this step.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), affixTypeProbability, outputWordProbability, aggregatedProbability);
-    }
-
-    /**
-     * Returns the string representation of this step.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "ProbabilisticStep[" +
-                "input=" + getInput() + ", " +
-                "output=" + getOutput() + ", " +
-                "affixType=" + getAffixType() + ", " +
-                "affixTypeProbability=" + affixTypeProbability + ", " +
-                "outputWordProbability=" + outputWordProbability + ", " +
-                "aggregatedProbability=" + aggregatedProbability +
-                ']';
     }
 
 }

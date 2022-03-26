@@ -8,9 +8,9 @@ ext {
     moduleName = 'com.github.szgabsz91.morpher.engines.impl'
     mockingEnabled = true
     testCoverageLimits = [
-        instruction: 97.35,
-        line: 97.77,
-        branch: 93.08,
+        instruction: 95.55,
+        line: 97.58,
+        branch: 79.33,
         class: 100.0
     ]
 }

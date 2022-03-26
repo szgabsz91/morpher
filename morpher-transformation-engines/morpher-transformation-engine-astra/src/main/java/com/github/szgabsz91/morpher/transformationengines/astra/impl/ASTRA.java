@@ -182,6 +182,7 @@ import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.RuleB
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.Segment;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.componentaccessors.IAtomicRuleComponentAccessor;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.searchers.ISearcher;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.paukov.combinatorics3.Generator;
 import org.slf4j.Logger;
@@ -208,6 +209,7 @@ import static java.util.stream.Collectors.toSet;
  *
  * @author szgabsz91
  */
+@AllArgsConstructor
 public class ASTRA implements IASTRA {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ASTRA.class);
@@ -226,55 +228,6 @@ public class ASTRA implements IASTRA {
     private final Integer minimumContextLength;
     private final Integer maximumNumberOfGeneratedAtomicRules;
     private final Double maximumResponseProbabilityDifferenceThreshold;
-
-    /**
-     * Constructor that sets all the fields.
-     * @param affixType the {@link AffixType} that this instance relates to
-     * @param wordConverter the {@link IWordConverter} instance
-     * @param characterRepository the {@link ICharacterRepository} instance
-     * @param searcher the {@link ISearcher} instance for searching rule candidates
-     * @param segmentFitnessCalculator the {@link ISegmentFitnessCalculator} instance
-     * @param minimalMatchingSegmentLength the minimal matching segment length
-     * @param fitnessThreshold the fitness threshold, i.e. the threshold of fitness below which a candidate will be
-     *                         dropped
-     * @param maximumNumberOfResponses the maximum number of responses
-     * @param minimumSupportThreshold the minimum support threshold
-     * @param minimumWordFrequencyThreshold the minimum word frequency threshold
-     * @param minimumAggregatedSupportThreshold the minimum aggregated support threshold
-     * @param minimumContextLength the minimum context length
-     * @param maximumNumberOfGeneratedAtomicRules the maximum number of generated atomic rules
-     * @param maximumResponseProbabilityDifferenceThreshold the maximum response probability difference threshold
-     */
-    public ASTRA(
-            final AffixType affixType,
-            final IWordConverter wordConverter,
-            final ICharacterRepository characterRepository,
-            final ISearcher searcher,
-            final ISegmentFitnessCalculator segmentFitnessCalculator,
-            final int minimalMatchingSegmentLength,
-            final double fitnessThreshold,
-            final int maximumNumberOfResponses,
-            final Integer minimumSupportThreshold,
-            final Integer minimumWordFrequencyThreshold,
-            final Integer minimumAggregatedSupportThreshold,
-            final Integer minimumContextLength,
-            final Integer maximumNumberOfGeneratedAtomicRules,
-            final Double maximumResponseProbabilityDifferenceThreshold) {
-        this.affixType = affixType;
-        this.wordConverter = wordConverter;
-        this.characterRepository = characterRepository;
-        this.searcher = searcher;
-        this.segmentFitnessCalculator = segmentFitnessCalculator;
-        this.minimalMatchingSegmentLength = minimalMatchingSegmentLength;
-        this.fitnessThreshold = fitnessThreshold;
-        this.maximumNumberOfResponses = maximumNumberOfResponses;
-        this.minimumSupportThreshold = minimumSupportThreshold;
-        this.minimumWordFrequencyThreshold = minimumWordFrequencyThreshold;
-        this.minimumAggregatedSupportThreshold = minimumAggregatedSupportThreshold;
-        this.minimumContextLength = minimumContextLength;
-        this.maximumNumberOfGeneratedAtomicRules = maximumNumberOfGeneratedAtomicRules;
-        this.maximumResponseProbabilityDifferenceThreshold = maximumResponseProbabilityDifferenceThreshold;
-    }
 
     /**
      * Returns if the ASTRA model is unidirectional or not.

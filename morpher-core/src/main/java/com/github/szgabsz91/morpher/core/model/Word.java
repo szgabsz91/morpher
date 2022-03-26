@@ -167,6 +167,10 @@
  */
 package com.github.szgabsz91.morpher.core.model;
 
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+
 import java.util.stream.Stream;
 
 /**
@@ -174,19 +178,13 @@ import java.util.stream.Stream;
  *
  * @author szgabsz91
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode
 public final class Word implements Comparable<Word> {
 
     private static final Word EMPTY = new Word();
 
     private final String word;
-
-    /**
-     * Constructor that sets the word.
-     * @param word the word
-     */
-    private Word(final String word) {
-        this.word = word;
-    }
 
     /**
      * Default constructor that leaves the word as an empty string.
@@ -335,33 +333,6 @@ public final class Word implements Comparable<Word> {
     @Override
     public int compareTo(final Word other) {
         return this.toString().compareTo(other.toString());
-    }
-
-    /**
-     * Returns if this word equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Word word1 = (Word) o;
-        return word.equals(word1.word);
-    }
-
-    /**
-     * Returns the hash code of this word.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return word.hashCode();
     }
 
     /**

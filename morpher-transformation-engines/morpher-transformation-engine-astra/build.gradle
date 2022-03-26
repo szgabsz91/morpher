@@ -8,9 +8,9 @@ ext {
     moduleName = 'com.github.szgabsz91.morpher.transformationengines.astra'
     mockingEnabled = true
     testCoverageLimits = [
-        instruction: 98.31,
-        line: 98.63,
-        branch: 94.62,
+        instruction: 85.19,
+        line: 98.11,
+        branch: 62.35,
         class: 100.0
     ]
 }

@@ -5,7 +5,6 @@ import com.github.szgabsz91.morpher.transformationengines.api.characters.reposit
 import com.github.szgabsz91.morpher.transformationengines.api.characters.repositories.ICharacterRepository;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.Addition;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.ITransformation;
-import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations.Removal;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -133,46 +132,6 @@ public class WordPairProcessorTreeNodeTest {
         WordPairProcessorTreeNode node2 = new WordPairProcessorTreeNode(0, 0, null, 0, 1, null);
         int result = node1.compareTo(node2);
         assertThat(result).isGreaterThan(0);
-    }
-
-    @ParameterizedTest
-    @MethodSource("parameters")
-    public void testEquals(ICharacterRepository characterRepository) {
-        WordPairProcessorTreeNode node1 = new WordPairProcessorTreeNode(0, 1, new Addition(Set.of(), characterRepository), 2, 3, null);
-        WordPairProcessorTreeNode node2 = new WordPairProcessorTreeNode(1, 1, new Addition(Set.of(), characterRepository), 2, 3, null);
-        WordPairProcessorTreeNode node3 = new WordPairProcessorTreeNode(1, 2, new Addition(Set.of(), characterRepository), 2, 3, null);
-        WordPairProcessorTreeNode node4 = new WordPairProcessorTreeNode(0, 1, new Addition(Set.of(), characterRepository), 3, 3, null);
-        WordPairProcessorTreeNode node5 = new WordPairProcessorTreeNode(0, 1, new Addition(Set.of(), characterRepository), 2, 4, null);
-        WordPairProcessorTreeNode node6 = new WordPairProcessorTreeNode(0, 1, new Removal(Set.of(), characterRepository), 2, 3, null);
-        WordPairProcessorTreeNode node7 = new WordPairProcessorTreeNode(0, 1, null, 2, 3, null);
-        WordPairProcessorTreeNode node8 = new WordPairProcessorTreeNode(0, 1, null, 2, 3, null);
-        WordPairProcessorTreeNode node9 = new WordPairProcessorTreeNode(0, 1, new Addition(Set.of(), characterRepository), 2, 3, null);
-
-        assertThat(node1.equals(node1)).isTrue();
-        assertThat(node1.equals(null)).isFalse();
-        assertThat(node1).isNotEqualTo("string");
-        assertThat(node1).isNotEqualTo(node2);
-        assertThat(node1).isNotEqualTo(node3);
-        assertThat(node1).isNotEqualTo(node4);
-        assertThat(node1).isNotEqualTo(node5);
-        assertThat(node1).isNotEqualTo(node6);
-        assertThat(node1).isNotEqualTo(node7);
-        assertThat(node7).isNotEqualTo(node1);
-        assertThat(node7).isEqualTo(node8);
-        assertThat(node1).isEqualTo(node9);
-    }
-
-    @ParameterizedTest
-    @MethodSource("parameters")
-    public void testHashCode(ICharacterRepository characterRepository) {
-        WordPairProcessorTreeNode node = new WordPairProcessorTreeNode(0, 1, new Addition(Set.of(), characterRepository), 2, 3, null);
-
-        int expected = 31 * node.getCurrentIndexInStartWord() + node.getCurrentIndexInEndWord();
-        expected = 31 * expected + node.getTransformation().hashCode();
-        expected = 31 * expected + node.getScoreSoFar();
-        expected = 31 * expected + node.getLevel();
-
-        assertThat(node.hashCode()).isEqualTo(expected);
     }
 
     @ParameterizedTest

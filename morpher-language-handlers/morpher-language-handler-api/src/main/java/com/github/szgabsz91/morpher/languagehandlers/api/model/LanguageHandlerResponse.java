@@ -169,6 +169,9 @@ package com.github.szgabsz91.morpher.languagehandlers.api.model;
 
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import com.github.szgabsz91.morpher.core.model.FrequencyAwareWordPair;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.Set;
@@ -178,17 +181,11 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class LanguageHandlerResponse {
 
     private final Map<AffixType, Set<FrequencyAwareWordPair>> wordPairMap;
-
-    /**
-     * Constructor that sets the map of word pairs.
-     * @param wordPairMap the map of word pairs
-     */
-    private LanguageHandlerResponse(final Map<AffixType, Set<FrequencyAwareWordPair>> wordPairMap) {
-        this.wordPairMap = wordPairMap;
-    }
 
     /**
      * Creates a new {@link LanguageHandlerResponse} with the given word pair map.
@@ -197,51 +194,6 @@ public final class LanguageHandlerResponse {
      */
     public static LanguageHandlerResponse of(final Map<AffixType, Set<FrequencyAwareWordPair>> wordPairMap) {
         return new LanguageHandlerResponse(wordPairMap);
-    }
-
-    /**
-     * Returns the map of word pairs.
-     * @return the map of word pairs
-     */
-    public Map<AffixType, Set<FrequencyAwareWordPair>> getWordPairMap() {
-        return wordPairMap;
-    }
-
-    /**
-     * Returns if this response is equal to the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final LanguageHandlerResponse that = (LanguageHandlerResponse) other;
-        return wordPairMap.equals(that.wordPairMap);
-    }
-
-    /**
-     * Returns the hash code of this response.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return wordPairMap.hashCode();
-    }
-
-    /**
-     * Returns the string representation of this response.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "LanguageHandlerResponse[wordPairMap=" + wordPairMap + ']';
     }
 
 }

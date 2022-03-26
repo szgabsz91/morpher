@@ -168,58 +168,19 @@
 package com.github.szgabsz91.morpher.transformationengines.astra.impl.rules;
 
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.componentaccessors.IAtomicRuleComponentAccessor;
+import lombok.Data;
 
 /**
  * Wrapper class for an ({@link AtomicRule}, fitness) pair.
  *
  * @author szgabsz91
  */
+@Data
 public class AtomicRuleCandidate implements Comparable<AtomicRuleCandidate> {
 
     private final IAtomicRuleComponentAccessor atomicRuleComponentAccessor;
     private final AtomicRule atomicRule;
     private final double fitness;
-
-    /**
-     * Constructor that sets the {@link IAtomicRuleComponentAccessor} and {@link AtomicRule} instances, as well as the
-     * fitness value.
-     *
-     * @param atomicRuleComponentAccessor the {@link IAtomicRuleComponentAccessor} instance
-     * @param atomicRule the {@link AtomicRule} instance
-     * @param fitness the fitness value of the atomic rule
-     */
-    public AtomicRuleCandidate(
-            final IAtomicRuleComponentAccessor atomicRuleComponentAccessor,
-            final AtomicRule atomicRule,
-            final double fitness) {
-        this.atomicRuleComponentAccessor = atomicRuleComponentAccessor;
-        this.atomicRule = atomicRule;
-        this.fitness = fitness;
-    }
-
-    /**
-     * Returns the {@link IAtomicRuleComponentAccessor} instance.
-     * @return the {@link IAtomicRuleComponentAccessor} instance
-     */
-    public IAtomicRuleComponentAccessor getAtomicRuleComponentAccessor() {
-        return atomicRuleComponentAccessor;
-    }
-
-    /**
-     * Returns the {@link AtomicRule} instance.
-     * @return the {@link AtomicRule} instance
-     */
-    public AtomicRule getAtomicRule() {
-        return atomicRule;
-    }
-
-    /**
-     * Returns the fitness value of the atomic rule.
-     * @return the fitness value of the atomic rule
-     */
-    public double getFitness() {
-        return fitness;
-    }
 
     /**
      * Compares the fitness values of the two {@link AtomicRule} instances.
@@ -261,16 +222,6 @@ public class AtomicRuleCandidate implements Comparable<AtomicRuleCandidate> {
         result = atomicRule.hashCode();
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "AtomicRuleCandidate[" + atomicRule + ", " + fitness + "]";
     }
 
 }

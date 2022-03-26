@@ -3,8 +3,6 @@ package com.github.szgabsz91.morpher.languagehandlers.api.model;
 import com.github.szgabsz91.morpher.core.model.AffixType;
 import org.junit.jupiter.api.Test;
 
-import java.util.Objects;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnnotationTokenizerResultTest {
@@ -75,44 +73,6 @@ public class AnnotationTokenizerResultTest {
         result2.addAffixType(AffixType.of("AFF2"));
         int result = result1.compareTo(result2);
         assertThat(result).isZero();
-    }
-
-    @Test
-    public void testEquals() {
-        AnnotationTokenizerResult result1 = new AnnotationTokenizerResult("expression", "grammatical", "lemma", 1);
-        AnnotationTokenizerResult result2 = new AnnotationTokenizerResult("expression2", "grammatical", "lemma", 1);
-        AnnotationTokenizerResult result3 = new AnnotationTokenizerResult("expression", "grammatical2", "lemma", 1);
-        AnnotationTokenizerResult result4 = new AnnotationTokenizerResult("expression", "grammatical", "lemma2", 1);
-        AnnotationTokenizerResult result5 = new AnnotationTokenizerResult("expression", "grammatical", "lemma", 1);
-        result5.addAffixType(AffixType.of("AFF"));
-        AnnotationTokenizerResult result6 = new AnnotationTokenizerResult("expression", "grammatical", "lemma", 2);
-        AnnotationTokenizerResult result7 = new AnnotationTokenizerResult("expression", "grammatical", "lemma", 1);
-
-        assertThat(result1.equals(result1)).isTrue();
-        assertThat(result1.equals(null)).isFalse();
-        assertThat(result1).isNotEqualTo("string");
-        assertThat(result1).isNotEqualTo(result2);
-        assertThat(result1).isNotEqualTo(result3);
-        assertThat(result1).isNotEqualTo(result4);
-        assertThat(result1).isNotEqualTo(result5);
-        assertThat(result1).isNotEqualTo(result6);
-        assertThat(result1).isEqualTo(result7);
-    }
-
-    @Test
-    public void testHashCode() {
-        AnnotationTokenizerResult result = new AnnotationTokenizerResult("expression", "grammatical", "lemma", 1);
-        result.addAffixType(AffixType.of("AFF"));
-        int hashCode = result.hashCode();
-        int expected = Objects.hash(result.getExpression(), result.getGrammaticalForm(), result.getLemma(), result.getAffixTypes(), result.getFrequency());
-        assertThat(hashCode).isEqualTo(expected);
-    }
-
-    @Test
-    public void testToString() {
-        AnnotationTokenizerResult result = new AnnotationTokenizerResult("expression", "grammatical", "lemma", 1);
-        result.addAffixType(AffixType.of("AFF"));
-        assertThat(result).hasToString("AnnotationTokenizerResult[" + result.getExpression() + ", " + result.getGrammaticalForm() + ", " + result.getLemma() + ", " + result.getAffixTypes() + ", " + result.getFrequency() + ']');
     }
 
 }

@@ -4,7 +4,6 @@ import com.github.szgabsz91.morpher.core.model.Word;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,34 +35,6 @@ public class ProbabilisticWordTest {
                 .map(ProbabilisticWord::getProbability)
                 .collect(toList());
         assertThat(probabilities).containsExactly(1.0, 0.8, 0.5);
-    }
-
-    @Test
-    public void testEquals() {
-        ProbabilisticWord probabilisticWord1 = ProbabilisticWord.of(Word.of("word"), 0.5);
-        ProbabilisticWord probabilisticWord2 = ProbabilisticWord.of(Word.of("word2"), 0.5);
-        ProbabilisticWord probabilisticWord3 = ProbabilisticWord.of(Word.of("word"), 0.6);
-        ProbabilisticWord probabilisticWord4 = ProbabilisticWord.of(Word.of("word"), 0.5);
-
-        assertThat(probabilisticWord1.equals(probabilisticWord1)).isTrue();
-        assertThat(probabilisticWord1.equals(null)).isFalse();
-        assertThat(probabilisticWord1).isNotEqualTo("string");
-        assertThat(probabilisticWord1).isNotEqualTo(probabilisticWord2);
-        assertThat(probabilisticWord1).isNotEqualTo(probabilisticWord3);
-        assertThat(probabilisticWord1).isEqualTo(probabilisticWord4);
-    }
-
-    @Test
-    public void testHashCode() {
-        ProbabilisticWord probabilisticWord = ProbabilisticWord.of(Word.of("word"), 0.5);
-        int result = probabilisticWord.hashCode();
-        assertThat(result).isEqualTo(Objects.hash(probabilisticWord.getWord(), probabilisticWord.getProbability()));
-    }
-
-    @Test
-    public void testToString() {
-        ProbabilisticWord probabilisticWord = ProbabilisticWord.of(Word.of("word"), 0.5);
-        assertThat(probabilisticWord).hasToString("ProbabilisticWord[word=" + probabilisticWord.getWord() + ", probability=" + probabilisticWord.getProbability() + "]");
     }
 
 }

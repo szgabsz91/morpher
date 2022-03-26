@@ -168,8 +168,9 @@
 package com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.transformations;
 
 import com.github.szgabsz91.morpher.transformationengines.api.characters.attributes.IAttribute;
-
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Attribute delta class that contains what type of attribute must be converted from what value to what value.
@@ -177,24 +178,14 @@ import java.util.Objects;
  * @author szgabsz91
  * @param <T> the type of attribute, subtype of {@link IAttribute}
  */
+@RequiredArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class AttributeDelta<T extends IAttribute> {
 
     private final Class<T> clazz;
     private final T from;
     private final T to;
-
-    /**
-     * Constructor that sets the type of attribute, the base value and the target value.
-     *
-     * @param clazz the type of attribute
-     * @param from the base value
-     * @param to the target value
-     */
-    public AttributeDelta(final Class<T> clazz, final T from, final T to) {
-        this.clazz = clazz;
-        this.from = from;
-        this.to = to;
-    }
 
     /**
      * Creates a new attribute delta so that it removes the given type of attribute if it has the given value.
@@ -218,62 +209,6 @@ public class AttributeDelta<T extends IAttribute> {
      */
     public static <T extends IAttribute> AttributeDelta<T> add(final Class<T> clazz, final T to) {
         return new AttributeDelta<>(clazz, null, to);
-    }
-
-    /**
-     * Returns the type of attribute.
-     * @return the type of attribute
-     */
-    public Class<T> getClazz() {
-        return clazz;
-    }
-
-    /**
-     * Returns the base value of the attribute.
-     * @return the base value of the attribute
-     */
-    public T getFrom() {
-        return from;
-    }
-
-    /**
-     * Returns the target value of the attribute.
-     * @return the target value of the attribute
-     */
-    public T getTo() {
-        return to;
-    }
-
-    /**
-     * Returns if this attribute delta equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final AttributeDelta<?> that = (AttributeDelta<?>) other;
-        return clazz.equals(that.clazz) &&
-                Objects.equals(from, that.from) &&
-                Objects.equals(to, that.to);
-    }
-
-    /**
-     * Returns the hash code of this attribute delta.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = clazz.hashCode();
-        result = 31 * result + (from != null ? from.hashCode() : 0);
-        result = 31 * result + (to != null ? to.hashCode() : 0);
-        return result;
     }
 
     /**

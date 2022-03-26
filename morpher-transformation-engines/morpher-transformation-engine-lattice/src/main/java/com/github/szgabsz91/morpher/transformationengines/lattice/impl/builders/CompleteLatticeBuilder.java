@@ -175,6 +175,7 @@ import com.github.szgabsz91.morpher.transformationengines.lattice.impl.nodes.Nod
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.rules.Rule;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.setoperations.IntersectionCalculator;
 import com.github.szgabsz91.morpher.transformationengines.lattice.impl.setoperations.IntersectionException;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,6 +190,7 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@Getter
 public class CompleteLatticeBuilder extends AbstractLatticeBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CompleteLatticeBuilder.class);
@@ -248,22 +250,6 @@ public class CompleteLatticeBuilder extends AbstractLatticeBuilder {
         if (lattice != null) {
             this.lattice = lattice;
         }
-    }
-
-    /**
-     * Returns if frequency calculation is skipped.
-     * @return true if frequency calculation is skipped, false otherwise
-     */
-    public boolean isSkipFrequencyCalculation() {
-        return skipFrequencyCalculation;
-    }
-
-    /**
-     * Returns if dominant rule selection is skipped.
-     * @return true if dominant rule selection is skipped
-     */
-    public boolean isSkipDominantRuleSelection() {
-        return skipDominantRuleSelection;
     }
 
     /**

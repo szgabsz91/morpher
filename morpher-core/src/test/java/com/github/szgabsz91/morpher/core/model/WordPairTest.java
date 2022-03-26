@@ -34,36 +34,4 @@ public class WordPairTest {
         assertThat(result.getRightWord()).isEqualTo(originalLeftWord);
     }
 
-    @Test
-    public void testEquals() {
-        WordPair wordPair1 = WordPair.of("left", "right");
-        WordPair wordPair2 = WordPair.of("left2", "right");
-        WordPair wordPair3 = WordPair.of("left", "right2");
-        WordPair wordPair4 = WordPair.of("left", "right");
-
-        assertThat(wordPair1.equals(wordPair1)).isTrue();
-        assertThat(wordPair1.equals(null)).isFalse();
-        assertThat(wordPair1).isNotEqualTo("string");
-        assertThat(wordPair1).isNotEqualTo(wordPair2);
-        assertThat(wordPair1).isNotEqualTo(wordPair3);
-        assertThat(wordPair1).isEqualTo(wordPair4);
-    }
-
-    @Test
-    public void testHashCode() {
-        Word leftWord = Word.of("left");
-        Word rightWord = Word.of("right");
-        WordPair wordPair = WordPair.of(leftWord, rightWord);
-
-        int expected = 31 * leftWord.hashCode() + rightWord.hashCode();
-
-        assertThat(wordPair.hashCode()).isEqualTo(expected);
-    }
-
-    @Test
-    public void testToString() {
-        WordPair wordPair = WordPair.of("left", "right");
-        assertThat(wordPair).hasToString("[left, right]");
-    }
-
 }

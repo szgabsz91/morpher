@@ -170,6 +170,7 @@ package com.github.szgabsz91.morpher.transformationengines.astra.impl.rules;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.componentaccessors.IAtomicRuleComponentAccessor;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.componentaccessors.ReversedAtomicRuleComponentAccessor;
 import com.github.szgabsz91.morpher.transformationengines.astra.impl.rules.componentaccessors.StraightAtomicRuleComponentAccessor;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -179,6 +180,7 @@ import java.util.Set;
  *
  * @author szgabsz91
  */
+@EqualsAndHashCode
 public final class RuleGroup {
 
     private final String context;
@@ -278,36 +280,6 @@ public final class RuleGroup {
         }
 
         this.atomicRules.add(atomicRule);
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final RuleGroup ruleGroup = (RuleGroup) other;
-        return context.equals(ruleGroup.context) &&
-                atomicRules.equals(ruleGroup.atomicRules);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = context.hashCode();
-        result = 31 * result + atomicRules.hashCode();
-        return result;
     }
 
     /**

@@ -4,6 +4,7 @@ module com.github.szgabsz91.morpher.languagehandlers.hunmorph {
     requires com.github.szgabsz91.morpher.languagehandlers.api;
     requires com.github.szgabsz91.morpher.core;
 
+    requires lombok;
     requires org.slf4j;
     requires transitive com.google.protobuf;
 

@@ -168,23 +168,21 @@
 package com.github.szgabsz91.morpher.transformationengines.astra.impl.model;
 
 import com.github.szgabsz91.morpher.core.model.Word;
-
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Model class that contains a {@link Word} and a fitness value.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FitnessAwareWord {
 
     private final Word word;
     private final double fitness;
-
-    private FitnessAwareWord(final Word word, final double fitness) {
-        this.word = word;
-        this.fitness = fitness;
-    }
 
     /**
      * Creates a new {@link FitnessAwareWord} with the given {@link Word} and fitness value.
@@ -194,60 +192,6 @@ public final class FitnessAwareWord {
      */
     public static FitnessAwareWord of(final Word word, final double fitness) {
         return new FitnessAwareWord(word, fitness);
-    }
-
-    /**
-     * Returns the {@link Word}.
-     * @return the {@link Word}
-     */
-    public Word getWord() {
-        return word;
-    }
-
-    /**
-     * Returns the fitness value.
-     * @return the fitness value
-     */
-    public double getFitness() {
-        return fitness;
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final FitnessAwareWord that = (FitnessAwareWord) other;
-        return Double.compare(that.fitness, fitness) == 0 &&
-                Objects.equals(word, that.word);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(word, fitness);
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "FitnessAwareWord[word=" + word + ", fitness=" + fitness + ']';
     }
 
 }

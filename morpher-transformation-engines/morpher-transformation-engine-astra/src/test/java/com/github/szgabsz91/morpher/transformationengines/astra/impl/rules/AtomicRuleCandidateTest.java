@@ -78,13 +78,4 @@ public class AtomicRuleCandidateTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    @Test
-    public void testToStringWithNullFitness() {
-        IAtomicRuleComponentAccessor atomicRuleComponentAccessor = StraightAtomicRuleComponentAccessor.get();
-        AtomicRule atomicRule = new AtomicRule("a", "b", "c", "d", 1);
-        double fitness = 1.0;
-        AtomicRuleCandidate atomicRuleCandidate = new AtomicRuleCandidate(atomicRuleComponentAccessor, atomicRule, fitness);
-        assertThat(atomicRuleCandidate).hasToString("AtomicRuleCandidate[" + atomicRule + ", " + fitness + "]");
-    }
-
 }

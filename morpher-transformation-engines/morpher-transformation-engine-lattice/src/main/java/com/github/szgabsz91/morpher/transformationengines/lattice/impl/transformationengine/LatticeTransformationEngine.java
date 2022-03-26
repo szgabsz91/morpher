@@ -186,6 +186,7 @@ import com.github.szgabsz91.morpher.transformationengines.lattice.impl.trainings
 import com.github.szgabsz91.morpher.transformationengines.lattice.protocolbuffers.LatticeTransformationEngineMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -199,6 +200,7 @@ import static java.util.stream.Collectors.toSet;
  *
  * @author szgabsz91
  */
+@Getter
 public class LatticeTransformationEngine
         implements IBidirectionalTransformationEngine<LatticeTransformationEngineMessage> {
 
@@ -313,55 +315,6 @@ public class LatticeTransformationEngine
                 backwardsTrainingSetProcessor,
                 backwardsLatticeBuilder
         );
-    }
-
-    /**
-     * Returns if the transformation engine is unidirectional, meaning that it can only transform words forwards.
-     * @return true if the transformation engine is unidirectional, false otherwise
-     */
-    public boolean isUnidirectional() {
-        return unidirectional;
-    }
-
-    /**
-     * Returns the {@link AffixType} that this transformation engine relates to.
-     * @return the {@link AffixType} that this transformation engine relates to
-     */
-    @Override
-    public AffixType getAffixType() {
-        return affixType;
-    }
-
-    /**
-     * Returns the underlying forwards {@link ITrainingSetProcessor}.
-     * @return the underlying forwards {@link ITrainingSetProcessor}
-     */
-    public ITrainingSetProcessor getForwardsTrainingSetProcessor() {
-        return forwardsTrainingSetProcessor;
-    }
-
-    /**
-     * Returns the underlying forwards {@link ILatticeBuilder}.
-     * @return the underlying forwards {@link ILatticeBuilder}
-     */
-    public ILatticeBuilder getForwardsLatticeBuilder() {
-        return forwardsLatticeBuilder;
-    }
-
-    /**
-     * Returns the underlying backwards {@link ITrainingSetProcessor}.
-     * @return the underlying backwards {@link ITrainingSetProcessor}
-     */
-    public ITrainingSetProcessor getBackwardsTrainingSetProcessor() {
-        return backwardsTrainingSetProcessor;
-    }
-
-    /**
-     * Returns the underlying backwards {@link ILatticeBuilder}.
-     * @return the underlying backwards {@link ILatticeBuilder}
-     */
-    public ILatticeBuilder getBackwardsLatticeBuilder() {
-        return backwardsLatticeBuilder;
     }
 
     /**

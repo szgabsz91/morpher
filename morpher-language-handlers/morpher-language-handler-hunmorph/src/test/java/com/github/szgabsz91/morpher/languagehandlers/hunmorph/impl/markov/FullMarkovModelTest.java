@@ -675,17 +675,6 @@ public class FullMarkovModelTest {
             assertThat(result).isEqualTo(expected);
         }
 
-        @Test
-        public void testToString() {
-            FullMarkovModel.Node node = new FullMarkovModel.Node(AffixType.of("AFF"), 1L, FullMarkovModel.Node.start());
-            assertThat(node).hasToString("Node[" +
-                    "affixType=" + node.getAffixType() +
-                    ", relativeFrequency=" + node.getRelativeFrequency() +
-                    ", parent=" + node.getParent().get() +
-                    ']'
-            );
-        }
-
     }
 
 }

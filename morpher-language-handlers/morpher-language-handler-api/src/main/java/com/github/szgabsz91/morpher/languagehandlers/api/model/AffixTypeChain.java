@@ -167,28 +167,23 @@
  */
 package com.github.szgabsz91.morpher.languagehandlers.api.model;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Model class that contains the affix types of an affix type chain and the overall aggregated probability.
  *
  * @author szgabsz91
  */
+@Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AffixTypeChain implements Comparable<AffixTypeChain> {
 
     private final List<ProbabilisticAffixType> affixTypes;
     private final double probability;
-
-    /**
-     * Constructor that sets the list of affix types and the aggregated probability.
-     * @param affixTypes the list of affix types
-     * @param probability the probability of the route
-     */
-    private AffixTypeChain(final List<ProbabilisticAffixType> affixTypes, final double probability) {
-        this.affixTypes = affixTypes;
-        this.probability = probability;
-    }
 
     /**
      * Returns a new {@link AffixTypeChain} containing the given affix types and the aggregated probability.
@@ -201,22 +196,6 @@ public final class AffixTypeChain implements Comparable<AffixTypeChain> {
     }
 
     /**
-     * Returns the list of affix types.
-     * @return the list of affix types
-     */
-    public List<ProbabilisticAffixType> getAffixTypes() {
-        return affixTypes;
-    }
-
-    /**
-     * Returns the aggregated probability.
-     * @return the aggregate probability
-     */
-    public double getProbability() {
-        return probability;
-    }
-
-    /**
      * Returns if this chain is less than the given other chain or not.
      * @param other the other chain
      * @return -1 if the probability of this chain is higher, 0 if they are equal, +1 otherwise
@@ -224,44 +203,6 @@ public final class AffixTypeChain implements Comparable<AffixTypeChain> {
     @Override
     public int compareTo(final AffixTypeChain other) {
         return Double.compare(other.probability, this.probability);
-    }
-
-    /**
-     * Returns if this object equals the given other object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final AffixTypeChain that = (AffixTypeChain) other;
-        return Double.compare(that.probability, probability) == 0 &&
-                Objects.equals(affixTypes, that.affixTypes);
-    }
-
-    /**
-     * Returns the hash code of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(affixTypes, probability);
-    }
-
-    /**
-     * Returns the string representation of this object.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "AffixTypeChain[affixTypes=" + affixTypes + ", probability=" + probability + ']';
     }
 
 }
