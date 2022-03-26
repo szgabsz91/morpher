@@ -1,7 +1,7 @@
 buildscript {
     ext {
         morpherGroupId = 'com.github.szgabsz91'
-        morpherVersion = '1.5.2-SNAPSHOT'
+        morpherVersion = '1.6.0-SNAPSHOT'
 
         signingKeyId = System.getenv('SIGNING_KEY_ID')
         signingKey = new String(System.getenv('SIGNING_KEY').decodeBase64())
@@ -9,11 +9,11 @@ buildscript {
         mavenCentralUsername = System.getenv('MAVEN_CENTRAL_USERNAME')
         mavenCentralPassword = System.getenv('MAVEN_CENTRAL_PASSWORD')
 
-        javaVersion = '17'
+        javaVersion = '18'
 
         checkstyleVersion = '10.0'
         guavaVersion = '31.1-jre'
-        jacocoVersion = '0.8.7'
+        jacocoVersion = '0.8.8'
         nexusPublishPlugin = '1.1.0'
         pmdVersion = '6.43.0'
         protobufGradlePluginVersion = '0.8.18'
