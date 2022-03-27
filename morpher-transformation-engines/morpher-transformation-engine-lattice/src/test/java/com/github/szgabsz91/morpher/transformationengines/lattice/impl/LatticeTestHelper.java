@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -51,7 +50,7 @@ public class LatticeTestHelper {
             return mapping.values()
                     .stream()
                     .map(list -> list.get(0))
-                    .collect(toList());
+                    .toList();
         }
     }
 

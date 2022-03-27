@@ -24,7 +24,6 @@ import java.util.function.Function;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 
 @ExcludeDuringBuild
 public class GraphExporterTest {
@@ -53,7 +52,7 @@ public class GraphExporterTest {
                                     }
                                     return affixType;
                                 })
-                                .collect(toList());
+                                .toList();
                     })
                     .collect(groupingBy(Function.identity(), counting()));
         }

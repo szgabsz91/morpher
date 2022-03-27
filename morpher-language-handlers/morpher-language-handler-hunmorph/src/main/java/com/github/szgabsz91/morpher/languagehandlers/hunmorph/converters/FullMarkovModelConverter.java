@@ -180,8 +180,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * Protocol Buffer converter for the {@link FullMarkovModel} class.
  *
@@ -203,14 +201,14 @@ public class FullMarkovModelConverter implements IConverter<FullMarkovModel, Mar
                             .stream()
                             .map(FullMarkovModel.Node::getAffixType)
                             .map(AffixType::toString)
-                            .collect(toList());
+                            .toList();
                     final long relativeFrequency = entry.getValue();
                     return MarkovModelRouteMessage.newBuilder()
                             .addAllAffixTypes(affixTypes)
                             .setRelativeFrequency(relativeFrequency)
                             .build();
                 })
-                .collect(toList());
+                .toList();
         return MarkovModelMessage.newBuilder()
                 .addAllRoutes(routeMessages)
                 .build();
@@ -228,7 +226,7 @@ public class FullMarkovModelConverter implements IConverter<FullMarkovModel, Mar
             final List<AffixType> affixTypes = routeMessage.getAffixTypesList()
                     .stream()
                     .map(AffixType::of)
-                    .collect(toList());
+                    .toList();
             final long relativeFrequency = routeMessage.getRelativeFrequency();
             result.add(affixTypes, relativeFrequency);
         });

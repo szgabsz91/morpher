@@ -41,8 +41,7 @@ import java.util.stream.Stream;
 import static java.util.Comparator.comparing;
 import static java.util.Map.entry;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 @ExcludeDuringBuild
 public class ASTRAGeneralUnsupervisedTest {
@@ -102,7 +101,7 @@ public class ASTRAGeneralUnsupervisedTest {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("../../morpher-language-handlers/data/ocamorph-results.csv"), StandardCharsets.UTF_8)) {
             Set<String> lines = reader
                     .lines()
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             HunmorphAnnotationTokenizer hunmorphAnnotationTokenizer = new HunmorphAnnotationTokenizer();
             return lines
                     .stream()
@@ -128,7 +127,7 @@ public class ASTRAGeneralUnsupervisedTest {
                         Set<AffixType> affixTypeSet = new HashSet<>(affixTypeList);
                         return expectedAffixTypes.containsAll(affixTypeSet);
                     })
-                    .collect(toList());
+                    .toList();
         }
     }
 
@@ -141,7 +140,7 @@ public class ASTRAGeneralUnsupervisedTest {
                     .simple(i)
                     .stream()
                     .map(HashSet::new)
-                    .collect(toList());
+                    .toList();
             affixTypeCombinations.addAll(affixTypeCombination);
         }
 
@@ -190,7 +189,7 @@ public class ASTRAGeneralUnsupervisedTest {
         List<ProcessResult> processResultCandidates = Stream.concat(Stream.of(fusionalProcessResult), agglutinativeProcessResultStream)
                 .peek(ProcessResult::reduce)
                 .sorted()
-                .collect(toList());
+                .toList();
         processResultCandidates.forEach(processResultCandidate -> LOGGER.info("    - Candidate: {}", processResultCandidate));
 
         ProcessResult winningProcessResult = processResultCandidates.get(0);
@@ -222,10 +221,10 @@ public class ASTRAGeneralUnsupervisedTest {
                             .map(RuleGroup::getAtomicRules)
                             .flatMap(Collection::stream)
                             .sorted(comparing(atomicRule -> atomicRule.getContext().length()))
-                            .collect(toList());
+                            .toList();
                     return new Item(result, wordPair, atomicRules);
                 })
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         String affixTypeString = affixTypesToProcess
                 .stream()
                 .map(AffixType::toString)
@@ -268,11 +267,11 @@ public class ASTRAGeneralUnsupervisedTest {
                                         .map(RuleGroup::getAtomicRules)
                                         .flatMap(Collection::stream)
                                         .sorted(comparing(atomicRule -> atomicRule.getContext().length()))
-                                        .collect(toList());
+                                        .toList();
                                 return new Item(result, wordPair, atomicRules);
                             });
                 })
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         return new ProcessResult(semanticRelations, affixTypesToProcess, items);
     }
 
@@ -302,10 +301,10 @@ public class ASTRAGeneralUnsupervisedTest {
                                             .map(AffixType::of)
                                             .map(affixType -> new AffixTypeCombinationAffixType(affixType, combination));
                                 })
-                                .collect(toSet());
+                                .collect(toUnmodifiableSet());
                     })
                     .flatMap(Collection::stream)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
         }
 
         List<AffixType> originalAffixTypes = annotationTokenizerResult.getAffixTypes();
@@ -315,7 +314,7 @@ public class ASTRAGeneralUnsupervisedTest {
                     return affixTypeCombinationAffixes
                             .stream()
                             .map(AffixTypeCombinationAffixType::getCombinedAffixType)
-                            .collect(toSet())
+                            .collect(toUnmodifiableSet())
                             .contains(originalAffixType);
                 });
 
@@ -333,7 +332,7 @@ public class ASTRAGeneralUnsupervisedTest {
                             .map(AffixTypeCombinationAffixType::getPrimitiveAffixTypes)
                             .orElse(Set.of(originalAffixType));
                 })
-                .collect(toList());
+                .toList();
         List<AffixType> convertedAffixTypes = new ArrayList<>();
         for (Set<AffixType> affixTypeSet : convertedAffixTypeSets) {
             convertedAffixTypes.addAll(affixTypeSet);
@@ -508,7 +507,7 @@ public class ASTRAGeneralUnsupervisedTest {
                     .stream()
                     .map(Item::getAtomicRules)
                     .flatMap(Collection::stream)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
 
             List<AffixType> parentAffixTypes = processResultToRemove.getAffixTypes();
             long originalAtomicRuleCount = this.items
@@ -554,7 +553,7 @@ public class ASTRAGeneralUnsupervisedTest {
                         return null;
                     })
                     .filter(Objects::nonNull)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             long originalAtomicRuleCount = this.items
                     .stream()
                     .map(Item::getAtomicRules)

@@ -8,9 +8,9 @@ ext {
     moduleName = 'com.github.szgabsz91.morpher.engines.api'
 
     testCoverageLimits = [
-        instruction: 36.48,
+        instruction: 36.66,
         line: 89.19,
-        branch: 14.71,
+        branch: 15.29,
         class: 100.0
     ]
 }

@@ -41,8 +41,8 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableMap;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -137,7 +137,7 @@ public class MorpherEngineTest {
         Map<String, Set<AffixType>> stringLemmaMap = lemmaMap.entrySet()
                 .stream()
                 .map(entry -> Map.entry(entry.getKey().toString(), entry.getValue()))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
         HunmorphLanguageHandler languageHandler = (HunmorphLanguageHandler) this.engine.getLanguageHandler();
         assertThat(languageHandler.getLemmaMap()).isEmpty();
         this.engine.learn(LemmaMap.of(lemmaMap));
@@ -332,7 +332,7 @@ public class MorpherEngineTest {
                 .stream()
                 .filter(affixType -> !affixType.startsWith("/"))
                 .map(AffixType::of)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         assertThat(supportedAffixTypes).isEqualTo(expected);
     }
 
@@ -695,13 +695,13 @@ public class MorpherEngineTest {
                     .isNotEmpty();
             MorpherEngineResponse morpherEngineResponse = morpherEngineResponses
                     .stream()
-                    .filter(response -> response.getOutput().equals(expectedWord) && response.getSteps().stream().map(ProbabilisticStep::getAffixType).collect(toList()).containsAll(affixTypes))
+                    .filter(response -> response.getOutput().equals(expectedWord) && response.getSteps().stream().map(ProbabilisticStep::getAffixType).toList().containsAll(affixTypes))
                     .findFirst()
                     .get();
             List<ProbabilisticAffixType> probabilisticAffixTypesFromSteps = morpherEngineResponse.getSteps()
                     .stream()
                     .map(probabilisticStep -> ProbabilisticAffixType.of(probabilisticStep.getAffixType(), probabilisticStep.getAffixTypeProbability()))
-                    .collect(toList());
+                    .toList();
             List<ProbabilisticAffixType> resultingProbabilisticAffixTypes = new ArrayList<>(morpherEngineResponse.getSteps().size() + 1);
             resultingProbabilisticAffixTypes.addAll(probabilisticAffixTypesFromSteps);
             posAdder.accept(resultingProbabilisticAffixTypes, morpherEngineResponse.getPos());

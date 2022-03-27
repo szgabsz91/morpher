@@ -17,7 +17,6 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 
 public class CharacterTransformationEngine implements IBidirectionalTransformationEngine<GeneratedMessageV3> {
 
@@ -65,7 +64,7 @@ public class CharacterTransformationEngine implements IBidirectionalTransformati
         List<RandomizableCharacter> strippedRandomizableCharacters = randomizableCharacters
                 .stream()
                 .filter(c -> !c.getCharacter().equals(this.character))
-                .collect(toList());
+                .toList();
         for (int i = 0; i < occurrences; i++) {
             int randomIndex = random.nextInt(strippedRandomizableCharacters.size() + 1);
             strippedRandomizableCharacters.add(randomIndex, new RandomizableCharacter(this.character, true));
@@ -111,7 +110,7 @@ public class CharacterTransformationEngine implements IBidirectionalTransformati
         List<RandomizableCharacter> transformableRandomizableCharacters = randomizableCharacters
                 .stream()
                 .filter(c -> !c.getCharacter().equals(this.character))
-                .collect(toList());
+                .toList();
         int startIndex = -1;
         for (int i = 0; i < transformableRandomizableCharacters.size(); i++) {
             RandomizableCharacter randomizableCharacter = transformableRandomizableCharacters.get(i);
@@ -178,7 +177,7 @@ public class CharacterTransformationEngine implements IBidirectionalTransformati
                 .chars()
                 .mapToObj(character -> Character.toString((char) character))
                 .map(RandomizableCharacter::parse)
-                .collect(toList());
+                .toList();
     }
 
 }

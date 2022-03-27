@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ASTRATest {
@@ -328,7 +328,7 @@ public class ASTRATest {
         Set<Word> resultingWords = response.get().getResults()
                 .stream()
                 .map(ProbabilisticWord::getWord)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         assertThat(resultingWords).contains(Word.of("legkiugróbb"));
     }
 
@@ -598,7 +598,7 @@ public class ASTRATest {
                 .stream()
                 .map(ProbabilisticWord::getWord)
                 .map(Word::toString)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         assertThat(results).containsExactlyInAnyOrder("almet", "almát");
     }
 
@@ -629,7 +629,7 @@ public class ASTRATest {
                 .stream()
                 .map(RuleGroup::getAtomicRules)
                 .flatMap(Collection::stream)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         assertThat(atomicRules).allMatch(atomicRule -> {
             if (atomicRule.getPrefix().equals("m") && atomicRule.getChangingSubstring().equals("a#") && atomicRule.getReplacementString().equals("át#") && atomicRule.getPostfix().equals("")) {
                 return atomicRule.getSupport() == 2 && atomicRule.getWordFrequency() == 3;

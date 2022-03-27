@@ -174,7 +174,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Convenience static class for retrieving Morpher services.
@@ -241,7 +241,7 @@ public class ServiceProvider {
      */
     public <T> T get(final Class<T> clazz) {
         final Set<ServiceLoader.Provider<?>> providerSet = this.serviceLoader.apply(clazz)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final Iterator<ServiceLoader.Provider<?>> iterator = providerSet.iterator();
 
         if (!iterator.hasNext()) {
@@ -255,7 +255,7 @@ public class ServiceProvider {
             final Set<? extends Class<?>> implementationClasses = providerSet
                     .stream()
                     .map(ServiceLoader.Provider::type)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             throw new IllegalArgumentException(
                     "Multiple implementations found for " + clazz.getName() + ": " + implementationClasses
             );

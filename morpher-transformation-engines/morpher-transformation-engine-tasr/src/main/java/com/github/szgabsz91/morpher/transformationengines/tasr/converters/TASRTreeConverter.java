@@ -180,8 +180,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static java.util.Comparator.comparingInt;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 /**
  * Converter for the {@link TASRTree} that can convert it to and from Protocol Buffers.
@@ -209,7 +208,7 @@ public class TASRTreeConverter implements IConverter<TASRTree, TASRTreeMessage> 
         final List<TASRTreeNodeMessage> tasrTreeNodeMessages = tasrTree.getNodes()
                 .stream()
                 .map(tasrTreeNodeConverter::convert)
-                .collect(toList());
+                .toList();
         final int lastNodeId = tasrTreeNodeMessages
                 .stream()
                 .mapToInt(TASRTreeNodeMessage::getId)
@@ -232,12 +231,12 @@ public class TASRTreeConverter implements IConverter<TASRTree, TASRTreeMessage> 
         tasrTree.setLastNodeId(tasrTreeMessage.getLastNodeId());
         final Map<Integer, TASRTreeNodeMessage> tasrTreeNodeMessageMap = tasrTreeMessage.getNodesList()
                 .stream()
-                .collect(toMap(TASRTreeNodeMessage::getId, Function.identity()));
+                .collect(toUnmodifiableMap(TASRTreeNodeMessage::getId, Function.identity()));
         final Map<Integer, TASRTreeNode> tasrTreeNodeMap = new HashMap<>();
         final List<Integer> tasrTreeNodeIds = tasrTreeNodeMessageMap.keySet()
                 .stream()
                 .sorted(comparingInt(id -> id))
-                .collect(toList());
+                .toList();
         for (final int tasrTreeNodeId : tasrTreeNodeIds) {
             final TASRTreeNodeMessage tasrTreeNodeMessage = tasrTreeNodeMessageMap.get(tasrTreeNodeId);
             final TASRTreeNode tasrTreeNode = this.tasrTreeNodeConverter.convertBack(tasrTreeNodeMessage);

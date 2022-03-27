@@ -32,8 +32,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableMap;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -123,7 +123,7 @@ public class HunmorphLanguageHandlerTest {
         Map<String, Set<AffixType>> stringLemmaMap = lemmaMap.entrySet()
                 .stream()
                 .map(entry -> Map.entry(entry.getKey().toString(), entry.getValue()))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
         assertThat(this.languageHandler.getLemmaMap()).isEmpty();
         this.languageHandler.learnLemmas(LemmaMap.of(lemmaMap));
         assertThat(this.languageHandler.getLemmaMap()).isEqualTo(stringLemmaMap);
@@ -447,7 +447,7 @@ public class HunmorphLanguageHandlerTest {
                 .stream()
                 .filter(affixType -> !affixType.startsWith("/"))
                 .map(AffixType::of)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         assertThat(supportedAffixTypes).isEqualTo(expected);
     }
 

@@ -193,7 +193,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Lattice based {@link IBidirectionalTransformationEngine} implementation.
@@ -387,7 +387,7 @@ public class LatticeTransformationEngine
         final Set<WordPair> wordPairs = trainingSet.getWordPairs()
                 .stream()
                 .map(FrequencyAwareWordPair::getWordPair)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final Set<Rule> inflectionRules = this.forwardsTrainingSetProcessor.induceRules(wordPairs);
         this.forwardsLatticeBuilder.addRules(inflectionRules);
 
@@ -395,7 +395,7 @@ public class LatticeTransformationEngine
             final Set<WordPair> inverseWordPairs = wordPairs
                     .stream()
                     .map(WordPair::inverse)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             final Set<Rule> backwardsRules = this.backwardsTrainingSetProcessor.induceRules(inverseWordPairs);
             this.backwardsLatticeBuilder.addRules(backwardsRules);
         }

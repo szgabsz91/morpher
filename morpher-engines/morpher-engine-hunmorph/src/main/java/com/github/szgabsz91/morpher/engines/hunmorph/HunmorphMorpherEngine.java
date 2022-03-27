@@ -187,10 +187,7 @@ import com.google.protobuf.GeneratedMessageV3;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Hunmorph based implementation of the {@link IMorpherEngine} interface.
@@ -307,7 +304,7 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
                     final List<AffixType> affixTypes = IntStream.range(0, reversedAffixTypes.size())
                             .map(index -> reversedAffixTypes.size() - index - 1)
                             .mapToObj(reversedAffixTypes::get)
-                            .collect(toList());
+                            .toList();
                     final String lemmaString = annotationTokenizerResult.getLemma();
                     final Word lemma = Word.of(lemmaString);
                     final List<ProbabilisticStep> probabilisticSteps = new ArrayList<>(affixTypes.size());
@@ -334,7 +331,7 @@ public class HunmorphMorpherEngine implements IMorpherEngine<GeneratedMessageV3>
                     response.setAggregatedWeight(1.0);
                     return response;
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**

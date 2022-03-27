@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public class PartialRadialTreeExporter extends AbstractRadialTreeExporter {
 
@@ -35,11 +34,11 @@ public class PartialRadialTreeExporter extends AbstractRadialTreeExporter {
                                         .replaceAll("/", "")
                                         .replaceAll("_", "");
                             })
-                            .collect(toList());
+                            .toList();
                     long relativeFrequency = entry.getValue();
                     return Map.entry(affixTypes, relativeFrequency);
                 })
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override
@@ -54,7 +53,7 @@ public class PartialRadialTreeExporter extends AbstractRadialTreeExporter {
         if (!treeNode.getAffixType().equals(START)) {
             childStream = childStream.limit(10L);
         }
-        treeNode.setChildren(childStream.collect(toList()));
+        treeNode.setChildren(childStream.toList());
     }
 
     @Override

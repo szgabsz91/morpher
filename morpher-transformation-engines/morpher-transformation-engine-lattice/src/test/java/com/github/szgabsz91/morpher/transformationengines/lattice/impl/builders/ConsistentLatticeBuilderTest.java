@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static com.github.szgabsz91.morpher.transformationengines.lattice.impl.setoperations.IntersectionCalculator.intersect;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConsistentLatticeBuilderTest {
@@ -289,7 +289,7 @@ public class ConsistentLatticeBuilderTest {
         Node intersection = intersect(a, e, characterRepository, wordConverter);
         Set<Rule> rules = Stream.of(a, e)
                 .map(Node::getRule)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         consistentLatticeBuilder.addRules(rules);
         Lattice lattice = consistentLatticeBuilder.getLattice();
         assertThat(lattice.getUnitNode().getChildren()).hasSize(1);
@@ -340,7 +340,7 @@ public class ConsistentLatticeBuilderTest {
         Set<Rule> rules = nodes
                 .stream()
                 .map(Node::getRule)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         consistentLatticeBuilder.addRules(rules);
         Lattice lattice = consistentLatticeBuilder.getLattice();
 
@@ -430,7 +430,7 @@ public class ConsistentLatticeBuilderTest {
         );
         Set<Rule> rules = Stream.of(node1, node2)
                 .map(Node::getRule)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         latticeBuilder.addRules(rules);
         Lattice lattice = latticeBuilder.getLattice();
         assertThat(lattice.size()).isEqualTo(4);

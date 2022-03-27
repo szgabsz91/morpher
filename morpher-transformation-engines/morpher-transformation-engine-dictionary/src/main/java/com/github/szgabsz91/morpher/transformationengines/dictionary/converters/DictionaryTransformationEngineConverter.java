@@ -187,7 +187,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.zip.GZIPInputStream;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Protocol Buffer converter for the {@link DictionaryTransformationEngine} class.
@@ -218,7 +218,7 @@ public class DictionaryTransformationEngineConverter
                 .entrySet()
                 .stream()
                 .map(wordPairMessageConverter)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         return DictionaryTransformationEngineMessage.newBuilder()
                 .setAffixType(dictionaryTransformationEngine.getAffixType().toString())
                 .addAllWordPairs(wordPairMessages)
@@ -241,7 +241,7 @@ public class DictionaryTransformationEngineConverter
                 .stream()
                 .map(wordPairMessage -> WordPair.of(wordPairMessage.getLeftWord(), wordPairMessage.getRightWord()))
                 .map(FrequencyAwareWordPair::of)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         dictionaryTransformationEngine.learn(TrainingSet.of(wordPairs));
         return dictionaryTransformationEngine;
     }

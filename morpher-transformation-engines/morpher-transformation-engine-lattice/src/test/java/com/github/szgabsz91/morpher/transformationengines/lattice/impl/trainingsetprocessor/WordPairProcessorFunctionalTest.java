@@ -27,7 +27,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExcludeDuringBuild
@@ -141,7 +140,7 @@ public class WordPairProcessorFunctionalTest {
                     .limit(DEFAULT_LIMIT)
                     .map(line -> line.split(","))
                     .map(lineParts -> WordPair.of(lineParts[0], lineParts[1]))
-                    .collect(toList());
+                    .toList();
         }
     }
 

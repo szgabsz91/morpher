@@ -36,8 +36,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LatticeTransformationEngineFunctionalTest {
@@ -82,7 +81,7 @@ public class LatticeTransformationEngineFunctionalTest {
                     .limit(500L)
                     .map(line -> line.split(","))
                     .map(lineParts -> WordPair.of(lineParts[0], lineParts[1]))
-                    .collect(toList());
+                    .toList();
             wordPairs = removeDuplicates(wordPairs);
             List<WordPair> wordPairs1 = wordPairs.subList(0, wordPairs.size() / 3);
             List<WordPair> wordPairs2 = wordPairs.subList(wordPairs.size() / 3, 2 * wordPairs.size() / 3);
@@ -103,7 +102,7 @@ public class LatticeTransformationEngineFunctionalTest {
         List<FrequencyAwareWordPair> additionalFrequencyAwareWordPairs = additionalWordPairs
                 .stream()
                 .map(FrequencyAwareWordPair::of)
-                .collect(toList());
+                .toList();
         latticeTransformationEngine.learn(TrainingSet.of(new HashSet<>(additionalFrequencyAwareWordPairs)));
 
         // Save and reload
@@ -142,7 +141,7 @@ public class LatticeTransformationEngineFunctionalTest {
     private static List<WordPair> removeDuplicates(List<WordPair> wordPairs) {
         Collection<WordPair> nonRedundantWordPairs = wordPairs
                 .stream()
-                .collect(toMap(WordPair::getLeftWord, Function.identity(), (x, y) -> x))
+                .collect(toUnmodifiableMap(WordPair::getLeftWord, Function.identity(), (x, y) -> x))
                 .values();
         return new ArrayList<>(nonRedundantWordPairs);
     }

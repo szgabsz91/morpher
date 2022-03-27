@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -220,7 +220,7 @@ public class MinimalLatticeBuilderTest {
         Set<Rule> rules = nodes
                 .stream()
                 .map(Node::getRule)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         minimalLatticeBuilder.addRules(rules);
         Lattice lattice = minimalLatticeBuilder.getLattice();
         assertThat(new HashSet<>(lattice.getNodes())).isEqualTo(nodes);

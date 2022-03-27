@@ -233,7 +233,8 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableList;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Default implementation of the {@link IMorpherEngine} interface.
@@ -422,7 +423,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     final String lemma = annotationTokenizerResult.getLemma();
                     return Map.entry(lemma, annotationTokenizerResult);
                 })
-                .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toList())));
+                .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toUnmodifiableList())));
         this.languageHandler.learnAnnotationTokenizerResults(annotationTokenizerResults);
 
         final Set<List<AffixType>> affixTypeChains = preanalyzedTrainingItems
@@ -432,7 +433,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                             preanalyzedTrainingItem.getAnnotationTokenizerResult();
                     return annotationTokenizerResult.getAffixTypes();
                 })
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         this.languageHandler.learnAffixTypeChains(affixTypeChains);
 
         final Map<Word, Set<AffixType>> lemmaMap = preanalyzedTrainingItems
@@ -444,7 +445,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     final AffixType pos = annotationTokenizerResult.getAffixTypes().get(0);
                     return Map.entry(lemma, pos);
                 })
-                .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toSet())));
+                .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toUnmodifiableSet())));
         this.languageHandler.learnLemmas(LemmaMap.of(lemmaMap));
 
         final Map<AffixType, Set<FrequencyAwareWordPair>> wordPairMap = preanalyzedTrainingItems
@@ -457,7 +458,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     final FrequencyAwareWordPair wordPair = preanalyzedTrainingItem.getWordPair();
                     return Map.entry(lastAffixType, wordPair);
                 })
-                .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toSet())));
+                .collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toUnmodifiableSet())));
         wordPairMap.forEach((affixType, wordPairs) -> {
             final TrainingSet trainingSet = TrainingSet.of(wordPairs);
             final ITransformationEngineHolder transformationEngineHolder =
@@ -510,7 +511,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
 
         return morpherEngineResponseStream
                 .sorted()
-                .collect(toList());
+                .toList();
     }
 
     /**
@@ -539,7 +540,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
 
         return morpherEngineResponseStream
                 .sorted()
-                .collect(toList());
+                .toList();
     }
 
     /**
@@ -619,7 +620,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                 final List<AffixType> affixTypes = createSteps(newCandidate)
                         .stream()
                         .map(ProbabilisticStep::getAffixType)
-                        .collect(toList());
+                        .toList();
                 this.languageHandler.getAnalysisCandidates(affixTypes)
                         .stream()
                         .map(c -> new StepCandidate(c, newWord, newCandidate))
@@ -645,7 +646,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                     return isAffixTypeChainValid;
                 })
                 .distinct()
-                .collect(toList());
+                .toList();
 
         final double maximumAffixTypeChainProbability = morpherEngineResponses
                 .stream()
@@ -673,7 +674,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
 
         return morpherEngineResponseStream
                 .sorted()
-                .collect(toList());
+                .toList();
     }
 
     /**
@@ -1077,7 +1078,7 @@ public class MorpherEngine implements IMorpherEngine<MorpherEngineMessage>, ICus
                             steps
                     );
                 })
-                .collect(toList());
+                .toList();
 
         final double maximumAffixTypeChainProbability = morpherEngineResponses
                 .stream()

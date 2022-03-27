@@ -180,7 +180,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Builds a new minimal {@link Lattice} object in two phases, using two separate {@link ILatticeBuilder} objects.
@@ -288,7 +288,7 @@ public class MinimalLatticeBuilder extends AbstractLatticeBuilder {
                 .stream()
                 .peek(Node::reset)
                 .map(Node::getRule)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         Arrays.stream(lattice.getAtomicNodes())
                 .filter(atomicNode -> !consistentLattice.hasNode(atomicNode))
                 .peek(Node::reset)

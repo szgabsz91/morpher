@@ -31,8 +31,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ASTRATransformationEngineFunctionalTest {
@@ -68,7 +67,7 @@ public class ASTRATransformationEngineFunctionalTest {
                     .limit(1000L)
                     .map(line -> line.split(","))
                     .map(lineParts -> FrequencyAwareWordPair.of(lineParts[0], lineParts[1], Integer.parseInt(lineParts[2])))
-                    .collect(toList());
+                    .toList();
             wordPairs = removeDuplicates(wordPairs);
             List<FrequencyAwareWordPair> wordPairs1 = wordPairs.subList(0, wordPairs.size() / 3);
             List<FrequencyAwareWordPair> wordPairs2 = wordPairs.subList(wordPairs.size() / 3, 2 * wordPairs.size() / 3);
@@ -126,7 +125,7 @@ public class ASTRATransformationEngineFunctionalTest {
     private static List<FrequencyAwareWordPair> removeDuplicates(List<FrequencyAwareWordPair> wordPairs) {
         return new ArrayList<>(wordPairs
                 .stream()
-                .collect(toMap(FrequencyAwareWordPair::getLeftWord, Function.identity(), (x, y) -> x))
+                .collect(toUnmodifiableMap(FrequencyAwareWordPair::getLeftWord, Function.identity(), (x, y) -> x))
                 .values());
     }
 

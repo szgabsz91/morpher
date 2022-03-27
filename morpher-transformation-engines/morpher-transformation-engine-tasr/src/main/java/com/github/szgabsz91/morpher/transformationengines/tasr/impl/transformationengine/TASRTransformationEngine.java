@@ -187,7 +187,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * TASR based {@link IBidirectionalTransformationEngine} implementation.
@@ -290,14 +290,14 @@ public class TASRTransformationEngine implements IBidirectionalTransformationEng
         final Set<WordPair> wordPairs = trainingSet.getWordPairs()
                 .stream()
                 .map(FrequencyAwareWordPair::getWordPair)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         this.forwardsTree.learn(wordPairs);
 
         if (!this.unidirectional) {
             final Set<WordPair> inverseWordPairs = wordPairs
                     .stream()
                     .map(WordPair::inverse)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             this.backwardsTree.learn(inverseWordPairs);
         }
     }

@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExcludeDuringBuild
@@ -98,7 +98,7 @@ public class ASTRAFunctionalTest {
             this.wordPairs = mapping.values()
                     .stream()
                     .map(list -> list.get(0))
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
         }
     }
 

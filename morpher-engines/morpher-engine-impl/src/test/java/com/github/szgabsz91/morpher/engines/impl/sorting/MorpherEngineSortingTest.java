@@ -48,10 +48,8 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableMap;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExcludeDuringBuild
@@ -111,12 +109,12 @@ public class MorpherEngineSortingTest {
                 .stream()
                 .map(GeneratedItem::getPreanalyzedTrainingItems)
                 .flatMap(Collection::stream)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         Map<Word, Set<AffixType>> lemmaMap = generatedItems
                 .stream()
                 .map(generatedItem -> generatedItem.getWordPair().getLeftWord())
                 .map(lemma -> Map.entry(lemma, Set.of(AFFIX_TYPE_POS)))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
         this.engine.learn(PreanalyzedTrainingItems.of(preanalyzedTrainingItems));
         this.engine.learn(LemmaMap.of(lemmaMap));
 
@@ -133,7 +131,7 @@ public class MorpherEngineSortingTest {
             List<AffixType> expectedAffixTypes = IntStream.range(0, reversedAffixTypes.size())
                     .map(index -> reversedAffixTypes.size() - index - 1)
                     .mapToObj(reversedAffixTypes::get)
-                    .collect(toList());
+                    .toList();
             AnalysisInput analysisInput = AnalysisInput.of(input);
             List<MorpherEngineResponse> responses = timer.measure(() -> this.engine.analyze(analysisInput));
             assertThat(responses).hasSize(1);
@@ -141,7 +139,7 @@ public class MorpherEngineSortingTest {
             List<AffixType> affixTypes = response.getSteps()
                     .stream()
                     .map(Step::getAffixType)
-                    .collect(toList());
+                    .toList();
             assertThat(response.getOutput()).isEqualTo(expectedOutput);
             assertThat(response.getPos().getAffixType()).isEqualTo(expectedPOS);
             assertThat(affixTypes).isEqualTo(expectedAffixTypes);
@@ -162,24 +160,24 @@ public class MorpherEngineSortingTest {
                     .chars()
                     .mapToObj(character -> Character.toString((char) character))
                     .sorted()
-                    .collect(toList());
+                    .toList();
             String sortedString = String.join("", characters);
             Word sortedWord = Word.of(sortedString);
             List<String> uniqueCharacters = characters
                     .stream()
                     .distinct()
                     .sorted()
-                    .collect(toList());
+                    .toList();
             int randomCharacterCount = (int) Math.floor(uniqueCharacters.size() * randomnessRatio);
             Set<Integer> characterIndicesToRandomize = generateRandomIndices(uniqueCharacters, randomCharacterCount);
             Set<String> charactersToRandomize = characterIndicesToRandomize
                     .stream()
                     .map(uniqueCharacters::get)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             List<AffixType> affixTypes = charactersToRandomize
                     .stream()
                     .map(AffixType::of)
-                    .collect(toList());
+                    .toList();
 
             List<PreanalyzedTrainingItem> preanalyzedTrainingItems = new ArrayList<>();
             Word currentWord = sortedWord;

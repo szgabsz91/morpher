@@ -191,8 +191,8 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableMap;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * {@link IMarkovModel} implementation that stores every single transition route.
@@ -525,7 +525,7 @@ public class FullMarkovModel implements IMarkovModel {
                     final double probability = relativeFrequency / (double) totalRelativeFrequencies;
                     return ProbabilisticAffixType.of(nextAffixType, probability);
                 })
-                .collect(toList());
+                .toList();
     }
 
     /**
@@ -540,7 +540,7 @@ public class FullMarkovModel implements IMarkovModel {
                     .map(index -> route.size() - index - 1)
                     .mapToObj(route::get)
                     .map(Node::getAffixType)
-                    .collect(toList());
+                    .toList();
             result.add(reversedRoute, frequency);
         });
         return result;
@@ -600,7 +600,7 @@ public class FullMarkovModel implements IMarkovModel {
                     }
                     return route;
                 })
-                .collect(toMap(Function.identity(), route -> {
+                .collect(toUnmodifiableMap(Function.identity(), route -> {
                     return route.get(route.size() - 1).getChild(IMarkovModel.END).get().getRelativeFrequency();
                 }));
     }
@@ -617,7 +617,7 @@ public class FullMarkovModel implements IMarkovModel {
         final Set<AffixType> extendedAffixTypes = extendedNodes
                 .stream()
                 .map(Node::getAffixType)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
 
         if (extendedAffixTypes.containsAll(requiredAffixTypes)) {
             final List<ProbabilisticAffixType> probabilisticAffixTypes = extendedNodes
@@ -677,7 +677,7 @@ public class FullMarkovModel implements IMarkovModel {
         final List<AffixType> nominatorAffixTypes = probabilisticAffixTypes
                 .stream()
                 .map(ProbabilisticAffixType::getAffixType)
-                .collect(toList());
+                .toList();
         final List<AffixType> denominatorAffixTypes = new ArrayList<>(nominatorAffixTypes);
         denominatorAffixTypes.remove(denominatorAffixTypes.size() - 1);
         final double nominator = this.getRelativeFrequencyOfRoutesContaining(nominatorAffixTypes);

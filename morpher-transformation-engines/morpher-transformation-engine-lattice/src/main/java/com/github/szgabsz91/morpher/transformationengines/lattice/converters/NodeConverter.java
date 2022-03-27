@@ -190,8 +190,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * Protocol Buffer converter for the {@link Node} class.
  *
@@ -311,15 +309,15 @@ public class NodeConverter implements IConverter<Node, NodeMessage> {
         final List<ICharacter> prefix = nodeMessage.getPrefixList()
                 .stream()
                 .map(this.characterConverter::convertBack)
-                .collect(toList());
+                .toList();
         final List<ICharacter> core = nodeMessage.getCoreList()
                 .stream()
                 .map(this.characterConverter::convertBack)
-                .collect(toList());
+                .toList();
         final List<ICharacter> postfix = nodeMessage.getPostfixList()
                 .stream()
                 .map(this.characterConverter::convertBack)
-                .collect(toList());
+                .toList();
         final Position frontPosition = nodeMessage.hasFrontPosition() ?
                 Position.of(nodeMessage.getFrontPosition().getPosition()) :
                 null;
@@ -330,7 +328,7 @@ public class NodeConverter implements IConverter<Node, NodeMessage> {
         final List<ITransformation> transformations = nodeMessage.getTransformationList()
                 .stream()
                 .map(this.transformationConverter::convertBack)
-                .collect(toList());
+                .toList();
         final Rule rule = new Rule(context, transformations, characterRepository, wordConverter);
         final Node result = new Node(rule, nodeMessage.getInconsistent(), new ArrayList<>(), new ArrayList<>());
         result.setLevel(nodeMessage.getLevel());

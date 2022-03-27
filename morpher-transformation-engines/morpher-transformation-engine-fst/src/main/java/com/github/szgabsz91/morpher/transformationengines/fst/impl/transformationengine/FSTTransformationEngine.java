@@ -187,7 +187,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * FST based {@link IBidirectionalTransformationEngine} implementation.
@@ -300,14 +300,14 @@ public class FSTTransformationEngine implements IBidirectionalTransformationEngi
         final Set<WordPair> wordPairs = trainingSet.getWordPairs()
                 .stream()
                 .map(FrequencyAwareWordPair::getWordPair)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         this.forwardsFST.learn(wordPairs);
 
         if (!this.unidirectional) {
             final Set<WordPair> inverseWordPairs = wordPairs
                     .stream()
                     .map(WordPair::inverse)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             this.backwardsFST.learn(inverseWordPairs);
         }
     }
