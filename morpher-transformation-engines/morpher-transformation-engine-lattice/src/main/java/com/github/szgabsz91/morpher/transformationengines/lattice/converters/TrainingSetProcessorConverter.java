@@ -193,8 +193,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * Protocol Buffer converter for the {@link ITrainingSetProcessor} component.
  *
@@ -242,7 +240,7 @@ public class TrainingSetProcessorConverter implements IConverter<ITrainingSetPro
             final List<TransformationMessage> transformationMessages = transformations
                     .stream()
                     .map(this.transformationConverter::convert)
-                    .collect(toList());
+                    .toList();
             final TransformationListMessage transformationListMessage = TransformationListMessage.newBuilder()
                     .addAllTransformations(transformationMessages)
                     .build();
@@ -293,7 +291,7 @@ public class TrainingSetProcessorConverter implements IConverter<ITrainingSetPro
             final List<ITransformation> transformations = message.getTransformationsList()
                     .stream()
                     .map(this.transformationConverter::convertBack)
-                    .collect(toList());
+                    .toList();
             final long frequency = trainingSetProcessorMessage.getFrequencyMapMap().get(++index);
             frequencyMap.put(transformations, frequency);
         }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PreanalyzedTrainingItemsTest {
@@ -27,7 +27,7 @@ public class PreanalyzedTrainingItemsTest {
         PreanalyzedTrainingItems preanalyzedTrainingItems = PreanalyzedTrainingItems.of(set);
         Set<PreanalyzedTrainingItem> result = preanalyzedTrainingItems
                 .stream()
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         assertThat(result).isEqualTo(set);
     }
 

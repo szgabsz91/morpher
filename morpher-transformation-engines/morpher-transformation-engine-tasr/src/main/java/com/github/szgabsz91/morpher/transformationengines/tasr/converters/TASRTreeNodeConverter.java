@@ -175,7 +175,7 @@ import com.github.szgabsz91.morpher.transformationengines.tasr.protocolbuffers.T
 import java.nio.file.Path;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Converter for the {@link TASRTreeNode} that can convert it to and from Protocol Buffers.
@@ -208,7 +208,7 @@ public class TASRTreeNodeConverter implements IConverter<TASRTreeNode, TASRTreeN
         final Set<SuffixRuleMessage> suffixRuleMessages = treeNode.getSuffixRules()
                 .stream()
                 .map(this.suffixRuleConverter::convert)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final char firstCharacter = treeNode.getFirstCharacter();
         final String firstCharacterString = firstCharacter == '\0' ? "" : Character.toString(firstCharacter);
         final int parentNodeId = treeNode.getParent() == null ? ROOT_ID : treeNode.getParent().getId();

@@ -17,8 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -134,7 +133,7 @@ public class FullMarkovModelTest {
 
             AffixTypeChain affixTypeChain1 = affixTypeChains
                     .stream()
-                    .filter(affixTypeChain -> affixTypeChain.getAffixTypes().stream().map(ProbabilisticAffixType::getAffixType).collect(toList()).get(1).equals(AffixType.of("<PLUR>")))
+                    .filter(affixTypeChain -> affixTypeChain.getAffixTypes().stream().map(ProbabilisticAffixType::getAffixType).toList().get(1).equals(AffixType.of("<PLUR>")))
                     .findFirst()
                     .get();
             assertThat(affixTypeChain1.getAffixTypes()).containsExactly(
@@ -146,7 +145,7 @@ public class FullMarkovModelTest {
 
             AffixTypeChain affixTypeChain2 = affixTypeChains
                     .stream()
-                    .filter(affixTypeChain -> affixTypeChain.getAffixTypes().stream().map(ProbabilisticAffixType::getAffixType).collect(toList()).get(1).equals(AffixType.of("<CAS<ACC>>")))
+                    .filter(affixTypeChain -> affixTypeChain.getAffixTypes().stream().map(ProbabilisticAffixType::getAffixType).toList().get(1).equals(AffixType.of("<CAS<ACC>>")))
                     .findFirst()
                     .get();
             assertThat(affixTypeChain2.getAffixTypes()).containsExactly(
@@ -408,11 +407,11 @@ public class FullMarkovModelTest {
                         List<AffixType> affixTypes = entry.getKey()
                                 .stream()
                                 .map(FullMarkovModel.Node::getAffixType)
-                                .collect(toList());
+                                .toList();
                         long relativeFrequency = entry.getValue();
                         return Map.entry(affixTypes, relativeFrequency);
                     })
-                    .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                    .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
             assertThat(routes).containsOnly(
                     Map.entry(List.of(AffixType.of("X"), AffixType.of("Z")), 2L),
                     Map.entry(List.of(AffixType.of("X"), AffixType.of("W")), 1L),

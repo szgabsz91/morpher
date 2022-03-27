@@ -194,7 +194,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Calculates if one object is subset of another one.
@@ -259,11 +259,11 @@ public final class SubsetCalculator {
         final Set<? extends Class<?>> attributeClasses1 = attributes1
                 .stream()
                 .map(Object::getClass)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final Set<? extends Class<?>> attributeClasses2 = attributes2
                 .stream()
                 .map(Object::getClass)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
 
         if (!attributeClasses2.containsAll(attributeClasses1)) {
             return false;
@@ -294,11 +294,11 @@ public final class SubsetCalculator {
         final Set<? extends Class<?>> attributeClasses1 = attributes1
                 .stream()
                 .map(Object::getClass)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final Set<? extends Class<?>> attributeClasses2 = attributes2
                 .stream()
                 .map(Object::getClass)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
 
         if (!attributeClasses2.containsAll(attributeClasses1)) {
             return false;

@@ -31,8 +31,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 @ExcludeDuringBuild
 public class ASTRAUnsupervisedTest {
@@ -92,7 +91,7 @@ public class ASTRAUnsupervisedTest {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("../../morpher-language-handlers/data/ocamorph-results.csv"), StandardCharsets.UTF_8)) {
             Set<String> lines = reader
                     .lines()
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             HunmorphAnnotationTokenizer hunmorphAnnotationTokenizer = new HunmorphAnnotationTokenizer();
             return lines
                     .stream()
@@ -129,10 +128,10 @@ public class ASTRAUnsupervisedTest {
                                 .map(RuleGroup::getAtomicRules)
                                 .flatMap(Collection::stream)
                                 .sorted(comparing(atomicRule -> atomicRule.getContext().length()))
-                                .collect(toList());
+                                .toList();
                         return new Item(result, wordPair, atomicRules);
                     })
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
         }
     }
 
@@ -140,7 +139,7 @@ public class ASTRAUnsupervisedTest {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("../../morpher-language-handlers/data/ocamorph-results.csv"), StandardCharsets.UTF_8)) {
             Set<String> lines = reader
                     .lines()
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             HunmorphAnnotationTokenizer hunmorphAnnotationTokenizer = new HunmorphAnnotationTokenizer();
             return lines
                     .stream()
@@ -182,13 +181,13 @@ public class ASTRAUnsupervisedTest {
                                             .map(RuleGroup::getAtomicRules)
                                             .flatMap(Collection::stream)
                                             .sorted(comparing(atomicRule -> atomicRule.getContext().length()))
-                                            .collect(toList());
+                                            .toList();
                                     return new Item(result, wordPair, atomicRules);
                                 });
                     })
                     .filter(Optional::isPresent)
                     .map(Optional::get)
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
         }
     }
 
@@ -202,7 +201,7 @@ public class ASTRAUnsupervisedTest {
                             .map(Item::getAtomicRules)
                             .flatMap(Collection::stream)
                             .filter(atomicRules::contains)
-                            .collect(toList());
+                            .toList();
                     atomicRules.removeAll(atomicRulesToRemove);
                 });
     }
@@ -229,7 +228,7 @@ public class ASTRAUnsupervisedTest {
                     return null;
                 })
                 .filter(Objects::nonNull)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
     }
 
     private static void printFirstItems(Set<Item> items, String title) {
@@ -294,7 +293,7 @@ public class ASTRAUnsupervisedTest {
             return affixTypeStrings
                     .stream()
                     .map(AffixType::of)
-                    .collect(toList());
+                    .toList();
         }
 
     }

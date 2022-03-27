@@ -29,8 +29,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 @SuppressWarnings("PMD.LoggerIsNotStaticFinal")
 public abstract class AbstractRadialTreeExporter implements IGraphExporter {
@@ -63,7 +62,7 @@ public abstract class AbstractRadialTreeExporter implements IGraphExporter {
                     .stream()
                     .map(node -> node.addRoutes(routeMap))
                     .flatMap(Collection::stream)
-                    .collect(toList());
+                    .toList();
         }
 
         startNode.process(this::preprocessTree);
@@ -85,7 +84,7 @@ public abstract class AbstractRadialTreeExporter implements IGraphExporter {
                     }
                     return affixTypes;
                 })
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         this.logger.info("Generated {} routes", routes.size());
         int maximumDeth = routes
                 .stream()

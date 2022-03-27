@@ -186,7 +186,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 /**
  * Dictionary based {@link IBidirectionalTransformationEngine} implementation that uses maps under the hood to store
@@ -298,7 +298,7 @@ public class DictionaryTransformationEngine
         this.forwardsDictionary = dictionaryTransformationEngine.forwardsDictionary;
         this.backwardsDictionary = this.forwardsDictionary.entrySet()
                 .stream()
-                .collect(toMap(Map.Entry::getValue, Map.Entry::getKey));
+                .collect(toUnmodifiableMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
     /**
@@ -350,7 +350,7 @@ public class DictionaryTransformationEngine
         this.forwardsDictionary = dictionaryTransformationEngine.getForwardsDictionary();
         this.backwardsDictionary = this.forwardsDictionary.entrySet()
                 .stream()
-                .collect(toMap(Map.Entry::getValue, Map.Entry::getKey));
+                .collect(toUnmodifiableMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
 }

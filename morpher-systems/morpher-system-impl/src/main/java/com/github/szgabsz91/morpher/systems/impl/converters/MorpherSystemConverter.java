@@ -179,7 +179,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 /**
  * Protocol Buffer converter for the {@link MorpherSystem} class.
@@ -198,7 +198,7 @@ public class MorpherSystemConverter implements IConverter<MorpherSystem, Morpher
         final Map<String, Any> engineMap = morpherSystem.getMorpherEngineMap().entrySet()
                 .stream()
                 .map(entry -> Map.entry(entry.getKey().toString(), Any.pack(entry.getValue().toMessage())))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
 
         return MorpherSystemMessage.newBuilder()
                 .putAllEngineMap(engineMap)

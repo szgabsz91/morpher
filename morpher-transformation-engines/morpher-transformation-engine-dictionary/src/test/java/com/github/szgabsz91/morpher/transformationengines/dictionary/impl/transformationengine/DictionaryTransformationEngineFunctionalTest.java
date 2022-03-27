@@ -23,8 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DictionaryTransformationEngineFunctionalTest {
@@ -40,7 +39,7 @@ public class DictionaryTransformationEngineFunctionalTest {
                     .limit(10000L)
                     .map(line -> line.split(","))
                     .map(lineParts -> WordPair.of(lineParts[0], lineParts[1]))
-                    .collect(toList());
+                    .toList();
             wordPairs = removeDuplicates(wordPairs);
             List<WordPair> wordPairs1 = wordPairs.subList(0, 3000);
             List<WordPair> wordPairs2 = wordPairs.subList(3000, 6000);
@@ -61,7 +60,7 @@ public class DictionaryTransformationEngineFunctionalTest {
         List<FrequencyAwareWordPair> additionalFrequencyAwareWordPairs = additionalWordPairs
                 .stream()
                 .map(FrequencyAwareWordPair::of)
-                .collect(toList());
+                .toList();
         dictionaryTransformationEngine.learn(TrainingSet.of(new HashSet<>(additionalFrequencyAwareWordPairs)));
 
         // Save and reload
@@ -88,7 +87,7 @@ public class DictionaryTransformationEngineFunctionalTest {
     private static List<WordPair> removeDuplicates(List<WordPair> wordPairs) {
         Collection<WordPair> nonRedundantWordPairs = wordPairs
                 .stream()
-                .collect(toMap(WordPair::getLeftWord, Function.identity(), (x, y) -> x))
+                .collect(toUnmodifiableMap(WordPair::getLeftWord, Function.identity(), (x, y) -> x))
                 .values();
         return new ArrayList<>(nonRedundantWordPairs);
     }

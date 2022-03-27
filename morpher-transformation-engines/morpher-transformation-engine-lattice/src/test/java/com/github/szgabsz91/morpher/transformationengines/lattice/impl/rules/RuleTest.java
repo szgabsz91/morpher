@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RuleTest {
@@ -779,7 +778,7 @@ public class RuleTest {
                 .chars()
                 .mapToObj(character -> String.valueOf((char) character))
                 .map(characterRepository::getCharacter)
-                .collect(toList());
+                .toList();
         boolean matches = rule.matches(word);
         boolean matchesFromFront = rule.matchesFromFront(word);
         boolean matchesFromBack = rule.matchesFromBack(word);

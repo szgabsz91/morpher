@@ -185,7 +185,7 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Protocol Buffer converter for the {@link ITransformation} interface and its subclasses.
@@ -290,7 +290,7 @@ public class TransformationConverter implements IConverter<ITransformation, Tran
                             throw new IllegalStateException("Attribute enum could not be instantiated", e);
                         }
                     })
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
             return new Replacement(attributeDeltas, characterRepository);
         }
 
@@ -320,7 +320,7 @@ public class TransformationConverter implements IConverter<ITransformation, Tran
                     final String attributeValue = change.substring(lastDotIndex + 1);
                     return getAttributeValue(attributeType, attributeValue);
                 })
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
     }
 
     private static IAttribute getAttributeValue(final String attributeType, final String attributeValue) {

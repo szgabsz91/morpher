@@ -30,8 +30,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -55,7 +54,7 @@ public class TASRTransformationEngineFunctionalTest {
                     .lines()
                     .map(line -> line.split(","))
                     .map(lineParts -> WordPair.of(lineParts[0], lineParts[1]))
-                    .collect(toList());
+                    .toList();
             wordPairs = removeDuplicates(wordPairs);
             List<WordPair> wordPairs1 = wordPairs.subList(0, 160);
             List<WordPair> wordPairs2 = wordPairs.subList(160, 320);
@@ -79,7 +78,7 @@ public class TASRTransformationEngineFunctionalTest {
         List<FrequencyAwareWordPair> additionalFrequencyAwareWordPairs = additionalWordPairs
                 .stream()
                 .map(FrequencyAwareWordPair::of)
-                .collect(toList());
+                .toList();
         tasrTransformationEngine.learn(TrainingSet.of(new HashSet<>(additionalFrequencyAwareWordPairs)));
 
         // Save and reload
@@ -127,7 +126,7 @@ public class TASRTransformationEngineFunctionalTest {
     private static List<WordPair> removeDuplicates(List<WordPair> wordPairs) {
         Collection<WordPair> nonRedundantWordPairs = wordPairs
                 .stream()
-                .collect(toMap(WordPair::getLeftWord, Function.identity(), (x, y) -> x))
+                .collect(toUnmodifiableMap(WordPair::getLeftWord, Function.identity(), (x, y) -> x))
                 .values();
         return new ArrayList<>(nonRedundantWordPairs);
     }

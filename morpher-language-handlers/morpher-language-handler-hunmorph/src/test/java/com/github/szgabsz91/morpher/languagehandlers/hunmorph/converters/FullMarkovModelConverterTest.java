@@ -14,8 +14,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FullMarkovModelConverterTest {
@@ -34,14 +33,14 @@ public class FullMarkovModelConverterTest {
         markovModel.add(List.of(AffixType.of("AFF3"), AffixType.of("AFF4")), 3L);
 
         MarkovModelMessage message = this.converter.convert(markovModel);
-        assertThat(message.getRoutesList()).containsExactly(
-                MarkovModelRouteMessage.newBuilder()
-                        .addAllAffixTypes(List.of("AFF3", "AFF4"))
-                        .setRelativeFrequency(3L)
-                        .build(),
+        assertThat(message.getRoutesList()).containsOnly(
                 MarkovModelRouteMessage.newBuilder()
                         .addAllAffixTypes(List.of("AFF1", "AFF2"))
                         .setRelativeFrequency(2L)
+                        .build(),
+                MarkovModelRouteMessage.newBuilder()
+                        .addAllAffixTypes(List.of("AFF3", "AFF4"))
+                        .setRelativeFrequency(3L)
                         .build()
         );
 
@@ -52,14 +51,14 @@ public class FullMarkovModelConverterTest {
                     List<AffixType> affixTypes = entry.getKey()
                             .stream()
                             .map(FullMarkovModel.Node::getAffixType)
-                            .collect(toList());
+                            .toList();
                     long frequency = entry.getValue();
                     return Map.entry(affixTypes, frequency);
                 })
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
-        assertThat(routes).containsExactly(
-                Map.entry(List.of(AffixType.of("AFF3"), AffixType.of("AFF4")), 3L),
-                Map.entry(List.of(AffixType.of("AFF1"), AffixType.of("AFF2")), 2L)
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
+        assertThat(routes).containsOnly(
+                Map.entry(List.of(AffixType.of("AFF1"), AffixType.of("AFF2")), 2L),
+                Map.entry(List.of(AffixType.of("AFF3"), AffixType.of("AFF4")), 3L)
         );
 
         Path file = Files.createTempFile("agent", "markovModel");

@@ -37,7 +37,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CompleteLatticeBuilderTest {
@@ -464,7 +464,7 @@ public class CompleteLatticeBuilderTest {
         Set<Rule> rules = wordPairs
                 .stream()
                 .map(wordPair -> cutWordPairProcessor.induceRules(wordPair).getRules().get(0))
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         latticeBuilder.addRules(rules);
         Lattice originalLattice = latticeBuilder.getLattice();
         LatticeConverter latticeConverter = new LatticeConverter();

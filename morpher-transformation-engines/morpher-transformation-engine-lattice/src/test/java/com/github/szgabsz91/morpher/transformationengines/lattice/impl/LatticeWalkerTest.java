@@ -44,7 +44,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LatticeWalkerTest {
@@ -674,7 +674,7 @@ public class LatticeWalkerTest {
                     .limit(200L)
                     .map(line -> line.split(","))
                     .map(lineParts -> WordPair.of(lineParts[0], lineParts[1]))
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
         }
         ICharacterRepository characterRepository = HungarianAttributedCharacterRepository.get();
         IWordConverter wordConverter = new DoubleConsonantWordConverter();

@@ -182,7 +182,7 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * {@link ITransformation} implementation class for replacement.
@@ -316,7 +316,7 @@ public class Replacement implements ITransformation {
         final Set<IAttribute> newAttributes = attributeMap.values()
                 .stream()
                 .flatMap(Collection::stream)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
 
         try {
             final ICharacter toCharacter = characterRepository.getCharacter(newAttributes);

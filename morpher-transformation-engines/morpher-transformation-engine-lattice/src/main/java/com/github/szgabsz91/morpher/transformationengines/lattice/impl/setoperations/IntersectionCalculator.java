@@ -200,7 +200,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Calculates intersections of different objects.
@@ -271,11 +271,11 @@ public final class IntersectionCalculator {
         final Set<? extends Class<?>> attributeClasses1 = attributes1
                 .stream()
                 .map(Object::getClass)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final Set<? extends Class<?>> attributeClasses2 = attributes2
                 .stream()
                 .map(Object::getClass)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final Set<? extends Class<?>> commonAttributeClasses = new HashSet<>(attributeClasses1);
         commonAttributeClasses.retainAll(attributeClasses2);
 
@@ -314,11 +314,11 @@ public final class IntersectionCalculator {
         final Set<? extends Class<?>> attributeClasses1 = attributes1
                 .stream()
                 .map(Object::getClass)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final Set<? extends Class<?>> attributeClasses2 = attributes2
                 .stream()
                 .map(Object::getClass)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final Set<? extends Class<?>> commonAttributeClasses = new HashSet<>(attributeClasses1);
         commonAttributeClasses.retainAll(attributeClasses2);
 

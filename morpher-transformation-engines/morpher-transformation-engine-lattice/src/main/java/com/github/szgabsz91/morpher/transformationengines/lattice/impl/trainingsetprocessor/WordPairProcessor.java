@@ -188,8 +188,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * The default {@link IWordPairProcessor} implementation class.
  *
@@ -235,30 +233,30 @@ public final class WordPairProcessor implements IWordPairProcessor {
             final List<ICharacter> fullPrefix = word
                     .stream()
                     .limit(removedFromBeginning)
-                    .collect(toList());
+                    .toList();
             List<ICharacter> prefix = fullPrefix;
             if (maximalContextSize != Integer.MAX_VALUE) {
                 prefix = fullPrefix
                         .stream()
                         .skip(Math.max(0, removedFromBeginning - maximalContextSize))
                         .limit(Math.min(maximalContextSize, removedFromBeginning))
-                        .collect(toList());
+                        .toList();
             }
             final List<ICharacter> core = word
                     .stream()
                     .skip(removedFromBeginning)
                     .limit(word.size() - removedFromEnd - removedFromBeginning)
-                    .collect(toList());
+                    .toList();
             final List<ICharacter> fullPostfix = word
                     .stream()
                     .skip(word.size() - removedFromEnd)
-                    .collect(toList());
+                    .toList();
             List<ICharacter> postfix = fullPostfix;
             if (maximalContextSize != Integer.MAX_VALUE) {
                 postfix = fullPostfix
                         .stream()
                         .limit(maximalContextSize)
-                        .collect(toList());
+                        .toList();
             }
             final List<ICharacter> contextCharacters = new ArrayList<>(
                     prefix.size() + core.size() + postfix.size()
@@ -272,7 +270,7 @@ public final class WordPairProcessor implements IWordPairProcessor {
             final List<ITransformation> transformations = path
                     .stream()
                     .map(WordPairProcessorTreeNode::getTransformation)
-                    .collect(toList());
+                    .toList();
             final Rule rule = new Rule(context, transformations, characterRepository, wordConverter);
             rules.add(rule);
         }
@@ -371,11 +369,11 @@ public final class WordPairProcessor implements IWordPairProcessor {
         final List<ICharacter> wordReverse = IntStream.range(0, word.size())
                 .map(index -> word.size() - index - 1)
                 .mapToObj(word::get)
-                .collect(toList());
+                .toList();
         final List<ICharacter> contextReverse = IntStream.range(0, context.size())
                 .map(index -> context.size() - index - 1)
                 .mapToObj(context::get)
-                .collect(toList());
+                .toList();
 
         return this.getFrontPosition(wordReverse, contextReverse, removedFromEnd);
     }

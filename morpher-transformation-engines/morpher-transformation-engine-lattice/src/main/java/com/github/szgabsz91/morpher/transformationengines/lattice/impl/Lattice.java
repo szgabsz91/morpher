@@ -190,7 +190,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Lattice implementation class.
@@ -512,7 +512,7 @@ public class Lattice {
                     return n.getRule().getContext().equals(node.getRule().getContext()) &&
                             !n.getRule().getTransformations().equals(node.getRule().getTransformations());
                 })
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         if (!ambiguousPaths.isEmpty()) {
             if (this.buildListener != null) {
                 ambiguousPaths.forEach(n -> this.buildListener.onNodeBecomingInconsistent(this, n));

@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-
 @ExcludeDuringBuild
 public class LatticeCutExporterTest {
 
@@ -92,7 +90,7 @@ public class LatticeCutExporterTest {
         wordPairs = wordPairs
                 .stream()
                 .map(wordPair -> WordPair.of(wordPair.getRightWord(), wordPair.getLeftWord()))
-                .collect(toList());
+                .toList();
         Set<Rule> rules = trainingSetProcessor.induceRules(wordPairs);
         latticeBuilder.addRules(rules);
         Lattice lattice = latticeBuilder.getLattice();

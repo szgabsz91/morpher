@@ -179,7 +179,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 /**
  * {@link IHyphenator} implementation that caches the responses.
@@ -244,7 +244,7 @@ public class CachingHyphenator implements IHyphenator {
                             .collect(joining("|"));
                     return Map.entry(key, value);
                 })
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
         return HyphenatorMessage.newBuilder()
                 .putAllCache(cache)
                 .build();
@@ -266,7 +266,7 @@ public class CachingHyphenator implements IHyphenator {
                     final String[] value = entry.getValue().split("\\|");
                     return Map.entry(key, value);
                 })
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
         this.cache.clear();
         this.cache.putAll(cache);
     }

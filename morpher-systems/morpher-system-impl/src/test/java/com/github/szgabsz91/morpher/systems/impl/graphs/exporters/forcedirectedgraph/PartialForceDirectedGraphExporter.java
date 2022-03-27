@@ -12,8 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 public class PartialForceDirectedGraphExporter extends AbstractForceDirectedGraphExporter {
 
@@ -43,7 +42,7 @@ public class PartialForceDirectedGraphExporter extends AbstractForceDirectedGrap
                     }
                     return affixTypes;
                 })
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
     }
 
     private static class TreeNode {
@@ -97,7 +96,7 @@ public class PartialForceDirectedGraphExporter extends AbstractForceDirectedGrap
                     .stream()
                     .sorted(Comparator.<Map.Entry<String, Long>>comparingLong(Map.Entry::getValue).reversed())
                     .limit(3L)
-                    .collect(toList());
+                    .toList();
             if (entryList.size() >= 1) {
                 this.setWinnerChild(new TreeNode(entryList.get(0).getKey()));
             }
@@ -125,7 +124,7 @@ public class PartialForceDirectedGraphExporter extends AbstractForceDirectedGrap
                     })
                     .sorted(Comparator.<Map.Entry<List<String>, Long>>comparingLong(Map.Entry::getValue).reversed())
                     .limit(3L)
-                    .collect(toList());
+                    .toList();
             if (entryList.size() >= 1) {
                 this.setWinnerChild(new TreeNode(last(entryList.get(0).getKey())));
             }

@@ -20,8 +20,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 @ExcludeDuringBuild
 public class PyphenHyphenatorMultiThreadTest {
@@ -39,7 +38,7 @@ public class PyphenHyphenatorMultiThreadTest {
                     .filter(line -> !"elősegít".equals(line))
                     .map(line -> line.split(","))
                     .map(lineParts -> new HyphenationResult(lineParts[0], lineParts[1].split("-")))
-                    .collect(toMap(HyphenationResult::getWord, Function.identity()));
+                    .collect(toUnmodifiableMap(HyphenationResult::getWord, Function.identity()));
         }
 
         // Process items
@@ -52,7 +51,7 @@ public class PyphenHyphenatorMultiThreadTest {
                     .lines()
                     .map(line -> line.split(",")[0])
                     .distinct()
-                    .collect(toList());
+                    .toList();
             sink.setTotalItemSize(wordsToProcess.size());
             sinkThread.start();
 

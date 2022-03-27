@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProbabilisticWordTest {
@@ -29,11 +28,11 @@ public class ProbabilisticWordTest {
         List<ProbabilisticWord> sortedProbabilisticWords = probabilisticWords
                 .stream()
                 .sorted()
-                .collect(toList());
+                .toList();
         List<Double> probabilities = sortedProbabilisticWords
                 .stream()
                 .map(ProbabilisticWord::getProbability)
-                .collect(toList());
+                .toList();
         assertThat(probabilities).containsExactly(1.0, 0.8, 0.5);
     }
 

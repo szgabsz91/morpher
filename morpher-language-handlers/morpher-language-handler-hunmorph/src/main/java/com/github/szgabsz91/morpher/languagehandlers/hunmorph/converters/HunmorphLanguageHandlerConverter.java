@@ -191,6 +191,8 @@ import java.util.zip.GZIPInputStream;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableMap;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Protocol Buffer converter for the {@link HunmorphLanguageHandler} class.
@@ -218,7 +220,7 @@ public class HunmorphLanguageHandlerConverter
                                 final List<String> affixTypes = annotationTokenizerResult.getAffixTypes()
                                         .stream()
                                         .map(AffixType::toString)
-                                        .collect(toList());
+                                        .toList();
                                 return AnnotationTokenizerResultMessage.newBuilder()
                                         .setExpression(annotationTokenizerResult.getExpression())
                                         .setGrammaticalForm(annotationTokenizerResult.getGrammaticalForm())
@@ -227,21 +229,21 @@ public class HunmorphLanguageHandlerConverter
                                         .setFrequency(annotationTokenizerResult.getFrequency())
                                         .build();
                             })
-                            .collect(toList());
+                            .toList();
                     final AnnotationTokenizerResultListMessage listMessage = AnnotationTokenizerResultListMessage
                             .newBuilder()
                             .addAllAnnotationTokenizerResults(annotationTokenizerResultMessages)
                             .build();
                     return Map.entry(entry.getKey(), listMessage);
                 })
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
 
         final String markovModelClassName = hunmorphLanguageHandler.getMarkovModel().getClass().getName();
         final MarkovModelMessage markovModel = hunmorphLanguageHandler.getMarkovModel().toMessage();
         final Map<String, POSCollection> lemmaMap = hunmorphLanguageHandler.getLemmaMap().entrySet()
                 .stream()
                 .map(entry -> Map.entry(entry.getKey(), createPOSCollection(entry.getValue())))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
 
         return HunmorphLanguageHandlerMessage.newBuilder()
                 .putAllAnnotationTokenizerResultMap(annotationTokenizerResultMap)
@@ -332,7 +334,7 @@ public class HunmorphLanguageHandlerConverter
         final Set<String> affixTypeStrings = affixTypes
                 .stream()
                 .map(AffixType::toString)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
 
         return POSCollection.newBuilder()
                 .addAllAffixTypes(affixTypeStrings)

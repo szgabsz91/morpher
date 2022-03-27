@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -112,7 +111,7 @@ public class HunmorphMorpherEngineTest {
                 .stream()
                 .map(MorpherEngineResponse::getOutput)
                 .map(Word::toString)
-                .collect(toList());
+                .toList();
         assertThat(outputs).containsExactlyInAnyOrder("hababl", "hababla", "habablá", "habablát");
     }
 

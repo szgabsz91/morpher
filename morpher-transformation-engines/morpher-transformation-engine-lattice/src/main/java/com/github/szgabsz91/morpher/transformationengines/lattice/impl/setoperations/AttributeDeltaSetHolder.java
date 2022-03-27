@@ -175,7 +175,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 /**
  * Class for wrapping two attribute delta sets and classes.
@@ -200,10 +200,10 @@ public final class AttributeDeltaSetHolder {
             final Set<AttributeDelta<? super IAttribute>> attributeDeltas2) {
         this.attributeDeltaMap1 = attributeDeltas1
                 .stream()
-                .collect(toMap(AttributeDelta::getClazz, Function.identity()));
+                .collect(toUnmodifiableMap(AttributeDelta::getClazz, Function.identity()));
         this.attributeDeltaMap2 = attributeDeltas2
                 .stream()
-                .collect(toMap(AttributeDelta::getClazz, Function.identity()));
+                .collect(toUnmodifiableMap(AttributeDelta::getClazz, Function.identity()));
         this.attributeDeltaClasses1 = attributeDeltaMap1.keySet();
         this.attributeDeltaClasses2 = attributeDeltaMap2.keySet();
         this.commonAttributeDeltaClasses = new HashSet<>(attributeDeltaClasses1);

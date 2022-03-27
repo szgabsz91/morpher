@@ -199,13 +199,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Hunmorph-Ocamorph based language handler implementation.
@@ -361,7 +359,7 @@ public class HunmorphLanguageHandler implements ILanguageHandler<HunmorphLanguag
             final List<AffixType> reversedAffixTypeChain = IntStream.range(0, affixTypeChain.size())
                     .map(index -> affixTypeChain.size() - index - 1)
                     .mapToObj(affixTypeChain::get)
-                    .collect(toList());
+                    .toList();
             this.reversedMarkovModel.add(reversedAffixTypeChain);
         });
     }
@@ -418,7 +416,7 @@ public class HunmorphLanguageHandler implements ILanguageHandler<HunmorphLanguag
                                 return this.hunmorphAnnotationTokenizer.preprocess(result);
                             })
                             .filter(Objects::nonNull)
-                            .collect(Collectors.toList());
+                            .toList();
                 })
                 .orElse(Collections.emptyList());
     }
@@ -466,7 +464,7 @@ public class HunmorphLanguageHandler implements ILanguageHandler<HunmorphLanguag
                             })
                             .orElse(Stream.empty());
                 })
-                .collect(toList());
+                .toList();
         final Map<AffixType, Set<FrequencyAwareWordPair>> affixTypeMap = process(annotationTokenizerResults);
         return LanguageHandlerResponse.of(affixTypeMap);
     }
@@ -513,7 +511,7 @@ public class HunmorphLanguageHandler implements ILanguageHandler<HunmorphLanguag
         return affixTypes
                 .stream()
                 .map(this.markovModel::getProbabilityOfPOS)
-                .collect(toList());
+                .toList();
     }
 
     /**
@@ -575,7 +573,7 @@ public class HunmorphLanguageHandler implements ILanguageHandler<HunmorphLanguag
         return this.hunmorphAnnotationTokenizer.getSupportedAffixTypes()
                 .stream()
                 .map(AffixType::of)
-                .collect(toList());
+                .toList();
     }
 
     /**
@@ -688,7 +686,7 @@ public class HunmorphLanguageHandler implements ILanguageHandler<HunmorphLanguag
                 final List<AffixType> reversedAffixTypes = IntStream.range(0, affixTypes.size())
                         .map(index -> affixTypes.size() - index - 1)
                         .mapToObj(affixTypes::get)
-                        .collect(toList());
+                        .toList();
                 this.reversedMarkovModel.add(reversedAffixTypes);
 
                 final Set<AffixType> posSet = this.lemmaMap.computeIfAbsent(lemma, k -> new HashSet<>());
@@ -766,7 +764,7 @@ public class HunmorphLanguageHandler implements ILanguageHandler<HunmorphLanguag
             Collections.sort(target);
             return IntStream.range(0, target.size())
                     .boxed()
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
         }
 
         source.removeAll(target);

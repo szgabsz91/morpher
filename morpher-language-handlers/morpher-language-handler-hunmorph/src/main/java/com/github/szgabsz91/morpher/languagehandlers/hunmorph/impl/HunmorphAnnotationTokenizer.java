@@ -175,7 +175,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.util.Comparator.comparingInt;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Tokenizes Hunmorph-Ocamorph token strings.
@@ -264,7 +263,7 @@ public class HunmorphAnnotationTokenizer {
                 .stream()
                 .filter(token -> !token.startsWith("/"))
                 .distinct()
-                .collect(toList());
+                .toList();
         knownTokens.sort(comparingInt(String::length).reversed());
         KNOWN_TOKENS = Collections.unmodifiableList(knownTokens);
     }
@@ -390,7 +389,7 @@ public class HunmorphAnnotationTokenizer {
 
                     return affixType;
                 })
-                .collect(toList());
+                .toList();
         AffixType currentPOS = null;
         for (final AffixType affixType : affixTypes) {
             final AffixType pos = getPOS(affixType);

@@ -181,7 +181,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * The default {@link ITrainingSetProcessor} implementation class.
@@ -227,12 +227,12 @@ public class TrainingSetProcessor implements ITrainingSetProcessor {
         if (!isFrequencyCheckRequired) {
             return Arrays.stream(wordPairProcessorResponses)
                     .map(response -> response.getRules().get(0))
-                    .collect(toSet());
+                    .collect(toUnmodifiableSet());
         }
 
         return Arrays.stream(wordPairProcessorResponses)
                 .map(response -> response.getRule(this.frequencyMap))
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
     }
 
 }

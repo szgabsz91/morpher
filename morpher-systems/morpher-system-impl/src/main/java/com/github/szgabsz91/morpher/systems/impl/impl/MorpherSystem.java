@@ -202,8 +202,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * Default {@link IMorpherSystem} implementation.
  *
@@ -451,7 +449,7 @@ public class MorpherSystem implements IMorpherSystem {
 
             final List<Path> morpherEngineFiles = Files.list(tempFolder)
                     .filter(Files::isRegularFile)
-                    .collect(toList());
+                    .toList();
 
             for (final Path engineFile : morpherEngineFiles) {
                 final Path engineFilename = engineFile.getFileName();

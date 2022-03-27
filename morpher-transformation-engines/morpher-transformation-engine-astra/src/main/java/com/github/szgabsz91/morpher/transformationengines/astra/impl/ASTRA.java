@@ -201,8 +201,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableList;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Default implementation of {@link IASTRA}.
@@ -376,7 +376,7 @@ public class ASTRA implements IASTRA {
     void addAtomicRules(final List<AtomicRule> atomicRules) {
         Stream<AtomicRule> atomicRuleStream = atomicRules
                 .stream()
-                .collect(groupingBy(atomicRule -> atomicRule, toList()))
+                .collect(groupingBy(atomicRule -> atomicRule, toUnmodifiableList()))
                 .entrySet()
                 .stream()
                 .map(entry -> {
@@ -398,7 +398,7 @@ public class ASTRA implements IASTRA {
                     .filter(atomicRule -> atomicRule.getAggregatedSupport() > this.minimumAggregatedSupportThreshold);
         }
         final Set<AtomicRule> atomicRuleSet = atomicRuleStream
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         this.searcher.addAtomicRules(atomicRuleSet);
     }
 
@@ -434,7 +434,7 @@ public class ASTRA implements IASTRA {
                             wordPair.getFrequency()
                     ));
                 })
-                .collect(toList());
+                .toList();
         this.addAtomicRules(atomicRules);
     }
 
@@ -633,7 +633,7 @@ public class ASTRA implements IASTRA {
                     return Generator.combination(ruleBuckets)
                             .simple(size)
                             .stream()
-                            .collect(toList());
+                            .toList();
                 })
                 .flatMap(ruleBucketCombinations -> {
                     return ruleBucketCombinations
@@ -667,7 +667,7 @@ public class ASTRA implements IASTRA {
                 .filter(probabilisticWord -> probabilisticWord.getProbability() > 0.0)
                 .sorted()
                 .limit(this.maximumNumberOfResponses)
-                .collect(toList());
+                .toList();
 
         final List<ProbabilisticWord> filteredProbabilisticWords = filterProbabilisticWords(probabilisticWords);
         final TransformationEngineResponse transformationEngineResponse =

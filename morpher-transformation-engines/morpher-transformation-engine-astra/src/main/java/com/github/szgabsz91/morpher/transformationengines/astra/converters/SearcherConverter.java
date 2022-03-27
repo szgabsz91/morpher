@@ -194,8 +194,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Protocol Buffer converter for the {@link ISearcher} interface and its subclasses.
@@ -237,7 +236,7 @@ public class SearcherConverter implements IConverter<ISearcher, SearcherMessage>
                 .map(RuleGroup::getAtomicRules)
                 .flatMap(Collection::stream)
                 .map(this.atomicRuleConverter::convert)
-                .collect(toList());
+                .toList();
         return SearcherMessage.newBuilder()
                 .setType(searcherTypeMessage)
                 .setUnidirectional(searcher.isUnidirectional())
@@ -271,7 +270,7 @@ public class SearcherConverter implements IConverter<ISearcher, SearcherMessage>
         final Set<AtomicRule> atomicRules = searcherMessage.getAtomicRulesList()
                 .stream()
                 .map(this.atomicRuleConverter::convertBack)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         searcher.addAtomicRules(atomicRules);
         return searcher;
     }

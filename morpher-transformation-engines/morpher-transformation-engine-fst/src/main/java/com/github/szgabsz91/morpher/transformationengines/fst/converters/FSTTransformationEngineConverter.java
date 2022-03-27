@@ -184,8 +184,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 /**
  * Converter for the {@link FSTTransformationEngine} that can convert it to and from Protocol Buffers.
@@ -210,7 +209,7 @@ public class FSTTransformationEngineConverter
                             .setRightWord(wordPair.getRightWord().toString())
                             .build();
                 })
-                .collect(toList());
+                .toList();
         return FSTTransformationEngineMessage.newBuilder()
                 .setUnidirectional(fstTransformationEngine.isUnidirectional())
                 .setAffixType(fstTransformationEngine.getAffixType().toString())
@@ -231,7 +230,7 @@ public class FSTTransformationEngineConverter
                 .stream()
                 .map(wordPairMessage -> WordPair.of(wordPairMessage.getLeftWord(), wordPairMessage.getRightWord()))
                 .map(FrequencyAwareWordPair::of)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         final FSTTransformationEngine fstTransformationEngine = new FSTTransformationEngine(unidirectional, affixType);
         fstTransformationEngine.learn(TrainingSet.of(wordPairs));
         return fstTransformationEngine;

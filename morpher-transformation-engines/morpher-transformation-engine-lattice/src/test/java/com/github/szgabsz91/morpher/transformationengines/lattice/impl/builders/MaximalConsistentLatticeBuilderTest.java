@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static com.github.szgabsz91.morpher.transformationengines.lattice.impl.setoperations.IntersectionCalculator.intersect;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -148,7 +148,7 @@ public class MaximalConsistentLatticeBuilderTest {
         Node inconsistentIntersection = intersect(maximalConsistentNode1, maximalConsistentNode2, characterRepository, wordConverter);
         Set<Rule> maximalConsistentRules = Stream.of(maximalConsistentNode1, maximalConsistentNode2)
                 .map(Node::getRule)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         maximalConsistentLatticeBuilder.addRules(maximalConsistentRules);
         Lattice lattice = maximalConsistentLatticeBuilder.getLattice();
         assertThat(inconsistentIntersection.isInconsistent()).isTrue();
@@ -203,7 +203,7 @@ public class MaximalConsistentLatticeBuilderTest {
         );
         Set<Rule> maximalConsistentRules = Stream.of(maximalConsistentNode1, maximalConsistentNode2)
                 .map(Node::getRule)
-                .collect(toSet());
+                .collect(toUnmodifiableSet());
         maximalConsistentLatticeBuilder.addRules(maximalConsistentRules);
         Lattice lattice = maximalConsistentLatticeBuilder.getLattice();
         assertThat(lattice.size()).isEqualTo(4);
