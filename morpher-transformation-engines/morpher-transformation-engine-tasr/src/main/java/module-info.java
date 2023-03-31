@@ -6,7 +6,7 @@ module com.github.szgabsz91.morpher.transformationengines.tasr {
 
     requires lombok;
     requires org.slf4j;
-    requires com.google.protobuf;
+    requires protobuf.java;
 
     exports com.github.szgabsz91.morpher.transformationengines.tasr;
     exports com.github.szgabsz91.morpher.transformationengines.tasr.config;

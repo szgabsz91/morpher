@@ -8,7 +8,7 @@ module com.github.szgabsz91.morpher.engines.impl {
 
     requires lombok;
     requires org.slf4j;
-    requires com.google.protobuf;
+    requires protobuf.java;
 
     exports com.github.szgabsz91.morpher.engines.impl;
     exports com.github.szgabsz91.morpher.engines.impl.transformationengineholders;

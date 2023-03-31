@@ -9,7 +9,7 @@ module com.github.szgabsz91.morpher.transformationengines.astra {
     requires org.apache.commons.collections4;
     requires org.apache.commons.lang3;
     requires org.slf4j;
-    requires com.google.protobuf;
+    requires protobuf.java;
 
     exports com.github.szgabsz91.morpher.transformationengines.astra;
     exports com.github.szgabsz91.morpher.transformationengines.astra.config;
