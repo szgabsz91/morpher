@@ -6,7 +6,7 @@ module com.github.szgabsz91.morpher.engines.hunmorph {
     requires com.github.szgabsz91.morpher.languagehandlers.hunmorph;
     requires transitive com.github.szgabsz91.morpher.engines.api;
 
-    requires com.google.protobuf;
+    requires protobuf.java;
 
     exports com.github.szgabsz91.morpher.engines.hunmorph;
 

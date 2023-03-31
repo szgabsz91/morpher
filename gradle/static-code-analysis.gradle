@@ -18,8 +18,9 @@ tasks.withType(Checkstyle) {
         rootDir: rootDir
     ]
     exclude '**/module-info.java'
+    exclude { it.file.path.contains('generated/source') }
     reports {
-        html.enabled true
+        html.required = true
     }
 }
 checkstyleTest.enabled = false
@@ -34,5 +35,5 @@ afterEvaluate {
 pmd {
     toolVersion = pmdVersion
     rulesMinimumPriority = 2
-    ruleSets = [new File("$rootDir/config/pmd.xml")]
+    ruleSets = ["$rootDir/config/pmd.xml"]
 }

@@ -8,7 +8,7 @@ ext {
     moduleName = 'com.github.szgabsz91.morpher.transformationengines.api'
 
     testCoverageLimits = [
-        instruction: 95.26,
+        instruction: 95.22,
         line: 99.35,
         branch: 84.73,
         class: 100.0

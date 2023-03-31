@@ -330,7 +330,6 @@ public class MorpherEngineConverter implements IConverter<MorpherEngine, Morpher
                     .map(entry -> {
                         final AffixType affixType = AffixType.of(entry.getKey());
                         final Any transformationEngineMessage = entry.getValue();
-                        @SuppressWarnings("checkstyle:LineLength")
                         final Supplier<IBidirectionalTransformationEngine<?>> bidirectionalTransformationEngineFactory =
                                 abstractTransformationEngineFactory.getBidirectionalFactory(affixType);
                         final IBidirectionalTransformationEngine<?> bidirectionalTransformationEngine =

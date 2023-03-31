@@ -6,7 +6,7 @@ module com.github.szgabsz91.morpher.languagehandlers.hunmorph {
 
     requires lombok;
     requires org.slf4j;
-    requires transitive com.google.protobuf;
+    requires transitive protobuf.java;
 
     exports com.github.szgabsz91.morpher.languagehandlers.hunmorph;
     exports com.github.szgabsz91.morpher.languagehandlers.hunmorph.impl to com.github.szgabsz91.morpher.engines.hunmorph;

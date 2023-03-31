@@ -22,7 +22,7 @@
     </module>
 
     <module name="LineLength">
-        <property name="ignorePattern" value="^$" />
+        <property name="ignorePattern" value="^import.+$" />
         <property name="max" value="120" />
     </module>
 

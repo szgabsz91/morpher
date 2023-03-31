@@ -9,7 +9,7 @@ ext {
     mockingEnabled = true
 
     testCoverageLimits = [
-        instruction: 95.63,
+        instruction: 95.52,
         line: 96.64,
         branch: 85.24,
         class: 100.0

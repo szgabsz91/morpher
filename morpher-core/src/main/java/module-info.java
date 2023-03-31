@@ -3,7 +3,7 @@ module com.github.szgabsz91.morpher.core {
 
     requires lombok;
     requires org.slf4j;
-    requires transitive com.google.protobuf;
+    requires transitive protobuf.java;
     requires zip4j;
 
     exports com.github.szgabsz91.morpher.core.io;
