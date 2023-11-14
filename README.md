@@ -1,6 +1,7 @@
 # [![Morpher](https://raw.githubusercontent.com/szgabsz91/morpher/master/docs/images/morpher.png "Morpher")](https://github.com/szgabsz91/morpher)
 
 [![Build Status](https://img.shields.io/circleci/project/github/szgabsz91/morpher/master.svg)](https://circleci.com/gh/szgabsz91/workflows/morpher)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.szgabsz91/morpher-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.szgabsz91/morpher-core)
 [![License](https://img.shields.io/github/license/szgabsz91/morpher.svg)](https://github.com/szgabsz91/morpher/blob/master/LICENSE)
 
 Morpher is a general purpose framework for inflection generation and morphological analysis, that lets you plug in

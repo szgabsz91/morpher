@@ -403,7 +403,7 @@ public class HunmorphWordProcessor implements AutoCloseable {
     /**
      * File visitor that recursively deletes the temporary directory.
      */
-    private static class DeleteTemporaryDirectoryFileVisitor extends SimpleFileVisitor<Path> {
+    private static final class DeleteTemporaryDirectoryFileVisitor extends SimpleFileVisitor<Path> {
 
         /**
          * Deletes the given file and continues the traversal.
