@@ -1,5 +1,5 @@
 # Morpher Language Handler API
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.szgabsz91/morpher-language-handler-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.szgabsz91/morpher-language-handler-api)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.szgabsz91/morpher-language-handler-api)](https://central.sonatype.com/artifact/com.github.szgabsz91/morpher-language-handler-api)
 
 API for language handler implementations.

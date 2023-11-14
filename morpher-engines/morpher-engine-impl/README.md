@@ -1,6 +1,6 @@
 # Morpher Engine Impl
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.szgabsz91/morpher-engine-impl/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.szgabsz91/morpher-engine-impl)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.szgabsz91/morpher-engine-impl)](https://central.sonatype.com/artifact/com.github.szgabsz91/morpher-engine-impl)
 
 Morpher Engine Impl is a Morpher Engine implementation framework that can
 

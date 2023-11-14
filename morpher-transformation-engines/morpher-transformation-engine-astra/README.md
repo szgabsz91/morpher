@@ -1,6 +1,6 @@
 # Morpher Transformation Engine ASTRA
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.szgabsz91/morpher-transformation-engine-astra/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.szgabsz91/morpher-transformation-engine-astra)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.szgabsz91/morpher-transformation-engine-astra)](https://central.sonatype.com/artifact/com.github.szgabsz91/morpher-transformation-engine-astra)
 
 The Atomic String Transformation Rule Assembler (ASTRA) is a position independent transformation rule learning model.
 
